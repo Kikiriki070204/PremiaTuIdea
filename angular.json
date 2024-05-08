@@ -25,9 +25,10 @@
               "src/assets"
             ],
             "styles": [
+              "node_modules/bootstrap/scss/bootstrap.scss",
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": ["node_modules/flowbite/dist/flowbite.js"]
           },
           "configurations": {
             "production": {
