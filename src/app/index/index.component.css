@@ -1,2 +1,20 @@
+.question{
+    color: rgb(37, 34, 90);
+    font-size:40px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 30px; 
+}
 
+li{
+    font-size: medium;
+    font-weight:600;
+}
 
+.yay{
+color: rgb(33, 199, 58);
+}
+
+.ref{
+    font-weight: bold;
+}
