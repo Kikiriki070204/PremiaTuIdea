@@ -13,7 +13,8 @@ export class ActivarService {
   constructor(protected http: HttpClient) { }
 
   activar(data: Activar): Observable<User>{
-    return this.http.put<User>('http://10.214.226.103:8000/api/password', data);
+    return this.http.put<User>('http://127.0.0.1:8000/api/auth/register', data);
+    //checa si jala bien con el post, si no hay q cambiar en api y aqui a put
   }
 
 

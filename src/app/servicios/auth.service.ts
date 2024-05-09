@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   me(): Observable<User> {
-    return this.http.post<User>("http://10.214.226.103:8000/api/me", undefined)
+    return this.http.post<User>("http://127.0.0.1:8000/api/me", undefined)
   }
 
   logout()

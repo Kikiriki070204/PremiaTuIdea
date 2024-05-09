@@ -4,6 +4,7 @@ import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angu
 import { Router, RouterLink } from '@angular/router';
 import { ActivarService } from '../servicios/activar.service';
 import { Activar } from '../interfaces/activar';
+import { User } from '../interfaces/user';
 
 @Component({
   selector: 'app-activate',
@@ -28,7 +29,7 @@ export class ActivateComponent {
     }
 
     this.service.activar(activar).subscribe({
-      next(value) {
+      next(value: User) {
         // llevarlo a login.
         console.log(value.ibm)
         self.router.navigate(['/login'])

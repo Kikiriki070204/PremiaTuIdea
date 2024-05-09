@@ -9,5 +9,5 @@ area_id: number
 locacion_id: number
 rol_id: number
 puntos: number
-token: string
+access_token: string
 }
