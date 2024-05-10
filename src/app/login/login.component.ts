@@ -6,6 +6,7 @@ import { LoginService } from '../servicios/login.service';
 import { Login } from '../interfaces/login';
 import { User } from '../interfaces/user';
 import { AuthService } from '../servicios/auth.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,7 @@ export class LoginComponent {
   ibm = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
 
-  constructor(protected service: LoginService, protected authService: AuthService,  protected router: Router){}
+  constructor(protected cookieService: CookieService, protected service: LoginService, protected authService: AuthService,  protected router: Router){}
 
   login(){
     let self = this
@@ -30,9 +31,8 @@ export class LoginComponent {
     this.service.login(login).subscribe({
       next(value: User ) {
         // llevarlo a su dashboard.
-        console.log("token: ",value.access_token)
         self.router.navigate(['/dashboard'])
-        localStorage.setItem('access_token',value.access_token)
+        self.cookieService.set('access_token', value.access_token,1)
 
         self.authService.me().subscribe({
           next(user: User){

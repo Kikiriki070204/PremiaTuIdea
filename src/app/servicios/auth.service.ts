@@ -2,16 +2,17 @@ import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  constructor(protected http: HttpClient) { }
+  constructor(protected http: HttpClient, protected cookie: CookieService) { }
 
   getToken(): string {
-    return localStorage.getItem('access_token') ?? '';
+    return this.cookie.get('access_token') ?? '';
   }
 
   currentUser: User | null = null

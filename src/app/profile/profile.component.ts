@@ -25,8 +25,8 @@ export class ProfileComponent implements OnInit{
 
     this.authService.me().subscribe({
       next(value: User ) {
-        // llevarlo a su dashboard.
-        console.log("si jala")
+        self.user = value
+        console.log("si jala", self.user.nombre)
       },
       error(err) {
         console.log(err)
