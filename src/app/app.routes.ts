@@ -4,6 +4,8 @@ import { AppNavbarComponent } from './app-navbar/app-navbar.component';
 import { ActivateComponent} from './activate/activate.component';
 import { LoginComponent } from './login/login.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const routes: Routes = 
 [
@@ -11,5 +13,7 @@ export const routes: Routes =
     {path:'navbar', component: AppNavbarComponent},
     {path: 'activar', component: ActivateComponent},
     {path: 'login', component: LoginComponent},
+    {path: 'dashboard', component: DashboardComponent},
+    {path: 'myProfile', component: ProfileComponent},
     {path: '**', component: NotFoundComponent}
 ];

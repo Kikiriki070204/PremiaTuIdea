@@ -1,9 +1,9 @@
 <nav class="bg-bw border-gray-100 dark:bg-gray-900">
     <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
+        <a [routerLink]="['/dashboard']" class="flex items-center space-x-3 rtl:space-x-reverse">
             <img src="../../assets/logoWhite.png" class="h-6" alt="Borgwarner Logo" />
         </a>
-        @if (user?.access_token != null) {
+        @if (user_token != null) {
         <div class="flex items-center space-x-6 rtl:space-x-reverse">
                 <button type="button" class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
@@ -17,7 +17,7 @@
                   </div>
                   <ul class="py-2" aria-labelledby="user-menu-button">
                     <li>
-                      <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mi perfil</a>
+                      <a [routerLink]="['/myProfile']" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Mi perfil</a>
                     </li>
                     <li>
                       <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar sesion</a>
@@ -30,7 +30,7 @@
       }
     </div>
 </nav>
-@if (user?.access_token != null) {
+@if (user_token != null) {
 <nav class="bg-gray-50 dark:bg-gray-700">
     <div class="max-w-screen-xl px-4 py-3 mx-auto">
         <div class="flex items-center">

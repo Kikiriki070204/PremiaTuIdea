@@ -11,7 +11,7 @@ export class AuthService {
   constructor(protected http: HttpClient) { }
 
   getToken(): string {
-    return localStorage.getItem('token') ?? '';
+    return localStorage.getItem('access_token') ?? '';
   }
 
   currentUser: User | null = null
@@ -25,12 +25,12 @@ export class AuthService {
   }
 
   me(): Observable<User> {
-    return this.http.post<User>("http://127.0.0.1:8000/api/me", undefined)
+    return this.http.post<User>("http://127.0.0.1:8000/api/auth/me", undefined)
   }
 
   logout()
   {
-    localStorage.removeItem('token')
+    localStorage.removeItem('access_token')
   }
 
 }
