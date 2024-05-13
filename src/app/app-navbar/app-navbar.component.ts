@@ -22,7 +22,6 @@ user: User | null = null
 user_rol: string | null = null
 user_id: string | null = null
 constructor(protected cookie: CookieService, protected authService: AuthService){
-  this.ngOnInit()
 }
 
 ngOnInit(): void {

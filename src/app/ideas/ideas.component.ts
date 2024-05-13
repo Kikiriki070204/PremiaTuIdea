@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { Idea } from '../interfaces/idea';
 import { IdeasService } from '../servicios/ideas.service';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-ideas',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor],
+  imports: [AppNavbarComponent, NgFor, RouterLink],
   templateUrl: './ideas.component.html',
   styleUrl: './ideas.component.css'
 })

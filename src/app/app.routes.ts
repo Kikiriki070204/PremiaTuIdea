@@ -7,6 +7,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { IdeasComponent } from './ideas/ideas.component';
+import { NewIdeaComponent } from './new-idea/new-idea.component';
 
 export const routes: Routes = 
 [
@@ -17,5 +18,6 @@ export const routes: Routes =
     {path: 'dashboard', component: DashboardComponent},
     {path: 'myProfile', component: ProfileComponent},
     {path: 'misIdeas', component: IdeasComponent},
+    {path: 'newIdea', component: NewIdeaComponent},
     {path: '**', component: NotFoundComponent}
 ];

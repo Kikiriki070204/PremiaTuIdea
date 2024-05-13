@@ -1,14 +1,14 @@
 <app-app-navbar></app-app-navbar>
 
 <div class="container flex" style="margin-left: 5%;padding-top: 3%;">
-    <h4 class="mb-2 text-4xl font-bold text-blue-950 dark:text-white">Tus ideas</h4> 
+    <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">Tus ideas</h4> 
    
 </div>
 
 <div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;" >
 
     <div class="w-fit" style="margin-bottom: 1%;">
-        <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
+        <button [routerLink]="['/newIdea']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
     </div>
      @if(ideas == null)
         {
@@ -50,7 +50,7 @@
     </div>
 }
 @else {
-    <h5 class=" hover:animate-bounce mb-2 text-4xl font-bold text-blue-600 dark:text-white">¡Aun no tienes ideas registradas!</h5> 
+    <h5 class=" hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">¡Aun no tienes ideas registradas!</h5> 
 }
    
 

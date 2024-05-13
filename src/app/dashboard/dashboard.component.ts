@@ -13,7 +13,8 @@ import { RouterLink } from '@angular/router';
 })
 export class DashboardComponent implements OnInit{
 user: User | null = null
-constructor(protected authService: AuthService ){}
+constructor(protected authService: AuthService ){
+}
 ngOnInit(): void {
   this.me()
 }

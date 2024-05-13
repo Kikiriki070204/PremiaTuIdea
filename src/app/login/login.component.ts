@@ -31,7 +31,6 @@ export class LoginComponent {
     this.service.login(login).subscribe({
       next(value: User ) {
         // llevarlo a su dashboard.
-        self.router.navigate(['/dashboard'])
         localStorage.setItem('access_token', value.access_token)
         self.authService.me().subscribe({
           next(user: User){
@@ -39,6 +38,7 @@ export class LoginComponent {
             console.log('Current User:', user);
             self.cookieService.set('rol_id',user.rol_id.toString(),1)
         self.cookieService.set('id',user.id.toString(),1)
+        self.router.navigate(['/dashboard'])
           }
         })
       },
