@@ -32,12 +32,13 @@ export class LoginComponent {
       next(value: User ) {
         // llevarlo a su dashboard.
         self.router.navigate(['/dashboard'])
-        self.cookieService.set('access_token', value.access_token,1)
-
+        localStorage.setItem('access_token', value.access_token)
         self.authService.me().subscribe({
           next(user: User){
             self.authService.setCurrentUser(user);
             console.log('Current User:', user);
+            self.cookieService.set('rol_id',user.rol_id.toString(),1)
+        self.cookieService.set('id',user.id.toString(),1)
           }
         })
       },

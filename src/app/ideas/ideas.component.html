@@ -1,1 +1,63 @@
-<p>ideas works!</p>
+<app-app-navbar></app-app-navbar>
+
+<div class="container flex" style="margin-left: 5%;padding-top: 3%;">
+    <h4 class="mb-2 text-4xl font-bold text-blue-950 dark:text-white">Tus ideas</h4> 
+   
+</div>
+
+<div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;" >
+
+    <div class="w-fit" style="margin-bottom: 1%;">
+        <button type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
+    </div>
+     @if(ideas == null)
+        {
+    <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+       
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">
+                        Titulo
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Estatus
+                    </th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let idea of ideas">
+                  <td scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{idea.titulo}}</td>
+                  @if(idea.estatus == 1)
+                  {
+                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white">En revision</td>
+                  }
+                  @else if(idea.estatus == 2) {
+                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-emerald-600 whitespace-nowrap dark:text-white">Aceptada</td>
+                  }
+                  @else if(idea.estatus == 3) {
+                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-blue-700 whitespace-nowrap dark:text-white">Implementada</td>
+                  }
+                  @else if(idea.estatus == 4) {
+                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-red-800 whitespace-nowrap dark:text-white">Rechazada</td>
+                  }
+                  
+                  
+              </tbody>
+        </table>
+    
+    </div>
+}
+@else {
+    <h5 class=" hover:animate-bounce mb-2 text-4xl font-bold text-blue-600 dark:text-white">¡Aun no tienes ideas registradas!</h5> 
+}
+   
+
+
+
+</div>
+
+    
+
+

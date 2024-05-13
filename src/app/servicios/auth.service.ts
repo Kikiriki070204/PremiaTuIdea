@@ -3,7 +3,8 @@ import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
-
+import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
+import { environment } from '../../enviroment/enviroment';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,7 +13,14 @@ export class AuthService {
   constructor(protected http: HttpClient, protected cookie: CookieService) { }
 
   getToken(): string {
-    return this.cookie.get('access_token') ?? '';
+    return localStorage.getItem('access_token') ?? '';
+  }
+
+  getId(): string{
+    return this.cookie.get('rol_id') ?? '';
+  }
+  getRol(): string{
+    return this.cookie.get('id') ?? '';
   }
 
   currentUser: User | null = null
@@ -26,12 +34,14 @@ export class AuthService {
   }
 
   me(): Observable<User> {
-    return this.http.post<User>("http://127.0.0.1:8000/api/auth/me", undefined)
+    return this.http.post<User>(`${environment.api_url}/auth/me`, undefined)
   }
 
   logout()
   {
-    localStorage.removeItem('access_token')
+   localStorage.removeItem('access_token')
+   this.cookie.delete('rol_id')
+   this.cookie.delete('id')
   }
 
 }
