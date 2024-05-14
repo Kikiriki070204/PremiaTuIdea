@@ -5,11 +5,12 @@ import { Observable } from 'rxjs';
 import { Idea } from '../interfaces/idea';
 import { Ideas } from '../interfaces/ideas';
 import { environment } from '../../enviroment/enviroment';
+import { NewIdea } from '../interfaces/new-idea';
 
 @Injectable({
   providedIn: 'root'
 })
-export class IdeasService {
+export class IdeasService{
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
@@ -17,11 +18,11 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideas/list`);
   }
 
-  ideasImp(){
-
+  ideasImp(): Observable<Ideas>{
+    return this.http.get<Ideas>(`${environment.api_url}/ideas/userIdeas`);
   }
 
-  idea(){
-
+  newIdea(data: NewIdea): Observable<Idea>{
+    return this.http.post<Idea>(`${environment.api_url}/ideas/create`,data);
   }
 }

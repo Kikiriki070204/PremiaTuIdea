@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 import { environment } from '../../enviroment/enviroment';
+import { Profile } from '../interfaces/profile';
 @Injectable({
   providedIn: 'root'
 })
@@ -35,6 +36,10 @@ export class AuthService {
 
   me(): Observable<User> {
     return this.http.post<User>(`${environment.api_url}/auth/me`, undefined)
+  }
+
+  meplus(): Observable<Profile>{
+    return this.http.get<Profile>(`${environment.api_url}/auth/meplus`)
   }
 
   logout()

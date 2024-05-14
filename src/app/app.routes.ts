@@ -8,16 +8,20 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { IdeasComponent } from './ideas/ideas.component';
 import { NewIdeaComponent } from './new-idea/new-idea.component';
+import { EquipoComponent } from './equipo/equipo.component';
 
 export const routes: Routes = 
 [
     {path: '', component: IndexComponent},
-    {path:'navbar', component: AppNavbarComponent},
+    //Rutas de usuario
     {path: 'activar', component: ActivateComponent},
     {path: 'login', component: LoginComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'myProfile', component: ProfileComponent},
+    //Rutas de ideas
     {path: 'misIdeas', component: IdeasComponent},
     {path: 'newIdea', component: NewIdeaComponent},
+    //Rutas de equipo
+    {path: 'newIdea/add', component: EquipoComponent},
     {path: '**', component: NotFoundComponent}
 ];
