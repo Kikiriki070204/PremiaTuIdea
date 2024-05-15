@@ -24,7 +24,8 @@ export const routes: Routes =
     {path: 'newIdea', component: NewIdeaComponent},
     //Rutas de equipo
     {path: 'newIdea/add/:id', component: EquipoComponent},
-    {path: '**', component: NotFoundComponent},
     //Rutas de productos
-    {path:'premios', component: PremiosComponent}
+    {path:'premios', component: PremiosComponent},
+    //wildcard
+    {path: '**', component: NotFoundComponent},
 ];

@@ -1,1 +1,47 @@
-<p>premios works!</p>
+<app-app-navbar></app-app-navbar>
+
+<div class="container px-5 pt-4">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+            <thead class="text-xs text-gray-700 uppercase bg-blue-200 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-16 py-3">
+                        <span class="sr-only">Image</span>
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Producto
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Valor
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        Diferencia
+                    </th>
+                    <th scope="col" class="px-6 py-3">
+                        
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let producto of productos">
+                    <td class="p-4">
+                        <!--Hay que validar el index del producto -->
+                        <img src="../../../assets/idea2.png" class="w-16 md:w-32 max-w-full max-h-full" alt="Apple Watch">
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                        {{producto.nombre}}
+                    </td>
+                    <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
+                        {{producto.valor}} puntos
+                    </td>
+                    
+            </tbody>
+        </table>
+    </div>
+    
+
+
+</div>
+
+
+

@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from '../interfaces/user';
 import { environment } from '../../enviroment/enviroment';
 import { Usuarios } from '../interfaces/usuarios';
+import { Productos } from '../interfaces/productos';
 
 @Injectable({
   providedIn: 'root'
@@ -17,4 +17,8 @@ export class UsersService {
   }
 
   allUsers(){}
+
+  premiosDisponibles(): Observable<Productos>{
+    return this.http.get<Productos>(`${environment.api_url}/productos/list`);
+  }
 }

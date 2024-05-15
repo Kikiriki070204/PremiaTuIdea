@@ -28,7 +28,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let idea of ideas">
-                  <td scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{idea.titulo}}</td>
+                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{idea.titulo}}</td>
                   @if(idea.estatus == 1)
                   {
                     <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white">En revision</td>
