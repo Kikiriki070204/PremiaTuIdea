@@ -9,6 +9,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { IdeasComponent } from './ideas/ideas.component';
 import { NewIdeaComponent } from './new-idea/new-idea.component';
 import { EquipoComponent } from './equipo/equipo.component';
+import { PremiosComponent } from './premios/premios.component';
 
 export const routes: Routes = 
 [
@@ -22,6 +23,8 @@ export const routes: Routes =
     {path: 'misIdeas', component: IdeasComponent},
     {path: 'newIdea', component: NewIdeaComponent},
     //Rutas de equipo
-    {path: 'newIdea/add', component: EquipoComponent},
-    {path: '**', component: NotFoundComponent}
+    {path: 'newIdea/add/:id', component: EquipoComponent},
+    {path: '**', component: NotFoundComponent},
+    //Rutas de productos
+    {path:'premios', component: PremiosComponent}
 ];

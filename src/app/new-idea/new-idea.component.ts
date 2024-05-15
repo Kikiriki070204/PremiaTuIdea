@@ -35,7 +35,7 @@ idea()
   this.ideaService.newIdea(newIdea).subscribe({
     next(value: Idea) {
       console.log("idea id:", value.id)
-      self.router.navigate(['/newIdea/add'])
+      self.router.navigate(['/newIdea/add', value.id])
     },
   })
 }
