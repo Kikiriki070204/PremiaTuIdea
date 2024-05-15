@@ -1,15 +1,15 @@
 import { Routes } from '@angular/router';
-import { IndexComponent } from './index/index.component';
-import { AppNavbarComponent } from './app-navbar/app-navbar.component';
-import { ActivateComponent} from './activate/activate.component';
-import { LoginComponent } from './login/login.component';
-import { NotFoundComponent } from './not-found/not-found.component';
-import { DashboardComponent } from './dashboard/dashboard.component';
-import { ProfileComponent } from './profile/profile.component';
-import { IdeasComponent } from './ideas/ideas.component';
-import { NewIdeaComponent } from './new-idea/new-idea.component';
-import { EquipoComponent } from './equipo/equipo.component';
-import { PremiosComponent } from './premios/premios.component';
+import { IndexComponent } from './vistas/index/index.component';
+import { AppNavbarComponent } from './vistas/app-navbar/app-navbar.component';
+import { ActivateComponent} from './vistas/activate/activate.component';
+import { LoginComponent } from './vistas/login/login.component';
+import { NotFoundComponent } from './vistas/not-found/not-found.component';
+import { DashboardComponent } from './vistas/dashboard/dashboard.component';
+import { ProfileComponent } from './vistas/profile/profile.component';
+import { IdeasComponent } from './vistas/ideas/ideas.component';
+import { NewIdeaComponent } from './vistas/new-idea/new-idea.component';
+import { EquipoComponent } from './vistas/equipo/equipo.component';
+import { PremiosComponent } from './vistas/premios/premios.component';
 
 export const routes: Routes = 
 [

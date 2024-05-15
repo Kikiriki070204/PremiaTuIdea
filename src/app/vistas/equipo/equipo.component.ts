@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { User } from '../interfaces/user';
-import { UsersService } from '../servicios/users.service';
+import { User } from '../../interfaces/user';
+import { UsersService } from '../../servicios/users.service';
 import { NgFor } from '@angular/common';
-import { EquipoIdea } from '../interfaces/equipo-idea';
-import { EquiposService } from '../servicios/equipos.service';
-import { Equipo } from '../interfaces/equipo';
-import { UsuarioEquipo } from '../interfaces/usuario-equipo';
-import { RequestEquipo } from '../interfaces/request-equipo';
+import { EquipoIdea } from '../../interfaces/equipo-idea';
+import { EquiposService } from '../../servicios/equipos.service';
+import { Equipo } from '../../interfaces/equipo';
+import { UsuarioEquipo } from '../../interfaces/usuario-equipo';
+import { RequestEquipo } from '../../interfaces/request-equipo';
 
 @Component({
   selector: 'app-equipo',

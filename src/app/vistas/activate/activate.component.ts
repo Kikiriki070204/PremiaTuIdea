@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ActivarService } from '../servicios/activar.service';
-import { Activar } from '../interfaces/activar';
-import { User } from '../interfaces/user';
+import { ActivarService } from '../../servicios/activar.service';
+import { Activar } from '../../interfaces/activar';
+import { User } from '../../interfaces/user';
 
 @Component({
   selector: 'app-activate',

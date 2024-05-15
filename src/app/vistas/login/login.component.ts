@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { LoginService } from '../servicios/login.service';
-import { Login } from '../interfaces/login';
-import { User } from '../interfaces/user';
-import { AuthService } from '../servicios/auth.service';
+import { LoginService } from '../../servicios/login.service';
+import { Login } from '../../interfaces/login';
+import { User } from '../../interfaces/user';
+import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
 @Component({

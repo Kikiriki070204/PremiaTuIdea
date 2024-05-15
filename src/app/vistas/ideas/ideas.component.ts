@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { Idea } from '../interfaces/idea';
-import { IdeasService } from '../servicios/ideas.service';
+import { Idea } from '../../interfaces/idea';
+import { IdeasService } from '../../servicios/ideas.service';
 import { Router, RouterLink } from '@angular/router';
 import { NgFor } from '@angular/common';
 

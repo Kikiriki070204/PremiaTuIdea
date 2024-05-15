@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { OnInit } from '@angular/core';
-import { User } from '../interfaces/user';
+import { User } from '../../interfaces/user';
 import { RouterLink } from '@angular/router';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
-import { AuthService } from '../servicios/auth.service';
+import { AuthService } from '../../servicios/auth.service';
 import { isEmpty } from 'rxjs';
 import { NgIf } from '@angular/common';
 

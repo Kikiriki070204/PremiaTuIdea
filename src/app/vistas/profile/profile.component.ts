@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { AuthService } from '../servicios/auth.service';
+import { AuthService } from '../../servicios/auth.service';
 import { Router } from '@angular/router';
-import { Profile } from '../interfaces/profile';
-import { User } from '../interfaces/user';
-import { Idea } from '../interfaces/idea';
-import { IdeasService } from '../servicios/ideas.service';
+import { Profile } from '../../interfaces/profile';
+import { User } from '../../interfaces/user';
+import { Idea } from '../../interfaces/idea';
+import { IdeasService } from '../../servicios/ideas.service';
 import { NgFor } from '@angular/common';
 
 @Component({

@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { IdeasService } from '../servicios/ideas.service';
-import { Idea } from '../interfaces/idea';
-import { NewIdea } from '../interfaces/new-idea';
+import { IdeasService } from '../../servicios/ideas.service';
+import { Idea } from '../../interfaces/idea';
+import { NewIdea } from '../../interfaces/new-idea';
 
 @Component({
   selector: 'app-new-idea',
