@@ -12,3 +12,17 @@ rol_id: number
 puntos: number
 access_token: string
 }
+
+export interface Usuario{
+ibm: number
+nombre: string
+email: string
+password: string
+departamento: string
+area: string
+locacion: string
+}
+
+export interface UsersList{
+    usuarios: Usuario[]
+}

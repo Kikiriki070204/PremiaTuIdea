@@ -10,6 +10,7 @@ import { IdeasComponent } from './vistas/ideas/ideas.component';
 import { NewIdeaComponent } from './vistas/new-idea/new-idea.component';
 import { EquipoComponent } from './vistas/equipo/equipo.component';
 import { PremiosComponent } from './vistas/premios/premios.component';
+import { UsuariosComponent } from './vistas/usuarios/usuarios.component';
 
 export const routes: Routes = 
 [
@@ -19,8 +20,9 @@ export const routes: Routes =
     {path: 'login', component: LoginComponent},
     {path: 'dashboard', component: DashboardComponent},
     {path: 'myProfile', component: ProfileComponent},
+    {path: 'usuarios', component: UsuariosComponent},
     //Rutas de ideas
-    {path: 'misIdeas', component: IdeasComponent},
+    {path: 'ideas', component: IdeasComponent},
     {path: 'newIdea', component: NewIdeaComponent},
     //Rutas de equipo
     {path: 'newIdea/add/:id', component: EquipoComponent},

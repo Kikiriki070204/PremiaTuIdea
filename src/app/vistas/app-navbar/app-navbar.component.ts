@@ -39,11 +39,11 @@ ngOnInit(): void {
 
 getId()
 {
-  this.user_rol = this.authService.getId()
+  this.user_id = this.authService.getId()
 }
 
 getRol(){
-  this.user_id = this.authService.getRol()
+  this.user_rol = this.authService.getRol()
 }
 getToken()
 {

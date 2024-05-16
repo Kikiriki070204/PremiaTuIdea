@@ -18,10 +18,10 @@ export class AuthService {
   }
 
   getId(): string{
-    return this.cookie.get('rol_id') ?? '';
+    return this.cookie.get('id') ?? '';
   }
   getRol(): string{
-    return this.cookie.get('id') ?? '';
+    return this.cookie.get('rol_id') ?? '';
   }
 
   currentUser: User | null = null

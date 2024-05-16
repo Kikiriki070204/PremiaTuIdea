@@ -4,6 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { Producto } from '../../interfaces/producto';
 import { UsersService } from '../../servicios/users.service';
 import { NgFor } from '@angular/common';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
   selector: 'app-premios',
@@ -14,10 +15,11 @@ import { NgFor } from '@angular/common';
 })
 export class PremiosComponent implements OnInit{
 productos: Producto[] = []
-
-constructor(protected userService: UsersService, protected router: Router){}
+user_rol: string | null = null
+constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService){}
 ngOnInit(): void {
   this.premiosDisponibles()
+  this.getRol()
 }
 
 premiosDisponibles(): void
@@ -27,5 +29,10 @@ premiosDisponibles(): void
       this.productos = myProducts.productos;
       console.log(this.productos)
     }); 
+  }
+
+  getRol(){
+    this.user_rol = this.authService.getRol()
+    console.log("user rol: ", this.user_rol)
   }
 }

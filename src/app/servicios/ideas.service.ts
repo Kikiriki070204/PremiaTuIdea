@@ -6,6 +6,7 @@ import { Idea } from '../interfaces/idea';
 import { Ideas } from '../interfaces/ideas';
 import { environment } from '../../enviroment/enviroment';
 import { NewIdea } from '../interfaces/new-idea';
+import { HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +25,14 @@ export class IdeasService{
 
   newIdea(data: NewIdea): Observable<Idea>{
     return this.http.post<Idea>(`${environment.api_url}/ideas/create`,data);
+  }
+
+  usersIdeas(): Observable<Ideas>{
+    return this.http.get<Ideas>(`${environment.api_url}/ideas/ideasAll`)
+  }
+
+  ideaData(idea_id: number): Observable<Idea>
+  {
+  return this.http.get<Idea>(`${environment.api_url}/equipos/` + idea_id);
   }
 }

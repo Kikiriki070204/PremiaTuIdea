@@ -1,6 +1,22 @@
 <app-app-navbar></app-app-navbar>
 
-<div class="container px-5 pt-4">
+@if(user_rol == '1')
+{
+    <div class="container flex" style="margin-left: 5%;padding-top: 1%;">
+        <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">Tus ideas</h4> 
+       
+    </div>
+<div style="margin-top: 1%; margin-left: 6%; margin-right: 20%;" >
+
+    <div class="w-fit" style="margin-bottom: 1%;">
+        <button [routerLink]="['/newIdea']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
+    </div>
+</div>
+}
+
+<!--Se ve fea la tabla, hay que corregirla-->
+
+<div class="container pt-2 ml-16 pr-32" >
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-blue-200 dark:bg-gray-700 dark:text-gray-400">
@@ -14,9 +30,12 @@
                     <th scope="col" class="px-6 py-3">
                         Valor
                     </th>
+                    @if(user_rol == '3')
+                    {
                     <th scope="col" class="px-6 py-3">
                         Diferencia
                     </th>
+                    }
                     <th scope="col" class="px-6 py-3">
                         
                     </th>
