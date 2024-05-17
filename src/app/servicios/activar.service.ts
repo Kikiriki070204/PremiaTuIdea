@@ -18,5 +18,7 @@ export class ActivarService {
     //checa si jala bien con el post, si no hay q cambiar en api y aqui a put
   }
 
+  
+
 
 }

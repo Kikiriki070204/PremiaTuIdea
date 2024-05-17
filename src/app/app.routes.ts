@@ -11,6 +11,8 @@ import { NewIdeaComponent } from './vistas/new-idea/new-idea.component';
 import { EquipoComponent } from './vistas/equipo/equipo.component';
 import { PremiosComponent } from './vistas/premios/premios.component';
 import { UsuariosComponent } from './vistas/usuarios/usuarios.component';
+import { ExampleComponent } from './example/example.component';
+import { IdeaDataComponent } from './vistas/idea-data/idea-data.component';
 
 export const routes: Routes = 
 [
@@ -23,11 +25,13 @@ export const routes: Routes =
     {path: 'usuarios', component: UsuariosComponent},
     //Rutas de ideas
     {path: 'ideas', component: IdeasComponent},
+    {path:'ideas/:id',component: IdeaDataComponent},
     {path: 'newIdea', component: NewIdeaComponent},
     //Rutas de equipo
     {path: 'newIdea/add/:id', component: EquipoComponent},
     //Rutas de productos
     {path:'premios', component: PremiosComponent},
+    {path:'ejemplo', component:ExampleComponent},
     //wildcard
     {path: '**', component: NotFoundComponent},
 ];

@@ -31,22 +31,24 @@
               <!-- Modal body -->
               <form class="p-4 md:p-5">
                 <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">
-                        Solo puedes elegir un colaborador a la vez*
-                    </p>
-                    <div *ngFor="let colaborador of colaboradores">
-
-                        <label for="{{colaborador.nombre}}">
-                        <input
-                            id="radioColab"
-                            [value]="colaborador.id"
-                            type="radio"
-                            name="colaboradores"
-                            [(ngModel)]="colabSelected"
-                        />
-                        {{ colaborador.nombre}}
-                        </label>
-                    </div>
+                    <input (input)="inputChanged($event)" type="text" class="border rounded p-2">
+                    <ng-container *ngIf="colaboradores.length > 0">
+                        <div class="mt-4 space-y-2">
+                          <label
+                            *ngFor="let colaborador of colaboradores"
+                            class="cursor-pointer flex items-center"
+                          >
+                            <input
+                              type="checkbox"
+                              [value]="colaborador.id"
+                              [checked]=""
+                              (change)="selected(colaborador.id)"
+                              class="mr-2"
+                            />
+                            <span>{{ colaborador.nombre }}</span>
+                          </label>
+                        </div>
+                      </ng-container>
                 </div>
                   <button (click)="agregarColab()" class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                     <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>

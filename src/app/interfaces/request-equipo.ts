@@ -1,4 +1,4 @@
 export interface RequestEquipo {
-    id_usuario: number
+    id_usuarios: number[]
     id_equipo: number
 }
