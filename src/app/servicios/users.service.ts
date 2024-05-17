@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
+import { UsersList } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,9 @@ export class UsersService {
   }
 
   //Aqui va la lista de usuarios con la consulta de nombres, por eso se usa la interfaz UsersList y no Usuarios
-  allUsers(){}
+  allUsers(): Observable<UsersList>{
+    return this.http.get<UsersList>(`${environment.api_url}/users/`)
+  }
 
   premiosDisponibles(): Observable<Productos>{
     return this.http.get<Productos>(`${environment.api_url}/productos/list`);
