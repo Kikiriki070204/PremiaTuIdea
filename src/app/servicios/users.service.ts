@@ -19,7 +19,7 @@ export class UsersService {
 
   //Aqui va la lista de usuarios con la consulta de nombres, por eso se usa la interfaz UsersList y no Usuarios
   allUsers(): Observable<UsersList>{
-    return this.http.get<UsersList>(`${environment.api_url}/users/`)
+    return this.http.get<UsersList>(`${environment.api_url}/users/colaboradores`);
   }
 
   premiosDisponibles(): Observable<Productos>{

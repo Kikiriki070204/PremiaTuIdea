@@ -19,5 +19,30 @@ export interface IdeaData{
 		user_id: number
 		estatus_idea: string
 	},
-	colaboradores: string[]
+	colaboradores: [
+		User
+	]
+}
+
+export interface Puntos{
+	id: number
+	puntos: number
+}
+
+export interface EstadoIdea{
+	id: number
+	nombre: string
+	is_active: boolean
+}
+
+export interface EstadoIdeas{
+estados: EstadoIdea[]
+}
+
+export interface Estado{
+	id: number
+    titulo: string
+    antecedentes: string
+    propuesta : string
+	estatus : number
 }

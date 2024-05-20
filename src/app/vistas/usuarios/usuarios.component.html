@@ -50,10 +50,17 @@
             </thead>
             <tbody>
                 <tr *ngFor="let usuario of usuarios">
-                    <td [routerLink]="['/usuario/', usuario.id]" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{usuario.ibm}}</td>
-                  <td [routerLink]="['/usuario/', usuario.id]" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{usuario.nombre}}</td>
-                  
-              </tbody>
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a [routerLink]="['/usuarios/', usuario.id]" >{{usuario.ibm}}</a></td>
+                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{usuario.nombre}}</td>
+                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{usuario.departamento}}, {{usuario.area}}</td>
+                  @if(usuario.locacion == null)
+                  {
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">N/A</td>
+                  }
+                  @else {
+                    <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{usuario.locacion}}</td>
+                  }
+                </tbody>
         </table>
     
     </div>

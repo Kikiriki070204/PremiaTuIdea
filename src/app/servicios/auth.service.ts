@@ -45,8 +45,8 @@ export class AuthService {
   logout()
   {
    localStorage.removeItem('access_token')
-   this.cookie.delete('rol_id')
-   this.cookie.delete('id')
+   this.cookie.delete('rol_id','/','localhost',false,'Lax')
+   this.cookie.delete('id','/','localhost',false,'Lax')
   }
 
 }

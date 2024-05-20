@@ -13,6 +13,7 @@ import { PremiosComponent } from './vistas/premios/premios.component';
 import { UsuariosComponent } from './vistas/usuarios/usuarios.component';
 import { ExampleComponent } from './example/example.component';
 import { IdeaDataComponent } from './vistas/idea-data/idea-data.component';
+import { UserDataComponent } from './vistas/user-data/user-data.component';
 
 export const routes: Routes = 
 [
@@ -23,6 +24,7 @@ export const routes: Routes =
     {path: 'dashboard', component: DashboardComponent},
     {path: 'myProfile', component: ProfileComponent},
     {path: 'usuarios', component: UsuariosComponent},
+    {path: 'usuarios/:id', component:UserDataComponent},
     //Rutas de ideas
     {path: 'ideas', component: IdeasComponent},
     {path:'ideas/:id',component: IdeaDataComponent},

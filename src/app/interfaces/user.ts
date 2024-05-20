@@ -14,6 +14,7 @@ access_token: string
 }
 
 export interface Usuario{
+id: number
 ibm: number
 nombre: string
 email: string
@@ -23,6 +24,10 @@ area: string
 locacion: string
 }
 
+export interface Colaborador{
+    id: number
+    nombre: string
+}
 export interface UsersList{
-    usuarios: Usuario[]
+    users: Usuario[]
 }
