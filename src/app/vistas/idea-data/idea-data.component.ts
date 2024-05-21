@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../servicios/ideas.service';
 import { EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
@@ -12,7 +12,7 @@ import { Actividad } from '../../interfaces/actividad';
 @Component({
   selector: 'app-idea-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule],
+  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './idea-data.component.html',
   styleUrl: './idea-data.component.css'
   

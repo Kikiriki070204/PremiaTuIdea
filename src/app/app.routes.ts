@@ -14,7 +14,10 @@ import { UsuariosComponent } from './vistas/usuarios/usuarios.component';
 import { ExampleComponent } from './example/example.component';
 import { IdeaDataComponent } from './vistas/idea-data/idea-data.component';
 import { UserDataComponent } from './vistas/user-data/user-data.component';
+import { NewUserComponent } from './vistas/new-user/new-user.component';
 
+//hay que hacer el lazy load PENDIENTE
+//TAMBIEN FALTA CREAR UN GUARD
 export const routes: Routes = 
 [
     {path: '', component: IndexComponent},
@@ -25,6 +28,7 @@ export const routes: Routes =
     {path: 'myProfile', component: ProfileComponent},
     {path: 'usuarios', component: UsuariosComponent},
     {path: 'usuarios/:id', component:UserDataComponent},
+    {path: 'newUser', component:NewUserComponent},
     //Rutas de ideas
     {path: 'ideas', component: IdeasComponent},
     {path:'ideas/:id',component: IdeaDataComponent},

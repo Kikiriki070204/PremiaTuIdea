@@ -28,6 +28,11 @@ export interface Colaborador{
     id: number
     nombre: string
 }
+
 export interface UsersList{
     users: Usuario[]
+}
+
+export interface UserName{
+    nombre: string
 }

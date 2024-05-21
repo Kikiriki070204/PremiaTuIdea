@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
-import { UsersList } from '../interfaces/user';
+import { UserName, UsersList } from '../interfaces/user';
 
 @Injectable({
   providedIn: 'root'
@@ -24,5 +24,8 @@ export class UsersService {
 
   premiosDisponibles(): Observable<Productos>{
     return this.http.get<Productos>(`${environment.api_url}/productos/list`);
+  }
+  usersByName(data: UserName): Observable<UsersList>{
+    return this.http.post<UsersList>(`${environment.api_url}/users/nombre`,data);
   }
 }

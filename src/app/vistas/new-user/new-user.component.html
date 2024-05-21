@@ -1,1 +1,33 @@
-<p>new-user works!</p>
+<app-app-navbar></app-app-navbar>
+<div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;margin-bottom: 10%;" >
+
+    <h5 class="text-2xl mb-2 font-medium text-blue-700 dark:text-white" style="font-weight: bold;">Nuevo Usuario</h5>
+    <div class="flex p-3 min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+        <form class="max-w-lg min-w-96">
+            <label for="ibm" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">IBM</label>
+            
+            <div class="flex">
+                <input  type="number" name="ibm" id="ibm" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="IBM del usuario" required />
+            </div>
+            <label for="nombre" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+            
+            <div class="flex">
+                <input  type="text" name="nombre" id="nombre" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre y Apellidos" required />
+            </div>
+            <label for="nombre" class="mt-2 block mb-1 text-sm font-medium text-gray-900 dark:text-white">Rol</label>
+            <!--select de roles, usar un metodo de change-->
+            <select  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+             
+              </select>
+        
+        </form>
+        
+        <form class="max-w-sm pt-20" style="margin-left: 10%;">
+        <!--Poner aqui los selects de departamento, area y locacion, hacer funcionalidad de cascada
+            por ejemplo, locacion estara hidden si rol es diferente a 3, si cambia a 3 se muestra y ademas 
+            unicamente mostrara datos basandose en su area-->
+        
+        </form>
+    </div>
+
+</div>
