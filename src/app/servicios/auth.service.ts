@@ -24,13 +24,13 @@ export class AuthService {
     return this.cookie.get('rol_id') ?? '';
   }
 
-  currentUser: User | null = null
+  currentUser: Profile | null = null
 
-  setCurrentUser(user: User): void {
+  setCurrentUser(user: Profile): void {
     this.currentUser = user;
   }
 
-  getCurrentUser(): User | null {
+  getCurrentUser(): Profile | null {
     return this.currentUser;
   }
 

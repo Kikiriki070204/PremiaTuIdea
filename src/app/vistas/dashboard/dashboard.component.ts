@@ -3,6 +3,7 @@ import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { User } from '../../interfaces/user';
 import { AuthService } from '../../servicios/auth.service';
 import { RouterLink } from '@angular/router';
+import { Profile } from '../../interfaces/profile';
 
 @Component({
   selector: 'app-dashboard',
@@ -12,7 +13,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit{
-user: User | null = null
+user: Profile | null = null
 constructor(protected authService: AuthService ){
 }
 ngOnInit(): void {
@@ -22,8 +23,8 @@ ngOnInit(): void {
 me(){
   let self = this
 
-  this.authService.me().subscribe({
-    next(value: User ) {
+  this.authService.meplus().subscribe({
+    next(value: Profile ) {
       self.user = value
       console.log("si jala", self.user.nombre)
     },

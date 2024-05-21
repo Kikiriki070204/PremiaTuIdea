@@ -8,5 +8,6 @@ departamento: string
 area: string
 locacion: string
 rol: string
+rol_id: number
 puntos: number
 }

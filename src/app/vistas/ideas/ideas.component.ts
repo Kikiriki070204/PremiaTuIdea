@@ -26,7 +26,7 @@ user_rol: string | null = null
       }
       else
       {
-        this.ideasbyStatus()
+        this.allideasUsers()
       }
   }
 
@@ -42,9 +42,19 @@ user_rol: string | null = null
     this.user_rol = this.authService.getRol()
     console.log("user rol: ", this.user_rol)
   }
-  ideasbyStatus(): void
+
+  allideasUsers(): void
   {
-    this.ideaService.usersIdeas()
+    this.ideaService.usersIdeas().subscribe(myIdeas =>{
+      this.ideasUsers = myIdeas.ideas;
+      console.log(this.ideasUsers)
+    })
+  }
+
+  ideasbyStatus(estatus: number | null = null): void
+  {
+    this.ideasUsers = []
+    this.ideaService.ideasByStatus(estatus)
     .subscribe(myIdeas => {
       this.ideasUsers = myIdeas.ideas;
       console.log(this.ideasUsers)

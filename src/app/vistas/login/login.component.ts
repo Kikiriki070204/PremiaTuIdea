@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../servicios/login.service';
 import { Login } from '../../interfaces/login';
 import { User } from '../../interfaces/user';
+import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -32,8 +33,8 @@ export class LoginComponent {
       next(value: User ) {
         // llevarlo a su dashboard.
         localStorage.setItem('access_token', value.access_token)
-        self.authService.me().subscribe({
-          next(user: User){
+        self.authService.meplus().subscribe({
+          next(user: Profile){
             self.authService.setCurrentUser(user);
             console.log('Current User:', user);
             self.cookieService.set('rol_id',user.rol_id.toString(),1)

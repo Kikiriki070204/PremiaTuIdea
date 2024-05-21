@@ -46,3 +46,7 @@ export interface Estado{
     propuesta : string
 	estatus : number
 }
+
+export interface EstatusIdea{
+	estatus: number
+}

@@ -7,6 +7,7 @@ import { NgFor } from '@angular/common';
 import { Colaborador, User } from '../../interfaces/user';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Estado } from '../../interfaces/idea';
+import { Actividad } from '../../interfaces/actividad';
 
 @Component({
   selector: 'app-idea-data',
@@ -26,6 +27,7 @@ check = false
 titulo= new FormControl
 antecedentes = new FormControl
 propuesta = new FormControl
+actividades: Actividad[] | null = null
 
 selectedEstado: number | null = null
 
@@ -40,6 +42,7 @@ ngOnInit() {
   });
   this.ideaData()
   this.estadoIdeas()
+  this.actividadesByIdea()
 }
 
 ideaData(): void
@@ -104,6 +107,15 @@ ideaData(): void
       error(err) {
         console.log(err)
       },
+    })
+  }
+
+  actividadesByIdea()
+  {
+    this.ideaService.actividades(this.idea_id).subscribe(
+      actividadesIdea => {
+      this.actividades = actividadesIdea.actividades
+      console.log(this.actividades);
     })
   }
 }
