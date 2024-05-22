@@ -36,3 +36,16 @@ export interface UsersList{
 export interface UserName{
     nombre: string
 }
+
+export interface NewUser{
+    ibm: number
+    nombre: string 
+    rol_id: number
+    departamento_id: number 
+    area_id: number
+    locacion_id: number 
+}
+
+export interface AreaId{
+    area_id: number
+}

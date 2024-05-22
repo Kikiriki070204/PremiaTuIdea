@@ -43,6 +43,10 @@ ngOnInit() {
   this.ideaData()
   this.estadoIdeas()
   this.actividadesByIdea()
+  if(this.idea?.idea.estatus == 3){
+    this.asignarDisabled()
+  }
+  
 }
 
 ideaData(): void
@@ -118,4 +122,19 @@ ideaData(): void
       console.log(this.actividades);
     })
   }
+
+
+  
+asignarDisabled(){
+  let state: boolean | null = null
+  if(this.idea?.idea.estatus == 3)
+  {
+      state = true
+  }
+  else{
+    state = false
+  }
+  console.log("check!:", state)
+  return state
+}
 }

@@ -15,6 +15,8 @@ import { ExampleComponent } from './example/example.component';
 import { IdeaDataComponent } from './vistas/idea-data/idea-data.component';
 import { UserDataComponent } from './vistas/user-data/user-data.component';
 import { NewUserComponent } from './vistas/new-user/new-user.component';
+import { NewProductoComponent } from './vistas/new-producto/new-producto.component';
+import { NewActivityComponent } from './vistas/new-activity/new-activity.component';
 
 //hay que hacer el lazy load PENDIENTE
 //TAMBIEN FALTA CREAR UN GUARD
@@ -38,6 +40,9 @@ export const routes: Routes =
     //Rutas de productos
     {path:'premios', component: PremiosComponent},
     {path:'ejemplo', component:ExampleComponent},
+    {path: 'newProduct', component: NewProductoComponent},
+    //Actividades
+    {path: 'newActivity', component: NewActivityComponent},
     //wildcard
     {path: '**', component: NotFoundComponent},
 ];

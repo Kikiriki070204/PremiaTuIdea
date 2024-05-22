@@ -1,0 +1,44 @@
+<app-app-navbar></app-app-navbar>
+<div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;margin-bottom: 10%;" >
+
+    <h5 class="text-2xl mb-2 font-medium text-blue-700 dark:text-white" style="font-weight: bold;">Nueva Actividad</h5>
+    
+    <!-- Hay q cambiar el dise;o a un flex pq se ve muy feo y vacio asi
+    <div class=" w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg  sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700" style="margin-top: 3%;">
+
+        <label for="nombre" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Nombre</label>
+        
+        <div class="flex">
+            <input type="text" name="nombre" id="nombre" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre del producto" required />
+        </div>
+
+        <label for="url" class="mt-2 block mb-1 text-sm font-medium text-gray-900 dark:text-white">Responsable de la actividad</label>
+         
+        <div class="md:p-2 border-b rounded-t dark:border-gray-600">
+            <input (input)="inputChanged($event)" type="text" class="border rounded p-2">
+            <ng-container *ngIf="colaboradores.length > 0">
+                <div class="mt-4 space-y-2">
+                  <label
+                    *ngFor="let colaborador of colaboradores"
+                    class="cursor-pointer flex items-center"
+                  >
+                    <input
+                      type="radio"
+                      [value]="colaborador.id"
+                      (change)="selected(colaborador.id)"
+                      [formControl]="selectModel"
+                      class="mr-2"
+                    />
+                    <span>{{ colaborador.nombre }}</span>
+                  </label>
+                </div>
+              </ng-container>
+        </div>
+
+
+        <button  type="button" class="mt-9 text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800  rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 font-semibold">Agregar</button>
+         
+</div>
+-->
+
+</div>

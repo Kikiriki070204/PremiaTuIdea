@@ -5,6 +5,7 @@ import { User } from '../interfaces/user';
 import { Observable } from 'rxjs';
 import { Activar } from '../interfaces/activar';
 import { environment } from '../../enviroment/enviroment';
+import { NuevoProducto, Producto } from '../interfaces/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,12 @@ export class ActivarService {
     //checa si jala bien con el post, si no hay q cambiar en api y aqui a put
   }
 
-  
+    //SERVICIOS DE PRODUCTOS ni modo tendran que ir aqui:
+
+    newProduct(data: NuevoProducto): Observable<Producto>
+    {
+      return this.http.post<Producto>(`${environment.api_url}/productos/create`, data);
+    }
 
 
 }

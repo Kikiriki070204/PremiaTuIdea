@@ -30,7 +30,7 @@
             </thead>
             <tbody>
                 <tr *ngFor="let idea of ideas">
-                  <td [routerLink]="['/idea/', idea.id]" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{idea.titulo}}</td>
+                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{idea.titulo}}</td>
                   @if(idea.estatus == 1)
                   {
                     <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white">En revision</td>
@@ -82,10 +82,10 @@
                         <button (click)="ideasbyStatus(2)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-green-500 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Aceptadas</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button (click)="ideasbyStatus(3)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-700 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" type="button" role="tab" aria-controls="settings" aria-selected="false">Rechazadas</button>
+                        <button (click)="ideasbyStatus(3)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-700 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" type="button" role="tab" aria-controls="settings" aria-selected="false">Implementadas</button>
                     </li>
                     <li role="presentation">
-                        <button (click)="ideasbyStatus(4)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" type="button" role="tab" aria-controls="contacts" aria-selected="false">Implementadas</button>
+                        <button (click)="ideasbyStatus(4)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" type="button" role="tab" aria-controls="contacts" aria-selected="false">Rechazadas</button>
                     </li>
                 </ul>
             </div>

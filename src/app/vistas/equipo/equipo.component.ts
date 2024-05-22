@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { User } from '../../interfaces/user';
 import { UsersService } from '../../servicios/users.service';
@@ -25,14 +25,15 @@ colaboradores: User[] = []
 id: number | null = null
 equipoID: number | null = null
 
+
 //modal properties:
+checkboxModel = new FormControl
 colabs: number[] = []
 selectedItem: number | null = null
 constructor(protected router: Router, protected userService: UsersService, private route: ActivatedRoute, protected equipoService: EquiposService){
   this.route.params.subscribe(params => {
     const id = params['id'];
     this.id = id
-    this.getColaboradores()
   });
 }
 
@@ -40,6 +41,7 @@ constructor(protected router: Router, protected userService: UsersService, priva
 ngOnInit(): void {
   this.getEquipo()
   console.log("id idea: ",this.id)
+  this.getColaboradores()
 }
 
 //modal methods
@@ -68,11 +70,23 @@ inputChanged($event: any): void {
   this.colaboradores = items;
 }
 
-selected(item: any){
+checkboxChanged(item: any, event: Event) {
+  const isChecked = (event.target as HTMLInputElement).checked;
   this.selectedItem = item
-  this.colabs.push(item)
-  console.log(this.colabs)
+  console.log("esta cambiando")
+  if (isChecked) {
+    this.colabs.push(item);
+    console.log(this.colabs)
+  } else {
+    // Si se desmarca el checkbox, verifica si el elemento está en el array
+    const index = this.colabs.indexOf(item);
+    if (index !== -1) {
+      // Si está presente, elimínalo del array
+      this.colabs.splice(index, 1);
+    }
+  }
 }
+
 //
 
 getEquipo(){
@@ -113,6 +127,8 @@ agregarColab() {
     });
   });
 }
+
+
 goBack()
 {
   this.router.navigate(['/ideas'])

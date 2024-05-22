@@ -4,7 +4,8 @@ import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
-import { UserName, UsersList } from '../interfaces/user';
+import { AreaId, NewUser, UserName, UsersList, User } from '../interfaces/user';
+import { Areas, Departamentos, Locaciones, Roles } from '../interfaces/activar';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,24 @@ export class UsersService {
   usersByName(data: UserName): Observable<UsersList>{
     return this.http.post<UsersList>(`${environment.api_url}/users/nombre`,data);
   }
+
+  newUsert(data: NewUser): Observable<User>{
+    return this.http.post<User>(`${environment.api_url}/users/create`,data);
+  }
+  allRoles(): Observable<Roles>{
+    return this.http.get<Roles>(`${environment.api_url}/roles/list`);
+  }
+
+  allDeps(): Observable<Departamentos>{
+    return this.http.get<Departamentos>(`${environment.api_url}/departamentos/list`);
+  }
+
+  allAreas(): Observable<Areas>{
+    return this.http.get<Areas>(`${environment.api_url}/areas/list`);
+  }
+
+  locByArea(data: AreaId): Observable<Locaciones>{
+    return this.http.post<Locaciones>(`${environment.api_url}/locaciones/area`, data);
+  }
+
 }

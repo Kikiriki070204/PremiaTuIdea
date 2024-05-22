@@ -41,8 +41,8 @@
                             <input
                               type="checkbox"
                               [value]="colaborador.id"
-                              [checked]=""
-                              (change)="selected(colaborador.id)"
+                              [formControl]="checkboxModel"
+                              (change)="checkboxChanged(colaborador.id, $event)"
                               class="mr-2"
                             />
                             <span>{{ colaborador.nombre }}</span>

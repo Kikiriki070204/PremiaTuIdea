@@ -46,7 +46,7 @@
                 
                 </div>
 
-                <button data-modal-target="puntos-modal" data-modal-toggle="puntos-modal"  type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Asignar puntos</button>
+                <button [disabled]="asignarDisabled()" data-modal-target="puntos-modal" data-modal-toggle="puntos-modal"  type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Asignar puntos</button>
 
                 <button (click)="editarEstado()" type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Editar estado</button>
             </div>
@@ -91,7 +91,7 @@
 <!--Actividades-->
 <h5 class="mb-2 text-3xl font-bold text-blue-900 dark:text-white" style="margin-left: 3%; margin-top: 3%;">Actividades</h5>
 
-<button style="margin-left: 3%; margin-top: 1%;" [routerLink]="['/newIdea']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Actividad</button>
+<button style="margin-left: 3%; margin-top: 1%;" [routerLink]="['/newActivity']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Actividad</button>
 <div class="myContainer mb-10">
     <div class="profileCard" style="width: 80%;">
          
