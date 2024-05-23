@@ -15,7 +15,6 @@ import { User } from '../../interfaces/user';
 })
 export class ActivateComponent {
   ibm = new FormControl('',Validators.required)
-  email = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
 
   constructor(protected service: ActivarService, protected router: Router){}
@@ -24,7 +23,6 @@ export class ActivateComponent {
     let self = this
     let activar: Activar = {
       ibm : (this.ibm.value !== null && this.ibm.value !== '') ? +this.ibm.value : 0,
-      email: this.email.value ?? "",
       password: this.password.value ?? ""
     }
 

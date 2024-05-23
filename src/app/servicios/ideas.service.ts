@@ -8,7 +8,7 @@ import { environment } from '../../enviroment/enviroment';
 import { NewIdea } from '../interfaces/new-idea';
 import { HttpParams } from '@angular/common/http';
 import { User } from '../interfaces/user';
-import { Actividad, Actividades } from '../interfaces/actividad';
+import { Actividad, ActividadIdea, Actividades, ActivityData, EditEstado, EditEstado2, EstadoAct, EstadoActividades, newActivity } from '../interfaces/actividad';
 
 @Injectable({
   providedIn: 'root'
@@ -56,8 +56,27 @@ export class IdeasService{
     return this.http.put<Idea>(`${environment.api_url}/ideas/update`, data)
   }
 
+  //SERVICIOS DE ACTIVIDADES
   actividades(idea: any): Observable<Actividades>
   {
     return this.http.get<Actividades>(`${environment.api_url}/actividades/ideaActividades/`+ idea)
+  }
+
+  newActivity(data: newActivity): Observable<Actividad>{
+  return this.http.post<Actividad>(`${environment.api_url}/actividades/create`, data);
+  }
+
+  actividadData(id_actividad: any): Observable<ActivityData>
+  {
+    return this.http.get<ActivityData>(`${environment.api_url}/actividades/show/`+ id_actividad)
+  }
+
+  getEstadoAct(): Observable<EstadoActividades>{
+    return this.http.get<EstadoActividades>(`${environment.api_url}/estadoactividades/list`)
+  }
+
+  editarEstadoAct(data: EditEstado | EditEstado2): Observable<Actividad>
+  {
+    return this.http.put<Actividad>(`${environment.api_url}/actividades/update`, data)
   }
 }

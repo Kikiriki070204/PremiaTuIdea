@@ -4,7 +4,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UsersService } from '../../servicios/users.service';
 import { Area, Departamento, Locacion, Rol } from '../../interfaces/activar';
-import { AreaId, NewUser, User } from '../../interfaces/user';
+import { AreaId, NewUser, NoLocation, User } from '../../interfaces/user';
 import { NgFor } from '@angular/common';
 
 @Component({
@@ -107,6 +107,27 @@ newUser(){
      departamento_id: this.selectedDep ?? 0,
      area_id: this.selectedArea ?? 0,
      locacion_id: this.selectedLoc ?? 0
+  }
+
+  this.userService.newUsert(newUser).subscribe({
+    next(value: User) {
+      console.log("si jala!")
+      self.router.navigate(['/usuarios'])
+    },
+    error(err) {
+      console.log(err)
+    },
+  })
+}
+
+noLocationUser(){
+  let self = this
+  let newUser: NoLocation = {
+     ibm : (this.ibm.value !== null ) ? +this.ibm.value : 0,
+     nombre : this.nombre.value ?? "",
+     rol_id: this.selectedRol ?? 0,
+     departamento_id: this.selectedDep ?? 0,
+     area_id: this.selectedArea ?? 0,
   }
 
   this.userService.newUsert(newUser).subscribe({

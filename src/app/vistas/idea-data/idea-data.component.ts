@@ -69,7 +69,7 @@ ideaData(): void
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User ) {
         console.log("puntos asignados correctamente!")
-        self.router.navigate(['/ideas'])
+        //hay que poner un alert bonito que diga puntos asignados
       },
       error(err) {
         console.log(err)
@@ -136,5 +136,9 @@ asignarDisabled(){
   }
   console.log("check!:", state)
   return state
+}
+
+newAct(){
+  this.router.navigate(['/newActivity/', this.idea_id])
 }
 }

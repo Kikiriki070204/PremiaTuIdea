@@ -46,6 +46,14 @@ export interface NewUser{
     locacion_id: number 
 }
 
+export interface NoLocation{
+    ibm: number
+    nombre: string 
+    rol_id: number
+    departamento_id: number 
+    area_id: number
+}
+
 export interface AreaId{
     area_id: number
 }

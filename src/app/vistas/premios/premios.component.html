@@ -62,8 +62,15 @@
                             <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
                                 {{producto.valor}} puntos
                             </td>
-                                <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                                    <button style="font-weight: 700;" type="button" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Canjear</button>
+                                <td class="px-6 py-4 font-semibold text-lime-700 dark:text-white">
+                                   @if(user!.puntos >= producto.valor)
+                                   {
+                                     <button style="font-weight: 700;" type="button" class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Canjear</button>
+                                   }
+                                   @else {
+                                    ¡Aun no completas este producto! Sigue compartiendo ideas
+                                   }
+                                   
                                 </td>
                     </tbody>
                 </table>

@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
 import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
-import { AreaId, NewUser, UserName, UsersList, User } from '../interfaces/user';
+import { AreaId, NewUser, UserName, UsersList, User, NoLocation } from '../interfaces/user';
 import { Areas, Departamentos, Locaciones, Roles } from '../interfaces/activar';
 
 @Injectable({
@@ -30,9 +30,11 @@ export class UsersService {
     return this.http.post<UsersList>(`${environment.api_url}/users/nombre`,data);
   }
 
-  newUsert(data: NewUser): Observable<User>{
+  newUsert(data: NewUser | NoLocation): Observable<User>{
     return this.http.post<User>(`${environment.api_url}/users/create`,data);
   }
+
+
   allRoles(): Observable<Roles>{
     return this.http.get<Roles>(`${environment.api_url}/roles/list`);
   }

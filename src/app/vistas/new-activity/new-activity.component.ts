@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { UsersService } from '../../servicios/users.service';
 import { User } from '../../interfaces/user';
+import { ActivatedRoute, Router } from '@angular/router';
+import { newActivity } from '../../interfaces/actividad';
+import { IdeasService } from '../../servicios/ideas.service';
 
 @Component({
   selector: 'app-new-activity',
@@ -18,10 +21,23 @@ export class NewActivityComponent implements OnInit{
   responsable: number | null = null
 selectedItem: number | null = null
 selectModel = new FormControl
-  constructor(protected userService: UsersService){}
+titulo = new FormControl
+
+id: number | null = null
+fecha = new Date()
+fecha_inicio: string | null = null
+  constructor(private datePipe: DatePipe, protected ideaService: IdeasService, protected userService: UsersService, private route: ActivatedRoute, protected router: Router){
+    this.route.params.subscribe(params => {
+      const id = params['id'];
+      this.id = id
+    });
+    this.fecha_inicio = this.datePipe.transform(this.fecha, 'yyyy-MM-dd');
+    console.log(this.fecha_inicio)
+  }
 
   ngOnInit(): void {
     this.getColaboradores()
+    console.log("id de idea:",this.id)
   }
   getColaboradores(): void {
     this.userService.colaboradores().subscribe(
@@ -52,4 +68,26 @@ selectModel = new FormControl
     
     console.log(this.selectedItem)
   }
+
+  asignarActividad()
+  {
+    let self =  this
+    let newAct: newActivity = {
+      id_idea: this.id ?? 0,
+      titulo: this.titulo.value ?? "",
+      responsable: this.selectedItem ?? 0,
+      fecha_inicio: this.fecha_inicio ?? ""
+    }
+
+    this.ideaService.newActivity(newAct).subscribe({
+      next(value) {
+        console.log("actividad creada correctamente!")
+        self.router.navigate(['/ideas/', self.id])
+      },
+      error(err) {
+        console.log(err)
+      },
+    })
+  }
+
 }
