@@ -1,0 +1,38 @@
+<app-app-navbar></app-app-navbar>
+<!--Hay q modificar el diseno, me voy a chambear en otros request-->
+<div class="myContainer container">
+   <div class="profileCard" style="width: 50%;">
+        
+        <div class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">Producto </h5>
+                
+                    <figure class="max-w-sm">
+                        <img class="w-16 md:w-56 max-w-full max-h-full" src="{{userPremio?.premio?.url}}" alt="image description">
+                        <figcaption class="mt-2 text-sm  text-gray-500 dark:text-gray-400">{{userPremio?.premio?.producto}}</figcaption>
+                    </figure>
+                    
+                <!--responsable-->
+                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Usuario</h5>
+                <h6 class="mb-1 text-xl font-medium dark:text-white text-gray-900" style="font-weight: 600">{{userPremio?.premio?.usuario}}</h6>
+    
+        </div>
+   </div>
+   <div class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard">
+    <div class="flex justify-end px-4 pt-4">
+    
+    </div>
+    <div class="flex flex-col pb-2" style="text-align: left;margin-left: 5%;">
+        <div class="flex flex-col pb-3 items-center">
+        <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white" style="font-weight: 700; color: rgb(38, 38, 107);"></h5>
+        <span class="text-sm text-gray-500 dark:text-gray-400" style="font-weight: 600;"></span>
+        </div>
+        <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Estatus</h6>
+
+        <select (change)="onEstadoChange($event)"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+            <option value="{{userPremio?.premio?.id_estado}}" disabled selected hidden>{{userPremio?.premio?.estado}}</option>
+            <option *ngFor="let estado of estados" [value]="estado.id">{{estado.estado}}</option>   
+          </select>
+         
+            <button (click)="editarEstado()" type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-36 py-2 text-center me-2 mb-2">Editar estado</button>
+    </div>
+</div>

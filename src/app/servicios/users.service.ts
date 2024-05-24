@@ -6,6 +6,7 @@ import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
 import { AreaId, NewUser, UserName, UsersList, User, NoLocation } from '../interfaces/user';
 import { Areas, Departamentos, Locaciones, Roles } from '../interfaces/activar';
+import { Canjear, EditarEstadoP, EstadosPremios, Premios, ProductoId, UsuarioPremio, UsuarioPremio2 } from '../interfaces/producto';
 
 @Injectable({
   providedIn: 'root'
@@ -51,4 +52,24 @@ export class UsersService {
     return this.http.post<Locaciones>(`${environment.api_url}/locaciones/area`, data);
   }
 
+  //CANJEAR PUNTOS Y SERVICIOS DE PREMIOS
+  canjearProducto(data: Canjear): Observable<UsuarioPremio>{
+    return this.http.post<UsuarioPremio>(`${environment.api_url}/productos/canjear`, data)
+  }
+
+  premiosCanjeados(): Observable<Premios>{
+    return this.http.get<Premios>(`${environment.api_url}/usuariopremios/list`)
+  }
+
+  usuarioPremioData(id: any): Observable<UsuarioPremio2>{
+    return this.http.get<UsuarioPremio2>(`${environment.api_url}/usuariopremios/show/`+ id)
+  }
+
+  estadosPremios(): Observable<EstadosPremios>{
+    return this.http.get<EstadosPremios>(`${environment.api_url}/estado/list`)
+  }
+  editarEstado(data: EditarEstadoP): Observable<UsuarioPremio>
+  {
+    return this.http.put<UsuarioPremio>(`${environment.api_url}/usuariopremios/update`,data);
+  }
 }

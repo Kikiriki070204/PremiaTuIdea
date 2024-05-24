@@ -11,3 +11,59 @@ export interface NuevoProducto{
     valor: number
     url: string
 }
+export interface Canjear{
+    id: number
+}
+export interface UsuarioPremio{
+
+    id: number
+    folio:number
+    id_usuario: number
+    id_producto: number
+    id_estado: number
+    usuario: string
+    producto: string
+    estado: string
+    url: string
+
+}
+
+export interface UsuarioPremio2{
+premio:{
+    id: number
+    folio:number
+    id_usuario: number
+    id_producto: number
+    id_estado: number
+    usuario: string
+    producto: string
+    estado: string
+    url: string
+}
+
+}
+
+export interface Premios{
+premios: UsuarioPremio[]
+}
+
+export interface ProductoId{
+    id: number
+}
+
+export interface EstadoPremio{
+    id:number
+    estado: string
+    activo: boolean
+}
+
+export interface EstadosPremios{
+    estado: EstadoPremio[]
+}
+
+export interface EditarEstadoP{
+    id: number
+    id_usuario : number
+    id_producto: number
+    id_estado: number 
+}

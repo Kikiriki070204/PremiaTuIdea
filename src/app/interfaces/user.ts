@@ -57,3 +57,5 @@ export interface NoLocation{
 export interface AreaId{
     area_id: number
 }
+
+

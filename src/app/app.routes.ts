@@ -18,6 +18,8 @@ import { NewUserComponent } from './vistas/new-user/new-user.component';
 import { NewProductoComponent } from './vistas/new-producto/new-producto.component';
 import { NewActivityComponent } from './vistas/new-activity/new-activity.component';
 import { ActividadDataComponent } from './vistas/actividad-data/actividad-data.component';
+import { ProductosComponent } from './vistas/productos/productos.component';
+import { PremioDataComponent } from './vistas/premio-data/premio-data.component';
 
 //hay que hacer el lazy load PENDIENTE
 //TAMBIEN FALTA CREAR UN GUARD
@@ -39,9 +41,11 @@ export const routes: Routes =
     //Rutas de equipo
     {path: 'newIdea/add/:id', component: EquipoComponent},
     //Rutas de productos
-    {path:'premios', component: PremiosComponent},
+    {path:'productos', component: ProductosComponent},
     {path:'ejemplo', component:ExampleComponent},
     {path: 'newProduct', component: NewProductoComponent},
+    {path: 'premios',component:PremiosComponent },
+    {path: 'premios/:id',component:PremioDataComponent },
     //Actividades
     {path: 'newActivity/:id', component: NewActivityComponent},
     {path: 'actividad/:id', component: ActividadDataComponent},
