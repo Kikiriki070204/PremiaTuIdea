@@ -8,6 +8,7 @@ import { User } from '../../interfaces/user';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
+import { Error } from '../../interfaces/error';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ import { CookieService } from 'ngx-cookie-service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
+  public errorMessage: string | null = null;
   ibm = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
 
@@ -43,8 +45,12 @@ export class LoginComponent {
           }
         })
       },
-      error(err) {
-        console.log(err)
+      error(err: Error) {
+        if (err.status === 401) {
+          console.error('Unprocessable Entity:', err);
+        } else {
+          console.error('An error occurred:', err);
+        }
       },
     })
   }

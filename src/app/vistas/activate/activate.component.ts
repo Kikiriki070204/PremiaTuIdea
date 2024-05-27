@@ -5,6 +5,7 @@ import { Router, RouterLink } from '@angular/router';
 import { ActivarService } from '../../servicios/activar.service';
 import { Activar } from '../../interfaces/activar';
 import { User } from '../../interfaces/user';
+import { Error } from '../../interfaces/error';
 
 @Component({
   selector: 'app-activate',
@@ -14,6 +15,7 @@ import { User } from '../../interfaces/user';
   styleUrl: './activate.component.css'
 })
 export class ActivateComponent {
+  public errorMessage: string | null = null;
   ibm = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
 
@@ -32,8 +34,12 @@ export class ActivateComponent {
         console.log(value.ibm)
         self.router.navigate(['/login'])
       },
-      error(err) {
-        console.log(err)
+      error(err: Error) {
+        if (err.status === 401) {
+          console.error('Unprocessable Entity:', err);
+        } else {
+          console.error('An error occurred:', err);
+        }
       },
     })
   }
