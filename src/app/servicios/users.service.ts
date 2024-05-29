@@ -7,6 +7,7 @@ import { Productos } from '../interfaces/productos';
 import { AreaId, NewUser, UserName, UsersList, User, NoLocation } from '../interfaces/user';
 import { Areas, Departamentos, Locaciones, Roles } from '../interfaces/activar';
 import { Canjear, EditarEstadoP, EstadosPremios, Premios, ProductoId, UsuarioPremio, UsuarioPremio2 } from '../interfaces/producto';
+import { Profile, UpdateUser } from '../interfaces/profile';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,12 @@ export class UsersService {
 
   //Aqui va la lista de usuarios con la consulta de nombres, por eso se usa la interfaz UsersList y no Usuarios
   allUsers(): Observable<UsersList>{
-    return this.http.get<UsersList>(`${environment.api_url}/users/colaboradores`);
+    return this.http.get<UsersList>(`${environment.api_url}/users/usuariosAll`);
+  }
+
+  updateUser(data: UpdateUser): Observable<User>
+  {
+    return this.http.put<User>(`${environment.api_url}/users/update`,data);
   }
 
   premiosDisponibles(): Observable<Productos>{
@@ -33,6 +39,10 @@ export class UsersService {
 
   newUsert(data: NewUser | NoLocation): Observable<User>{
     return this.http.post<User>(`${environment.api_url}/users/create`,data);
+  }
+
+  userData(id: any): Observable<Profile>{
+    return this.http.get<Profile>(`${environment.api_url}/users/show/`+id);
   }
 
 

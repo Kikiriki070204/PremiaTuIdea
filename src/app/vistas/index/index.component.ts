@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgTemplateOutlet } from '@angular/common';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { Router, RouterLink } from '@angular/router';
+import { AuthService } from '../../servicios/auth.service';
 
 @Component({
   selector: 'app-index',
@@ -10,6 +11,23 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
-export class IndexComponent  {
+export class IndexComponent  implements OnInit{
+  user_token : string | null = null
+  constructor( protected authService: AuthService, protected router: Router){
+  }
 
+  ngOnInit(): void {
+    this.getToken()
+  }
+  getToken()
+  {
+    this.user_token = this.authService.getToken()
+    console.log("Access token exist!")
+  }
+
+  logout()
+{
+  this.authService.logout()
+  this.router.navigate([''])
+}
 }
