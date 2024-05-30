@@ -5,16 +5,18 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { UsersService } from '../../servicios/users.service';
 import { Area, Departamento, Locacion, Rol } from '../../interfaces/activar';
 import { AreaId, NewUser, NoLocation, User } from '../../interfaces/user';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-new-user',
   standalone: true,
-  imports: [AppNavbarComponent, RouterLink, FormsModule, ReactiveFormsModule, NgFor],
+  imports: [AppNavbarComponent, RouterLink, FormsModule, ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './new-user.component.html',
   styleUrl: './new-user.component.css'
 })
 export class NewUserComponent implements OnInit{
+  errorMessage: string | null = null
   roles: Rol[] | null = null
   departamentos: Departamento[] | null = null
   areas: Area[] | null = null
@@ -114,8 +116,19 @@ newUser(){
       console.log("si jala!")
       self.router.navigate(['/usuarios'])
     },
-    error(err) {
-      console.log(err)
+    error(err: HttpResponse) {
+      switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
+              console.log(err)
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                console.log(err)
+                break;
+        }
     },
   })
 }
@@ -135,8 +148,19 @@ noLocationUser(){
       console.log("si jala!")
       self.router.navigate(['/usuarios'])
     },
-    error(err) {
-      console.log(err)
+    error(err: HttpResponse) {
+      switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
+              console.log(err)
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                console.log(err)
+                break;
+        }
     },
   })
 }

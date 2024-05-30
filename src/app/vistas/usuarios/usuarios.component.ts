@@ -16,11 +16,12 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 })
 export class UsuariosComponent implements OnInit {
 usuarios: Usuario[] = []
-nombre = new FormControl('',Validators.required)
+nombre = new FormControl(null,Validators.required)
 
 constructor(protected userService: UsersService){}
 ngOnInit(): void {
   this.allUsers()
+  console.log("nombre Input: ",this.nombre.value)
 }
 
 allUsers(): void

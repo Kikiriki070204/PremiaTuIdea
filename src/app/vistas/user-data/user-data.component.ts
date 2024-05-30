@@ -7,7 +7,7 @@ import { Profile, UpdateUser } from '../../interfaces/profile';
 import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { User } from '../../interfaces/user';
-import { Error } from '../../interfaces/error';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-user-data',
@@ -73,7 +73,7 @@ editar(){
     next(value) {
       self.router.navigate(['/usuarios'])
     },
-    error(err: Error)
+    error(err: HttpResponse)
     {
       if (err.status === 422) {
         console.error('Unprocessable Entity:', err);

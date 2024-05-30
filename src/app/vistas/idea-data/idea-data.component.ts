@@ -3,21 +3,24 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../servicios/ideas.service';
 import { EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { Colaborador, User } from '../../interfaces/user';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Estado } from '../../interfaces/idea';
 import { Actividad } from '../../interfaces/actividad';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-idea-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './idea-data.component.html',
   styleUrl: './idea-data.component.css'
   
 })
 export class IdeaDataComponent implements OnInit{
+errorMessage: string | null = null
+Message: string | null = null
 idea: IdeaData | null = null
 idea_id: number | null = null
 colaboradores: [User] | null = null
@@ -69,6 +72,8 @@ ideaData(): void
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User ) {
         console.log("puntos asignados correctamente!")
+        self.Message = '¡Puntos asignados correctamente!'
+        
         //hay que poner un alert bonito que diga puntos asignados
       },
       error(err) {
@@ -108,8 +113,20 @@ ideaData(): void
         console.log("editado correctamente!")
         self.router.navigate(['/ideas'])
       },
-      error(err) {
-        console.log(err)
+      error(err: HttpResponse) {
+        switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Debes seleccionar un estado';
+              break;
+            case 404:
+              self.errorMessage = 'Idea no encontrada';
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                break;
+        }
       },
     })
   }

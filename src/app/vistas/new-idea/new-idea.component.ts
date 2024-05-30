@@ -5,15 +5,18 @@ import { Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { NewIdea } from '../../interfaces/new-idea';
+import { HttpResponse } from '../../interfaces/http';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-new-idea',
   standalone: true,
-  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './new-idea.component.html',
   styleUrl: './new-idea.component.css'
 })
 export class NewIdeaComponent {
+  errorMessage: string | null = null
 //aun hay dudas con lo del servidor de fotos
 //por el momento el campo de condiciones actuales no tiene valor real y no se almacena
 titulo = new FormControl('', Validators.required)
@@ -36,6 +39,24 @@ idea()
     next(value: Idea) {
       console.log("idea id:", value.id)
       self.router.navigate(['/newIdea/add', value.id])
+    },
+    error(err: HttpResponse) {
+      switch(err.status)
+      {
+        case 422:
+            self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
+            console.log(err)
+            break;
+          case 404:
+            self.errorMessage = 'Idea no encontrada';
+            console.log(err)
+            break;
+          default:
+              // Errores generales
+              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              console.log(err)
+              break;
+      }
     },
   })
 }

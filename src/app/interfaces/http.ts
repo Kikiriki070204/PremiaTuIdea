@@ -1,4 +1,4 @@
-export interface Error {
+export interface HttpResponse {
     headers: any; // You can specify the type for headers
     status: number;
     statusText: string;

@@ -8,17 +8,18 @@ import { User } from '../../interfaces/user';
 import { Profile } from '../../interfaces/profile';
 import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
-import { Error } from '../../interfaces/error';
+import { HttpResponse } from '../../interfaces/http';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  public errorMessage: string | null = null;
+  errorMessage: string | null = null;
   ibm = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
 
@@ -45,11 +46,40 @@ export class LoginComponent {
           }
         })
       },
-      error(err: Error) {
-        if (err.status === 401) {
-          console.error('Unprocessable Entity:', err);
-        } else {
-          console.error('An error occurred:', err);
+      error(err: HttpResponse) {
+
+        switch(err.status)
+        {
+          case 401:
+            if(err.error.msg == "Usuario no activo")
+              {
+              self.errorMessage = 'Cuenta inactiva';
+              }
+              else if(err.error.msg == "Usuario no registrado")
+              {
+                self.errorMessage = 'Debe registrarse antes de iniciar sesion';
+              }
+              else{
+                self.errorMessage = 'Contraseña incorrecta';
+              }
+            break;
+          case 422:
+            if(err.error.msg == "Usuario ya registrado")
+              {
+                  self.errorMessage = 'Usuario ya registrado, por favor inicie sesion';
+              }
+              else
+              {
+                self.errorMessage = 'Campos obligatorios, por favor introduzca datos validos';
+              }
+              break;
+            case 404:
+              self.errorMessage = 'Usuario no encontrado, si cree que es un error comuniquese con su administrador';
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                break;
         }
       },
     })

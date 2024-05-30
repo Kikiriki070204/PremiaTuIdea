@@ -7,6 +7,7 @@ import { User } from '../../interfaces/user';
 import { ActivatedRoute, Router } from '@angular/router';
 import { newActivity } from '../../interfaces/actividad';
 import { IdeasService } from '../../servicios/ideas.service';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-new-activity',
@@ -16,6 +17,7 @@ import { IdeasService } from '../../servicios/ideas.service';
   styleUrl: './new-activity.component.css'
 })
 export class NewActivityComponent implements OnInit{
+  errorMessage: string | null = null
   colabSelected: number | null = null
   colaboradores: User[] = []
   responsable: number | null = null
@@ -84,8 +86,23 @@ fecha_inicio: string | null = null
         console.log("actividad creada correctamente!")
         self.router.navigate(['/ideas/', self.id])
       },
-      error(err) {
-        console.log(err)
+      error(err: HttpResponse) {
+        switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
+              console.log(err)
+              break;
+            case 404:
+              self.errorMessage = 'Idea no encontrada';
+              console.log(err)
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                console.log(err)
+                break;
+        }
       },
     })
   }

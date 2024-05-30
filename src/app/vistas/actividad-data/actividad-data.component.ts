@@ -1,19 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { DatePipe, NgFor } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { IdeasService } from '../../servicios/ideas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actividad, ActivityData, EditEstado, EditEstado2, EstadoAct } from '../../interfaces/actividad';
+import { HttpResponse } from '../../interfaces/http'; 
 
 @Component({
   selector: 'app-actividad-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor],
+  imports: [AppNavbarComponent, NgFor, NgIf],
   templateUrl: './actividad-data.component.html',
   styleUrl: './actividad-data.component.css'
 })
 export class ActividadDataComponent implements OnInit{
-
+  errorMessage: string | null = null
   id: number | null = null
   actividad: ActivityData | null = null
   estados: EstadoAct[] | null = null
@@ -100,8 +101,20 @@ fecha_fin: string | null = null
         console.log("editado correctamente!")
         self.router.navigate(['/ideas/',self.actividad?.actividad.id_idea])
       },
-      error(err) {
-        console.log(err)
+      error(err: HttpResponse) {
+        switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Debes seleccionar un estado';
+              break;
+            case 404:
+              self.errorMessage = 'Idea no encontrada';
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                break;
+        }
       },
     })
   }

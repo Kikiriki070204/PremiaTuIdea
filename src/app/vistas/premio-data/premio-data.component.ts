@@ -3,17 +3,19 @@ import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { EditarEstadoP, EstadoPremio, ProductoId, UsuarioPremio, UsuarioPremio2 } from '../../interfaces/producto';
 import { UsersService } from '../../servicios/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 import { EditEstado } from '../../interfaces/actividad';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-premio-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor],
+  imports: [AppNavbarComponent, NgFor, NgIf],
   templateUrl: './premio-data.component.html',
   styleUrl: './premio-data.component.css'
 })
 export class PremioDataComponent implements OnInit{
+  errorMessage: string | null = null
 id: number | null = null
 userPremio: UsuarioPremio2 | null = null
 estados: EstadoPremio[] | null = null
@@ -68,8 +70,20 @@ editarEstado(){
     next(value) {
       self.router.navigate(['/premios'])
     },
-    error(err) {
-      console.log(err)
+    error(err: HttpResponse) {
+      switch(err.status)
+      {
+        case 422:
+            self.errorMessage = 'Debes seleccionar un estado';
+            break;
+          case 404:
+            self.errorMessage = 'Idea no encontrada';
+            break;
+          default:
+              // Errores generales
+              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              break;
+      }
     },
   })
 }
