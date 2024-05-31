@@ -2,7 +2,7 @@
 @if(user?.rol_id == 3)
 {
     <div class="container items-center" style="margin-top: 3%; text-align: center;">
-          <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenida/o {{user?.nombre}}!</h5>
+          <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
     <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">Este es tu espacio para compartir tus ideas y
          poder canjear tus puntos por premios</h6>
          <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por participar!</h6>
@@ -15,7 +15,7 @@
 }
 @else if(user?.rol_id == 1){
     <div class="container items-center" style="margin-top: 3%; text-align: center;">
-        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenida/o {{user?.nombre}}!</h5>
+        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
   <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">En este espacio podras administrar las ideas propuestas, registrar usuarios y otorgar puntos</h6>
        <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por tu confianza!</h6>
   
@@ -24,8 +24,16 @@
       <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
   </div>
 }
-@else if(user?.rol_id == 1){
-    
+@else if(user?.rol_id == 2){
+    <div class="container items-center" style="margin-top: 3%; text-align: center;">
+        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
+  <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">En este espacio podras registrar usuarios</h6>
+       <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por tu confianza!</h6>
+  
+  </div>
+  <div class="flex flex-col items-center pb-10">
+      <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+  </div>
 }
 @else{
 

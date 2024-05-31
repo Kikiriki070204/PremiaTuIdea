@@ -27,7 +27,7 @@
             <option value="{{actividad?.actividad?.id_estado_actividad}}" disabled selected hidden>{{actividad?.actividad?.estado_actividad}}</option>
             <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>     
           </select>
-          @if(selectedEstado == 3 || selectedEstado == 4)
+          @if(selectedEstado == 4 || selectedEstado == 5)
           {
             <button (click)="editarEstadoFinal()" type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-36 py-2 text-center me-2 mb-2">Editar estado</button>
           }

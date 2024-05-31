@@ -1,3 +1,4 @@
+
 <app-app-navbar></app-app-navbar>
 
 <div class="myContainer">
@@ -40,6 +41,9 @@
         }
         @else{
         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Mis puntos</h5>
+
+        <div class="w-full">
+
         @if(user?.puntos == 0)
         {
             <h6 class="mb-1 text-lg font-semibold text-blue-800 dark:text-white">Aún no cuentas con puntos</h6>
@@ -47,8 +51,8 @@
         @else {
              <h6 class="mb-1 text-lg font-semibold text-emerald-700 dark:text-white">{{user?.puntos}} puntos</h6>
         }
-        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Ideas implementadas</h5>
-        <div class=" justify-normal space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
+        <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white sm:text-2xl">Ideas implementadas</h5>
+        <div class="w-full justify-normal space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">
             @if(ideas.length != 0)
             { 
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -88,6 +92,9 @@
                 <h5 class="mb-2 text-2xl font-bold text-blue-600 dark:text-white">¡Aun no tienes ideas implementadas!</h5> 
             }
         </div>
+
+        </div>
+        
     }
     
 </div>

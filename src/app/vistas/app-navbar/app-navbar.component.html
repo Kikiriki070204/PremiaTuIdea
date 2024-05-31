@@ -12,7 +12,7 @@
         </a>
       }
         @if (user_token != null) {
-        <div class="flex items-center space-x-6 rtl:space-x-reverse">
+          <div class="flex items-center space-x-6 rtl:space-x-reverse">
                 <button type="button" class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                   <span class="sr-only">Open user menu</span>
                   <img class="w-8 h-8 rounded-full" src="../../assets/whiteProfile.png" alt="user photo">
@@ -30,6 +30,8 @@
                   </ul>
                 </div>      
         </div>
+
+
       }
       @else {
       }
@@ -75,7 +77,7 @@
                   <a [routerLink]="['/productos']" class="text-gray-900 dark:text-white hover:underline">Productos</a>
                 </li>
                 <li>
-                  <a [routerLink]="['/premios']" class="text-gray-900 dark:text-white hover:underline">Premios canjeados</a>
+                  <a [routerLink]="['/premios']" class="text-gray-900 dark:text-white hover:underline">Premios</a>
                 </li>
             </ul>
         </div>

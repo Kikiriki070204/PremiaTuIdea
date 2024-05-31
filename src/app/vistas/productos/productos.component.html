@@ -21,15 +21,8 @@
 }
 
 @if (user_rol == '3') {
-    @if (productos.length == 0) {
-        <div class="container text-center mt-5">
-             <h5 class=" hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">¡No tienes puntos suficientes para canjear un premio!</h5> 
-        </div>
-       
-    }
-    @else{
         <div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;">
-            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+            <div class="relative overflow-x-auto  shadow-md sm:rounded-lg">
                 <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                     <thead class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -80,7 +73,6 @@
         
         </div>
     }
-}
 @else{
 <div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -96,12 +88,7 @@
                     <th scope="col" class="px-6 py-3">
                         Valor
                     </th>
-                    @if(user_rol == '3')
-                    {
-                    <th scope="col" class="px-6 py-3">
-                        Diferencia
-                    </th>
-                    }
+                    
                     <th scope="col" class="px-6 py-3">
                         
                     </th>

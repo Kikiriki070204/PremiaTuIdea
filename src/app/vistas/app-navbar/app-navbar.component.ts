@@ -48,7 +48,6 @@ getRol(){
 getToken()
 {
   this.user_token = this.authService.getToken()
-  console.log("Access token exist!")
 }
 
 logout()
