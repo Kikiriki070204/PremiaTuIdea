@@ -23,8 +23,18 @@ titulo = new FormControl('', Validators.required)
 antecedentes = new FormControl('', Validators.maxLength(2000))
 //condicion_actual = new FormControl()
 propuesta = new FormControl('', Validators.maxLength(2000))
-
+condiciones: File | null = null
 constructor(protected ideaService: IdeasService, protected router: Router){}
+
+onFileSelected(event: any): void {
+  const fileInput = event.target as HTMLInputElement;
+  if (fileInput.files && fileInput.files.length > 0) {
+    this.condiciones = fileInput.files[0];
+  } else {
+    this.condiciones = null;
+  }
+}
+
 
 idea()
 {
@@ -32,7 +42,8 @@ idea()
   let newIdea: NewIdea = {
     titulo: this.titulo.value ?? "",
     antecedentes: this.antecedentes.value ?? "",
-    propuesta: this.propuesta.value ?? ""
+    propuesta: this.propuesta.value ?? "",
+    condiciones: this.condiciones as File 
   }
 
   this.ideaService.newIdea(newIdea).subscribe({
@@ -65,5 +76,7 @@ goBack()
 {
   this.router.navigate(['/misIdeas'])
 }
+
+
 
 }

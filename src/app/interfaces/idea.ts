@@ -4,6 +4,7 @@ export interface Idea {
 id: number
 titulo: string
 antecedente: string
+condiciones: File
 propuesta: string
 estatus: number
 user_id: number
