@@ -37,13 +37,17 @@ fecha_fin: string | null = null
     console.log("id: ", this.id)
   }
 
-  actividadData(): void{
-    this.actService.actividadData(this.id).subscribe(
-      actividadData=>{
-        this.actividad = actividadData
-        console.log(this.actividad)
+  actividadData(){
+    let self = this
+    this.actService.actividadData(this.id)
+    .subscribe({
+      next(value: ActivityData){
+          self.actividad = value;
+      },
+      error(err: HttpResponse){
+        self.router.navigate(['**']) 
       }
-    )
+    }); 
   }
 
   getEstados(): void{

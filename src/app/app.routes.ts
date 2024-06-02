@@ -1,54 +1,33 @@
 import { Routes } from '@angular/router';
-import { IndexComponent } from './vistas/index/index.component';
-import { AppNavbarComponent } from './vistas/app-navbar/app-navbar.component';
-import { ActivateComponent} from './vistas/activate/activate.component';
-import { LoginComponent } from './vistas/login/login.component';
-import { NotFoundComponent } from './vistas/not-found/not-found.component';
-import { DashboardComponent } from './vistas/dashboard/dashboard.component';
-import { ProfileComponent } from './vistas/profile/profile.component';
-import { IdeasComponent } from './vistas/ideas/ideas.component';
-import { NewIdeaComponent } from './vistas/new-idea/new-idea.component';
-import { EquipoComponent } from './vistas/equipo/equipo.component';
-import { PremiosComponent } from './vistas/premios/premios.component';
-import { UsuariosComponent } from './vistas/usuarios/usuarios.component';
-import { ExampleComponent } from './example/example.component';
-import { IdeaDataComponent } from './vistas/idea-data/idea-data.component';
-import { UserDataComponent } from './vistas/user-data/user-data.component';
-import { NewUserComponent } from './vistas/new-user/new-user.component';
-import { NewProductoComponent } from './vistas/new-producto/new-producto.component';
-import { NewActivityComponent } from './vistas/new-activity/new-activity.component';
-import { ActividadDataComponent } from './vistas/actividad-data/actividad-data.component';
-import { ProductosComponent } from './vistas/productos/productos.component';
-import { PremioDataComponent } from './vistas/premio-data/premio-data.component';
+import { authenticateGuard } from './guards/authenticate.guard';
 
-//hay que hacer el lazy load PENDIENTE
-//TAMBIEN FALTA CREAR UN GUARD
+//Ya hay lazy load
+// Ya hay un guard!
 export const routes: Routes = 
 [
-    {path: '', component: IndexComponent},
+    {path: '', loadComponent:() => import('./vistas/index/index.component').then(m=> m.IndexComponent)},
     //Rutas de usuario
-    {path: 'activar', component: ActivateComponent},
-    {path: 'login', component: LoginComponent},
-    {path: 'dashboard', component: DashboardComponent},
-    {path: 'myProfile', component: ProfileComponent},
-    {path: 'usuarios', component: UsuariosComponent},
-    {path: 'usuarios/:id', component:UserDataComponent},
-    {path: 'newUser', component:NewUserComponent},
+    {path: 'activar', loadComponent:() => import('./vistas/activate/activate.component').then(m=> m.ActivateComponent)},
+    {path: 'login', loadComponent:() => import('./vistas/login/login.component').then(m=> m.LoginComponent)},
+    {path: 'dashboard', loadComponent:() => import('./vistas/dashboard/dashboard.component').then(m=> m.DashboardComponent), canActivate:[authenticateGuard]},
+    {path: 'myProfile', loadComponent:() => import('./vistas/profile/profile.component').then(m=> m.ProfileComponent), canActivate:[authenticateGuard]},
+    {path: 'usuarios', loadComponent:() => import('./vistas/usuarios/usuarios.component').then(m=> m.UsuariosComponent), canActivate:[authenticateGuard]},
+    {path: 'usuarios/:id', loadComponent:() => import('./vistas/user-data/user-data.component').then(m=> m.UserDataComponent), canActivate:[authenticateGuard]},
+    {path: 'newUser', loadComponent:() => import('./vistas/new-user/new-user.component').then(m=> m.NewUserComponent), canActivate:[authenticateGuard]},
     //Rutas de ideas
-    {path: 'ideas', component: IdeasComponent},
-    {path:'ideas/:id',component: IdeaDataComponent},
-    {path: 'newIdea', component: NewIdeaComponent},
+    {path: 'ideas', loadComponent:() => import('./vistas/ideas/ideas.component').then(m=> m.IdeasComponent), canActivate:[authenticateGuard]},
+    {path:'ideas/:id',loadComponent:() => import('./vistas/idea-data/idea-data.component').then(m=> m.IdeaDataComponent), canActivate:[authenticateGuard]},
+    {path: 'newIdea', loadComponent:() => import('./vistas/new-idea/new-idea.component').then(m=> m.NewIdeaComponent), canActivate:[authenticateGuard]},
     //Rutas de equipo
-    {path: 'newIdea/add/:id', component: EquipoComponent},
+    {path: 'newIdea/add/:id', loadComponent:() => import('./vistas/new-idea/new-idea.component').then(m=> m.NewIdeaComponent), canActivate:[authenticateGuard]},
     //Rutas de productos
-    {path:'productos', component: ProductosComponent},
-    {path:'ejemplo', component:ExampleComponent},
-    {path: 'newProduct', component: NewProductoComponent},
-    {path: 'premios',component:PremiosComponent },
-    {path: 'premios/:id',component:PremioDataComponent },
+    {path:'productos', loadComponent:() => import('./vistas/productos/productos.component').then(m=> m.ProductosComponent), canActivate:[authenticateGuard]},
+    {path: 'newProduct', loadComponent:() => import('./vistas/new-producto/new-producto.component').then(m=> m.NewProductoComponent), canActivate:[authenticateGuard]},
+    {path: 'premios',loadComponent:() => import('./vistas/premios/premios.component').then(m=> m.PremiosComponent), canActivate:[authenticateGuard]},
+    {path: 'premios/:id',loadComponent:() => import('./vistas/premio-data/premio-data.component').then(m=> m.PremioDataComponent), canActivate:[authenticateGuard]},
     //Actividades
-    {path: 'newActivity/:id', component: NewActivityComponent},
-    {path: 'actividad/:id', component: ActividadDataComponent},
+    {path: 'newActivity/:id', loadComponent:() => import('./vistas/new-activity/new-activity.component').then(m=> m.NewActivityComponent), canActivate:[authenticateGuard]},
+    {path: 'actividad/:id', loadComponent:() => import('./vistas/actividad-data/actividad-data.component').then(m=> m.ActividadDataComponent), canActivate:[authenticateGuard]},
     //wildcard
-    {path: '**', component: NotFoundComponent},
+    {path: '**', loadComponent:() => import('./vistas/not-found/not-found.component').then(m=> m.NotFoundComponent)},
 ];

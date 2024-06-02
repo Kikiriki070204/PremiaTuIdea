@@ -52,13 +52,18 @@ ngOnInit() {
   
 }
 
-ideaData(): void
+ideaData()
   {
+    let self = this
     this.ideaService.ideaData(this.idea_id)
-    .subscribe(ideaData => {
-      this.idea = ideaData;
-      this.colaboradores = ideaData.colaboradores
-      console.log(this.idea)
+    .subscribe({
+      next(value: IdeaData){
+          self.idea = value;
+          self.colaboradores = value.colaboradores
+      },
+      error(err: HttpResponse){
+        self.router.navigate(['**']) 
+      }
     }); 
   }
 

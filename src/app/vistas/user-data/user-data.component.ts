@@ -35,12 +35,20 @@ this.userData()
 this.userImplementedIdeas()
 }
 
-userData(): void{
-  this.userService.userData(this.id).subscribe(
-    usuario =>{
-      this.userProfile = usuario
+userData(){
+  let self = this
+  this.userService.userData(this.id)
+  .subscribe({
+    next(value: Profile){
+        self.userProfile = value;
     },
-  )
+    error(err: HttpResponse){
+      if(err.status == 401)
+        {
+          self.router.navigate(['**']) 
+        }
+    }
+  }); 
 }
 
 userImplementedIdeas(): void{
