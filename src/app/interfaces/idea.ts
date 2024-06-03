@@ -20,6 +20,7 @@ export interface IdeaData{
 		user_id: number
 		estatus_idea: string
 		status: number
+		condiciones: string
 	},
 	colaboradores: [
 		User

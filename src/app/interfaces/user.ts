@@ -11,6 +11,7 @@ is_active: number
 rol_id: number
 puntos: number
 access_token: string
+isChecked: boolean
 }
 
 export interface Usuario{

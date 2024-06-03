@@ -10,7 +10,8 @@ import { EquiposService } from '../../servicios/equipos.service';
 import { Equipo } from '../../interfaces/equipo';
 import { UsuarioEquipo } from '../../interfaces/usuario-equipo';
 import { RequestEquipo } from '../../interfaces/request-equipo';
-import { debounceTime } from 'rxjs';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-equipo',
@@ -24,10 +25,12 @@ colabSelected: number | null = null
 colaboradores: User[] = []
 id: number | null = null
 equipoID: number | null = null
-
-
+searchChanged = new Subject<string>();
+allColaboradores: User[] = []
 //modal properties:
 checkboxModel = new FormControl
+checkboxStates: { [id: number]: boolean } = {};
+
 colabs: number[] = []
 selectedItem: number | null = null
 constructor(protected router: Router, protected userService: UsersService, private route: ActivatedRoute, protected equipoService: EquiposService){
@@ -35,20 +38,27 @@ constructor(protected router: Router, protected userService: UsersService, priva
     const id = params['id'];
     this.id = id
   });
+
+  this.searchChanged.pipe(
+    debounceTime(500)
+  ).subscribe(value => {
+    this.filterColaboradores(value);
+  });
 }
 
 
 ngOnInit(): void {
   this.getEquipo()
   console.log("id idea: ",this.id)
-  this.getColaboradores()
+  this.getAllColaboradores()
 }
 
 //modal methods
-getColaboradores(): void {
+getAllColaboradores(): void {
   this.userService.colaboradores().subscribe(
     colabs => {
-      this.colaboradores = colabs.users;
+      this.allColaboradores = colabs.users;
+      this.colaboradores = [...this.allColaboradores];
       console.log(this.colaboradores);
     }
   );
@@ -56,24 +66,31 @@ getColaboradores(): void {
 
 inputChanged($event: any): void {
   const value = $event.target.value.toLowerCase();
+  this.searchChanged.next(value);
+}
+ 
+filterColaboradores(value: string): void {
   if (value.length <= 0) {
-    this.colaboradores = [];
-    console.log("there's nothing here")
-    this.getColaboradores()
+    this.colaboradores = [...this.allColaboradores];
+  } else {
+    const items: User[] = this.allColaboradores.filter((user) =>
+      user.nombre.toLowerCase().includes(value)
+    );
+    console.log("lot of things happening")
+    console.log(items)
+    this.colaboradores = items;
   }
-  debounceTime(500)
-  const items: User[] = this.colaboradores.filter((user) =>
-    user.nombre.toLowerCase().includes(value)
-  );
-  console.log("lot of things happening")
-  console.log(items)
-  this.colaboradores = items;
+ 
+  // Update isChecked for each colaborador
+  this.colaboradores.forEach(colaborador => {
+    colaborador.isChecked = this.checkboxStates[colaborador.id] || false;
+  });
 }
 
 checkboxChanged(item: any, event: Event) {
   const isChecked = (event.target as HTMLInputElement).checked;
-  this.selectedItem = item
-  console.log("esta cambiando")
+  this.checkboxStates[item] = isChecked;
+ 
   if (isChecked) {
     this.colabs.push(item);
     console.log(this.colabs)

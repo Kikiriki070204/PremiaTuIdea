@@ -29,7 +29,7 @@ export class IdeasService{
     return this.http.get<Ideas>(`${environment.api_url}/ideas/userIdeasImplementadas/`+id);
   }
 
-  newIdea(data: NewIdea): Observable<Idea>{
+  newIdea(data: FormData): Observable<Idea>{
     return this.http.post<Idea>(`${environment.api_url}/ideas/create`,data);
   }
 

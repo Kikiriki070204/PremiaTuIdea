@@ -19,7 +19,7 @@ export const routes: Routes =
     {path:'ideas/:id',loadComponent:() => import('./vistas/idea-data/idea-data.component').then(m=> m.IdeaDataComponent), canActivate:[authenticateGuard]},
     {path: 'newIdea', loadComponent:() => import('./vistas/new-idea/new-idea.component').then(m=> m.NewIdeaComponent), canActivate:[authenticateGuard]},
     //Rutas de equipo
-    {path: 'newIdea/add/:id', loadComponent:() => import('./vistas/new-idea/new-idea.component').then(m=> m.NewIdeaComponent), canActivate:[authenticateGuard]},
+    {path: 'newIdea/add/:id', loadComponent:() => import('./vistas/equipo/equipo.component').then(m=> m.EquipoComponent), canActivate:[authenticateGuard]},
     //Rutas de productos
     {path:'productos', loadComponent:() => import('./vistas/productos/productos.component').then(m=> m.ProductosComponent), canActivate:[authenticateGuard]},
     {path: 'newProduct', loadComponent:() => import('./vistas/new-producto/new-producto.component').then(m=> m.NewProductoComponent), canActivate:[authenticateGuard]},

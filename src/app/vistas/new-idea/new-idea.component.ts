@@ -39,14 +39,15 @@ onFileSelected(event: any): void {
 idea()
 {
   let self = this
-  let newIdea: NewIdea = {
-    titulo: this.titulo.value ?? "",
-    antecedentes: this.antecedentes.value ?? "",
-    propuesta: this.propuesta.value ?? "",
-    condiciones: this.condiciones as File 
+  let formData: FormData = new FormData();
+  formData.append('titulo', this.titulo.value ?? "");
+  formData.append('antecedentes', this.antecedentes.value ?? "");
+  formData.append('propuesta', this.propuesta.value ?? "");
+  if (this.condiciones) {
+    formData.append('condiciones', this.condiciones);
   }
-
-  this.ideaService.newIdea(newIdea).subscribe({
+ 
+  this.ideaService.newIdea(formData).subscribe({
     next(value: Idea) {
       console.log("idea id:", value.id)
       self.router.navigate(['/newIdea/add', value.id])

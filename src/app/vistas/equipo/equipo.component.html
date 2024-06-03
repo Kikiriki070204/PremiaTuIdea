@@ -35,19 +35,9 @@
                     <input (input)="inputChanged($event)" type="text" class="border rounded p-2">
                     <ng-container *ngIf="colaboradores.length > 0">
                         <div class="mt-4 space-y-2">
-                          <label
-                            *ngFor="let colaborador of colaboradores"
-                            class="cursor-pointer flex items-center"
-                          >
-                            <input
-                              type="checkbox"
-                              [value]="colaborador.id"
-                              [formControl]="checkboxModel"
-                              (change)="checkboxChanged(colaborador.id, $event)"
-                              class="mr-2"
-                            />
-                            <span>{{ colaborador.nombre }}</span>
-                          </label>
+                          <div *ngFor="let colaborador of colaboradores">
+                            <input type="checkbox" [checked]="checkboxStates[colaborador.id] || false" (change)="checkboxChanged(colaborador.id, $event)" /> {{ colaborador.nombre }}
+                            </div>
                         </div>
                       </ng-container>
                 </div>
