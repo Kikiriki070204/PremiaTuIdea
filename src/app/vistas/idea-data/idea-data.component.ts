@@ -9,6 +9,7 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 import { Estado } from '../../interfaces/idea';
 import { Actividad } from '../../interfaces/actividad';
 import { HttpResponse } from '../../interfaces/http';
+import { Imagen } from '../../interfaces/ideas';
 
 @Component({
   selector: 'app-idea-data',
@@ -31,6 +32,7 @@ titulo= new FormControl
 antecedentes = new FormControl
 propuesta = new FormControl
 actividades: Actividad[] | null = null
+image: string | null = null
 
 selectedEstado: number | null = null
 
@@ -49,8 +51,15 @@ ngOnInit() {
   if(this.idea?.idea.estatus == 3){
     this.asignarDisabled()
   }
-  
+  this.ideaService.imageByIdea(this.idea_id).subscribe(
+    (response: Imagen) => {
+      this.image = response.image_path;
+      console.log('image_path:',this.image)
+    }
+  );
 }
+
+
 
 ideaData()
   {
@@ -66,6 +75,21 @@ ideaData()
       }
     }); 
   }
+
+
+ideaImage()
+{
+  let self = this
+    this.ideaService.imageByIdea(this.idea_id)
+    .subscribe({
+      next(value: Imagen) {
+        self.image = value.image_path
+        console.log(self.image)
+      },
+    }); 
+}
+
+
 
   asignarPuntos(){
     let self = this

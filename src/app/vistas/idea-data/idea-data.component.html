@@ -20,7 +20,7 @@
                 <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Evidencias </h5>
     
                     <figure class="max-w-lg">
-                        <img class="h-auto max-w-full rounded-lg" [src]="idea?.idea?.condiciones" alt="image description">
+                        <img class="h-auto max-w-full rounded-lg" src="{{idea}}" alt="image description">
                         <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Condiciones</figcaption>
                     </figure>
                     
@@ -164,7 +164,7 @@
                         }
                         <td>
                             <button [routerLink]="['/actividad/',actividad.id]" type="button" class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-                                <img class="w-4 h-4" aria-hidden="true" src="../../../assets/edit.png" fill="currentColor" viewBox="0 0 18 18">
+                                <img class="w-4 h-4" aria-hidden="true" src="./../../assets/edit.png" fill="currentColor" viewBox="0 0 18 18">
                                 <span class="sr-only">Icon description</span>
                                 </button>
                         </td>
@@ -173,6 +173,8 @@
                         
                     </tbody>
             </table>
+        </div><div class="h-10">
+    
         </div>
         
     

@@ -6,6 +6,24 @@ export interface Producto {
     is_active: boolean
 }
 
+export interface ProductoData {
+    producto: {
+    id:number
+    nombre: string
+    url: string
+    valor: number 
+    is_active: boolean
+    }
+}
+
+export interface EditarProducto{
+    id:number
+    nombre: string
+    url: string
+    valor: number 
+    is_active: number 
+}
+
 export interface NuevoProducto{
     nombre: string
     valor: number

@@ -6,7 +6,7 @@ import { Usuarios } from '../interfaces/usuarios';
 import { Productos } from '../interfaces/productos';
 import { AreaId, NewUser, UserName, UsersList, User, NoLocation } from '../interfaces/user';
 import { Areas, Departamentos, Locaciones, Roles } from '../interfaces/activar';
-import { Canjear, EditarEstadoP, EstadosPremios, Premios, ProductoId, UsuarioPremio, UsuarioPremio2 } from '../interfaces/producto';
+import { Canjear, EditarEstadoP, EditarProducto, EstadosPremios, Premios, Producto, ProductoData, ProductoId, UsuarioPremio, UsuarioPremio2 } from '../interfaces/producto';
 import { Profile, UpdateUser } from '../interfaces/profile';
 
 @Injectable({
@@ -81,5 +81,15 @@ export class UsersService {
   editarEstado(data: EditarEstadoP): Observable<UsuarioPremio>
   {
     return this.http.put<UsuarioPremio>(`${environment.api_url}/usuariopremios/update`,data);
+  }
+
+  productoData(id: any): Observable<ProductoData>
+  {
+    return this.http.get<ProductoData>(`${environment.api_url}/productos/show/`+ id)
+  }
+
+  editarProducto(data: EditarProducto): Observable<ProductoData>
+  {
+    return this.http.put<ProductoData>(`${environment.api_url}/productos/update`,data);
   }
 }

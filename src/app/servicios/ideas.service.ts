@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { Estado, EstadoIdeas, EstatusIdea, Idea, IdeaData, Puntos } from '../interfaces/idea';
-import { Ideas } from '../interfaces/ideas';
+import { Ideas, Imagen } from '../interfaces/ideas';
 import { environment } from '../../enviroment/enviroment';
 import { NewIdea } from '../interfaces/new-idea';
 import { HttpParams } from '@angular/common/http';
@@ -39,6 +39,10 @@ export class IdeasService{
 
   ideasByStatus(estatus: number | null ): Observable<Ideas>{
     return this.http.get<Ideas>(`${environment.api_url}/ideas/ideasAll/`+ estatus)
+  }
+
+  imageByIdea(idea: number | null): Observable<Imagen>{
+    return this.http.get<Imagen>(`${environment.api_url}/ideasimagenes/show/`+idea)
   }
 
   ideaData(idea_id: any): Observable<IdeaData>

@@ -23,6 +23,7 @@ export const routes: Routes =
     //Rutas de productos
     {path:'productos', loadComponent:() => import('./vistas/productos/productos.component').then(m=> m.ProductosComponent), canActivate:[authenticateGuard]},
     {path: 'newProduct', loadComponent:() => import('./vistas/new-producto/new-producto.component').then(m=> m.NewProductoComponent), canActivate:[authenticateGuard]},
+    {path: 'productos/:id', loadComponent:() => import('./vistas/producto-data/producto-data.component').then(m=> m.ProductoDataComponent), canActivate:[authenticateGuard]},
     {path: 'premios',loadComponent:() => import('./vistas/premios/premios.component').then(m=> m.PremiosComponent), canActivate:[authenticateGuard]},
     {path: 'premios/:id',loadComponent:() => import('./vistas/premio-data/premio-data.component').then(m=> m.PremioDataComponent), canActivate:[authenticateGuard]},
     //Actividades

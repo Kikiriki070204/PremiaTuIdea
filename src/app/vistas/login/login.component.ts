@@ -33,7 +33,7 @@ export class LoginComponent {
     }
 
     this.service.login(login).subscribe({
-      next(value: User ) {
+      next(value: User) {
         // llevarlo a su dashboard.
         localStorage.setItem('access_token', value.access_token)
         self.authService.meplus().subscribe({

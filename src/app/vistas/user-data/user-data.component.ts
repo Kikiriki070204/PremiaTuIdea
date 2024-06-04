@@ -17,6 +17,7 @@ import { HttpResponse } from '../../interfaces/http';
   styleUrl: './user-data.component.css'
 })
 export class UserDataComponent implements OnInit{
+errorMessage: string | null = null
 id: number | null = null
 userProfile: Profile | null = null
 ideas: Idea[] | null = null
@@ -82,11 +83,18 @@ editar(){
       self.router.navigate(['/usuarios'])
     },
     error(err: HttpResponse)
-    {
-      if (err.status === 422) {
-        console.error('Unprocessable Entity:', err);
-      } else {
-        console.error('An error occurred:', err);
+    {switch(err.status)
+      {
+        case 422:
+            self.errorMessage = 'Debes seleccionar un estado';
+            break;
+          case 404:
+            self.errorMessage = 'Usuario no encontrado';
+            break;
+          default:
+              // Errores generales
+              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              break;
       }
     }
   })
