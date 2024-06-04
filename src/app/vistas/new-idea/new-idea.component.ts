@@ -65,8 +65,16 @@ idea()
             break;
           default:
               // Errores generales
-              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-              console.log(err)
+              if(err.error.msg == 'Error al guardar la idea e imagen')
+                {
+                  self.errorMessage = 'Error al guardar la imagen. Intentelo de nuevo.';
+                  console.log(err)
+                }
+              else{
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                console.log(err)
+              }
+            
               break;
       }
     },
@@ -75,7 +83,7 @@ idea()
 
 goBack()
 {
-  this.router.navigate(['/misIdeas'])
+  this.router.navigate(['/ideas'])
 }
 
 

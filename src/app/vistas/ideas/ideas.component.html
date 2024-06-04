@@ -5,56 +5,79 @@
 {
     <div class="container flex" style="margin-left: 5%;padding-top: 1%;">
         <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">Tus ideas</h4> 
-       
     </div>
-<div style="margin-top: 1%; margin-left: 6%; margin-right: 20%;" >
+    <div style="margin-top: 1%; margin-left: 6%; margin-right: 20%;" >
 
-    <div class="w-fit" style="margin-bottom: 1%;">
-        <button [routerLink]="['/newIdea']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
+
+        <div class="w-fit" style="margin-bottom: 1%;">
+            <button [routerLink]="['/newIdea']" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Idea</button>
+        </div>
     </div>
-     @if(ideas.length != 0)
-        {
-    <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
-       
-        <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    <th scope="col" class="px-6 py-3">
-                        Titulo
-                    </th>
-                    <th scope="col" class="px-6 py-3">
-                        Estatus
-                    </th>
-                   
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let idea of ideas">
-                  <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{idea.titulo}}</td>
-                  @if(idea.estatus == 1)
-                  {
-                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white">En revision</td>
-                  }
-                  @else if(idea.estatus == 2) {
-                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-emerald-600 whitespace-nowrap dark:text-white">Aceptada</td>
-                  }
-                  @else if(idea.estatus == 3) {
-                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-blue-700 whitespace-nowrap dark:text-white">Implementada</td>
-                  }
-                  @else if(idea.estatus == 4) {
-                    <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-red-800 whitespace-nowrap dark:text-white">Rechazada</td>
-                  }
-                  
-                  
-              </tbody>
-        </table>
-    
+    <div class="mt-2" style="margin-left: 6%; margin-right: 20%;" >
+
+        <div class="w-fit" style="margin-bottom: 1%;">
+        </div>
+        
+            <!--Tabs por estatus, unicamente mandaran el id del estatus dependiendo de su nombre para la consukta de ideas-->
+            <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+                <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-styled-tab" data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500" data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300" role="tablist">
+                    <li class="me-2" role="presentation">
+                        <button (click)="misIdeas(1)" class="hover:text-amber-600 inline-block p-4 border-b-2 rounded-t-lg" id="profile-styled-tab" aria-selected="false">En revision</button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button (click)="misIdeas(2)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-green-500 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Aceptadas</button>
+                    </li>
+                    <li class="me-2" role="presentation">
+                        <button (click)="misIdeas(3)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" type="button" role="tab" aria-controls="settings" aria-selected="false">Implementadas</button>
+                    </li>
+                    <li role="presentation">
+                        <button (click)="misIdeas(4)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-700 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" type="button" role="tab" aria-controls="contacts" aria-selected="false">Rechazadas</button>
+                    </li>
+                </ul>
+            </div>
+            @if(ideas.length != 0)
+            {
+         <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+           
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                    <tr>
+                        <th scope="col" class="px-6 py-3">
+                            Titulo
+                        </th>
+                        <th scope="col" class="px-6 py-3">
+                            Estatus
+                        </th>
+                       
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let idea of ideas">
+                      <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white ">{{idea.titulo}}</td>
+                      @if(idea.estatus == 1)
+                      {
+                        <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white">En revision</td>
+                      }
+                      @else if(idea.estatus == 2) {
+                        <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-emerald-600 whitespace-nowrap dark:text-white">Aceptada</td>
+                      }
+                      @else if(idea.estatus == 3) {
+                        <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-blue-700 whitespace-nowrap dark:text-white">Implementada</td>
+                      }
+                      @else if(idea.estatus == 4) {
+                        <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-red-800 whitespace-nowrap dark:text-white">Rechazada</td>
+                      }
+                      
+                      
+                  </tbody>
+            </table>
+        
+        </div>
+    }
+    @else {
+        <h5 class=" hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">¡No tienes ideas registradas con este estatus!</h5> 
+    }
     </div>
-}
-@else {
-    <h5 class=" hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">¡Aun no tienes ideas registradas!</h5> 
-}
-</div>
 }
 @else {
     <div class="container flex" style="margin-left: 5%;padding-top: 3%;">

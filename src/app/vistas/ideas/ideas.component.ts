@@ -22,17 +22,17 @@ user_rol: string | null = null
     this.getRol()
     if(this.user_rol == '3')
       {
-        this.misIdeas()
+        this.misIdeas(1)
       }
       else
       {
-        this.allideasUsers()
+        this.ideasbyStatus(1)
       }
   }
 
-  misIdeas(): void
+  misIdeas(estatus: number | null = null): void
   {
-    this.ideaService.allIdeas()
+    this.ideaService.allIdeas(estatus)
     .subscribe(myIdeas => {
       this.ideas = myIdeas.ideas;
       console.log(this.ideas)

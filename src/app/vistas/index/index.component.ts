@@ -17,7 +17,12 @@ export class IndexComponent  implements OnInit{
   }
 
   ngOnInit(): void {
-    this.getToken()
+    const accessToken = this.authService.getToken(); 
+    if (accessToken.trim() === '') {
+      console.log('Access token is empty.');
+    } else {
+      this.getToken()
+    }
   }
   getToken()
   {
