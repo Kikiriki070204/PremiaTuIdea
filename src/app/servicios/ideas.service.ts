@@ -41,9 +41,13 @@ export class IdeasService{
     return this.http.get<Ideas>(`${environment.api_url}/ideas/ideasAll/`+ estatus)
   }
 
-  imageByIdea(idea: number | null): Observable<Imagen>{
-    return this.http.get<Imagen>(`${environment.api_url}/ideasimagenes/show/`+idea)
-  }
+  // imageByIdea(idea: number | null): Observable<any>{
+  //   return this.http.get<any>(`${environment.api_url}/ideas/images/`+idea,{ responseType: 'blob' })
+  // }
+
+  getImage(idea: any): Observable<any> {
+    return this.http.get(`${environment.api_url}` + '/ideas/images/' + idea, { responseType: 'blob' });
+}
 
   ideaData(idea_id: any): Observable<IdeaData>
   {

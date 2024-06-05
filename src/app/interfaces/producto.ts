@@ -20,7 +20,7 @@ export interface EditarProducto{
     id:number
     nombre: string
     url: string
-    valor: number 
+    valor: number | undefined
     is_active: number 
 }
 

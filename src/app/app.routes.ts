@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { authenticateGuard } from './guards/authenticate.guard';
-
 //Ya hay lazy load
 // Ya hay un guard!
 export const routes: Routes = 

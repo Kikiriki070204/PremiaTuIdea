@@ -10,6 +10,8 @@ import { Estado } from '../../interfaces/idea';
 import { Actividad } from '../../interfaces/actividad';
 import { HttpResponse } from '../../interfaces/http';
 import { Imagen } from '../../interfaces/ideas';
+import { environment } from '../../../enviroment/enviroment';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-idea-data',
@@ -32,12 +34,11 @@ titulo= new FormControl
 antecedentes = new FormControl
 propuesta = new FormControl
 actividades: Actividad[] | null = null
-image: string | null = null
-
 selectedEstado: number | null = null
 
+public safeImage: SafeUrl | null = null;
 puntos = new FormControl(Validators.required)
-  constructor(private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {}
+  constructor(protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {}
 
 ngOnInit() {
   this.activatedRoute.params.subscribe(params => {
@@ -47,18 +48,21 @@ ngOnInit() {
   });
   this.ideaData()
   this.estadoIdeas()
+  this.getImage()
   this.actividadesByIdea()
   if(this.idea?.idea.estatus == 3){
     this.asignarDisabled()
   }
-  this.ideaService.imageByIdea(this.idea_id).subscribe(
-    (response: Imagen) => {
-      this.image = response.image_path;
-      console.log('image_path:',this.image)
-    }
-  );
 }
 
+
+private getImage(): void {
+  this.ideaService.getImage(this.idea_id).subscribe(image => {
+  let blob: Blob = image;
+  let objectURL = URL.createObjectURL(blob);
+  this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+});
+}
 
 
 ideaData()
@@ -77,17 +81,7 @@ ideaData()
   }
 
 
-ideaImage()
-{
-  let self = this
-    this.ideaService.imageByIdea(this.idea_id)
-    .subscribe({
-      next(value: Imagen) {
-        self.image = value.image_path
-        console.log(self.image)
-      },
-    }); 
-}
+
 
 
 

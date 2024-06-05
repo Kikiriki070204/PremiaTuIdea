@@ -13,7 +13,10 @@
                     
                 <!--responsable-->
                 <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Valor</h5>
-                <h6 class="mb-1 text-xl font-medium dark:text-white text-gray-900" style="font-weight: 600">{{producto?.producto?.valor}}</h6>
+                <div class="relative z-0 w-full mb-5 group">
+                    <input [formControl]="valor" type="number" name="floating_valor" id="floating_valor" value="{{producto?.producto?.valor}}" class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder=" " required />
+                    <label for="floating_valor" class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Valor en puntos</label>
+                </div>
     
         </div>
    </div>
@@ -40,7 +43,13 @@
             <option value="0" >Inactivo</option>
           </select>
 
-          <button (click)="editar()" type="button" class="  mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2">Editar estado</button>
+         @if(selectedActive == null)
+         {
+            <button (click)="editar2()" type="button" class="  mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2">Editar producto</button>
+         }
+         @else {
+            <button (click)="editar()" type="button" class="  mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2">Editar producto</button>
+         }
 
             <div *ngIf="errorMessage" class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                 <span class="font-medium">{{errorMessage}}</span>
