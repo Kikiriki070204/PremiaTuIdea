@@ -106,9 +106,9 @@ newUser(){
      ibm : (this.ibm.value !== null ) ? +this.ibm.value : 0,
      nombre : this.nombre.value ?? "",
      rol_id: this.selectedRol ?? 0,
-     departamento_id: this.selectedDep ?? 0,
+     departamento_id: this.selectedDep ?? null,
      area_id: this.selectedArea ?? 0,
-     locacion_id: this.selectedLoc ?? 0
+     locacion_id: this.selectedLoc ?? null
   }
 
   this.userService.newUsert(newUser).subscribe({

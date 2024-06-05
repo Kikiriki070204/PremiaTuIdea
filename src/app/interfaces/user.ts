@@ -42,9 +42,9 @@ export interface NewUser{
     ibm: number
     nombre: string 
     rol_id: number
-    departamento_id: number 
+    departamento_id: number | null
     area_id: number
-    locacion_id: number 
+    locacion_id: number | null
 }
 
 export interface NoLocation{

@@ -72,7 +72,7 @@ editar(){
     ibm: this.userProfile?.ibm ?? 0,
     nombre: this.userProfile?.nombre ?? "",
     rol_id : this.userProfile?.rol_id ?? 0,
-    departamento_id: this.userProfile?.departamento_id ?? 0, 
+    departamento_id: this.userProfile?.departamento_id ?? null, 
     area_id : this.userProfile?.area_id ?? 0,
     is_active: this.selectedActive ?? 0, 
     locacion_id : this.userProfile?.locacion_id ?? null
@@ -87,13 +87,16 @@ editar(){
       {
         case 422:
             self.errorMessage = 'Debes seleccionar un estado';
+            console.log(err)
             break;
           case 404:
             self.errorMessage = 'Usuario no encontrado';
+            console.log(err)
             break;
           default:
               // Errores generales
               self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              console.log(err)
               break;
       }
     }

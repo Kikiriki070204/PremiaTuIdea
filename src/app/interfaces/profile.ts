@@ -21,7 +21,7 @@ export interface UpdateUser{
     ibm : number
     nombre: string
     rol_id : number
-    departamento_id: number 
+    departamento_id: number | null
     area_id : number
     is_active: number 
     locacion_id : number | null
