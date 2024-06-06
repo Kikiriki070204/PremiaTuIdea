@@ -47,6 +47,7 @@ export class AuthService {
    localStorage.removeItem('access_token')
    this.cookie.delete('rol_id','/','localhost',false,'Lax')
    this.cookie.delete('id','/','localhost',false,'Lax')
+   this.cookie.deleteAll()
   }
 
 }

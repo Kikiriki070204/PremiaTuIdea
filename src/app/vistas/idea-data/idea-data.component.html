@@ -17,7 +17,7 @@
                 <div class=" mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
                     <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">{{idea?.idea?.propuesta}}</p>
                 </div> 
-                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Evidencias </h5>
+                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Condiciones actuales</h5>
     
                     <figure class="max-w-lg">
                         <img class="h-auto max-w-full rounded-lg" [src]="safeImage" alt="imagen">
@@ -46,7 +46,7 @@
                 <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Colaboradores de la idea</h6>
 
                     <ul *ngFor="let colaborador of colaboradores" class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <li class="w-full px-4 py-2  border-gray-200 rounded-t-lg dark:border-gray-600">{{colaborador.nombre}}</li>
+                        <li class="w-full px-4 py-2  hover:text-blue-500 border-gray-200 rounded-t-lg dark:border-gray-600" [routerLink]="['/usuarios/',colaborador.id]" >{{colaborador.nombre}}</li>
                     </ul>
                 
                 </div>
