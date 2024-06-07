@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -6,7 +6,9 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { NewIdea } from '../../interfaces/new-idea';
 import { HttpResponse } from '../../interfaces/http';
-import { NgIf } from '@angular/common';
+import { DatePipe, NgIf } from '@angular/common';
+import { UsersService } from '../../servicios/users.service';
+import { Area } from '../../interfaces/activar';
 
 @Component({
   selector: 'app-new-idea',
@@ -15,16 +17,26 @@ import { NgIf } from '@angular/common';
   templateUrl: './new-idea.component.html',
   styleUrl: './new-idea.component.css'
 })
-export class NewIdeaComponent {
-  errorMessage: string | null = null
-//aun hay dudas con lo del servidor de fotos
-//por el momento el campo de condiciones actuales no tiene valor real y no se almacena
+export class NewIdeaComponent implements OnInit{
+fecha = new Date()
+fecha_inicio: string | null = null
+areas: Area[] | null = null
+selectedArea : string | null = null
+
+errorMessage: string | null = null
 titulo = new FormControl('', Validators.required)
 antecedentes = new FormControl('', Validators.maxLength(2000))
-//condicion_actual = new FormControl()
 propuesta = new FormControl('', Validators.maxLength(2000))
 condiciones: File | null = null
-constructor(protected ideaService: IdeasService, protected router: Router){}
+area = new FormControl()
+
+constructor(private datePipe: DatePipe,protected ideaService: IdeasService, protected router: Router, protected userService: UsersService){
+  this.fecha_inicio = this.datePipe.transform(this.fecha, 'yyyy-MM-dd');
+}
+
+ngOnInit(): void {
+  this.getAreas()
+}
 
 onFileSelected(event: any): void {
   const fileInput = event.target as HTMLInputElement;
@@ -34,7 +46,18 @@ onFileSelected(event: any): void {
     this.condiciones = null;
   }
 }
-
+getAreas(): void
+{
+  this.userService.allAreas()
+  .subscribe(Areas => {
+    this.areas = Areas.areas;
+    console.log(this.areas)
+  });
+}
+onAreaChange(event: any){
+  const selectedValue = event.target.value;
+  this.selectedArea = String(selectedValue)
+}
 
 idea()
 {
@@ -46,6 +69,8 @@ idea()
   if (this.condiciones) {
     formData.append('condiciones', this.condiciones);
   }
+  formData.append('fecha_inicio', this.fecha_inicio ?? "")
+  formData.append('area_id', this.selectedArea ?? "")
  
   this.ideaService.newIdea(formData).subscribe({
     next(value: Idea) {

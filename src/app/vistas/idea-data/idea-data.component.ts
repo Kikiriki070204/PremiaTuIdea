@@ -35,6 +35,8 @@ antecedentes = new FormControl
 propuesta = new FormControl
 actividades: Actividad[] | null = null
 selectedEstado: number | null = null
+colaboradores_id: number[] = []
+colaboradores_punto: number[] = []
 
 public safeImage: SafeUrl | null = null;
 puntos = new FormControl(Validators.required)
@@ -80,6 +82,17 @@ ideaData()
     }); 
   }
 
+
+  //QUIEN SABE como PERO DEBE SER UN CICLO Q RECORRA EL ARRAY DE COLABORADORES Y HAGA UN PUSH 
+  //AL ARRAY DE LOS IDS
+  getColaboradoresId()
+  {
+    this.colaboradores?.forEach(
+      colaborador =>{
+        
+      }
+    )
+  }
 
 
 
