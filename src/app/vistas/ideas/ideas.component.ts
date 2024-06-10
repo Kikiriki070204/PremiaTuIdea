@@ -20,7 +20,7 @@ user_rol: string | null = null
  constructor(protected ideaService: IdeasService, protected router: Router, protected authService: AuthService){}
   ngOnInit(): void {
     this.getRol()
-    if(this.user_rol == '3')
+    if(this.user_rol == '4')
       {
         this.misIdeas(1)
       }

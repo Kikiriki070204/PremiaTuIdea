@@ -36,7 +36,7 @@ propuesta = new FormControl
 actividades: Actividad[] | null = null
 selectedEstado: number | null = null
 colaboradores_id: number[] = []
-colaboradores_punto: number[] = []
+colaboradores_puntos: number[] = []
 
 public safeImage: SafeUrl | null = null;
 puntos = new FormControl(Validators.required)
@@ -55,6 +55,7 @@ ngOnInit() {
   if(this.idea?.idea.estatus == 3){
     this.asignarDisabled()
   }
+  
 }
 
 
@@ -75,27 +76,18 @@ ideaData()
       next(value: IdeaData){
           self.idea = value;
           self.colaboradores = value.colaboradores
+          value.colaboradores.forEach(
+            colaborador =>{
+              self.colaboradores_id.push(colaborador.id)
+            }
+          )
+          console.log("id's:", self.colaboradores_id)
       },
       error(err: HttpResponse){
         self.router.navigate(['**']) 
       }
     }); 
   }
-
-
-  //QUIEN SABE como PERO DEBE SER UN CICLO Q RECORRA EL ARRAY DE COLABORADORES Y HAGA UN PUSH 
-  //AL ARRAY DE LOS IDS
-  getColaboradoresId()
-  {
-    this.colaboradores?.forEach(
-      colaborador =>{
-        
-      }
-    )
-  }
-
-
-
 
 
   asignarPuntos(){

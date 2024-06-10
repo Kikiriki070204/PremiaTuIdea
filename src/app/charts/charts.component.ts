@@ -3,11 +3,12 @@ import { Chart, registerables } from 'chart.js';
 import { UsersService } from '../servicios/users.service';
 import { Usuario } from '../interfaces/user';
 import { UsersList } from '../interfaces/user';
+import { AppNavbarComponent } from '../vistas/app-navbar/app-navbar.component';
 Chart.register(...registerables)
 @Component({
   selector: 'app-charts',
   standalone: true,
-  imports: [],
+  imports: [AppNavbarComponent],
   templateUrl: './charts.component.html',
   styleUrl: './charts.component.css'
 })

@@ -6,14 +6,14 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { NewIdea } from '../../interfaces/new-idea';
 import { HttpResponse } from '../../interfaces/http';
-import { DatePipe, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { UsersService } from '../../servicios/users.service';
 import { Area } from '../../interfaces/activar';
 
 @Component({
   selector: 'app-new-idea',
   standalone: true,
-  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
+  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf, NgFor],
   templateUrl: './new-idea.component.html',
   styleUrl: './new-idea.component.css'
 })

@@ -18,27 +18,27 @@ export class IdeasService{
   constructor(protected http: HttpClient, protected router: Router) { }
 
   allIdeas(estatus: number | null ): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideas/userideasall/`+ estatus);
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/`+ estatus);
   }
 
   ideasImp(): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideas/userIdeas`);
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeas`);
   }
 
   ideasImpByUser(id: any): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideas/userIdeasImplementadas/`+id);
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeasImplementadas/`+id);
   }
 
   newIdea(data: FormData): Observable<Idea>{
-    return this.http.post<Idea>(`${environment.api_url}/ideas/create`,data);
+    return this.http.post<Idea>(`${environment.api_url}/ideass/create`,data);
   }
 
   usersIdeas(): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideas/ideasAll`)
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll`)
   }
 
   ideasByStatus(estatus: number | null ): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideas/ideasAll/`+ estatus)
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/`+ estatus)
   }
 
   // imageByIdea(idea: number | null): Observable<any>{
@@ -46,17 +46,17 @@ export class IdeasService{
   // }
 
   getImage(idea: any): Observable<any> {
-    return this.http.get(`${environment.api_url}` + '/ideas/images/' + idea, { responseType: 'blob' });
+    return this.http.get(`${environment.api_url}` + '/ideass/images/' + idea, { responseType: 'blob' });
 }
 
   ideaData(idea_id: any): Observable<IdeaData>
   {
-  return this.http.get<IdeaData>(`${environment.api_url}/ideas/show/` + idea_id);
+  return this.http.get<IdeaData>(`${environment.api_url}/ideass/show/` + idea_id);
   }
 
   asignarPuntos(data: Puntos ): Observable<User>
   {
-    return this.http.put<User>(`${environment.api_url}/ideas/puntos`, data);
+    return this.http.put<User>(`${environment.api_url}/ideass/puntos`, data);
   }
 
   estadoIdeas(): Observable<EstadoIdeas>{
@@ -65,7 +65,7 @@ export class IdeasService{
 
   editarEstado(data: Estado): Observable<Idea>
   {
-    return this.http.put<Idea>(`${environment.api_url}/ideas/update`, data)
+    return this.http.put<Idea>(`${environment.api_url}/ideass/update`, data)
   }
 
   //SERVICIOS DE ACTIVIDADES
@@ -91,4 +91,5 @@ export class IdeasService{
   {
     return this.http.put<Actividad>(`${environment.api_url}/actividades/update`, data)
   }
+
 }
