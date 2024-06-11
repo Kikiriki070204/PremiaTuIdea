@@ -52,9 +52,9 @@ ngOnInit() {
   this.estadoIdeas()
   this.getImage()
   this.actividadesByIdea()
-  if(this.idea?.idea.estatus == 3){
-    this.asignarDisabled()
-  }
+  // if(this.idea?.idea.estatus == 3){
+  //   this.asignarDisabled()
+  // }
   
 }
 
@@ -92,11 +92,13 @@ ideaData()
 
   asignarPuntos(){
     let self = this
+    const puntosColaboradores = self.colaboradores?.map((colaborador) => colaborador.puntos);
     let puntos: Puntos = {
       id : this.idea_id ?? 0,
-      puntos: (this.puntos.value !== null) ? +this.puntos.value : 0,
+      id_usuarios: this.colaboradores_id,
+      puntos: puntosColaboradores ?? [],
     }
-    console.log("puntos", this.puntos)
+    console.log("puntos", puntosColaboradores)
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User ) {
         console.log("puntos asignados correctamente!")
@@ -104,8 +106,20 @@ ideaData()
         
         //hay que poner un alert bonito que diga puntos asignados
       },
-      error(err) {
-        console.log(err)
+      error(err: HttpResponse) {
+        switch(err.status)
+        {
+          case 422:
+              self.errorMessage = 'Por favor introduzca datos validos';
+              break;
+            case 404:
+              self.errorMessage = 'Usuarios no encontrada';
+              break;
+            default:
+                // Errores generales
+                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+                break;
+        }
       },
     })
   }
@@ -170,18 +184,18 @@ ideaData()
 
 
   
-asignarDisabled(){
-  let state: boolean | null = null
-  if(this.idea?.idea.estatus == 3)
-  {
-      state = true
-  }
-  else{
-    state = false
-  }
-  console.log("check!:", state)
-  return state
-}
+// asignarDisabled(){
+//   let state: boolean | null = null
+//   if(this.idea?.idea.estatus == 3)
+//   {
+//       state = true
+//   }
+//   else{
+//     state = false
+//   }
+//   console.log("check!:", state)
+//   return state
+// }
 
 newAct(){
   this.router.navigate(['/newActivity/', this.idea_id])

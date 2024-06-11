@@ -3,16 +3,13 @@
     <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">Reportes</h4> 
 </div>
 <div class="mt-2" style="margin-left: 6%; margin-right: 20%;" >
-        <!--Tabs por estatus, unicamente mandaran el id del estatus dependiendo de su nombre para la consukta de ideas-->
-`
-
 <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
         <li class="me-2" role="presentation">
             <button class="inline-block p-4 border-b-2 rounded-t-lg" id="puntos-tab" data-tabs-target="#puntos" type="button" role="tab" aria-controls="puntos" aria-selected="false">Puntos</button>
         </li>
         <li class="me-2" role="presentation">
-            <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="ideas-tab" data-tabs-target="#ideas" type="button" role="tab" aria-controls="ideas" aria-selected="false">Ideas</button>
+            <button (click)="renderNotAccountable(); renderAccountable()" ng-click="" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="ideas-tab" data-tabs-target="#ideas" type="button" role="tab" aria-controls="ideas" aria-selected="false">Ideas</button>
         </li>
         <li class="me-2" role="presentation">
             <button class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-tab" data-tabs-target="#settings" type="button" role="tab" aria-controls="settings" aria-selected="false">Ahorro</button>
@@ -22,16 +19,53 @@
 </div>
 <div id="default-tab-content">
     <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="puntos" role="tabpanel" aria-labelledby="puntos-tab">
-        
-        <div class="w-full">
-            <canvas id="ctx">
-            </canvas>
+        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Top 10 usuarios con mas puntos</h4> 
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div class="w-full">
+                <canvas id="top10">
+                </canvas>
+            </div>  
+        </div>
+        <br>
+        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Puntos asignados a ideas contables</h4> 
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div class="w-full">
+                <canvas id="puntosCountable">
+                </canvas>
+            </div>  
+        </div>
+        <br>
+        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Puntos asignados a ideas no contables</h4> 
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div class="w-full">
+                <canvas id="puntosUncountable">
+                </canvas>
+            </div>  
+        </div>
+
+    
+    </div>
+
+    <!--Ideas-->
+    <div class="hidden p-4 rounded-lg dark:bg-gray-800" id="ideas" role="tabpanel" aria-labelledby="ideas-tab">
+        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Contables</h4> 
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div class="w-full">
+                <canvas id="countable">
+                </canvas>
+            </div>  
+        </div>
+        <br>
+        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">No contables</h4> 
+        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+            <div class="w-full">
+                <canvas id="ctx">
+                </canvas>
+            </div> 
         </div>
 
     </div>
-    <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="ideas" role="tabpanel" aria-labelledby="ideas-tab">
-        <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">ideas tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
-    </div>
+
     <div class="hidden p-4 rounded-lg bg-gray-50 dark:bg-gray-800" id="settings" role="tabpanel" aria-labelledby="settings-tab">
         <p class="text-sm text-gray-500 dark:text-gray-400">This is some placeholder content the <strong class="font-medium text-gray-800 dark:text-white">Settings tab's associated content</strong>. Clicking another tab will toggle the visibility of this one for the next. The tab JavaScript swaps classes to control the content visibility and styling.</p>
     </div>

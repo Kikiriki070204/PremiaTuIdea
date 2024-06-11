@@ -131,6 +131,7 @@ agregarColab() {
     let userteam: RequestEquipo = {
       id_usuarios: this.colabs,
       id_equipo: equipoData.equipoID ?? 0,
+      id: this.id ?? 0
     };
 
     this.equipoService.agregar(userteam).subscribe({

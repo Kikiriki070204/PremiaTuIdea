@@ -29,7 +29,8 @@ export interface IdeaData{
 
 export interface Puntos{
 	id: number
-	puntos: number
+	id_usuarios: number[]
+	puntos: number[]
 }
 
 export interface EstadoIdea{

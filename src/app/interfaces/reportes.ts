@@ -21,3 +21,16 @@ export interface ReportesPuntos {
        puntos_por_area: PuntosArea[]
     }
 }
+
+export interface Top10User{
+    id: number
+    user_id: number
+    puntos: number
+    is_active: boolean
+    ibm: number
+    nombre: string
+}
+
+export interface Historial{
+    historial: Top10User[]
+}
