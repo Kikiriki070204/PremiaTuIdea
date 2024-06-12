@@ -12,6 +12,7 @@ import { UsuarioEquipo } from '../../interfaces/usuario-equipo';
 import { RequestEquipo } from '../../interfaces/request-equipo';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { HttpResponse } from '../../interfaces/http';
 
 @Component({
   selector: 'app-equipo',
@@ -117,8 +118,18 @@ this.equipoService.equipo(idea).subscribe({
     // llevarlo a su dashboard.
     console.log("id equipo: ",value.equipoID)
   },
-  error(err) {
-    console.log(err)
+  error(err: HttpResponse) {
+    switch(err.status)
+    {
+      case 422: 
+      self.router.navigate(['**'])
+      console.log(err)
+      break;
+      default:
+        console.log(err)
+        break;
+    }
+    
   },
 })
 return this.equipoService.equipo(idea);

@@ -21,9 +21,14 @@ export interface IdeaData{
 		estatus_idea: string
 		status: number
 		condiciones: string
+		ahorro: number
+		contable: number
 	},
 	colaboradores: [
 		User
+	],
+	campos:[
+		Campo
 	]
 }
 
@@ -49,8 +54,21 @@ export interface Estado{
     antecedentes: string
     propuesta : string
 	estatus : number
+	contable: number
+	campos_id: number[] | null
+	ahorro: number |  null
 }
 
 export interface EstatusIdea{
 	estatus: number
+}
+
+export interface Campo{
+	id: number
+	nombre: number
+	is_active: boolean
+}
+
+export interface Campos{
+	campos: Campo[]
 }

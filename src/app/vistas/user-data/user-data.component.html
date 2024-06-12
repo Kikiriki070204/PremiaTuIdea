@@ -37,7 +37,7 @@
                 <option value="0" >Inactivo</option>
               </select>
 
-              <button (click)="editar()" type="button" class="  mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2">Editar estado</button>
+              <button (click)="editar()" type="button" class="  mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2">Editar datos</button>
 
             <div class="flex mt-4 md:mt-6">
             </div>
@@ -52,7 +52,9 @@
             <h6 class="mb-1 text-lg font-semibold text-blue-800 dark:text-white">Este usuario aún no cuentas con puntos</h6>
         }
         @else {
-             <h6 class="mb-1 text-lg font-semibold text-emerald-700 dark:text-white">{{userProfile?.puntos}} puntos</h6>
+            <div class="flex items-center border-b py-2" >
+                <input [formControl]="puntos" name="puntos" class="border-blue-500 rounded-md w-32 appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 text-md leading-tight focus:outline-none" type="number" min="5" placeholder="puntos" aria-label="puntos" value="{{userProfile?.puntos}}"> <h6 class="mb-1 text-lg font-semibold text-blue-800 dark:text-white"> puntos</h6>
+              </div>
         }
         <h5 class="mb-2 text-3xl font-bold text-gray-900 dark:text-white">Ideas implementadas</h5>
         <div class=" justify-normal space-y-4 sm:flex sm:space-y-0 sm:space-x-4 rtl:space-x-reverse">

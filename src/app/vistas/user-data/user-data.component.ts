@@ -8,11 +8,12 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { User } from '../../interfaces/user';
 import { HttpResponse } from '../../interfaces/http';
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-user-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor],
+  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule],
   templateUrl: './user-data.component.html',
   styleUrl: './user-data.component.css'
 })
@@ -22,6 +23,7 @@ id: number | null = null
 userProfile: Profile | null = null
 ideas: Idea[] | null = null
 selectedActive: number | null = null
+puntos = new FormControl('',Validators.required)
 
 constructor(protected ideasService: IdeasService, protected userService: UsersService, protected router: Router, private route: ActivatedRoute){
   this.route.params.subscribe(params => {
@@ -74,8 +76,9 @@ editar(){
     rol_id : this.userProfile?.rol_id ?? 0,
     departamento_id: this.userProfile?.departamento_id ?? null, 
     area_id : this.userProfile?.area_id ?? 0,
-    is_active: this.selectedActive ?? 0, 
-    locacion_id : this.userProfile?.locacion_id ?? null
+    is_active: this.selectedActive ?? this.userProfile?.is_active, 
+    locacion_id : this.userProfile?.locacion_id ?? null,
+    puntos: (this.puntos.value !== null && this.puntos.value !== '') ? +this.puntos.value : this.userProfile?.puntos
   }
 
   this.userService.updateUser(active).subscribe({

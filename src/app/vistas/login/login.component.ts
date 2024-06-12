@@ -39,7 +39,6 @@ export class LoginComponent {
         self.authService.meplus().subscribe({
           next(user: Profile){
             self.authService.setCurrentUser(user);
-            console.log('Current User:', user);
             self.cookieService.set('rol_id',user.rol_id.toString(),1)
         self.cookieService.set('id',user.id.toString(),1)
         self.router.navigate(['/dashboard'])

@@ -23,6 +23,7 @@ export interface UpdateUser{
     rol_id : number
     departamento_id: number | null
     area_id : number
-    is_active: number 
+    is_active: number | undefined | boolean
     locacion_id : number | null
+    puntos: number |undefined
 }

@@ -23,6 +23,7 @@ selectedActive: number | null = null
 valor=  new FormControl('',Validators.required)
 nombre= new FormControl('',Validators.required)
 
+
 constructor(protected productoService: UsersService, protected router: Router, private route: ActivatedRoute){
   this.route.params.subscribe(params => {
     const id = params['id'];
