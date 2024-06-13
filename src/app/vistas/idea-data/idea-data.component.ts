@@ -39,6 +39,7 @@ selectedEstado: number | null = null
 colaboradores_id: number[] = []
 colaboradores_puntos: number[] = []
 contable: number = 0
+ahorro_valor: number = 0
 
 
 campos: Campo[] | null = null
@@ -48,7 +49,7 @@ checkboxModel = new FormControl
 checkboxStates: { [id: number]: boolean } = {};
 
 public safeImage: SafeUrl | null = null;
-ahorro = new FormControl(Validators.required)
+ahorro = new FormControl('',Validators.required)
 puntos = new FormControl(Validators.required)
   constructor(protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {}
 
@@ -88,6 +89,9 @@ ideaData()
           self.idea = value;
           self.colaboradores = value.colaboradores
           self.campos_init = value.campos
+          self.contable = value.idea.contable
+          self.ahorro_valor = value.idea.ahorro
+          console.log(value.idea.ahorro)
           value.colaboradores.forEach(
             colaborador =>{
               self.colaboradores_id.push(colaborador.id)
@@ -169,7 +173,7 @@ ideaData()
       estatus: this.selectedEstado ?? 0,
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
-      ahorro: (this.ahorro.value !== null) ? +this.ahorro.value : 0,
+      ahorro: (this.ahorro.value !== null) ? +this.ahorro.value : this.idea?.idea.ahorro,
     }
 
     this.ideaService.editarEstado(estado).subscribe({
@@ -207,7 +211,7 @@ ideaData()
       estatus: this.idea?.idea.estatus ?? 0,
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
-      ahorro: (this.ahorro.value !== null) ? +this.ahorro.value : 0,
+      ahorro: (this.ahorro.value !== null && this.ahorro.value !== '') ? +this.ahorro.value : this.idea?.idea.ahorro,
     }
 
     this.ideaService.editarEstado(estado).subscribe({

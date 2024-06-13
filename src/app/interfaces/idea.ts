@@ -56,7 +56,7 @@ export interface Estado{
 	estatus : number
 	contable: number
 	campos_id: number[] | null
-	ahorro: number |  null
+	ahorro: number |  null | undefined
 }
 
 export interface EstatusIdea{

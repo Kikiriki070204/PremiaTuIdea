@@ -3,7 +3,7 @@ import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { NgFor } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { ReportesService } from '../../servicios/reportes.service';
-import { Historial, IdeasCN, PuntosArea, ReportesPuntos, Top10User } from '../../interfaces/reportes';
+import { AhorroArea, AhorroTotal, Historial, IdeasCN, PuntosArea, ReportesPuntos, Top10User } from '../../interfaces/reportes';
 import { ReportesIdeas } from '../../interfaces/reportes';
 Chart.register(...registerables)
 
@@ -46,6 +46,14 @@ export class ReportesComponent implements OnInit{
   top10_users_points: number[] = []
   top10_max: number = 0
 
+  //Ahorros
+  ahorros: AhorroArea[] | null = null
+  ahorros_data: AhorroTotal | null = null
+  ahorros_nombres: string[] = []
+  ahorros_totalByArea: number[] = []
+  ahorros_percentages: number[] = []
+  total_ahorros: number = 0
+
   pxt: number = 0
   ctx = document.getElementById('myChart');
   constructor(protected reporteService: ReportesService){}
@@ -54,6 +62,9 @@ export class ReportesComponent implements OnInit{
   this.renderHistorial()
   this.renderPuntosNoContables()
   this.renderPuntosContables()
+  this.renderNotAccountable()
+  this.renderAccountable()
+  this.renderAhorros()
   }
     
   //TOP 10 USUARIOS CON MAS PUNTOS 
@@ -281,8 +292,9 @@ async renderPuntosNoContables()
 
 
   //IDEAS POR AREA  (contables y no contables)
-  ideasContables() {
+  async ideasContables() {
     let self = this
+    try{
     return new Promise<void>((resolve, reject) => {
       this.reporteService.ideasContables().subscribe({
         next: (value: ReportesIdeas) => {
@@ -303,12 +315,17 @@ async renderPuntosNoContables()
         error: (error) => reject(error)
       });
     });
-    }
+  }
+  catch(error) {
+    console.error('Error fetching data:', error);
+    }  
+  }
 
 
 
-    ideasNoContables() {
+    async ideasNoContables() {
       let self = this
+      try{
       return new Promise<void>((resolve, reject) => {
         this.reporteService.ideasNoContables().subscribe({
           next: (value: ReportesIdeas) => {
@@ -332,10 +349,14 @@ async renderPuntosNoContables()
         });
       });
     }
+    catch (error) {
+      console.error('Error fetching data:', error);
+      }  
+    }
     
-    renderAccountable()
+    async renderAccountable()
     {
-      this.ideasContables()
+      await this.ideasContables()
 
       const myChart = new Chart("countable", {
         type: 'bar',
@@ -376,9 +397,9 @@ async renderPuntosNoContables()
   }
 
 
-    renderNotAccountable()
+    async renderNotAccountable()
     {
-      this.ideasNoContables()
+      await this.ideasNoContables()
 
       const myChart = new Chart("ctx", {
         type: 'bar',
@@ -417,6 +438,78 @@ async renderPuntosNoContables()
         }
     });
   }
+
+
+  //Ahorro por area
+  async ahorroTotal() {
+    let self = this
+    try{
+    return new Promise<void>((resolve, reject) => {
+      this.reporteService.ahorro().subscribe({
+        next: (value: AhorroTotal) => {
+        self.ahorros_data = value
+        self.ahorros = value.msg.ahorros_por_area
+        self.total_ahorros = value.msg.total_ahorros
+        value.msg.ahorros_por_area.forEach(
+          area =>{
+            self.ahorros_nombres.push(area.nombre_area + " ($"+area.total_ahorros+")")
+            self.ahorros_totalByArea.push(area.total_ahorros)
+          })
+          const total= this.total_ahorros
+          self.ahorros_totalByArea.forEach(value => {
+            self.pxt = (value / total ) * 100
+            self.ahorros_percentages.push(this.pxt)
+          });
+          resolve();
+        },
+        error: (error) => reject(error)
+      });
+    });
+  }
+  catch(error) {
+    console.error('Error fetching data:', error);
+    }  
+    }
+
+    async renderAhorros()
+    {
+      await this.ahorroTotal()
+
+      const myChart = new Chart("ahorro", {
+        type: 'bar',
+        data: {
+            labels: this.ahorros_nombres,
+            datasets: [{
+                label: '% of savings',
+                data: this.ahorros_percentages,
+                backgroundColor: [
+                    'rgba(64, 224, 208, 0.2)', //turquesa
+                    'rgba(216, 191, 216, 0.2)', // lila
+                    'rgba(255, 218, 185, 0.2)', //melocoton
+                    'rgba(135, 206, 235, 0.2)', //azul cielo
+                    'rgba(152, 251, 152, 0.2)'//verde menta
+                ],
+                borderColor: [
+                    'rgba(64, 224, 208, 1)', //turquesa
+                    'rgba(216, 191, 216, 1)', // lila
+                    'rgba(255, 218, 185, 1)', //melocoton
+                    'rgba(135, 206, 235, 1)', //azul cielo
+                    'rgba(152, 251, 152, 1)'//verde menta
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 100
+                }
+            }
+        }
+    });
+    }
 
 
 }

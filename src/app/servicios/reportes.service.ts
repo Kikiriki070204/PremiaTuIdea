@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Historial, ReportesIdeas, ReportesPuntos } from '../interfaces/reportes';
+import { AhorroArea, AhorroTotal, Historial, ReportesIdeas, ReportesPuntos } from '../interfaces/reportes';
 import { environment } from '../../enviroment/enviroment';
 
 @Injectable({
@@ -31,5 +31,8 @@ export class ReportesService {
     return this.http.get<Historial>(`${environment.api_url}/historial/list`)
   }
   //Falta ahorro, debo hacer la interfaz 
+  ahorro(): Observable<AhorroTotal>{
+    return this.http.get<AhorroTotal>(`${environment.api_url}/ideass/ahorrocontable`)
+  }
   
 }

@@ -34,3 +34,15 @@ export interface Top10User{
 export interface Historial{
     historial: Top10User[]
 }
+
+export interface AhorroArea{
+    nombre_area: string
+    total_ahorros: number
+}
+
+export interface AhorroTotal{
+    msg: {
+		total_ahorros: number
+		ahorros_por_area:AhorroArea[]
+    }
+}
