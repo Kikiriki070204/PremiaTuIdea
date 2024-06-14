@@ -24,8 +24,8 @@ export interface IdeaData{
 		ahorro: number
 		contable: number
 	},
-	colaboradores: [
-		User
+	colaboradores: User[
+		
 	],
 	campos:[
 		Campo
@@ -71,4 +71,13 @@ export interface Campo{
 
 export interface Campos{
 	campos: Campo[]
+}
+
+export interface EditColabs{
+	id_usuarios: number[]
+	id: number
+}
+
+export interface Msg{
+	msg: string
 }

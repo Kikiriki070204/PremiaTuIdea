@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { Campos, Estado, EstadoIdeas, EstatusIdea, Idea, IdeaData, Puntos } from '../interfaces/idea';
+import { Campos, EditColabs, Estado, EstadoIdeas, EstatusIdea, Idea, IdeaData, Msg, Puntos } from '../interfaces/idea';
 import { Ideas, Imagen } from '../interfaces/ideas';
 import { environment } from '../../enviroment/enviroment';
 import { NewIdea } from '../interfaces/new-idea';
@@ -70,6 +70,11 @@ export class IdeasService{
 
   campos(num: any): Observable<Campos>{
     return this.http.get<Campos>(`${environment.api_url}/campos/monetario/`+num)
+  }
+
+
+  editarColaboradores(data: EditColabs): Observable<Msg>{
+    return this.http.post<Msg>(`${environment.api_url}/userteam/create`, data);
   }
 
   //SERVICIOS DE ACTIVIDADES

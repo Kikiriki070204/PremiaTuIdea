@@ -17,6 +17,7 @@ export const routes: Routes =
     //Rutas de ideas
     {path: 'ideas', loadComponent:() => import('./vistas/ideas/ideas.component').then(m=> m.IdeasComponent), canActivate:[authenticateGuard]},
     {path:'ideas/:id',loadComponent:() => import('./vistas/idea-data/idea-data.component').then(m=> m.IdeaDataComponent), canActivate:[authenticateGuard]},
+    {path:'idea/:id', loadComponent:() => import('./vistas/idea-data-g/idea-data-g.component').then(m=> m.IdeaDataGComponent), canActivate:[authenticateGuard]},
     {path: 'newIdea', loadComponent:() => import('./vistas/new-idea/new-idea.component').then(m=> m.NewIdeaComponent), canActivate:[authenticateGuard]},
     //Rutas de equipo
     {path: 'newIdea/add/:id', loadComponent:() => import('./vistas/equipo/equipo.component').then(m=> m.EquipoComponent), canActivate:[authenticateGuard]},

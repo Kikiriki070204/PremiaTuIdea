@@ -29,6 +29,9 @@ equipoID: number | null = null
 searchChanged = new Subject<string>();
 allColaboradores: User[] = []
 //modal properties:
+checkboxModelModal = new FormControl
+checkboxStatesModal: { [id: number]: boolean } = {};
+
 checkboxModel = new FormControl
 checkboxStates: { [id: number]: boolean } = {};
 

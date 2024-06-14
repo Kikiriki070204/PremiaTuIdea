@@ -64,4 +64,8 @@ user_rol: string | null = null
   {
     this.router.navigate(['/ideas/', id])
   }
+  goToIdeaG(id: number)
+  {
+    this.router.navigate(['/idea/', id])
+  }
 }

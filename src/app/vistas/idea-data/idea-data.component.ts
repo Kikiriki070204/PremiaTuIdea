@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../servicios/ideas.service';
-import { Campo, EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
+import { Campo, EditColabs, EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { NgFor, NgIf } from '@angular/common';
 import { Colaborador, User } from '../../interfaces/user';
@@ -12,6 +12,9 @@ import { HttpResponse } from '../../interfaces/http';
 import { Imagen } from '../../interfaces/ideas';
 import { environment } from '../../../enviroment/enviroment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { AuthService } from '../../servicios/auth.service';
+import { Subject, debounceTime } from 'rxjs';
+import { UsersService } from '../../servicios/users.service';
 
 @Component({
   selector: 'app-idea-data',
@@ -22,11 +25,26 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
   
 })
 export class IdeaDataComponent implements OnInit{
+  colabSelected: number | null = null
+  id: number | null = null
+  equipoID: number | null = null
+  searchChanged = new Subject<string>();
+  allColaboradores: User[] = []
+  //modal properties:
+  checkboxModel = new FormControl
+  checkboxStates: { [id: number]: boolean } = {};
+  
+  colabs: number[] = []
+  selectedItem: number | null = null
+
+
+user_rol: string | null = null
 errorMessage: string | null = null
 Message: string | null = null
 idea: IdeaData | null = null
 idea_id: number | null = null
-colaboradores: [User] | null = null
+colaboradores: User[] | null = null
+colaboradores_modal: User[] = []
 campos_init: [Campo] | null = null
 estados: EstadoIdea[] | null = null
 check = false
@@ -45,20 +63,28 @@ ahorro_valor: number = 0
 campos: Campo[] | null = null
 campos_idea: number[] = []
 //campo's properties:
-checkboxModel = new FormControl
-checkboxStates: { [id: number]: boolean } = {};
+checkboxModelColabs = new FormControl
+checkboxStatesColabs: { [id: number]: boolean } = {};
 
 public safeImage: SafeUrl | null = null;
 ahorro = new FormControl('',Validators.required)
 puntos = new FormControl(Validators.required)
-  constructor(protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {}
+  constructor(protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
+    this.searchChanged.pipe(
+      debounceTime(500)
+    ).subscribe(value => {
+      this.filterColaboradores(value);
+    });
+  }
 
 ngOnInit() {
   this.activatedRoute.params.subscribe(params => {
     var idea_id = params['id']; 
     this.idea_id = idea_id
     console.log(params['id'])
+    this.getAllColaboradores()
   });
+  this.getRol()
   this.ideaData()
   this.estadoIdeas()
   this.getImage()
@@ -68,6 +94,94 @@ ngOnInit() {
   //   this.asignarDisabled()
   // }
   
+}
+
+getRol(){
+  this.user_rol = this.authService.getRol()
+}
+
+
+//Input para modificar colaboradores
+//modal methods
+getAllColaboradores(): void {
+  this.userService.colaboradores().subscribe(
+    colabs => {
+      this.allColaboradores = colabs.users;
+      this.colaboradores_modal = [...this.allColaboradores];
+      console.log(this.colaboradores);
+    }
+  );
+}
+
+
+inputChanged($event: any): void {
+  const value = $event.target.value.toLowerCase();
+  this.searchChanged.next(value);
+}
+
+filterColaboradores(value: string): void {
+  if (value.length <= 0) {
+    this.colaboradores_modal = [...this.allColaboradores];
+  } else {
+    const items: User[] = this.allColaboradores.filter((user) =>
+      user.nombre.toLowerCase().includes(value)
+    );
+    console.log("lot of things happening")
+    console.log(items)
+    this.colaboradores_modal = items;
+  }
+ 
+  // Update isChecked for each colaborador
+  this.colaboradores_modal.forEach(colaborador => {
+    colaborador.isChecked = this.checkboxStates[colaborador.id] || false;
+  });
+}
+
+checkboxColabsChanged(item: any, event: Event) {
+  const isChecked = (event.target as HTMLInputElement).checked;
+  this.checkboxStatesColabs[item] = isChecked;
+ 
+  if (isChecked) {
+    this.colabs.push(item);
+    console.log(this.colabs)
+  } else {
+    // Si se desmarca el checkbox, verifica si el elemento está en el array
+    const index = this.colabs.indexOf(item);
+    if (index !== -1) {
+      // Si está presente, elimínalo del array
+      this.colabs.splice(index, 1);
+      console.log(this.colabs)
+    }
+  }
+}
+
+agregarColab() {
+  let self = this
+  let editarColabs: EditColabs = {
+    id_usuarios: this.colabs,
+    id: this.idea_id ?? 0
+  }
+
+  this.ideaService.editarColaboradores(editarColabs).subscribe({
+    next(value) {
+      self.router.navigate(['/ideas'])
+    },
+    error(err: HttpResponse) {
+      switch(err.status)
+      {
+        case 422:
+            self.errorMessage = 'Por favor introduzca datos validos';
+            break;
+          case 404:
+            self.errorMessage = 'Usuarios no encontrada';
+            break;
+          default:
+              // Errores generales
+              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              break;
+      }
+    },
+  })
 }
 
 
@@ -101,6 +215,12 @@ ideaData()
             campo =>{
               self.campos_idea.push(campo.id)
               self.checkboxStates[campo.id] = self.campos_idea.includes(campo.id);
+            }
+          )
+          value.colaboradores.forEach(
+            colab =>{
+              self.colabs.push(colab.id)
+              self.checkboxStatesColabs[colab.id] = self.colabs.includes(colab.id)
             }
           )
           console.log("campos seleccionados:", self.campos_idea)

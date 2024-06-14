@@ -76,6 +76,28 @@
     </div>
 </nav>
 }
+@else if(user_rol == '2') {
+  <nav class="bg-gray-50 dark:bg-gray-700" style="width: 100%;">
+    <div class="max-w-screen-xl px-4 py-3 mx-auto">
+        <div class="flex items-center">
+            <ul class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm">
+                <li>
+                    <a [routerLink]="['/dashboard']" class="text-gray-900 dark:text-white hover:underline" aria-current="page">Inicio</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/ideas']" class="text-gray-900 dark:text-white hover:underline">Ideas</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/usuarios']" class="text-gray-900 dark:text-white hover:underline">Usuarios</a>
+                </li>
+                <li>
+                  <a [routerLink]="['/productos']" class="text-gray-900 dark:text-white hover:underline">Productos</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+}
 @else if(user_rol == '3') {
   <nav class="bg-gray-50 dark:bg-gray-700 sm:w-fit">
     <div class="max-w-screen-xl px-4 py-3 mx-auto">
