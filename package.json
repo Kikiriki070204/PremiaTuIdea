@@ -21,6 +21,7 @@
     "apexcharts": "^3.49.1",
     "bootstrap": "^5.3.3",
     "chart.js": "^4.4.3",
+    "cors": "^2.8.5",
     "flowbite": "^2.3.0",
     "flowbite-angular": "^0.0.2",
     "ng-apexcharts": "^1.10.0",
