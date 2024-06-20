@@ -139,9 +139,9 @@
                 <tbody>
                     <tr *ngFor="let idea of ideasUsers">
                     @if(user_rol == '1'){
-                      <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white  hover:text-blue-500 "><a (click)="goToIdea(idea.id)">{{idea.titulo}}</a></td>
+                      <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white  hover:text-blue-500 "><a [routerLink]="['/ideas/', idea.id]">{{idea.titulo}}</a></td>
                     }
-                    @else {<td class="px-6 py-4 font-semibold text-gray-900 dark:text-white  hover:text-blue-500 "><a (click)="goToIdeaG(idea.id)">{{idea.titulo}}</a></td>
+                    @else {<td class="px-6 py-4 font-semibold text-gray-900 dark:text-white  hover:text-blue-500 "><a [routerLink]="['/idea/', idea.id]">{{idea.titulo}}</a></td>
                         }
                       @if(idea.estatus == 1)
                       {
