@@ -47,7 +47,9 @@ colaboradores: User[] | null = null
 colaboradores_modal: User[] = []
 campos_init: [Campo] | null = null
 estados: EstadoIdea[] | null = null
+puntos_idea: number|null = null
 check = false
+ahorro_idea: number | null = null
 //datos para editar
 titulo= new FormControl
 antecedentes = new FormControl
@@ -69,6 +71,7 @@ checkboxStatesColabs: { [id: number]: boolean } = {};
 public safeImage: SafeUrl | null = null;
 ahorro = new FormControl('',Validators.required)
 puntos = new FormControl(Validators.required)
+puntos_x_idea = new FormControl('',Validators.required)
   constructor(protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
     this.searchChanged.pipe(
       debounceTime(500)
@@ -205,6 +208,8 @@ ideaData()
           self.campos_init = value.campos
           self.contable = value.idea.contable
           self.ahorro_valor = value.idea.ahorro
+          self.puntos_idea = value.idea.puntos
+          self.ahorro_idea = value.idea.ahorro
           console.log(value.idea.ahorro)
           value.colaboradores.forEach(
             colaborador =>{
@@ -290,6 +295,7 @@ ideaData()
       titulo: this.idea?.idea.titulo ?? "",
       antecedentes: this.idea?.idea.antecedente ?? "",
       propuesta: this.idea?.idea.propuesta ?? "",
+      puntos: (this.puntos_x_idea.value !== null && this.puntos_x_idea.value !== '') ? +this.puntos_x_idea.value : this.idea?.idea.puntos,
       estatus: this.selectedEstado ?? 0,
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
@@ -328,6 +334,7 @@ ideaData()
       titulo: this.idea?.idea.titulo ?? "",
       antecedentes: this.idea?.idea.antecedente ?? "",
       propuesta: this.idea?.idea.propuesta ?? "",
+      puntos: (this.puntos_x_idea.value !== null && this.puntos_x_idea.value !== '') ? +this.puntos_x_idea.value : this.idea?.idea.puntos,
       estatus: this.idea?.idea.estatus ?? 0,
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,

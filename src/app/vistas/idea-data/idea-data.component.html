@@ -140,12 +140,13 @@
                         <input (change)="handleRadioChange($event)" id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
                     </div>
-                    <h6 class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
-                    <div class="flex relative z-0 w-full mb-1 group">
-                        <p class="block py-2.5 px-0 w-2 text-sm">$</p>
-                        <input [formControl]="ahorro" type="number" name="floating_valor" id="floating_valor" class="block py-2.5 px-0 w-32 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{ahorro_valor}}" required />
+
+                    <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
+                    <div class="flex relative z-0 w-full mb-2 group">
+                        <p class="w-fit mt-2.5">$</p>
+                        <input [formControl]="ahorro" type="number" name="floating_ahorro" id="floating_ahorro" value="{{idea?.idea?.ahorro}}" class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{idea?.idea?.ahorro}}" required />  
                     </div>
-                    }
+                 }
                     @else {
                         <div class="flex items-center mb-4">
                             <input disabled="true" (change)="handleRadioChange($event)" checked  id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -162,6 +163,24 @@
                         </div>
                     }
                 }
+
+                
+                @if(idea?.idea?.puntos == 0){
+                }
+                @else {
+                    @if(idea?.idea?.estatus == 3)
+                    {
+                        
+                        <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Puntos asignados a la idea</h6>
+                        <div class="relative z-0 w-full mb-2 group">
+                            <input [formControl]="puntos_x_idea" type="number" name="floating_puntos_i" id="floating_puntos_i" value="{{idea?.idea?.puntos}}" class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{idea?.idea?.puntos}}" required />
+                        </div>
+                        }
+                    @else {
+
+                    }
+                }
+
                 
                 <h6 class="mt-3 mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Campos</h6>
 
@@ -183,7 +202,7 @@
                         </div>
                 </div>
                 }
-
+  
                 </div>
 
                 <button data-modal-target="puntos-modal" data-modal-toggle="puntos-modal"  type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Asignar puntos</button>

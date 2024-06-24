@@ -23,6 +23,7 @@ export interface IdeaData{
 		condiciones: string
 		ahorro: number
 		contable: number
+		puntos: number
 	},
 	colaboradores: User[
 		
@@ -53,6 +54,7 @@ export interface Estado{
     titulo: string
     antecedentes: string
     propuesta : string
+	puntos: number | undefined
 	estatus : number
 	contable: number
 	campos_id: number[] | null
