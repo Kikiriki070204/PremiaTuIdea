@@ -48,6 +48,8 @@ colaboradores_modal: User[] = []
 campos_init: [Campo] | null = null
 estados: EstadoIdea[] | null = null
 puntos_idea: number|null = null
+
+puntos_idea_edit: number = 0
 check = false
 ahorro_idea: number | null = null
 //datos para editar
@@ -246,12 +248,14 @@ ideaData()
       id_usuarios: this.colaboradores_id,
       puntos: puntosColaboradores ?? [],
     }
-    console.log("puntos", puntosColaboradores)
+    
+  const totalPuntos = puntosColaboradores!.reduce((acc, curr) => acc + curr, 0);
+  self.puntos_idea_edit = totalPuntos; // Asignar el total de puntos a 
+  console.log("puntos totales: ", self.puntos_idea_edit)
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User ) {
         console.log("puntos asignados correctamente!")
         self.Message = '¡Puntos asignados correctamente!'
-        
         //hay que poner un alert bonito que diga puntos asignados
       },
       error(err: HttpResponse) {
@@ -334,7 +338,7 @@ ideaData()
       titulo: this.idea?.idea.titulo ?? "",
       antecedentes: this.idea?.idea.antecedente ?? "",
       propuesta: this.idea?.idea.propuesta ?? "",
-      puntos: (this.puntos_x_idea.value !== null && this.puntos_x_idea.value !== '') ? +this.puntos_x_idea.value : this.idea?.idea.puntos,
+      puntos: (this.puntos_x_idea.value !== null && this.puntos_x_idea.value !== '') ? +this.puntos_x_idea.value : (this.idea?.idea.puntos === 0) ? this.puntos_idea_edit : this.idea?.idea.puntos,
       estatus: this.idea?.idea.estatus ?? 0,
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
