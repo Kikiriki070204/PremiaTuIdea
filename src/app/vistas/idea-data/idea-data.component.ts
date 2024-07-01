@@ -255,6 +255,7 @@ ideaData()
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User ) {
         console.log("puntos asignados correctamente!")
+        self.router.navigate(['/ideas'])
         self.Message = '¡Puntos asignados correctamente!'
         //hay que poner un alert bonito que diga puntos asignados
       },
