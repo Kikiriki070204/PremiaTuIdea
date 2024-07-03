@@ -103,28 +103,28 @@ export class ReportesComponent implements OnInit{
               label: '# of assigned points',
               data: this.top10_users_points,
               backgroundColor: [
-                  'rgba(255, 99, 132, 0.2)',
-                  'rgba(255, 159, 64, 0.2)',
-                  'rgba(255, 205, 86, 0.2)',
-                  'rgba(75, 192, 192, 0.2)',
-                  'rgba(54, 162, 235, 0.2)',
-                  'rgba(153, 102, 255, 0.2)',
-                  'rgba(201, 203, 207, 0.2)',
-                  'rgba(0, 128, 0, 0.2)', // Nuevo color
-                  'rgba(255, 0, 0, 0.2)', // Nuevo color
-                  'rgba(0, 0, 255, 0.2)'
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
               ],
               borderColor: [
-                'rgb(255, 99, 132)',
-                'rgb(255, 159, 64)',
-                'rgb(255, 205, 86)',
-                'rgb(75, 192, 192)',
-                'rgb(54, 162, 235)',
-                'rgb(153, 102, 255)',
-                'rgb(201, 203, 207)',
-                'rgb(0, 128, 0)', // Nuevo color
-                'rgb(255, 0, 0)', // Nuevo color
-                'rgb(0, 0, 255)' 
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
               ],
               borderWidth: 1
           }]
@@ -216,20 +216,29 @@ async renderPuntosContables()
                 label: '% of Ideas',
                 data: this.percentages_puntos,
                 backgroundColor: [
-                    'rgba(0, 128, 0, 0.2)', 
-                    'rgba(255, 0, 0, 0.2)', 
-                    'rgba(0, 0, 255, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(0, 128, 0)', 
-                    'rgb(255, 0, 0)', 
-                    'rgb(0, 0, 255)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
+              ],
+              borderColor: [
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
+              ],
                 borderWidth: 1
             }]
         },
@@ -258,20 +267,29 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.non_percentages_puntos,
                 backgroundColor: [
-                    'rgba(0, 128, 0, 0.2)', 
-                    'rgba(255, 0, 0, 0.2)', 
-                    'rgba(0, 0, 255, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgb(0, 128, 0)', 
-                    'rgb(255, 0, 0)', 
-                    'rgb(0, 0, 255)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
+              ],
+              borderColor: [
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
+              ],
                 borderWidth: 1
             }]
         },
@@ -366,21 +384,29 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.accountable_percentages,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
+              ],
+              borderColor: [
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
+              ],
                 borderWidth: 1
             }]
         },
@@ -409,21 +435,29 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.non_percentages,
                 backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
-                ],
-                borderColor: [
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
-                ],
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
+              ],
+              borderColor: [
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
+              ],
                 borderWidth: 1
             }]
         },
@@ -483,19 +517,29 @@ async renderPuntosNoContables()
                 label: '% of savings',
                 data: this.ahorros_percentages,
                 backgroundColor: [
-                    'rgba(64, 224, 208, 0.2)', //turquesa
-                    'rgba(216, 191, 216, 0.2)', // lila
-                    'rgba(255, 218, 185, 0.2)', //melocoton
-                    'rgba(135, 206, 235, 0.2)', //azul cielo
-                    'rgba(152, 251, 152, 0.2)'//verde menta
-                ],
-                borderColor: [
-                    'rgba(64, 224, 208, 1)', //turquesa
-                    'rgba(216, 191, 216, 1)', // lila
-                    'rgba(255, 218, 185, 1)', //melocoton
-                    'rgba(135, 206, 235, 1)', //azul cielo
-                    'rgba(152, 251, 152, 1)'//verde menta
-                ],
+                  'rgba(0, 206, 209, 0.4)', //dark turquoise
+                  'rgba(127, 255, 212, 0.4)', //aquamarine
+                  'rgba(64, 224, 208, 0.4)', //turquoise
+                  'rgba(70, 130, 180, 0.4)', //steel blue
+                  'rgba(0, 191, 255, 0.4)', //deep sky blue
+                  'rgba(0, 0, 128, 0.4)', //navy blue
+                  'rgba(0, 0, 255, 0.4)', //blue
+                  'rgba(65, 105, 255, 0.4)', //royal blue
+                  'rgba(72, 61, 134, 0.4)', //dark slate
+                  'rgba(0, 71, 100, 0.4)' //storm blue
+              ],
+              borderColor: [
+                  'rgb(0, 206, 209)', //dark turquoise
+                  'rgb(127, 255, 212)', //aqumarine
+                  'rgb(64, 224, 208)', //turquoise
+                  'rgb(70, 130, 180)', //steel blue
+                  'rgb(0, 191, 255)', //deep sky blue
+                  'rgb(0, 0, 128)', //navy blue
+                  'rgb(0, 0, 255)', //blue
+                  'rgb(65, 105, 255)', //royal blue
+                  'rgb(72, 61, 134)', //dark slate
+                  'rgb(0, 71, 100)' //storm blue
+              ],
                 borderWidth: 1
             }]
         },
