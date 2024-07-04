@@ -103,28 +103,28 @@ export class ReportesComponent implements OnInit{
               label: '# of assigned points',
               data: this.top10_users_points,
               backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
               borderWidth: 1
           }]
@@ -216,28 +216,28 @@ async renderPuntosContables()
                 label: '% of Ideas',
                 data: this.percentages_puntos,
                 backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
                 borderWidth: 1
             }]
@@ -267,28 +267,28 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.non_percentages_puntos,
                 backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
                 borderWidth: 1
             }]
@@ -384,28 +384,28 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.accountable_percentages,
                 backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
                 borderWidth: 1
             }]
@@ -435,28 +435,28 @@ async renderPuntosNoContables()
                 label: '% of Ideas',
                 data: this.non_percentages,
                 backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
                 borderWidth: 1
             }]
@@ -517,28 +517,28 @@ async renderPuntosNoContables()
                 label: '% of savings',
                 data: this.ahorros_percentages,
                 backgroundColor: [
-                  'rgba(0, 206, 209, 0.4)', //dark turquoise
-                  'rgba(127, 255, 212, 0.4)', //aquamarine
-                  'rgba(64, 224, 208, 0.4)', //turquoise
-                  'rgba(70, 130, 180, 0.4)', //steel blue
-                  'rgba(0, 191, 255, 0.4)', //deep sky blue
-                  'rgba(0, 0, 128, 0.4)', //navy blue
-                  'rgba(0, 0, 255, 0.4)', //blue
-                  'rgba(65, 105, 255, 0.4)', //royal blue
-                  'rgba(72, 61, 134, 0.4)', //dark slate
-                  'rgba(0, 71, 100, 0.4)' //storm blue
+                  'rgba(35, 52, 188, 0.4)', //dark turquoise
+                  'rgba(176, 21, 63, 0.4)', //aqumarine
+                  'rgba(29, 232, 50, 0.4)', //turquoise 29, 232, 50
+                  'rgba(235, 235, 28, 0.4)', //steel blue
+                  'rgba(294, 97, 7, 0.4)', //deep sky blue 0, 191, 255
+                  'rgba(33, 147, 8, 0.4)', //navy blue 29, 232, 50
+                  'rgba(0, 191, 255, 0.4)', //blue
+                  'rgba(213, 14, 192, 0.4)', //royal blue
+                  'rgba(231, 207, 7, 0.4)', //dark slate
+                  'rgba(185, 178, 122, 0.4)' //storm blue
               ],
               borderColor: [
-                  'rgb(0, 206, 209)', //dark turquoise
-                  'rgb(127, 255, 212)', //aqumarine
-                  'rgb(64, 224, 208)', //turquoise
-                  'rgb(70, 130, 180)', //steel blue
-                  'rgb(0, 191, 255)', //deep sky blue
-                  'rgb(0, 0, 128)', //navy blue
-                  'rgb(0, 0, 255)', //blue
-                  'rgb(65, 105, 255)', //royal blue
-                  'rgb(72, 61, 134)', //dark slate
-                  'rgb(0, 71, 100)' //storm blue
+                  'rgb(35, 52, 188)', //dark turquoise
+                  'rgb(176, 21, 63)',  //aqumarine 241, 65, 34
+                  'rgb(29, 232, 50)', //turquoise
+                  'rgb(235, 235, 28)', //steel blue
+                  'rgb(294, 97, 7)', //deep sky blue
+                  'rgb(33, 147, 8)', //navy blue
+                  'rgb(0, 191, 255)', //blue
+                  'rgb(213, 14, 192)', //royal blue
+                  'rgb(231, 207, 7)', //dark slate
+                  'rgb(185, 178, 122)' //storm blue
               ],
                 borderWidth: 1
             }]
