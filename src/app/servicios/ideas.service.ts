@@ -63,6 +63,10 @@ export class IdeasService{
     return this.http.get<EstadoIdeas>(`${environment.api_url}/estadoideas/list`);
   }
 
+  deleteIdea(idea: any): Observable<any>{
+    return this.http.delete(`${environment.api_url}`+'/ideass/delete/'+ idea);
+  }
+
   editarEstado(data: Estado): Observable<Idea>
   {
     return this.http.put<Idea>(`${environment.api_url}/ideass/update`, data)

@@ -39,7 +39,8 @@ export class IdeaDataGComponent implements OnInit{
   contable: number = 0
   ahorro_valor: number = 0
   
-  
+  fecha = new Date()
+fecha_puntos: string | null = null
   campos: Campo[] | null = null
   campos_idea: number[] = []
   //campo's properties:

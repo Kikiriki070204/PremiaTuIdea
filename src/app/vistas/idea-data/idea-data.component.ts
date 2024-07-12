@@ -3,7 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../servicios/ideas.service';
 import { Campo, EditColabs, EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Colaborador, User } from '../../interfaces/user';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Estado } from '../../interfaces/idea';
@@ -37,7 +37,8 @@ export class IdeaDataComponent implements OnInit{
   colabs: number[] = []
   selectedItem: number | null = null
 
-
+  fecha = new Date()
+  fecha_puntos: string | null = null
 user_rol: string | null = null
 errorMessage: string | null = null
 Message: string | null = null
@@ -74,12 +75,14 @@ public safeImage: SafeUrl | null = null;
 ahorro = new FormControl('',Validators.required)
 puntos = new FormControl(Validators.required)
 puntos_x_idea = new FormControl('',Validators.required)
-  constructor(protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
+  constructor(private datePipe: DatePipe, protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
     this.searchChanged.pipe(
       debounceTime(500)
     ).subscribe(value => {
       this.filterColaboradores(value);
     });
+    this.fecha_puntos = this.datePipe.transform(this.fecha, 'yyyy-MM-dd');
+    console.log(this.fecha_puntos)
   }
 
 ngOnInit() {
@@ -247,6 +250,7 @@ ideaData()
       id : this.idea_id ?? 0,
       id_usuarios: this.colaboradores_id,
       puntos: puntosColaboradores ?? [],
+      fecha: this.fecha_puntos ?? ''
     }
     
   const totalPuntos = puntosColaboradores!.reduce((acc, curr) => acc + curr, 0);
@@ -264,6 +268,7 @@ ideaData()
         {
           case 422:
               self.errorMessage = 'Por favor introduzca datos validos';
+              console.log(err)
               break;
             case 404:
               self.errorMessage = 'Usuarios no encontrada';
@@ -305,6 +310,7 @@ ideaData()
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
       ahorro: (this.ahorro.value !== null) ? +this.ahorro.value : this.idea?.idea.ahorro,
+      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : ' '
     }
 
     this.ideaService.editarEstado(estado).subscribe({
@@ -344,6 +350,7 @@ ideaData()
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
       ahorro: (this.ahorro.value !== null && this.ahorro.value !== '') ? +this.ahorro.value : this.idea?.idea.ahorro,
+      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : ' '
     }
 
     this.ideaService.editarEstado(estado).subscribe({

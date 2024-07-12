@@ -68,4 +68,20 @@ user_rol: string | null = null
   {
     this.router.navigate(['/idea/', id])
   }
+
+  delete(idea: number)
+  {
+    const confirmation = window.confirm("¿Estás seguro de querer eliminar esta idea? Una vez hecho, no se podrá recuperar.");
+
+    if (confirmation) {
+      this.ideaService.deleteIdea(idea).subscribe({
+        next: () => {
+          this.router.navigate(['/dashboard']);
+        },
+        error: (err) => {
+          console.error('Error al eliminar la idea:', err);
+        }
+      });
+    }
+  }
 }

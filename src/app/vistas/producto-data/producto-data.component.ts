@@ -59,7 +59,6 @@ productData(): void{
       id: this.producto?.producto.id ?? 0,
       nombre: this.producto?.producto.nombre ?? "",
       valor : (this.valor.value !== null && this.valor.value !== '') ? +this.valor.value : this.producto?.producto.valor,
-      url: this.producto?.producto.url ?? "",
       is_active: this.selectedActive ?? 0
     }
 
@@ -94,7 +93,6 @@ productData(): void{
       id: this.producto?.producto.id ?? 0,
       nombre: this.producto?.producto.nombre ?? "",
       valor : (this.valor.value !== null && this.valor.value !== '') ? +this.valor.value : this.producto?.producto.valor,
-      url: this.producto?.producto.url ?? "",
       is_active: this.selectedActive ?? 1
     }
 

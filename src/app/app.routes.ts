@@ -32,6 +32,7 @@ export const routes: Routes =
     {path: 'actividad/:id', loadComponent:() => import('./vistas/actividad-data/actividad-data.component').then(m=> m.ActividadDataComponent), canActivate:[authenticateGuard]},
     //reportes
     {path:'reportes',loadComponent:() => import('./vistas/reportes/reportes.component').then(m=> m.ReportesComponent), canActivate:[authenticateGuard]},
+    {path: 'chart', component:ChartsComponent},
     //wildcard
     {path: '**', loadComponent:() => import('./vistas/not-found/not-found.component').then(m=> m.NotFoundComponent)},
 ];

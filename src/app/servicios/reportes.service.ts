@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AhorroArea, AhorroTotal, Historial, ReportesIdeas, ReportesPuntos } from '../interfaces/reportes';
+import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, ReportesIdeas, ReportesIdeas2, ReportesPuntos } from '../interfaces/reportes';
 import { environment } from '../../enviroment/enviroment';
 
 @Injectable({
@@ -12,27 +12,27 @@ export class ReportesService {
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
-  ideasContables(): Observable<ReportesIdeas>{
-    return this.http.get<ReportesIdeas>(`${environment.api_url}/ideass/ideascontables`)
+  ideasContables(fechas: FechasIdeas): Observable<ReportesIdeas2>{
+    return this.http.post<ReportesIdeas2>(`${environment.api_url}/ideass/ideascontables`, fechas)
   }
-  ideasNoContables(): Observable<ReportesIdeas>{
-    return this.http.get<ReportesIdeas>(`${environment.api_url}/ideass/ideasnocontables`)
-  }
-
-  puntosContables(): Observable<ReportesPuntos>{
-    return this.http.get<ReportesPuntos>(`${environment.api_url}/ideass/puntoscontalbes`)
+  ideasNoContables(fechas: FechasIdeas): Observable<ReportesIdeas>{
+    return this.http.post<ReportesIdeas>(`${environment.api_url}/ideass/ideasnocontables`, fechas)
   }
 
-  puntosNoContables(): Observable<ReportesPuntos>{
-    return this.http.get<ReportesPuntos>(`${environment.api_url}/ideass/ahorronocontable`)
+  puntosContables(fechas: FechasPuntos): Observable<ReportesPuntos>{
+    return this.http.post<ReportesPuntos>(`${environment.api_url}/ideass/puntoscontables`, fechas)
   }
 
-  top10(): Observable<Historial>{
-    return this.http.get<Historial>(`${environment.api_url}/historial/list`)
+  puntosNoContables(fechas: FechasPuntos): Observable<ReportesPuntos>{
+    return this.http.post<ReportesPuntos>(`${environment.api_url}/ideass/ahorronocontable`, fechas)
+  }
+
+  top10(fechas: FechasPuntos): Observable<Historial>{
+    return this.http.post<Historial>(`${environment.api_url}/historial/list`, fechas)
   }
   //Falta ahorro, debo hacer la interfaz 
-  ahorro(): Observable<AhorroTotal>{
-    return this.http.get<AhorroTotal>(`${environment.api_url}/ideass/ahorrocontable`)
+  ahorro(fechas: FechasAhorros): Observable<AhorroTotal>{
+    return this.http.post<AhorroTotal>(`${environment.api_url}/ideass/ahorrocontable`, fechas)
   }
   
 }

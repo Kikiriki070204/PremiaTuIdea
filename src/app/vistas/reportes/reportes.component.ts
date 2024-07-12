@@ -1,20 +1,39 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { NgFor } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Chart, registerables } from 'chart.js';
 import { ReportesService } from '../../servicios/reportes.service';
-import { AhorroArea, AhorroTotal, Historial, IdeasCN, PuntosArea, ReportesPuntos, Top10User } from '../../interfaces/reportes';
+import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../interfaces/reportes';
 import { ReportesIdeas } from '../../interfaces/reportes';
+import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { initFlowbite } from 'flowbite';
 Chart.register(...registerables)
 
 @Component({
   selector: 'app-reportes',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor],
+  imports: [AppNavbarComponent, NgFor, ReactiveFormsModule, FormsModule, NgIf, NgClass],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css'
 })
 export class ReportesComponent implements OnInit{
+
+  ////AUN QUEDA PENDIENTE LAS GRAFICAS DE IDEAS POR AREA Y AHORRO
+
+
+  //CALENDARIO
+  MONTH_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+  DAYS = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+  showDatepicker: boolean = false;
+  showDatepicker2: boolean = false;
+  datepickerValue: any = '';
+  datepickerValue2: any = '';
+  month: any = '';
+  year: any = '';
+  no_of_days: any = [];
+  blankdays: any = [];
+  days: any = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
+
 
   areas_cont_nombres: string[] = []
   areas_cont_ideas: number[] = []
@@ -39,6 +58,8 @@ export class ReportesComponent implements OnInit{
   non_percentages_puntos: number[] = []
   percentages_puntos: number[] = []
 
+  fecha_inicio: string|null = null
+  fecha_fin: string|null = null
   //Top10
   top10: Top10User[] | null = null
   top10_data: Historial | null = null
@@ -56,32 +77,52 @@ export class ReportesComponent implements OnInit{
 
   pxt: number = 0
   ctx = document.getElementById('myChart');
+  tab: number = 0
   constructor(protected reporteService: ReportesService){}
 
   ngOnInit(): void {
-  this.renderHistorial()
-  this.renderPuntosNoContables()
-  this.renderPuntosContables()
-  this.renderNotAccountable()
-  this.renderAccountable()
-  this.renderAhorros()
+  this.initDate()
   }
     
+
+  renderHistorialsByDate()
+  {
+    this.renderHistorial()
+    this.renderPuntosContables()
+    this.renderPuntosNoContables()
+  }
+
+  renderIdeasByDate()
+  {
+    this.renderAccountable()
+    this.renderNotAccountable()
+  }
+  
+  renderSavingsByDate()
+  {
+    this.renderAhorros()
+  }
+
   //TOP 10 USUARIOS CON MAS PUNTOS 
   async historial(){
     let self = this
+    let fechas: FechasPuntos = {
+      fecha_inicio: this.fecha_inicio ?? '',
+      fecha_fin: this.fecha_fin ?? ''
+    }
   try{
      return new Promise<void>((resolve, reject) => {
-      this.reporteService.top10().subscribe({
+      this.reporteService.top10(fechas).subscribe({
         next: (value: Historial) => {
           self.top10_data = value
         value.historial.forEach(
           user =>{
             self.top10_nombres.push(user.nombre)
-            self.top10_users_points.push(user.puntos)
+            self.top10_users_points.push(user.total_puntos)
           })
           const PuntosMax = Math.max(...this.top10_users_points)
           this.top10_max = PuntosMax
+          console.log(this.top10_users_points)
           resolve();
         },
         error: (error) => reject(error)
@@ -94,7 +135,8 @@ export class ReportesComponent implements OnInit{
 
   async renderHistorial()
   {
-    await this.historial();
+
+    await this.historial()
     const myChart = new Chart("top10", {
       type: 'bar',
       data: {
@@ -142,13 +184,50 @@ export class ReportesComponent implements OnInit{
       }
   });
   }
+
+  cleanCharts()
+  {
+    const existingChartHistorial = Chart.getChart('top10');
+    if (existingChartHistorial) {
+        existingChartHistorial.destroy();
+        this.top10 = null
+        this.top10_data =null
+        this.top10_nombres = []
+        this.top10_users_points = []
+        this.top10_max = 0
+
+    }
+    const existingChartPuntosAc = Chart.getChart('puntosCountable');
+      if (existingChartPuntosAc) {
+          existingChartPuntosAc.destroy();
+          this.puntos_cont_data = null
+          this.total_puntos_countable = 0
+          this.total_cont_puntos = []
+          this.puntos_areas_nombres_cont = []
+          this.percentages_puntos = []
+
+      }
+    const existingChartPuntosUn = Chart.getChart('puntosUncountable');
+    if (existingChartPuntosUn) {
+        existingChartPuntosUn.destroy();
+        this.puntos_non_data = null
+        this.total_puntos_unacountable = 0
+        this.total_non_puntos = []
+        this.puntos_areas_nombres = []
+        this.non_percentages_puntos = []
+    }
+  }
   
   //PUNTOS POR AREA (contables y no contables)
   async puntosContables(){
     let self = this
+    let fechas: FechasPuntos = {
+      fecha_inicio: this.fecha_inicio ?? '',
+      fecha_fin: this.fecha_fin ?? ''
+    }
 try{
   return new Promise<void>((resolve, reject) => {
-    this.reporteService.puntosContables().subscribe({
+    this.reporteService.puntosContables(fechas).subscribe({
       next: (value: ReportesPuntos) => {
         
       self.puntos_cont_data = value.msg.puntos_por_area
@@ -175,9 +254,13 @@ try{
 
 async puntosNoContables(){
   let self = this
+  let fechas: FechasPuntos = {
+    fecha_inicio: this.fecha_inicio ?? '',
+    fecha_fin: this.fecha_fin ?? ''
+  }
 try{
   return new Promise<void>((resolve, reject) => {
-    this.reporteService.puntosNoContables().subscribe({
+    this.reporteService.puntosNoContables(fechas).subscribe({
       next: (value: ReportesPuntos) => {
         
       self.puntos_non_data = value.msg.puntos_por_area
@@ -312,13 +395,17 @@ async renderPuntosNoContables()
   //IDEAS POR AREA  (contables y no contables)
   async ideasContables() {
     let self = this
+    let fechas: FechasIdeas = {
+      fecha_inicio: this.fecha_inicio ?? '',
+      fecha_fin: this.fecha_fin ?? ''
+    }
     try{
     return new Promise<void>((resolve, reject) => {
-      this.reporteService.ideasContables().subscribe({
-        next: (value: ReportesIdeas) => {
-          self.areas_cont_data = value.msg.ideas_por_area
+      this.reporteService.ideasContables(fechas).subscribe({
+        next: (value: ReportesIdeas2) => {
+          self.areas_cont_data = value.ideas_por_area
         console.log(self.areas_cont_data)
-        value.msg.ideas_por_area.forEach(
+        value.ideas_por_area.forEach(
           area =>{
             self.areas_cont_nombres.push(area.nombre_area + " ("+area.total_ideas+" ideas)")
             self.areas_cont_ideas.push(area.total_ideas)
@@ -343,9 +430,13 @@ async renderPuntosNoContables()
 
     async ideasNoContables() {
       let self = this
+      let fechas: FechasIdeas = {
+        fecha_inicio: this.fecha_inicio ?? '',
+        fecha_fin: this.fecha_fin ?? ''
+      }
       try{
       return new Promise<void>((resolve, reject) => {
-        this.reporteService.ideasNoContables().subscribe({
+        this.reporteService.ideasNoContables(fechas).subscribe({
           next: (value: ReportesIdeas) => {
             
           self.areas_non_data = value.msg.ideas_por_area
@@ -477,9 +568,13 @@ async renderPuntosNoContables()
   //Ahorro por area
   async ahorroTotal() {
     let self = this
+    let fechas: FechasAhorros = {
+      fecha_inicio: this.fecha_inicio ?? '',
+      fecha_fin: this.fecha_fin ?? ''
+    }
     try{
     return new Promise<void>((resolve, reject) => {
-      this.reporteService.ahorro().subscribe({
+      this.reporteService.ahorro(fechas).subscribe({
         next: (value: AhorroTotal) => {
         self.ahorros_data = value
         self.ahorros = value.msg.ahorros_por_area
@@ -556,4 +651,84 @@ async renderPuntosNoContables()
     }
 
 
+
+    //calendario
+
+    initDate() {
+      let today = new Date();
+      this.month = today.getMonth();
+      this.year = today.getFullYear();
+      this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
+      this.getNoOfDays()
+    }
+  
+    isToday(date: any) {
+      const today = new Date();
+      const d = new Date(this.year, this.month, date);
+      return today.toDateString() === d.toDateString() ? true : false;
+    }
+  
+    getDateValue(date: any) {
+      let selectedDate = new Date(this.year, this.month, date);
+      this.datepickerValue = selectedDate.toDateString();
+      // this.$refs.date.value = selectedDate.getFullYear() +"-"+ ('0'+ selectedDate.getMonth()).slice(-2) +"-"+ ('0' + selectedDate.getDate()).slice(-2);
+      // console.log(this.$refs.date.value);
+      let formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+      this.fecha_inicio = formattedDate
+
+      console.log(this.fecha_inicio)
+      this.showDatepicker = false;
+      }
+
+      getDateValue2(date: any) {
+        let selectedDate = new Date(this.year, this.month, date);
+        this.datepickerValue2 = selectedDate.toDateString();
+        // this.$refs.date.value = selectedDate.getFullYear() +"-"+ ('0'+ selectedDate.getMonth()).slice(-2) +"-"+ ('0' + selectedDate.getDate()).slice(-2);
+        // console.log(this.$refs.date.value);
+        let formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+        this.fecha_fin = formattedDate
+        
+        console.log(this.fecha_fin)
+        this.showDatepicker2 = false;
+        }
+  
+    getNoOfDays() {
+      let daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
+  
+      // find where to start calendar day of week
+      let dayOfWeek = new Date(this.year, this.month).getDay();
+      let blankdaysArray = [];
+      for ( var i=1; i <= dayOfWeek; i++) {
+        blankdaysArray.push(i);
+      }
+  
+      let daysArray = [];
+      for ( var i=1; i <= daysInMonth; i++) {
+        daysArray.push(i);
+      }
+  
+      this.blankdays = blankdaysArray;
+      this.no_of_days = daysArray;
+    }
+    
+    puntosClick()
+    {
+      this.tab = 0
+      console.log(this.tab)
+    }
+
+    ideasClick()
+    {
+      this.tab = 1
+      console.log(this.tab)
+    }
+    ahorrosClick()
+    {
+      this.tab = 2
+      console.log(this.tab)
+    }
+
+
+    //hola, este calendario NO es de mi propiedad, lo saqué por completo de la sig. página:
+        //https://stackblitz.com/edit/angular-tailwind-datepicker?file=src%2Fapp%2Fapp.component.ts
 }

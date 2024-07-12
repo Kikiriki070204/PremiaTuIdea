@@ -37,6 +37,7 @@ export interface Puntos{
 	id: number
 	id_usuarios: number[]
 	puntos: number[]
+	fecha: string
 }
 
 export interface EstadoIdea{
@@ -59,6 +60,7 @@ export interface Estado{
 	contable: number
 	campos_id: number[] | null
 	ahorro: number |  null | undefined
+	fecha_fin: string | null
 }
 
 export interface EstatusIdea{

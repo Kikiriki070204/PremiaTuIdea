@@ -33,6 +33,6 @@ export class IndexComponent  implements OnInit{
   logout()
 {
   this.authService.logout()
-  this.router.navigate([''])
+  this.router.navigate(['/dashboard'])
 }
 }

@@ -19,7 +19,6 @@ export interface ProductoData {
 export interface EditarProducto{
     id:number
     nombre: string
-    url: string
     valor: number | undefined
     is_active: number 
 }

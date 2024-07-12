@@ -22,10 +22,15 @@ export interface ReportesPuntos {
     }
 }
 
+export interface ReportesIdeas2 {
+    total_ideas: number,
+    ideas_por_area: IdeasCN[]
+}
+
 export interface Top10User{
     id: number
     user_id: number
-    puntos: number
+    total_puntos: number
     is_active: boolean
     ibm: number
     nombre: string
@@ -45,4 +50,19 @@ export interface AhorroTotal{
 		total_ahorros: number
 		ahorros_por_area:AhorroArea[]
     }
+}
+
+export interface FechasPuntos{
+    fecha_inicio: string
+    fecha_fin: string
+}
+
+export interface FechasIdeas{
+    fecha_inicio: string
+    fecha_fin: string
+}
+
+export interface FechasAhorros{
+    fecha_inicio: string
+    fecha_fin: string
 }
