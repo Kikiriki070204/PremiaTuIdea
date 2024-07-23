@@ -108,13 +108,13 @@
                         <button (click)="ideasbyStatus(1)" class="hover:text-amber-600 inline-block p-4 border-b-2 rounded-t-lg" id="profile-styled-tab" aria-selected="false">En revision</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button (click)="ideasbyStatus(2)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-green-500 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Aceptadas</button>
+                        <button (click)="ideasbyStatus(2); no_revision()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-green-500 hover:border-gray-300 dark:hover:text-gray-300" id="dashboard-styled-tab" type="button" role="tab" aria-controls="dashboard" aria-selected="false">Aceptadas</button>
                     </li>
                     <li class="me-2" role="presentation">
-                        <button (click)="ideasbyStatus(3)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" type="button" role="tab" aria-controls="settings" aria-selected="false">Implementadas</button>
+                        <button (click)="ideasbyStatus(3); no_revision()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-blue-600 hover:border-gray-300 dark:hover:text-gray-300" id="settings-styled-tab" type="button" role="tab" aria-controls="settings" aria-selected="false">Implementadas</button>
                     </li>
                     <li role="presentation">
-                        <button (click)="ideasbyStatus(4)" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-700 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" type="button" role="tab" aria-controls="contacts" aria-selected="false">Rechazadas</button>
+                        <button (click)="ideasbyStatus(4); no_revision()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-red-700 hover:border-gray-300 dark:hover:text-gray-300" id="contacts-styled-tab" type="button" role="tab" aria-controls="contacts" aria-selected="false">Rechazadas</button>
                     </li>
                 </ul>
             </div>
@@ -133,9 +133,15 @@
                         </th>
                         @if(user_rol == '1')
                         {
+                            @if(revision == 1)
+                            {
                             <th scope="col" class="px-6 py-3">
                                 Opciones
                             </th>
+                        }
+                        @else {
+                            
+                        }
                         }
                         @else {
 
@@ -163,12 +169,18 @@
                       @else if(idea.estatus == 4) {
                         <td  scope="row" style="font-weight: 700;" class="px-6 py-4 font-medium text-red-800 whitespace-nowrap dark:text-white">Rechazada</td>
                       }
+                      @if(idea.estatus == 1){
                         <td>
                             <button (click)="delete(idea.id)" type="button" class="ml-4 text-blue-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
                                 <img class="w-4 h-4" aria-hidden="true" src="./../../assets/delete.png" fill="currentColor" viewBox="0 0 18 18">
                                 <span class="sr-only">Icon description</span>
                             </button>
                         </td>
+                      }
+                      @else {
+
+                      }
+                       
                         
                   </tbody>
             </table>

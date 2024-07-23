@@ -17,6 +17,7 @@ export class IdeasComponent implements OnInit{
  ideas: Idea[] = []
 ideasUsers: Idea[] = []
 user_rol: string | null = null
+revision: number = 1
  constructor(protected ideaService: IdeasService, protected router: Router, protected authService: AuthService){}
   ngOnInit(): void {
     this.getRol()
@@ -83,5 +84,10 @@ user_rol: string | null = null
         }
       });
     }
+  }
+
+  no_revision()
+  {
+    this.revision = 0
   }
 }

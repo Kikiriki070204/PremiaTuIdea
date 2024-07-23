@@ -1,52 +1,81 @@
 <app-app-navbar></app-app-navbar>
 @if(user?.rol_id == 4)
 {
-    <div class="container items-center" style="margin-top: 3%; text-align: center;">
-          <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
-    <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">Este es tu espacio para compartir tus ideas y
-         poder canjear tus puntos por premios</h6>
-         <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por participar!</h6>
-    
-    </div>
-    <div class="flex flex-col items-center pb-10">
-        <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+    <div class="h-screen w-full flex justify-center" style="background-image: url(../../../assets/blue-back.png);" >
+        <div>
+            <div class="container items-center" style="margin-top: 3%; text-align: center;">
+                <h5 class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-teal-300 via-green-300 to-cyan-400">¡Bienvenido(a) {{user?.nombre}}!</h5>
+            <h6 class="mb-2 text-xl font-bold text-white dark:text-gray-400">Este es tu espacio para compartir tus ideas y
+                poder canjear tus puntos por premios</h6>
+                <h6 class="mb-4 text-xl font-bold text-white dark:text-gray-400">¡Gracias por participar!</h6>
+            
+            </div>
+            <div class="flex flex-col items-center pb-10">
+                <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+            </div>
+        </div>
     </div>
   
 }
 @else if(user?.rol_id == 1){
-    <div class="container items-center" style="margin-top: 3%; text-align: center;">
-        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
-  <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">En este espacio podras administrar las ideas propuestas, registrar usuarios y otorgar puntos</h6>
-       <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por tu confianza!</h6>
+<div class="h-screen w-full flex justify-center" style="background-image: url(../../../assets/blue-back.png);" >
+    <div>
+         <div class="container items-center" style="margin-top: 3%; text-align: center;">
+        <h5 class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-teal-300 via-emerald-300 to-cyan-400">¡Bienvenido(a) {{user?.nombre}}!</h5>
+  <h6 class="mb-2 text-xl font-bold text-white dark:text-gray-400">En este espacio podras administrar las ideas propuestas, registrar usuarios y otorgar puntos</h6>
+       <h6 class="mb-4 text-xl font-bold text-white dark:text-gray-400">¡Gracias por tu confianza!</h6>
   
   </div>
   <div class="flex flex-col items-center pb-10">
       <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
   </div>
+    </div>
+   
+</div>
 }
 @else if(user?.rol_id == 2){
-    <div class="container items-center" style="margin-top: 3%; text-align: center;">
-        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
-  <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">En este espacio podras visualizar las ideas propuestas y reportes</h6>
-       <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por tu confianza!</h6>
-  
-  </div>
-  <div class="flex flex-col items-center pb-10">
-      <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
-  </div> 
+    <div class="h-screen w-full flex justify-center" style="background-image: url(../../../assets/blue-back.png);" >
+        <div>
+                <div class="container items-center" style="margin-top: 3%; text-align: center;">
+                    <h5 class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-cyan-400 via-green-300 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
+            <h6 class="mb-2 text-xl font-bold text-white dark:text-gray-400">En este espacio podras visualizar las ideas propuestas y reportes</h6>
+                <h6 class="mb-4 text-xl font-bold text-white dark:text-gray-400">¡Gracias por tu confianza!</h6>
+            
+            </div>
+            <div class="flex flex-col items-center pb-10">
+                <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+            </div> 
+        </div>
+    </div>
 }
 @else if(user?.rol_id == 3){
-    <div class="container items-center" style="margin-top: 3%; text-align: center;">
-        <h5 class="mb-2 text-3xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-blue-500 via-green-500 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
-  <h6 class="mb-2 text-xl font-bold text-gray-700 dark:text-gray-400">En este espacio podras registrar usuarios</h6>
-       <h6 class="mb-4 text-xl font-bold text-gray-700 dark:text-gray-400">¡Gracias por tu confianza!</h6>
-  
-  </div>
-  <div class="flex flex-col items-center pb-10">
-      <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
-  </div>
+    <div class="h-screen w-full flex justify-center" style="background-image: url(../../../assets/blue-back.png);" >
+        <div>
+                <div class="container items-center" style="margin-top: 3%; text-align: center;">
+                    <h5 class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-cyan-400 via-green-300 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
+            <h6 class="mb-2 text-xl font-bold text-white dark:text-gray-400">En este espacio podras registrar usuarios</h6>
+                <h6 class="mb-4 text-xl font-bold text-white dark:text-gray-400">¡Gracias por tu confianza!</h6>
+            
+            </div>
+            <div class="flex flex-col items-center pb-10">
+                <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+            </div>
+        </div>
+    </div>
 }
 @else{
-
+    <div class="h-screen w-full flex justify-center" style="background-image: url(../../../assets/blue-bg-2.png);" >
+        <div>
+                <div class="container items-center" style="margin-top: 3%; text-align: center;">
+                    <h5 class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-cyan-400 via-green-300 to-teal-300">¡Bienvenido(a) {{user?.nombre}}!</h5>
+            <h6 class="mb-2 text-xl font-bold text-white dark:text-gray-400">Haz iniciado sesión como invitado</h6>
+                <h6 class="mb-4 text-xl font-bold text-white dark:text-gray-400">Si crees que se trata de un error, contacta a tu administrador</h6>
+            
+            </div>
+            <div class="flex flex-col items-center pb-10">
+                <img class="w-24 h-24 mb-3 animate-pulse" src="../../assets/idea2.png" alt="idea image"/>
+            </div>
+        </div>
+    </div>
 }
 
