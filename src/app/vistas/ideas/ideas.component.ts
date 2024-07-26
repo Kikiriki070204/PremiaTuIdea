@@ -86,8 +86,5 @@ revision: number = 1
     }
   }
 
-  no_revision()
-  {
-    this.revision = 0
-  }
+
 }
