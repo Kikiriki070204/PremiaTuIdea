@@ -156,6 +156,7 @@ fecha_puntos: string | null = null
               this.campos = campos.campos
             }
           )
+          console.log("campos contable: ", this.campos);
         }
         else
         {
@@ -164,6 +165,7 @@ fecha_puntos: string | null = null
               this.campos = campos.campos
             }
           )
+          console.log("campos no contable: ", this.campos);
         }
   
     }

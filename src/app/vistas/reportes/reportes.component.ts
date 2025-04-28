@@ -34,6 +34,8 @@ export class ReportesComponent implements OnInit{
   blankdays: any = [];
   days: any = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
 
+  date0:string | null = null
+  date1:string | null = null
 
   areas_cont_nombres: string[] = []
   areas_cont_ideas: number[] = []
@@ -87,6 +89,7 @@ export class ReportesComponent implements OnInit{
 
   renderHistorialsByDate()
   {
+    this.cleanCharts()
     this.renderHistorial()
     this.renderPuntosContables()
     this.renderPuntosNoContables()
@@ -94,21 +97,25 @@ export class ReportesComponent implements OnInit{
 
   renderIdeasByDate()
   {
+    this.cleanCharts()
     this.renderAccountable()
     this.renderNotAccountable()
   }
   
   renderSavingsByDate()
   {
+    this.cleanCharts()
     this.renderAhorros()
   }
 
   //TOP 10 USUARIOS CON MAS PUNTOS 
   async historial(){
     let self = this
+    console.log(this.date0);
+    console.log(this.date1);
     let fechas: FechasPuntos = {
-      fecha_inicio: this.fecha_inicio ?? '',
-      fecha_fin: this.fecha_fin ?? ''
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
     }
   try{
      return new Promise<void>((resolve, reject) => {
@@ -222,8 +229,8 @@ export class ReportesComponent implements OnInit{
   async puntosContables(){
     let self = this
     let fechas: FechasPuntos = {
-      fecha_inicio: this.fecha_inicio ?? '',
-      fecha_fin: this.fecha_fin ?? ''
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
     }
 try{
   return new Promise<void>((resolve, reject) => {
@@ -255,8 +262,8 @@ try{
 async puntosNoContables(){
   let self = this
   let fechas: FechasPuntos = {
-    fecha_inicio: this.fecha_inicio ?? '',
-    fecha_fin: this.fecha_fin ?? ''
+    fecha_inicio: this.date0 ?? '',
+    fecha_fin: this.date1 ?? ''
   }
 try{
   return new Promise<void>((resolve, reject) => {
@@ -396,8 +403,8 @@ async renderPuntosNoContables()
   async ideasContables() {
     let self = this
     let fechas: FechasIdeas = {
-      fecha_inicio: this.fecha_inicio ?? '',
-      fecha_fin: this.fecha_fin ?? ''
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
     }
     try{
     return new Promise<void>((resolve, reject) => {
@@ -431,8 +438,8 @@ async renderPuntosNoContables()
     async ideasNoContables() {
       let self = this
       let fechas: FechasIdeas = {
-        fecha_inicio: this.fecha_inicio ?? '',
-        fecha_fin: this.fecha_fin ?? ''
+        fecha_inicio: this.date0 ?? '',
+        fecha_fin: this.date1 ?? ''
       }
       try{
       return new Promise<void>((resolve, reject) => {
@@ -569,8 +576,8 @@ async renderPuntosNoContables()
   async ahorroTotal() {
     let self = this
     let fechas: FechasAhorros = {
-      fecha_inicio: this.fecha_inicio ?? '',
-      fecha_fin: this.fecha_fin ?? ''
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
     }
     try{
     return new Promise<void>((resolve, reject) => {
@@ -660,6 +667,23 @@ async renderPuntosNoContables()
       this.year = today.getFullYear();
       this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
       this.getNoOfDays()
+    }
+
+    changeMonth(direction: number) {
+      this.month += direction;
+      if (this.month > 11) {
+        this.month = 0;
+        this.year++;
+      } else if (this.month < 0) {
+        this.month = 11;
+        this.year--;
+      }
+      this.getNoOfDays();
+    }
+  
+    changeYear(direction: number) {
+      this.year += direction;
+      this.getNoOfDays();
     }
   
     isToday(date: any) {

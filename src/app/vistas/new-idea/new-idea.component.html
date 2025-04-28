@@ -1,19 +1,24 @@
 <app-app-navbar></app-app-navbar>
-<div style="margin-top: 2%; margin-left: 6%; margin-right: 20%;margin-bottom: 10%;" >
+<div style="margin-top: 2%; margin-left: 20%; margin-right: 20%;margin-bottom: 10%;" >
 
-    <h5 class="text-2xl mb-2 font-medium text-blue-700 dark:text-white" style="font-weight: bold;">Describe tu idea</h5>
+    <h5 class="text-2xl mb-2 font-medium text-blue-700 dark:text-white" style="font-weight: bold; text-align: center;">Describe tu idea</h5>
     <div *ngIf="errorMessage" class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
         <span class="font-medium">{{errorMessage}}</span>
       </div> 
       
-    <div class="flex p-3 min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex p-3 min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg" style="align-items: center; justify-content: center;">
         <form class="max-w-lg min-w-96">
             <label for="titulo" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Titulo</label>
             
             <div class="flex">
                 <input [formControl]="titulo" type="text" name="titulo" id="titulo" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Titulo de tu idea" required />
             </div>
-
+            <br>
+            <label for="fecha_inicial" class="block mb-1 text-sm font-medium text-gray-900 dark:text-white">Fecha Inicio</label>
+            <div class="flex">
+                <input [formControl]="fecha_inicial" type="date" name="fecha_inicial" id="fecha_inicial" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="08/30/2024" required>
+            </div>
+            <br>
             <label for="antecedente" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Antecedente</label>
             <textarea [formControl]="antecedentes" id="antecedente" rows="4" class="mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="..."></textarea>
             

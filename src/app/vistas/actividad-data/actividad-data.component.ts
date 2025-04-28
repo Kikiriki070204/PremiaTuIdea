@@ -5,11 +5,12 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Actividad, ActivityData, EditEstado, EditEstado2, EstadoAct } from '../../interfaces/actividad';
 import { HttpResponse } from '../../interfaces/http'; 
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-actividad-data',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor, NgIf],
+  imports: [AppNavbarComponent, NgFor, NgIf, FormsModule],
   templateUrl: './actividad-data.component.html',
   styleUrl: './actividad-data.component.css'
 })
@@ -19,6 +20,8 @@ export class ActividadDataComponent implements OnInit{
   actividad: ActivityData | null = null
   estados: EstadoAct[] | null = null
   selectedEstado: number | null = null
+
+  date1: string | null = null
 
   fecha = new Date()
 fecha_fin: string | null = null
@@ -73,7 +76,7 @@ fecha_fin: string | null = null
       titulo: this.actividad?.actividad.titulo ?? "",
       responsable: this.actividad?.actividad.responsable ?? 0,
       fecha_inicio: this.actividad?.actividad.fecha_inicio || new Date(),
-      fecha_finalizacion: this.fecha_fin ?? "",
+      fecha_finalizacion: this.date1 ?? "",
       id_estado_actividad: this.selectedEstado ?? 0
     }
 

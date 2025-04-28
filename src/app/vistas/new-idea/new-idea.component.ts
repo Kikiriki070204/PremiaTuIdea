@@ -6,14 +6,14 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { NewIdea } from '../../interfaces/new-idea';
 import { HttpResponse } from '../../interfaces/http';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf, NgClass } from '@angular/common';
 import { UsersService } from '../../servicios/users.service';
 import { Area } from '../../interfaces/activar';
 
 @Component({
   selector: 'app-new-idea',
   standalone: true,
-  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf, NgFor],
+  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf, NgFor,NgClass],
   templateUrl: './new-idea.component.html',
   styleUrl: './new-idea.component.css'
 })
@@ -28,6 +28,7 @@ titulo = new FormControl('', Validators.required)
 antecedentes = new FormControl('', Validators.maxLength(2000))
 propuesta = new FormControl('', Validators.maxLength(2000))
 condiciones: File | null = null
+fecha_inicial = new FormControl('',Validators.required)
 area = new FormControl()
 
 constructor(private datePipe: DatePipe,protected ideaService: IdeasService, protected router: Router, protected userService: UsersService){
@@ -59,7 +60,7 @@ onAreaChange(event: any){
   this.selectedArea = String(selectedValue)
 }
 
-idea()
+async idea() 
 {
   let self = this
   let formData: FormData = new FormData();
@@ -69,7 +70,19 @@ idea()
   if (this.condiciones) {
     formData.append('condiciones', this.condiciones);
   }
-  formData.append('fecha_inicio', this.fecha_inicio ?? "")
+  else  {
+    console.log("No selecciono niguna imagen")
+    // Load the default image/file from the project (assuming it's in the assets folder)
+    const defaultImageUrl = 'assets/borgwarner_logo.png';  // Adjust this path accordingly
+
+    const response = await fetch(defaultImageUrl);
+    const blob = await response.blob();
+    const file = new File([blob], 'default-image.png', { type: blob.type });
+
+  
+    formData.append('condiciones', file);
+  }
+  formData.append('fecha_inicio', this.fecha_inicial.value ?? "")
   formData.append('area_id', this.selectedArea ?? "")
  
   this.ideaService.newIdea(formData).subscribe({

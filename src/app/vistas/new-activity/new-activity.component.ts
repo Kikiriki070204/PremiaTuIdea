@@ -24,6 +24,7 @@ export class NewActivityComponent implements OnInit{
 selectedItem: number | null = null
 selectModel = new FormControl
 titulo = new FormControl
+date1: string | null = null
 
 id: number | null = null
 fecha = new Date()
@@ -78,7 +79,7 @@ fecha_inicio: string | null = null
       id_idea: this.id ?? 0,
       titulo: this.titulo.value ?? "",
       responsable: this.selectedItem ?? 0,
-      fecha_inicio: this.fecha_inicio ?? ""
+      fecha_inicio: this.date1 ?? ""
     }
 
     this.ideaService.newActivity(newAct).subscribe({

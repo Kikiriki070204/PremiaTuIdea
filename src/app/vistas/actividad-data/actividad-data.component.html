@@ -1,6 +1,6 @@
 <app-app-navbar></app-app-navbar>
 <!--Hay q modificar el diseno, me voy a chambear en otros request-->
-<div class="myContainer container">
+<div class="myContainer container" style="justify-content: center; align-items: center;">
    <div class="profileCard" style="width: 50%;">
         
         <div class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
@@ -27,6 +27,13 @@
             <option value="{{actividad?.actividad?.id_estado_actividad}}" disabled selected hidden>{{actividad?.actividad?.estado_actividad}}</option>
             <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>     
           </select>
+          @if (selectedEstado == 4 || selectedEstado == 5) {
+            <br>
+            <label for="date1" class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Fecha de Finalizacion</label>
+              <div class="flex w-72">
+                  <input [(ngModel)]="date1" type="date" name="date1" id="date1" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="08/30/2024" required>
+              </div>
+          }
           @if(selectedEstado == 4 || selectedEstado == 5)
           {
             <button (click)="editarEstadoFinal()" type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-36 py-2 text-center me-2 mb-2">Editar estado</button>
