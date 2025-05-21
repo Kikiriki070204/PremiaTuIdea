@@ -1,27 +1,20 @@
 import { Component, OnInit } from '@angular/core';
-import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
-import { CommonModule, NgClass, NgFor, NgIf } from '@angular/common';
+import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../interfaces/reportes';
+import { ReportesService } from '../../../servicios/reportes.service';
 import { Chart, registerables } from 'chart.js';
-import { ReportesService } from '../../servicios/reportes.service';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../interfaces/reportes';
-import { ReportesIdeas } from '../../interfaces/reportes';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { initFlowbite } from 'flowbite';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 Chart.register(...registerables)
 
 @Component({
-  selector: 'app-reportes',
+  selector: 'app-reportes-ahorro',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, RouterLink, RouterOutlet, RouterModule],
-  templateUrl: './reportes.component.html',
-  styleUrl: './reportes.component.css'
+  imports: [ReactiveFormsModule, CommonModule, FormsModule],
+  templateUrl: './reportes-ahorro.component.html',
+  styleUrl: './reportes-ahorro.component.css'
 })
-export class ReportesComponent implements OnInit {
-
-  ////AUN QUEDA PENDIENTE LAS GRAFICAS DE IDEAS POR AREA Y AHORRO
-
-
+export class ReportesAhorroComponent implements OnInit {
+  constructor(private reporteService: ReportesService) { }
   //CALENDARIO
   MONTH_NAMES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
   DAYS = ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'];
@@ -38,11 +31,6 @@ export class ReportesComponent implements OnInit {
   date0: string | null = null
   date1: string | null = null
 
-
-  //Ideas Contables y No contables
-
-
-  //Puntos por Area
   puntos_non_data: PuntosArea[] | null = null
   puntos_cont_data: PuntosArea[] | null = null
   total_puntos_uncountable: number = 0
@@ -56,38 +44,7 @@ export class ReportesComponent implements OnInit {
 
   fecha_inicio: string | null = null
   fecha_fin: string | null = null
-  //Top10
-  top10: Top10User[] | null = null
-  top10_data: Historial | null = null
-  top10_nombres: string[] = []
-  top10_users_points: number[] = []
-  top10_max: number = 0
 
-  // puntos contables y no contables (historicos)
-  puntosCountableChart = Chart.getChart('puntosCountable')
-  puntosUncountableChart = Chart.getChart('puntosUncountable')
-  puntos_max: number = 0
-  puntos_max_nocont: number = 0
-
-  // ideas contables y no contables (historicos)
-  ideasTotalesChart = Chart.getChart('ideasTotales')
-  ideasContablesChart = Chart.getChart('countable')
-  ideasNoContablesChart = Chart.getChart('ctx')
-  areas_tot_nombres: string[] = []
-  areas_tot_ideas: number[] = []
-  areas_tot_data: IdeasCN[] | null = null
-  tot_percentages: number[] = []
-  areas_cont_nombres: string[] = []
-  areas_cont_ideas: number[] = []
-  areas_non_nombres: string[] = []
-  areas_non_ideas: number[] = []
-  accountable_percentages: number[] = []
-  non_percentages: number[] = []
-  areas_non_data: IdeasCN[] | null = null
-  areas_cont_data: IdeasCN[] | null = null
-
-
-  //Ahorros
   ahorrosChart = Chart.getChart('ahorro')
   ahorros: AhorroArea[] | null = null
   ahorros_data: AhorroTotal | null = null
@@ -95,90 +52,24 @@ export class ReportesComponent implements OnInit {
   ahorros_totalByArea: number[] = []
   ahorros_percentages: number[] = []
   total_ahorros: number = 0
-
   pxt: number = 0
-  ctx = document.getElementById('myChart');
-  tab: number = 0
-
-  constructor(protected reporteService: ReportesService) { }
 
   ngOnInit(): void {
     this.initDate()
-
+    this.renderAhorrosHistoricos()
   }
 
-
-
-  renderHistorialsByDate() {
+  mostrarDatosHistoricos() {
     this.cleanCharts()
-
+    this.renderAhorrosHistoricos()
   }
 
-  renderIdeasByDate() {
+  mostrarDatosFiltrados() {
     this.cleanCharts()
-
-  }
-
-  renderSavingsByDate() {
-    this.cleanCharts()
-    this.renderAhorros()
+    this.renderAhorrosFiltrados()
   }
 
   cleanCharts() {
-    const existingChartHistorial = Chart.getChart('top10');
-    if (existingChartHistorial) {
-      existingChartHistorial.destroy();
-      this.top10 = null
-      this.top10_data = null
-      this.top10_nombres = []
-      this.top10_users_points = []
-      this.top10_max = 0
-
-    }
-    const existingChartPuntosAc = Chart.getChart('puntosCountable');
-    if (existingChartPuntosAc) {
-      existingChartPuntosAc.destroy();
-      this.puntos_cont_data = null
-      this.total_puntos_countable = 0
-      this.total_cont_puntos = []
-      this.puntos_areas_nombres_cont = []
-      this.percentages_puntos = []
-
-    }
-    const existingChartPuntosUn = Chart.getChart('puntosUncountable');
-    if (existingChartPuntosUn) {
-      existingChartPuntosUn.destroy();
-      this.puntos_non_data = null
-      this.total_puntos_uncountable = 0
-      this.total_non_puntos = []
-      this.puntos_areas_nombres = []
-      this.non_percentages_puntos = []
-    }
-    const existingChartIdeasTotales = Chart.getChart('ideasTotales');
-    if (existingChartIdeasTotales) {
-      existingChartIdeasTotales.destroy();
-      this.areas_tot_data = null
-      this.areas_tot_nombres = []
-      this.areas_tot_ideas = []
-      this.tot_percentages = []
-    }
-    const existingChartIdeasAc = Chart.getChart('countable');
-    if (existingChartIdeasAc) {
-      existingChartIdeasAc.destroy();
-      this.areas_cont_data = null
-      this.areas_cont_nombres = []
-      this.areas_cont_ideas = []
-      this.accountable_percentages = []
-    }
-    const existingChartIdeasUn = Chart.getChart('ctx');
-    if (existingChartIdeasUn) {
-      existingChartIdeasUn.destroy();
-      this.areas_non_data = null
-      this.areas_non_nombres = []
-      this.areas_non_ideas = []
-      this.non_percentages = []
-    }
-
     const existingChartAhorro = Chart.getChart('ahorro');
     if (existingChartAhorro) {
       existingChartAhorro.destroy();
@@ -188,66 +79,10 @@ export class ReportesComponent implements OnInit {
       this.ahorros_totalByArea = []
       this.ahorros_percentages = []
     }
-
   }
 
-  // Mostrar datos historicos de nuevo
-  mostrarDatosHistoricos() {
-    if (this.tab === 0) {
-      this.cleanCharts()
-
-    }
-    else if (this.tab === 1) {
-      this.cleanCharts()
-
-
-    } else if (this.tab == 2) {
-      this.cleanCharts()
-      this.renderAhorrosHistorico()
-    }
-  }
-
-
-
-  // Filtrar por fechas
-  mostrarDatosPorFechas() {
-    if (this.tab === 0) {
-      this.cleanCharts()
-
-    }
-    else if (this.tab === 1) {
-      this.cleanCharts()
-
-    }
-    else if (this.tab === 2) {
-      this.cleanCharts()
-      this.renderAhorros()
-    }
-  }
-  //TOP 10 USUARIOS CON MAS PUNTOS (HISTORICO)
-
-
-  //TOP 10 USUARIOS CON MAS PUNTOS (FILTRADO)
-
-
-  //PUNTOS POR AREA CONTABLES (HISTORICOS)
-
-  //PUNTOS POR AREA NO CONTABLES (HISTORICOS)
-
-
-  //PUNTOS POR AREA CONTABLES Y NO CONTABLES (FILTRADOS)
-
-  //IDEAS POR AREA (FILTRADAS)
-
-
-  // IDEAS POR AREA (HISTORICAS)
-
-
-
-  //AHORRO POR AREA (FILTRADO)
-
-  async ahorroTotalHistorico() {
-
+  // Fuente de info
+  async ahorrosHistoricos() {
     let self = this
     try {
       return new Promise<void>((resolve, reject) => {
@@ -275,12 +110,44 @@ export class ReportesComponent implements OnInit {
     catch (error) {
       console.error('Error fetching data:', error);
     }
-
-
   }
 
-  async renderAhorrosHistorico() {
-    await this.ahorroTotalHistorico()
+  async ahorrosFiltrados() {
+    let self = this
+    let fechas: FechasAhorros = {
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
+    }
+    try {
+      return new Promise<void>((resolve, reject) => {
+        this.reporteService.ahorro(fechas).subscribe({
+          next: (value: AhorroTotal) => {
+            self.ahorros_data = value
+            self.ahorros = value.msg.ahorros_por_area
+            self.total_ahorros = value.msg.total_ahorros
+            value.msg.ahorros_por_area.forEach(
+              area => {
+                self.ahorros_nombres.push(area.nombre_area + " ($" + area.total_ahorros + ")")
+                self.ahorros_totalByArea.push(area.total_ahorros)
+              })
+            const total = this.total_ahorros
+            self.ahorros_totalByArea.forEach(value => {
+              self.pxt = (value / total) * 100
+              self.ahorros_percentages.push(this.pxt)
+            });
+            resolve();
+          },
+          error: (error) => reject(error)
+        });
+      });
+    }
+    catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  async renderAhorrosHistoricos() {
+    await this.ahorrosHistoricos()
 
     if (this.ahorrosChart) {
       this.ahorrosChart.destroy();
@@ -332,44 +199,8 @@ export class ReportesComponent implements OnInit {
     });
   }
 
-  async ahorroTotal() {
-    let self = this
-    let fechas: FechasAhorros = {
-      fecha_inicio: this.date0 ?? '',
-      fecha_fin: this.date1 ?? ''
-    }
-    try {
-      return new Promise<void>((resolve, reject) => {
-        this.reporteService.ahorro(fechas).subscribe({
-          next: (value: AhorroTotal) => {
-            self.ahorros_data = value
-            self.ahorros = value.msg.ahorros_por_area
-            self.total_ahorros = value.msg.total_ahorros
-            value.msg.ahorros_por_area.forEach(
-              area => {
-                self.ahorros_nombres.push(area.nombre_area + " ($" + area.total_ahorros + ")")
-                self.ahorros_totalByArea.push(area.total_ahorros)
-              })
-            const total = this.total_ahorros
-            self.ahorros_totalByArea.forEach(value => {
-              self.pxt = (value / total) * 100
-              self.ahorros_percentages.push(this.pxt)
-            });
-            resolve();
-          },
-          error: (error) => reject(error)
-        });
-      });
-    }
-    catch (error) {
-      console.error('Error fetching data:', error);
-    }
-
-
-  }
-
-  async renderAhorros() {
-    await this.ahorroTotal()
+  async renderAhorrosFiltrados() {
+    await this.ahorrosFiltrados()
 
     const myChart = new Chart("ahorro", {
       type: 'bar',
@@ -412,15 +243,11 @@ export class ReportesComponent implements OnInit {
             min: 0,
             max: 100
           }
-        }
+        },
+        responsive: true
       }
     });
   }
-
-  //CALENDARIO
-
-  //hola, este calendario NO es de mi propiedad, lo saqué por completo de la sig. página:
-  //https://stackblitz.com/edit/angular-tailwind-datepicker?file=src%2Fapp%2Fapp.component.ts
 
   initDate() {
     let today = new Date();
@@ -494,23 +321,5 @@ export class ReportesComponent implements OnInit {
 
     this.blankdays = blankdaysArray;
     this.no_of_days = daysArray;
-  }
-
-  puntosClick() {
-    this.tab = 0
-    this.cleanCharts()
-
-  }
-
-  ideasClick() {
-    this.tab = 1
-    this.cleanCharts()
-
-  }
-
-  ahorrosClick() {
-    this.tab = 2
-    this.cleanCharts()
-    this.renderAhorrosHistorico()
   }
 }

@@ -2,30 +2,6 @@
   class="container flex gap-2 items-center"
   style="margin-left: 5%; padding-top: 3%"
 >
-  <button
-    class="btn btn-primary flex items-center justify-center"
-    (click)="goBack()"
-    style="
-      background-color: #233876;
-      border-color: #233876;
-      width: 38px;
-      height: 34px;
-      padding: 0;
-    "
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="20"
-      height="20"
-      fill="white"
-      viewBox="0 0 16 16"
-    >
-      <path
-        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
-      />
-    </svg>
-  </button>
-
   <h4 class="text-4xl font-bold text-blue-900 dark:text-white">Reportes</h4>
 </div>
 
@@ -39,7 +15,9 @@
     >
       <li class="me-2" role="presentation">
         <button
-          (click)="puntosClick()"
+          [routerLink]="['/reportes/puntos']"
+          routerLinkActive="border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
           class="inline-block p-4 border-b-2 rounded-t-lg"
           id="puntos-tab"
           data-tabs-target="#puntos"
@@ -53,8 +31,10 @@
       </li>
       <li class="me-2" role="presentation">
         <button
-          (click)="ideasClick()"
-          class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+          [routerLink]="['/reportes/ideas']"
+          routerLinkActive="border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-block p-4 border-b-2 rounded-t-lg"
           id="ideas-tab"
           data-tabs-target="#ideas"
           type="button"
@@ -67,8 +47,10 @@
       </li>
       <li class="me-2" role="presentation">
         <button
-          (click)="ahorrosClick()"
-          class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+          [routerLink]="['/reportes/ahorro']"
+          routerLinkActive="border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-block p-4 border-b-2 rounded-t-lg"
           id="ahorros-tab"
           data-tabs-target="#ahorros"
           type="button"
@@ -81,7 +63,10 @@
       </li>
     </ul>
   </div>
+  <router-outlet></router-outlet>
+</div>
 
+<!--
   <div id="default-tab-content">
     <div
       class="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 items-start md:items-end mt-2"
@@ -146,7 +131,7 @@
       </button>
     </div>
 
-    <!--Top 10, contables y no contables-->
+    <!--Top 10, contables y no contables
     <div
       class="p-2 rounded-lg dark:bg-gray-800"
       id="puntos"
@@ -184,7 +169,7 @@
       </div>
     </div>
 
-    <!--Ideas-->
+    <!--Ideas
     <div
       class="hidden p-2 rounded-lg dark:bg-gray-800"
       id="ideas"
@@ -218,7 +203,7 @@
       </div>
     </div>
 
-    <!--Ahorro-->
+    <!--Ahorro
     <div
       class="hidden p-2 rounded-lg dark:bg-gray-800"
       id="ahorros"
@@ -235,4 +220,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
