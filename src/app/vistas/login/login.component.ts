@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -18,12 +18,24 @@ import { NgIf } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit{
   errorMessage: string | null = null;
   ibm = new FormControl('',Validators.required)
-  password = new FormControl('', Validators.minLength(6))
+  password = new FormControl('', Validators.minLength(6)) 
+  cargando = false;
+  
 
   constructor(protected cookieService: CookieService, protected service: LoginService, protected authService: AuthService,  protected router: Router){}
+
+  ngOnInit() {
+    this.ibm.valueChanges.subscribe(() => {
+      this.clearError();
+    });
+
+    this.password.valueChanges.subscribe(() => {
+      this.clearError();
+    });
+  }
 
   login(){
     let self = this
@@ -32,9 +44,11 @@ export class LoginComponent {
       password: this.password.value ?? ""
     }
 
+
     this.service.login(login).subscribe({
       next(value: User) {
         // llevarlo a su dashboard.
+        self.cargando = true;
         localStorage.setItem('access_token', value.access_token)
         self.authService.meplus().subscribe({
           next(user: Profile){
@@ -56,7 +70,7 @@ export class LoginComponent {
               }
               else if(err.error.msg == "Usuario no registrado")
               {
-                self.errorMessage = 'Debe registrarse antes de iniciar sesion';
+                self.errorMessage = 'Debe activar su cuenta antes de iniciar sesion';
               }
               else{
                 self.errorMessage = 'Contraseña incorrecta';
@@ -82,6 +96,10 @@ export class LoginComponent {
         }
       },
     })
+  }
+
+  clearError(): void{
+    this.errorMessage = null;
   }
   
 }

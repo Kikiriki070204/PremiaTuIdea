@@ -1,370 +1,708 @@
-<app-app-navbar></app-app-navbar>
 <!--Hay q modificar el diseno, me voy a chambear en otros request-->
 
 <div class="myContainer">
-   <div class="profileCard" style="width: 60%;">
-        
-        <div class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">Titulo de la idea </h5>
-                <h6 class="mb-1 text-xl font-medium dark:text-white text-gray-900" style="font-weight: 600">{{idea?.idea?.titulo}}</h6>
-                <!--antecedentes-->
-                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Antecedentes </h5>
-                <div class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
-                <p class="mb-3 text-gray-600 dark:text-gray-400 text-lg">{{idea?.idea?.antecedente}}</p>
-                </div>  
+  <div class="profileCard" style="width: 60%">
+    <div
+      class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Titulo de la idea
+      </h5>
+      <h6
+        class="mb-1 text-xl font-medium dark:text-white text-gray-900"
+        style="font-weight: 600"
+      >
+        {{ idea?.idea?.titulo }}
+      </h6>
+      <!--antecedentes-->
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Antecedentes
+      </h5>
+      <div
+        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <p class="mb-3 text-gray-600 dark:text-gray-400 text-lg">
+          {{ idea?.idea?.antecedente }}
+        </p>
+      </div>
 
-                <!--propuesta-->
-                <h5 class="mb-2 text-2xl font-bold inline-block text-transparent bg-clip-text dark:text-blue-300 bg-gradient-to-r from-blue-600 via-green-500 to-teal-300">Propuesta</h5>
-                <div class=" mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
-                    <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">{{idea?.idea?.propuesta}}</p>
-                </div> 
-                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Condiciones actuales</h5>
-    
-                    <figure class="max-w-lg">
-                        <img class="h-auto max-w-full rounded-lg" [src]="safeImage" alt="imagen">
-                        <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Condiciones</figcaption>
-                    </figure>
-                    
-        </div>
-   </div>
-    
-            <div class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard">
-            <div class="flex justify-end px-4 pt-4">
-            
-            </div>
-            <div class="flex flex-col pb-2" style="text-align: left;margin-left: 5%;">
-                <div class="flex flex-col pb-3 items-center">
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white" style="font-weight: 700; color: rgb(38, 38, 107);"></h5>
-                <span class="text-sm text-gray-500 dark:text-gray-400" style="font-weight: 600;"></span>
-                </div>
-                <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Estatus de la idea</h6>
+      <!--propuesta-->
+      <h5
+        class="mb-2 text-2xl font-bold inline-block text-transparent bg-clip-text dark:text-blue-300 bg-gradient-to-r from-blue-600 via-green-500 to-teal-300"
+      >
+        Propuesta
+      </h5>
+      <div
+        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">
+          {{ idea?.idea?.propuesta }}
+        </p>
+      </div>
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Condiciones actuales
+      </h5>
 
-                @if(user_rol == '1'){
-                <select (change)="onEstadoChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="{{idea?.idea?.estatus}}" disabled selected hidden>{{idea?.idea?.estatus_idea}}</option>
-                    <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>
-                  </select>
-                }
-                @else {
-                    <select disabled="true" (change)="onEstadoChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="{{idea?.idea?.estatus}}" disabled selected hidden>{{idea?.idea?.estatus_idea}}</option>
-                        <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>
-                      </select>
-                }
-                <div class="flex">
-                   <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Colaboradores de la idea</h6>
-                   <button data-modal-target="colaborador-modal" data-modal-toggle="colaborador-modal" type="button" class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-                    <img class="w-4 h-4" aria-hidden="true" src="./../../assets/edit.png" fill="currentColor" viewBox="0 0 18 18">
-                    <span class="sr-only">Icon description</span>
-                </button>
-                </div>
+      <figure class="max-w-lg">
+        <img
+          class="h-auto max-w-full rounded-lg"
+          [src]="safeImage"
+          alt="imagen"
+        />
+        <figcaption
+          class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400"
+        >
+          Condiciones
+        </figcaption>
+      </figure>
+    </div>
+  </div>
 
-                  <!-- Main modal -->
-  <div id="colaborador-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-md max-h-full">
-        <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+  <div
+    class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard"
+  >
+    <div class="flex justify-end px-4 pt-4"></div>
+    <div class="flex flex-col pb-2" style="text-align: left; margin-left: 5%">
+      <div class="flex flex-col pb-3 items-center">
+        <h5
+          class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+          style="font-weight: 700; color: rgb(38, 38, 107)"
+        ></h5>
+        <span
+          class="text-sm text-gray-500 dark:text-gray-400"
+          style="font-weight: 600"
+        ></span>
+      </div>
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Estatus de la idea
+      </h6>
+
+      @if(user_rol == '1'){
+      <select
+        (change)="onEstadoChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
+          {{ idea?.idea?.estatus_idea }}
+        </option>
+        <option *ngFor="let estado of estados" [value]="estado.id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+      } @else {
+      <select
+        disabled="true"
+        (change)="onEstadoChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
+          {{ idea?.idea?.estatus_idea }}
+        </option>
+        <option *ngFor="let estado of estados" [value]="estado.id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+      }
+      <div class="flex">
+        <h6
+          class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+          style="font-weight: 700"
+        >
+          Colaboradores de la idea
+        </h6>
+        <button
+          data-modal-target="colaborador-modal"
+          data-modal-toggle="colaborador-modal"
+          type="button"
+          class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+        >
+          <img
+            class="w-4 h-4"
+            aria-hidden="true"
+            src="./../../assets/edit.png"
+            fill="currentColor"
+            viewBox="0 0 18 18"
+          />
+          <span class="sr-only">Icon description</span>
+        </button>
+      </div>
+
+      <!-- Main modal -->
+      <div
+        id="colaborador-modal"
+        tabindex="-1"
+        aria-hidden="true"
+        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+      >
+        <div class="relative p-4 w-full max-w-md max-h-full">
+          <!-- Modal content -->
+          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
             <!-- Modal header -->
-            <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                    Modificar colaboradores
-                </h3>
-                <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="colaborador-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
+            <div
+              class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+            >
+              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+                Modificar colaboradores
+              </h3>
+              <button
+                type="button"
+                class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                data-modal-toggle="colaborador-modal"
+              >
+                <svg
+                  class="w-3 h-3"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 14 14"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+                  />
+                </svg>
+                <span class="sr-only">Close modal</span>
+              </button>
             </div>
-            
+
             <!-- Modal body -->
             <form class="p-4 md:p-5">
               <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                  <input (input)="inputChanged($event)" type="text" class="border rounded p-2">
-                  <ng-container *ngIf="colaboradores_modal.length > 0">
-                      <div class="mt-4 space-y-2">
-                        <div *ngFor="let colaborador of colaboradores_modal">
-                          <input type="checkbox" [checked]="checkboxStatesColabs[colaborador.id] || false" (change)="checkboxColabsChanged(colaborador.id, $event)" /> {{ colaborador.nombre }}
-                          </div>
-                      </div>
-                    </ng-container>
+                <input
+                  (input)="inputChanged($event)"
+                  type="text"
+                  class="border rounded p-2"
+                />
+                <ng-container *ngIf="colaboradores_modal.length > 0">
+                  <div class="mt-4 space-y-2">
+                    <div *ngFor="let colaborador of colaboradores_modal">
+                      <input
+                        type="checkbox"
+                        [checked]="
+                          checkboxStatesColabs[colaborador.id] || false
+                        "
+                        (change)="checkboxColabsChanged(colaborador.id, $event)"
+                      />
+                      {{ colaborador.nombre }}
+                    </div>
+                  </div>
+                </ng-container>
               </div>
-                <button (click)="agregarColab()" class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                  <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                  Guardar cambios
+              <button
+                (click)="agregarColab()"
+                class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              >
+                <svg
+                  class="me-1 -ms-1 w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+                Guardar cambios
               </button>
             </form>
+          </div>
         </div>
+      </div>
+
+      <!--aqui acaba el modal-->
+
+      <ul
+        *ngFor="let colaborador of colaboradores"
+        class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      >
+        <li
+          class="w-full px-4 py-2 hover:text-blue-500 border-gray-200 rounded-t-lg dark:border-gray-600"
+          [routerLink]="['/usuarios/', colaborador.id]"
+        >
+          {{ colaborador.nombre }}
+        </li>
+      </ul>
+
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Tipo de idea
+      </h6>
+      @if(contable == 0) { @if(user_rol == '1'){
+      <div class="flex items-center mb-4">
+        <input
+          (change)="handleRadioChange($event)"
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      } @else {
+      <div class="flex items-center mb-4">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      } } @else{ @if(user_rol == '1'){
+      <div class="flex items-center mb-4">
+        <input
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          (change)="handleRadioChange($event)"
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Ahorro
+      </h6>
+      <div class="flex relative z-0 w-full mb-2 group">
+        <p class="w-fit mt-2.5">$</p>
+        <input
+          [formControl]="ahorro"
+          type="number"
+          name="floating_ahorro"
+          id="floating_ahorro"
+          value="{{ idea?.idea?.ahorro }}"
+          class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder="{{ idea?.idea?.ahorro }}"
+          required
+        />
+      </div>
+      } @else {
+      <div class="flex items-center mb-4">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      <h6
+        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Ahorro
+      </h6>
+      <div class="flex relative z-0 w-full mb-1 group">
+        <p class="block py-2.5 px-0 w-2 text-sm">${{ idea?.idea?.ahorro }}</p>
+      </div>
+      } } @if(idea?.idea?.puntos == 0){ } @else { @if(idea?.idea?.estatus == 3)
+      {
+
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Puntos asignados a la idea
+      </h6>
+      <div class="relative z-0 w-full mb-2 group">
+        <input
+          [formControl]="puntos_x_idea"
+          type="number"
+          name="floating_puntos_i"
+          id="floating_puntos_i"
+          value="{{ idea?.idea?.puntos }}"
+          class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder="{{ idea?.idea?.puntos }}"
+          required
+        />
+      </div>
+      } @else { } }
+
+      <h6
+        class="mt-3 mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Campos
+      </h6>
+
+      @if(user_rol == '1'){
+      <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+        <div class="mt-1 space-y-2">
+          <div *ngFor="let campo of campos">
+            <input
+              type="checkbox"
+              [checked]="checkboxStates[campo.id] || false"
+              (change)="checkboxChanged(campo.id, $event)"
+            />
+            {{ campo.nombre }}
+          </div>
+        </div>
+      </div>
+      } @else {
+      <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+        <div class="mt-1 space-y-2">
+          <div *ngFor="let campo of campos">
+            <input
+              disabled="true"
+              type="checkbox"
+              [checked]="checkboxStates[campo.id] || false"
+              (change)="checkboxChanged(campo.id, $event)"
+            />
+            {{ campo.nombre }}
+          </div>
+        </div>
+      </div>
+      }
     </div>
-</div> 
 
-<!--aqui acaba el modal-->
-                
-                    <ul *ngFor="let colaborador of colaboradores" class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <li class="w-full px-4 py-2  hover:text-blue-500 border-gray-200 rounded-t-lg dark:border-gray-600" [routerLink]="['/usuarios/',colaborador.id]" >{{colaborador.nombre}}</li>
-                    </ul>
+    <button
+      data-modal-target="puntos-modal"
+      data-modal-toggle="puntos-modal"
+      type="button"
+      class="ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2"
+    >
+      Asignar puntos
+    </button>
+    @if(selectedEstado == null) {
+    <button
+      (click)="editarSinEstado()"
+      type="button"
+      class="mb-3 ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2"
+    >
+      Editar datos
+    </button>
+    } @else {
+    <button
+      (click)="editarEstado()"
+      type="button"
+      class="mb-3 ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2"
+    >
+      Editar datos
+    </button>
+    }
 
-                    <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Tipo de idea</h6>
-                    @if(contable == 0)
-                    {
-                        @if(user_rol == '1'){
-                            <div class="flex items-center mb-4">
-                                <input (change)="handleRadioChange($event)" id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input (change)="handleRadioChange($event)" checked id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                            </div>
-                        }
-                        @else {
-                             <div class="flex items-center mb-4">
-                            <input disabled="true" (change)="handleRadioChange($event)" id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input disabled="true" (change)="handleRadioChange($event)" checked id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                        </div>
-                        }
-                       
+    <div
+      *ngIf="errorMessage"
+      class="mt-3 p-3 mb-4 text-sm w-fit ml-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+      role="alert"
+    >
+      <span class="font-medium">{{ errorMessage }}</span>
+    </div>
+  </div>
 
-                    }
-                    @else{
-                        @if(user_rol == '1'){
-                    <div class="flex items-center mb-4">
-                        <input (change)="handleRadioChange($event)" checked  id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input (change)="handleRadioChange($event)" id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                    </div>
+  <!-- Main modal -->
+  <div
+    id="puntos-modal"
+    tabindex="-1"
+    aria-hidden="true"
+    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Asignar puntos a los colaboradores
+          </h3>
+          <button
+            type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="puntos-modal"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
 
-                    <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
-                    <div class="flex relative z-0 w-full mb-2 group">
-                        <p class="w-fit mt-2.5">$</p>
-                        <input [formControl]="ahorro" type="number" name="floating_ahorro" id="floating_ahorro" value="{{idea?.idea?.ahorro}}" class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{idea?.idea?.ahorro}}" required />  
-                    </div>
-                 }
-                    @else {
-                        <div class="flex items-center mb-4">
-                            <input disabled="true" (change)="handleRadioChange($event)" checked  id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input disabled="true" (change)="handleRadioChange($event)" id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                        </div>
-                        <h6 class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
-                        <div class="flex relative z-0 w-full mb-1 group">
-                            <p class="block py-2.5 px-0 w-2 text-sm">${{idea?.idea?.ahorro}}</p>
-                            
-                        </div>
-                    }
-                }
-
-                
-                @if(idea?.idea?.puntos == 0){
-                }
-                @else {
-                    @if(idea?.idea?.estatus == 3)
-                    {
-                        
-                        <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Puntos asignados a la idea</h6>
-                        <div class="relative z-0 w-full mb-2 group">
-                            <input [formControl]="puntos_x_idea" type="number" name="floating_puntos_i" id="floating_puntos_i" value="{{idea?.idea?.puntos}}" class="block py-2.5 px-0 w-52 text-md text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{idea?.idea?.puntos}}" required />
-                        </div>
-                        }
-                    @else {
-
-                    }
-                }
-
-                
-                <h6 class="mt-3 mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Campos</h6>
-
-                @if(user_rol == '1'){
-                    <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                        <div class="mt-1 space-y-2">
-                          <div *ngFor="let campo of campos">
-                            <input type="checkbox" [checked]="checkboxStates[campo.id] || false" (change)="checkboxChanged(campo.id, $event)" /> {{ campo.nombre }}
-                            </div>
-                        </div>
-                </div>
-                }
-                @else {
-                    <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                        <div class="mt-1 space-y-2">
-                          <div *ngFor="let campo of campos">
-                            <input disabled="true" type="checkbox" [checked]="checkboxStates[campo.id] || false" (change)="checkboxChanged(campo.id, $event)" /> {{ campo.nombre }}
-                            </div>
-                        </div>
-                </div>
-                }
-  
-                </div>
-
-                
-                    <button data-modal-target="puntos-modal" data-modal-toggle="puntos-modal"  type="button" class=" ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Asignar puntos</button>
-                @if(selectedEstado == null)
-                {
-                    <button (click)="editarSinEstado()" type="button" class="mb-3 ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2">Editar datos</button>
-                }
-                @else {
-                    <button (click)="editarEstado()" type="button" class="mb-3 ml-4 mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2">Editar datos</button>
-                }
-
-            <div *ngIf="errorMessage" class="mt-3 p-3 mb-4 text-sm w-fit ml-4 text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-            <span class="font-medium">{{errorMessage}}</span>
-          </div> 
-            
+        <!-- Modal body -->
+        <form class="p-4 md:p-5">
+          <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+            <div
+              class="flex items-center border-b py-2"
+              *ngFor="let colaborador of colaboradores"
+            >
+              <label
+                class="block mr-2 text-sm font-medium text-gray-900 dark:text-white"
+                >{{ colaborador.nombre }}</label
+              >
+              <input
+                [(ngModel)]="colaborador.puntos"
+                name="puntos_{{ colaborador.id }}"
+                class="border-blue-500 rounded-md w-fit appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 text-sm leading-tight focus:outline-none"
+                type="number"
+                min="5"
+                placeholder="puntos"
+                aria-label="puntos"
+              />
             </div>
-            
-              
-              <!-- Main modal -->
-              <div  id="puntos-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                  <div class="relative p-4 w-full max-w-md max-h-full">
-                      <!-- Modal content -->
-                      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                          <!-- Modal header -->
-                          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                              <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-                                  Asignar puntos a los colaboradores
-                              </h3>
-                              <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="puntos-modal">
-                                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                  </svg>
-                                  <span class="sr-only">Close modal</span>
-                              </button>
-                          </div>
-                          
-                          <!-- Modal body -->
-                          <form class="p-4 md:p-5">
-                            <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                                <div class="flex items-center border-b py-2" *ngFor="let colaborador of colaboradores">
-                                    <label class="block mr-2 text-sm font-medium text-gray-900 dark:text-white">{{colaborador.nombre}}</label>
-                                    <input [(ngModel)]="colaborador.puntos" name="puntos_{{colaborador.id}}" class="border-blue-500 rounded-md w-fit appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 text-sm leading-tight focus:outline-none" type="number" min="5" placeholder="puntos" aria-label="puntos">
-                                  </div>
-                            </div>                        
-                            
-                            <div *ngIf="Message" class="mt-3 p-3 mb-4 text-sm w-fit  text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-                                <span class="font-medium">{{Message}}</span>
-                              </div> 
-                              <div *ngIf="errorMessage" class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-                                <span class="font-medium">{{errorMessage}}</span>
-                              </div> 
-                              <button (click)="asignarPuntos()" class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                                Guardar
-                            </button>
+          </div>
 
-                          </form>
-                      </div>
-                  </div>
-              </div> 
-              
-              <!--aqui acaba el modal-->
+          <div
+            *ngIf="Message"
+            class="mt-3 p-3 mb-4 text-sm w-fit text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+            role="alert"
+          >
+            <span class="font-medium">{{ Message }}</span>
+          </div>
+          <div
+            *ngIf="errorMessage"
+            class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            <span class="font-medium">{{ errorMessage }}</span>
+          </div>
+          <button
+            (click)="asignarPuntos()"
+            class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <svg
+              class="me-1 -ms-1 w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!--aqui acaba el modal-->
 </div>
 
 <!--Actividades-->
-<h5 class="mb-2 text-3xl font-bold text-blue-900 dark:text-white" style="margin-left: 3%; margin-top: 3%;">Actividades</h5>
+<h5
+  class="mb-2 text-3xl font-bold text-blue-900 dark:text-white"
+  style="margin-left: 3%; margin-top: 3%"
+>
+  Actividades
+</h5>
 
 @if(user_rol == '1'){
-<button style="margin-left: 3%; margin-top: 1%;" (click)="newAct()" type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Actividad</button>
-}
-@else {
-
-}
+<button
+  style="margin-left: 3%; margin-top: 1%"
+  (click)="newAct()"
+  type="button"
+  class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2"
+>
+  Nueva Actividad
+</button>
+} @else { }
 <div class="myContainer mb-10">
-    @if(actividades?.length == 0)
-        {
-            <h5 class="ml-8 hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">Sin actividades registradas</h5> 
-        }
-    @else{
-    <div class="profileCard" style="width: 80%;">
-         
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Titulo
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Responsable
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Fecha de inicio
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Fecha de finalizacion
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Estatus
-                        </th>
-                        @if(user_rol == '1'){
-                        <th scope="col" class="px-6 py-3">
-                           Opciones
-                        </th>
-                    }
-                    @else {
+  @if(actividades?.length == 0) {
+  <h5
+    class="ml-8 hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white"
+  >
+    Sin actividades registradas
+  </h5>
+  } @else{
+  <div class="profileCard" style="width: 80%">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Titulo</th>
+            <th scope="col" class="px-6 py-3">Responsable</th>
+            <th scope="col" class="px-6 py-3">Fecha de inicio</th>
+            <th scope="col" class="px-6 py-3">Fecha de finalizacion</th>
+            <th scope="col" class="px-6 py-3">Estatus</th>
+            @if(user_rol == '1'){
+            <th scope="col" class="px-6 py-3">Opciones</th>
+            } @else { }
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let actividad of actividades">
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.titulo }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.responsable_name }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.fecha_inicio }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.fecha_finalizacion }}</a>
+            </td>
+            @if(actividad.id_estado_actividad == 1) {
+            <td class="px-6 py-4 font-semibold text-amber-600 dark:text-white">
+              Revision
+            </td>
+            } @else if(actividad.id_estado_actividad == 2) {
+            <td class="px-6 py-4 font-semibold text-amber-800 dark:text-white">
+              En proceso
+            </td>
+            } @else if(actividad.id_estado_actividad == 3) {
+            <td
+              class="px-6 py-4 font-semibold text-emerald-500 dark:text-white"
+            >
+              Aceptada
+            </td>
+            } @else if(actividad.id_estado_actividad == 4){
+            <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
+              Finalizada
+            </td>
 
-                    }
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr *ngFor="let actividad of actividades">
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.titulo}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.responsable_name}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.fecha_inicio}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.fecha_finalizacion}}</a></td>
-                        @if(actividad.id_estado_actividad == 1)
-                        {
-                            <td class="px-6 py-4 font-semibold text-amber-600 dark:text-white">Revision</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 2) {
-                            <td class="px-6 py-4 font-semibold text-amber-800 dark:text-white">En proceso</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 3) {
-                            <td class="px-6 py-4 font-semibold text-emerald-500 dark:text-white">Aceptada</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 4){
-                            <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">Finalizada</td>
-                            
-                        }
-                        @else{
-                            <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">Rechazada</td>
-                        }
-                        @if(user_rol == '1'){
+            } @else{
+            <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">
+              Rechazada
+            </td>
+            } @if(user_rol == '1'){
 
-                        
-                        <td>
-                            <button [routerLink]="['/actividad/',actividad.id]" type="button" class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-                                <img class="w-4 h-4" aria-hidden="true" src="./../../assets/edit.png" fill="currentColor" viewBox="0 0 18 18">
-                                <span class="sr-only">Icon description</span>
-                            </button>
-                        </td>
-                    }
-                    @else{
-
-                    }
-
-                    
-                        
-                    </tbody>
-            </table>
-        </div><div class="h-10">
-    
-        </div>
-        
-    
-    
+            <td>
+              <button
+                [routerLink]="['/actividad/', actividad.id]"
+                type="button"
+                class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+              >
+                <img
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  src="./../../assets/edit.png"
+                  fill="currentColor"
+                  viewBox="0 0 18 18"
+                />
+                <span class="sr-only">Icon description</span>
+              </button>
+            </td>
+            } @else{ }
+          </tr>
+        </tbody>
+      </table>
     </div>
-}
-
- </div>
-
-
+    <div class="h-10"></div>
+  </div>
+  }
+</div>

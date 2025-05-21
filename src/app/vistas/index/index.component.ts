@@ -11,28 +11,25 @@ import { AuthService } from '../../servicios/auth.service';
   templateUrl: './index.component.html',
   styleUrl: './index.component.css',
 })
-export class IndexComponent  implements OnInit{
-  user_token : string | null = null
-  constructor( protected authService: AuthService, protected router: Router){
+export class IndexComponent implements OnInit {
+  user_token: string | null = null
+  constructor(protected authService: AuthService, protected router: Router) {
   }
 
   ngOnInit(): void {
-    const accessToken = this.authService.getToken(); 
+    const accessToken = this.authService.getToken();
     if (accessToken.trim() === '') {
       console.log('Access token is empty.');
     } else {
       this.getToken()
     }
   }
-  getToken()
-  {
+  getToken() {
     this.user_token = this.authService.getToken()
     console.log("Access token exist!")
   }
 
-  logout()
-{
-  this.authService.logout()
-  this.router.navigate(['/dashboard'])
-}
+  dashboard() {
+    this.router.navigate(['/dashboard'])
+  }
 }

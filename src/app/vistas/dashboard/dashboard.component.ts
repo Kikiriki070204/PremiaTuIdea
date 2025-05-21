@@ -26,7 +26,7 @@ me(){
   this.authService.meplus().subscribe({
     next(value: Profile ) {
       self.user = value
-      console.log("si jala", self.user.nombre)
+      console.log(self.user)
     },
     error(err) {
       console.log(err)

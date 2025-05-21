@@ -1,175 +1,238 @@
-<app-app-navbar></app-app-navbar>
-<div class="container flex" style="margin-left: 5%;padding-top: 1%;">
-    <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">Reportes</h4> 
+<div
+  class="container flex gap-2 items-center"
+  style="margin-left: 5%; padding-top: 3%"
+>
+  <button
+    class="btn btn-primary flex items-center justify-center"
+    (click)="goBack()"
+    style="
+      background-color: #233876;
+      border-color: #233876;
+      width: 38px;
+      height: 34px;
+      padding: 0;
+    "
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      fill="white"
+      viewBox="0 0 16 16"
+    >
+      <path
+        d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z"
+      />
+    </svg>
+  </button>
+
+  <h4 class="text-4xl font-bold text-blue-900 dark:text-white">Reportes</h4>
 </div>
-<div class="mt-2" style="margin-left: 6%; margin-right: 20%;" >
-<div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-    <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab" data-tabs-toggle="#default-tab-content" role="tablist">
-        <li class="me-2" role="presentation">
-            <button (click)="puntosClick()" class="inline-block p-4 border-b-2 rounded-t-lg" id="puntos-tab" data-tabs-target="#puntos" type="button" role="tab" aria-controls="puntos" aria-selected="false">Puntos</button>
-        </li>
-        <li class="me-2" role="presentation">
-            <button (click)="ideasClick()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="ideas-tab" data-tabs-target="#ideas" type="button" role="tab" aria-controls="ideas" aria-selected="false">Ideas</button>
-        </li>
-        <li class="me-2" role="presentation">
-            <button (click)="ahorrosClick()" class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300" id="ahorros-tab" data-tabs-target="#ahorros" type="button" role="tab" aria-controls="ahorros" aria-selected="false">Ahorro</button>
-        </li>
-       
+
+<div class="mt-2" style="margin-left: 6%; margin-right: 20%">
+  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
+    <ul
+      class="flex flex-wrap -mb-px text-sm font-medium text-center"
+      id="default-tab"
+      data-tabs-toggle="#default-tab-content"
+      role="tablist"
+    >
+      <li class="me-2" role="presentation">
+        <button
+          (click)="puntosClick()"
+          class="inline-block p-4 border-b-2 rounded-t-lg"
+          id="puntos-tab"
+          data-tabs-target="#puntos"
+          type="button"
+          role="tab"
+          aria-controls="puntos"
+          aria-selected="false"
+        >
+          Puntos
+        </button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button
+          (click)="ideasClick()"
+          class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+          id="ideas-tab"
+          data-tabs-target="#ideas"
+          type="button"
+          role="tab"
+          aria-controls="ideas"
+          aria-selected="false"
+        >
+          Ideas
+        </button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button
+          (click)="ahorrosClick()"
+          class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
+          id="ahorros-tab"
+          data-tabs-target="#ahorros"
+          type="button"
+          role="tab"
+          aria-controls="ahorros"
+          aria-selected="false"
+        >
+          Ahorro
+        </button>
+      </li>
     </ul>
-</div>
-<div id="default-tab-content">
-    
-    
-<div class="flex w-fit" style="align-items:last baseline;">
-    <!--Inicio de calendario-->
-        <div class="flex">
-          <div>
-            <div class="container mx-auto px-2 py-2 md:py-10 flex flex-col items-center justify-center">
-              <div class="flex mb-1 w-70">
-                <label for="datepicker" class="font-bold mb-1 mr-2 text-gray-700 ">Fecha inicial</label>
-                <input type="date" [(ngModel)]="date0" name="date0" id="date0" style="font-size: 18px;" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              </div>
-      
-            </div>
-          </div>
-      
-      
-        </div>
+  </div>
 
-    <!--Fin del calendario-->
-
-
-     <!--Inicio de calendario-->
-    
-     <div class="flex">
-        <div>
-          <div class="container mx-auto px-2 py-2 md:py-10 flex flex-col items-center justify-center">
-            <div class="flex mb-1 w-70">
-              <label for="datepicker" class="font-bold mb-1 mr-2 text-gray-700 ">Fecha final</label>
-              <input type="date" [(ngModel)]="date1" name="date1" id="date1" style="font-size: 18px;" class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              
-            </div>
-    
-          </div>
-        </div>
-    
-    
+  <div id="default-tab-content">
+    <div
+      class="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 items-start md:items-end mt-2"
+    >
+      <div
+        class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto"
+      >
+        <label for="date0" class="font-bold mb-1 md:mb-0 md:mr-2 text-gray-700"
+          >Fecha inicial</label
+        >
+        <input
+          type="date"
+          [(ngModel)]="date0"
+          name="date0"
+          id="date0"
+          class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        />
       </div>
-  <!--Fin del calendario-->
-  @if(tab == 0)
-  {
-<div class="h-5 mt-3 ml-1"> 
-    <button (click)="renderHistorialsByDate()" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+
+      <div
+        class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto"
+      >
+        <label for="date1" class="font-bold mb-1 md:mb-0 md:mr-2 text-gray-700"
+          >Fecha final</label
+        >
+        <input
+          type="date"
+          [(ngModel)]="date1"
+          name="date1"
+          id="date1"
+          class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        />
+      </div>
+
+      <button
+        (click)="mostrarDatosPorFechas()"
+        class="flex items-center justify-center p-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-auto"
+      >
+        <svg
+          class="w-4 h-4 mr-1"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
         </svg>
-        <span class="sr-only">Buscar</span>
-    </button>  
-</div>
-<div class="h-5 mt-3.5 ml-1">
-    <button (click)="cleanCharts()" type="button" class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Limpiar</button>
-</div>
-  }
-  @else if (tab == 1) {
-    <div class="h-5 mt-3"> 
-      <button (click)="renderIdeasByDate()" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-          </svg>
-          <span class="sr-only">Buscar</span>
-      </button>  
-  </div>
-  <div class="h-5 mt-3.5 ml-1">
-      <button (click)="cleanCharts()" type="button" class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Limpiar</button>
-  </div>
-  
-  }
-  @else {
-    <div class="h-5 mt-3"> 
-      <button (click)="renderSavingsByDate()" class="p-2.5 ms-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-          <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-          </svg>
-          <span class="sr-only">Buscar</span>
-      </button>  
-  </div>
-  <div class="h-5 mt-3.5 ml-1">
-      <button (click)="cleanCharts()" type="button" class="p-2.5 ms-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Limpiar</button>
-  </div>
-  }
+        Filtrar
+      </button>
 
-</div>
+      <button
+        (click)="mostrarDatosHistoricos()"
+        type="button"
+        class="flex items-center justify-center p-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full md:w-auto"
+      >
+        Datos históricos
+      </button>
+    </div>
 
-    <div class="hidden p-2 rounded-lg dark:bg-gray-800" id="puntos" role="tabpanel" aria-labelledby="puntos-tab">
-        <h4 class=" mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">Top 10 usuarios con más puntos</h4> 
-        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div class="w-full">
-                <canvas id="top10">
-                </canvas>
-            </div>  
+    <!--Top 10, contables y no contables-->
+    <div
+      class="p-2 rounded-lg dark:bg-gray-800"
+      id="puntos"
+      role="tabpanel"
+      aria-labelledby="puntos-tab"
+    >
+      <h4
+        class="mt-2 mb-2 text-xl font-bold dark:text-white"
+        style="color: #2f4b93"
+      >
+        Top 10 usuarios con más puntos
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="top10"> </canvas>
         </div>
-        <br>
-        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Puntos asignados a ideas contables</h4> 
-        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div class="w-full">
-                <canvas id="puntosCountable">
-                </canvas>
-            </div>  
+      </div>
+      <br />
+      <h4 class="mb-2 text-xl font-bold dark:text-white" style="color: #2f4b93">
+        Puntos asignados a ideas contables
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="puntosCountable"> </canvas>
         </div>
-        <br>
-        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">Puntos asignados a ideas no contables</h4> 
-        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div class="w-full">
-                <canvas id="puntosUncountable">
-                </canvas>
-            </div>  
+      </div>
+      <br />
+      <h4 class="mb-2 text-xl font-bold dark:text-white" style="color: #2f4b93">
+        Puntos asignados a ideas no contables
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="puntosUncountable"> </canvas>
         </div>
-
-    
+      </div>
     </div>
 
     <!--Ideas-->
-    <div class=" hidden p-2 rounded-lg dark:bg-gray-800" id="ideas" role="tabpanel" aria-labelledby="ideas-tab">
-        <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">Contables</h4> 
-        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div class="w-full">
-                <canvas id="countable">
-                </canvas>
-            </div>  
+    <div
+      class="hidden p-2 rounded-lg dark:bg-gray-800"
+      id="ideas"
+      role="tabpanel"
+      aria-labelledby="ideas-tab"
+    >
+      <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+        Total de ideas
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="ideasTotales"> </canvas>
         </div>
-        <br>
-        <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">No contables</h4> 
-        <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-            <div class="w-full">
-                <canvas id="ctx">
-                </canvas>
-            </div> 
+      </div>
+      <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+        Contables e implementadas
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="countable"> </canvas>
         </div>
-
+      </div>
+      <br />
+      <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">
+        No contables e implementadas
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="ctx"> </canvas>
+        </div>
+      </div>
     </div>
 
     <!--Ahorro-->
-    <div class="hidden p-2 rounded-lg dark:bg-gray-800" id="ahorros" role="tabpanel" aria-labelledby="ahorros-tab">
-            <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">Ahorro por area</h4> 
-            <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-                <div class="w-full">
-                    <canvas id="ahorro">
-                    </canvas>
-                </div>  
-            </div>
+    <div
+      class="hidden p-2 rounded-lg dark:bg-gray-800"
+      id="ahorros"
+      role="tabpanel"
+      aria-labelledby="ahorros-tab"
+    >
+      <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+        Ahorro por area
+      </h4>
+      <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
+        <div class="w-full h-72 sm:h-96">
+          <canvas id="ahorro"> </canvas>
+        </div>
+      </div>
     </div>
-    
+  </div>
 </div>
-
-
-
-
-
-</div>
-<!--
-Ojo
-<div style="width: 800px;">
-    <canvas id="ctx">
-    </canvas>
-</div>
--->

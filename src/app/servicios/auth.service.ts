@@ -17,10 +17,12 @@ export class AuthService {
     return localStorage.getItem('access_token') ?? '';
   }
 
-  getId(): string{
+  getId(): string {
+    console.log(this.cookie.get('id'))
     return this.cookie.get('id') ?? '';
   }
-  getRol(): string{
+  getRol(): string {
+    console.log(this.cookie.get('rol_id'))
     return this.cookie.get('rol_id') ?? '';
   }
 
@@ -38,16 +40,15 @@ export class AuthService {
     return this.http.post<User>(`${environment.api_url}/auth/me`, undefined)
   }
 
-  meplus(): Observable<Profile>{
+  meplus(): Observable<Profile> {
     return this.http.get<Profile>(`${environment.api_url}/auth/meplus`)
   }
 
-  logout()
-  {
-   localStorage.removeItem('access_token')
-   this.cookie.delete('rol_id','/','localhost',false,'Lax')
-   this.cookie.delete('id','/','localhost',false,'Lax')
-   this.cookie.deleteAll()
+  logout() {
+    localStorage.removeItem('access_token')
+    this.cookie.delete('rol_id', '/', 'localhost', false, 'Lax')
+    this.cookie.delete('id', '/', 'localhost', false, 'Lax')
+    this.cookie.deleteAll()
   }
 
 }

@@ -1,246 +1,440 @@
-<app-app-navbar></app-app-navbar>
 <!--Hay q modificar el diseno, me voy a chambear en otros request-->
 
 <div class="myContainer">
-   <div class="profileCard" style="width: 60%;">
-        
-        <div class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-                <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">Titulo de la idea </h5>
-                <h6 class="mb-1 text-xl font-medium dark:text-white text-gray-900" style="font-weight: 600">{{idea?.idea?.titulo}}</h6>
-                <!--antecedentes-->
-                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Antecedentes </h5>
-                <div class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
-                <p class="mb-3 text-gray-600 dark:text-gray-400 text-lg">{{idea?.idea?.antecedente}}</p>
-                </div>  
+  <div class="profileCard" style="width: 60%">
+    <div
+      class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Titulo de la idea
+      </h5>
+      <h6
+        class="mb-1 text-xl font-medium dark:text-white text-gray-900"
+        style="font-weight: 600"
+      >
+        {{ idea?.idea?.titulo }}
+      </h6>
+      <!--antecedentes-->
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Antecedentes
+      </h5>
+      <div
+        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <p class="mb-3 text-gray-600 dark:text-gray-400 text-lg">
+          {{ idea?.idea?.antecedente }}
+        </p>
+      </div>
 
-                <!--propuesta-->
-                <h5 class="mb-2 text-2xl font-bold inline-block text-transparent bg-clip-text dark:text-blue-300 bg-gradient-to-r from-blue-600 via-green-500 to-teal-300">Propuesta</h5>
-                <div class=" mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg  dark:bg-gray-800 dark:border-gray-700">
-                    <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">{{idea?.idea?.propuesta}}</p>
-                </div> 
-                <h5 class="mb-2 text-2xl font-bold  text-blue-800 dark:text-white">Condiciones actuales</h5>
-    
-                    <figure class="max-w-lg">
-                        <img class="h-auto max-w-full rounded-lg" [src]="safeImage" alt="imagen">
-                        <figcaption class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400">Condiciones</figcaption>
-                    </figure>
-                    
+      <!--propuesta-->
+      <h5
+        class="mb-2 text-2xl font-bold inline-block text-transparent bg-clip-text dark:text-blue-300 bg-gradient-to-r from-blue-600 via-green-500 to-teal-300"
+      >
+        Propuesta
+      </h5>
+      <div
+        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+      >
+        <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">
+          {{ idea?.idea?.propuesta }}
+        </p>
+      </div>
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Condiciones actuales
+      </h5>
+
+      <figure class="max-w-lg">
+        <img
+          class="h-auto max-w-full rounded-lg"
+          [src]="safeImage"
+          alt="imagen"
+        />
+        <figcaption
+          class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400"
+        >
+          Condiciones
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <div
+    class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard"
+  >
+    <div class="flex justify-end px-4 pt-4"></div>
+    <div class="flex flex-col pb-2" style="text-align: left; margin-left: 5%">
+      <div class="flex flex-col pb-3 items-center">
+        <h5
+          class="mb-1 text-xl font-medium text-gray-900 dark:text-white"
+          style="font-weight: 700; color: rgb(38, 38, 107)"
+        ></h5>
+        <span
+          class="text-sm text-gray-500 dark:text-gray-400"
+          style="font-weight: 600"
+        ></span>
+      </div>
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Estatus de la idea
+      </h6>
+
+      @if(user_rol == '1'){
+      <select
+        (change)="onEstadoChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
+          {{ idea?.idea?.estatus_idea }}
+        </option>
+        <option *ngFor="let estado of estados" [value]="estado.id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+      } @else {
+      <select
+        disabled="true"
+        (change)="onEstadoChange($event)"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+      >
+        <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
+          {{ idea?.idea?.estatus_idea }}
+        </option>
+        <option *ngFor="let estado of estados" [value]="estado.id">
+          {{ estado.nombre }}
+        </option>
+      </select>
+      }
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Colaboradores de la idea
+      </h6>
+
+      <ul
+        *ngFor="let colaborador of colaboradores"
+        class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      >
+        <li
+          class="w-full px-4 py-2 hover:text-blue-500 border-gray-200 rounded-t-lg dark:border-gray-600"
+          [routerLink]="['/usuarios/', colaborador.id]"
+        >
+          {{ colaborador.nombre }}
+        </li>
+      </ul>
+
+      <h6
+        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Tipo de idea
+      </h6>
+      @if(contable == 0) { @if(user_rol == '1'){
+      <div class="flex items-center mb-4">
+        <input
+          (change)="handleRadioChange($event)"
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      } @else {
+      <div class="flex items-center mb-4">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      } } @else{ @if(user_rol == '1'){
+      <div class="flex items-center mb-4">
+        <input
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          (change)="handleRadioChange($event)"
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      <h6
+        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Ahorro
+      </h6>
+      <div class="flex relative z-0 w-full mb-1 group">
+        <p class="block py-2.5 px-0 w-2 text-sm">$</p>
+        <input
+          [formControl]="ahorro"
+          type="number"
+          name="floating_valor"
+          id="floating_valor"
+          class="block py-2.5 px-0 w-32 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder="{{ ahorro_valor }}"
+          required
+        />
+      </div>
+      } @else {
+      <div class="flex items-center mb-4">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          checked
+          id="default-radio-1"
+          type="radio"
+          value="1"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-1"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >Contable</label
+        >
+      </div>
+      <div class="flex items-center">
+        <input
+          disabled="true"
+          (change)="handleRadioChange($event)"
+          id="default-radio-2"
+          type="radio"
+          value="0"
+          name="default-radio"
+          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+        />
+        <label
+          for="default-radio-2"
+          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+          >No contable</label
+        >
+      </div>
+      <h6
+        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Ahorro
+      </h6>
+      <div class="flex relative z-0 w-full mb-1 group">
+        <p class="block py-2.5 px-0 w-2 text-sm">${{ idea?.idea?.ahorro }}</p>
+      </div>
+      } }
+
+      <h6
+        class="mt-3 mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Campos
+      </h6>
+
+      @if(user_rol == '1'){
+      <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+        <div class="mt-1 space-y-2">
+          <div *ngFor="let campo of campos">
+            <input
+              type="checkbox"
+              [checked]="checkboxStates[campo.id] || false"
+            />
+            {{ campo.nombre }}
+          </div>
         </div>
-   </div>
-    
-            <div class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard">
-            <div class="flex justify-end px-4 pt-4">
-            
-            </div>
-            <div class="flex flex-col pb-2" style="text-align: left;margin-left: 5%;">
-                <div class="flex flex-col pb-3 items-center">
-                <h5 class="mb-1 text-xl font-medium text-gray-900 dark:text-white" style="font-weight: 700; color: rgb(38, 38, 107);"></h5>
-                <span class="text-sm text-gray-500 dark:text-gray-400" style="font-weight: 600;"></span>
-                </div>
-                <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Estatus de la idea</h6>
-
-                @if(user_rol == '1'){
-                <select (change)="onEstadoChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                    <option value="{{idea?.idea?.estatus}}" disabled selected hidden>{{idea?.idea?.estatus_idea}}</option>
-                    <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>
-                  </select>
-                }
-                @else {
-                    <select disabled="true" (change)="onEstadoChange($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="{{idea?.idea?.estatus}}" disabled selected hidden>{{idea?.idea?.estatus_idea}}</option>
-                        <option *ngFor="let estado of estados" [value]="estado.id">{{estado.nombre}}</option>
-                      </select>
-                }
-                <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Colaboradores de la idea</h6>
-
-                    <ul *ngFor="let colaborador of colaboradores" class="mt-2 w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <li class="w-full px-4 py-2  hover:text-blue-500 border-gray-200 rounded-t-lg dark:border-gray-600" [routerLink]="['/usuarios/',colaborador.id]" >{{colaborador.nombre}}</li>
-                    </ul>
-
-                    <h6 class="mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Tipo de idea</h6>
-                    @if(contable == 0)
-                    {
-                        @if(user_rol == '1'){
-                            <div class="flex items-center mb-4">
-                                <input (change)="handleRadioChange($event)" id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                            </div>
-                            <div class="flex items-center">
-                                <input (change)="handleRadioChange($event)" checked id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                            </div>
-                        }
-                        @else {
-                             <div class="flex items-center mb-4">
-                            <input disabled="true" (change)="handleRadioChange($event)" id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input disabled="true" (change)="handleRadioChange($event)" checked id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                        </div>
-                        }
-                       
-
-                    }
-                    @else{
-                        @if(user_rol == '1'){
-                    <div class="flex items-center mb-4">
-                        <input (change)="handleRadioChange($event)" checked  id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                    </div>
-                    <div class="flex items-center">
-                        <input (change)="handleRadioChange($event)" id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                        <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                    </div>
-                    <h6 class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
-                    <div class="flex relative z-0 w-full mb-1 group">
-                        <p class="block py-2.5 px-0 w-2 text-sm">$</p>
-                        <input [formControl]="ahorro" type="number" name="floating_valor" id="floating_valor" class="block py-2.5 px-0 w-32 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" placeholder="{{ahorro_valor}}" required />
-                    </div>
-                    }
-                    @else {
-                        <div class="flex items-center mb-4">
-                            <input disabled="true" (change)="handleRadioChange($event)" checked  id="default-radio-1" type="radio" value="1" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Contable</label>
-                        </div>
-                        <div class="flex items-center">
-                            <input disabled="true" (change)="handleRadioChange($event)" id="default-radio-2" type="radio" value="0" name="default-radio" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="default-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No contable</label>
-                        </div>
-                        <h6 class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Ahorro</h6>
-                        <div class="flex relative z-0 w-full mb-1 group">
-                            <p class="block py-2.5 px-0 w-2 text-sm">${{idea?.idea?.ahorro}}</p>
-                            
-                        </div>
-                    }
-                }
-                
-                <h6 class="mt-3 mb-1 text-xl font-medium text-blue-800 dark:text-white" style="font-weight: 700">Campos</h6>
-
-                @if(user_rol == '1'){
-                    <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                        <div class="mt-1 space-y-2">
-                          <div *ngFor="let campo of campos">
-                            <input type="checkbox" [checked]="checkboxStates[campo.id] || false" /> {{ campo.nombre }}
-                            </div>
-                        </div>
-                </div>
-                }
-                @else {
-                    <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
-                        <div class="mt-1 space-y-2">
-                          <div *ngFor="let campo of campos">
-                            <input disabled="true" type="checkbox" [checked]="checkboxStates[campo.id] || false"/> {{ campo.nombre }}
-                            </div>
-                        </div>
-                </div>
-                }
-
-                </div>
-          </div> 
-            
-            </div>
-            <!-- Main modal -->
-              
+      </div>
+      } @else {
+      <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+        <div class="mt-1 space-y-2">
+          <div *ngFor="let campo of campos">
+            <input
+              disabled="true"
+              type="checkbox"
+              [checked]="checkboxStates[campo.id] || false"
+            />
+            {{ campo.nombre }}
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+</div>
+<!-- Main modal -->
 
 <!--Actividades-->
-<h5 class="mb-2 text-3xl font-bold text-blue-900 dark:text-white" style="margin-left: 3%; margin-top: 3%;">Actividades</h5>
+<h5
+  class="mb-2 text-3xl font-bold text-blue-900 dark:text-white"
+  style="margin-left: 3%; margin-top: 3%"
+>
+  Actividades
+</h5>
 
 @if(user_rol == '1'){
-<button style="margin-left: 3%; margin-top: 1%;"  type="button" class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2">Nueva Actividad</button>
-}
-@else {
-
-}
+<button
+  style="margin-left: 3%; margin-top: 1%"
+  type="button"
+  class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2"
+>
+  Nueva Actividad
+</button>
+} @else { }
 <div class="myContainer mb-10">
-    @if(actividades?.length == 0)
-        {
-            <h5 class="ml-8 hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white">Sin actividades registradas</h5> 
-        }
-    @else{
-    <div class="profileCard" style="width: 80%;">
-         
-        <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">
-                    <tr>
-                        <th scope="col" class="px-6 py-3">
-                            Titulo
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Responsable
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Fecha de inicio
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Fecha de finalizacion
-                        </th>
-                        <th scope="col" class="px-6 py-3">
-                            Estatus
-                        </th>
-                        @if(user_rol == '1'){
-                        <th scope="col" class="px-6 py-3">
-                           Opciones
-                        </th>
-                    }
-                    @else {
+  @if(actividades?.length == 0) {
+  <h5
+    class="ml-8 hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white"
+  >
+    Sin actividades registradas
+  </h5>
+  } @else{
+  <div class="profileCard" style="width: 80%">
+    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+      <table
+        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      >
+        <thead
+          class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="px-6 py-3">Titulo</th>
+            <th scope="col" class="px-6 py-3">Responsable</th>
+            <th scope="col" class="px-6 py-3">Fecha de inicio</th>
+            <th scope="col" class="px-6 py-3">Fecha de finalizacion</th>
+            <th scope="col" class="px-6 py-3">Estatus</th>
+            @if(user_rol == '1'){
+            <th scope="col" class="px-6 py-3">Opciones</th>
+            } @else { }
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let actividad of actividades">
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.titulo }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.responsable_name }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.fecha_inicio }}</a>
+            </td>
+            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+              <a>{{ actividad.fecha_finalizacion }}</a>
+            </td>
+            @if(actividad.id_estado_actividad == 1) {
+            <td class="px-6 py-4 font-semibold text-amber-600 dark:text-white">
+              Revision
+            </td>
+            } @else if(actividad.id_estado_actividad == 2) {
+            <td class="px-6 py-4 font-semibold text-amber-800 dark:text-white">
+              En proceso
+            </td>
+            } @else if(actividad.id_estado_actividad == 3) {
+            <td
+              class="px-6 py-4 font-semibold text-emerald-500 dark:text-white"
+            >
+              Aceptada
+            </td>
+            } @else if(actividad.id_estado_actividad == 4){
+            <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
+              Finalizada
+            </td>
 
-                    }
-                    </tr>
-                </thead>
-                <tbody>
-                    
-                    <tr *ngFor="let actividad of actividades">
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.titulo}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.responsable_name}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.fecha_inicio}}</a></td>
-                        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white"><a >{{actividad.fecha_finalizacion}}</a></td>
-                        @if(actividad.id_estado_actividad == 1)
-                        {
-                            <td class="px-6 py-4 font-semibold text-amber-600 dark:text-white">Revision</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 2) {
-                            <td class="px-6 py-4 font-semibold text-amber-800 dark:text-white">En proceso</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 3) {
-                            <td class="px-6 py-4 font-semibold text-emerald-500 dark:text-white">Aceptada</td>
-                        }
-                        @else if(actividad.id_estado_actividad == 4){
-                            <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">Finalizada</td>
-                            
-                        }
-                        @else{
-                            <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">Rechazada</td>
-                        }
-                        @if(user_rol == '1'){
+            } @else{
+            <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">
+              Rechazada
+            </td>
+            } @if(user_rol == '1'){
 
-                        
-                        <td>
-                            <button [routerLink]="['/actividad/',actividad.id]" type="button" class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-                                <img class="w-4 h-4" aria-hidden="true" src="./../../assets/edit.png" fill="currentColor" viewBox="0 0 18 18">
-                                <span class="sr-only">Icon description</span>
-                                </button>
-                        </td>
-                    }
-                    @else{
-
-                    }
-
-                    
-                        
-                    </tbody>
-            </table>
-        </div><div class="h-10">
-    
-        </div>
-        
-    
-    
+            <td>
+              <button
+                [routerLink]="['/actividad/', actividad.id]"
+                type="button"
+                class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+              >
+                <img
+                  class="w-4 h-4"
+                  aria-hidden="true"
+                  src="./../../assets/edit.png"
+                  fill="currentColor"
+                  viewBox="0 0 18 18"
+                />
+                <span class="sr-only">Icon description</span>
+              </button>
+            </td>
+            } @else{ }
+          </tr>
+        </tbody>
+      </table>
     </div>
-}
-
- </div>
-
-
+    <div class="h-10"></div>
+  </div>
+  }
+</div>

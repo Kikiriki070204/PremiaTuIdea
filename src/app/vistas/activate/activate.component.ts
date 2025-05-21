@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
@@ -15,13 +15,24 @@ import { NgIf } from '@angular/common';
   templateUrl: './activate.component.html',
   styleUrl: './activate.component.css'
 })
-export class ActivateComponent {
+export class ActivateComponent implements OnInit {
   errorMessage: string | null = null;
   ibm = new FormControl('',Validators.required)
   password = new FormControl('', Validators.minLength(6))
+  cargando: boolean = false;
 
 
   constructor(protected service: ActivarService, protected router: Router){}
+
+  ngOnInit() {
+    this.ibm.valueChanges.subscribe(() => {
+      this.clearError();
+    });
+
+    this.password.valueChanges.subscribe(() => {
+      this.clearError();
+    });
+  }
 
   activar(){
     let self = this
@@ -32,6 +43,7 @@ export class ActivateComponent {
 
     this.service.activar(activar).subscribe({
       next(value: User) {
+        self.cargando = true;
         // llevarlo a login.
         console.log(value.ibm)
         self.router.navigate(['/login'])
@@ -66,4 +78,7 @@ export class ActivateComponent {
     })
   }
   
+  clearError() {
+    this.errorMessage = null;
+  }
 }
