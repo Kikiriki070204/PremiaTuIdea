@@ -2,7 +2,7 @@ import { Component, HostListener } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 import { OnInit } from '@angular/core';
 import { User } from '../../interfaces/user';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../servicios/auth.service';
 import { isEmpty } from 'rxjs';
@@ -15,7 +15,7 @@ import { Profile } from '../../interfaces/profile';
 @Component({
   selector: 'app-app-navbar',
   standalone: true,
-  imports: [RouterLink, NgIf],
+  imports: [RouterLink, NgIf, RouterModule],
   templateUrl: './app-navbar.component.html',
   styleUrl: './app-navbar.component.css'
 })

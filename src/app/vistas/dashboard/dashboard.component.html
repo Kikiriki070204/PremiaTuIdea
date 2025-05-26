@@ -1,13 +1,10 @@
-<div
+<!-- <div
   id="container"
   class="h-screen w-full flex justify-center"
   style="background-image: url(../../../assets/blue-back.png)"
 >
   <div>
-    <div
-      class="container items-center"
-      style="margin-top: 3%; text-align: center"
-    >
+    <div class="items-center" style="margin-top: 3%; text-align: center">
       <h5
         class="mb-2 text-4xl font-bold inline-block text-transparent bg-clip-text dark:text-white bg-gradient-to-r from-teal-300 via-green-300 to-cyan-400"
       >
@@ -36,6 +33,43 @@
         src="../../assets/idea2.png"
         alt="idea image"
       />
+    </div>
+  </div>
+</div>
+-->
+<div class="bg-white" style="background-image: url('../../../assets/white-bg.png');
+height:100%;
+background-size: cover;
+background-position: center;
+background-repeat: no-repeat;
+width:100%">
+  <div class="relative isolate px-6 pt-14 lg:px-8">
+    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
+      <div class="text-center">
+        <h1
+          class="text-5xl font-semibold tracking-tight text-balance text-black sm:text-7xl"
+        >
+          ¡Bienvenido(a) {{ user?.nombre }}!
+        </h1>
+
+        <p
+          class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8"
+        >
+          @if(user?.rol_id == 4){ Este es tu espacio para compartir tus ideas y
+          poder canjear tus puntos por premios } @else if(user?.rol_id == 1){ En
+          este espacio podras administrar las ideas propuestas, registrar
+          usuarios y otorgar puntos. } @else if(user?.rol_id == 2){ En este
+          espacio podras visualizar las ideas propuestas y reportes. } @else if(user?.rol_id == 3){ En este espacio podras registrar usuarios. }
+          @else if(user?.rol_id == 5){ Haz iniciado sesión como invitado. }
+        </p>
+        <div class="mt-10 flex items-center justify-center gap-x-6">
+          <img
+            class="w-24 h-24 mb-3 animate-pulse"
+            src="../../assets/idea2.png"
+            alt="idea image"
+          />
+        </div>
+      </div>
     </div>
   </div>
 </div>

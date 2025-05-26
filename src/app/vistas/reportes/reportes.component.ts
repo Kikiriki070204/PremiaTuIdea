@@ -327,7 +327,9 @@ export class ReportesComponent implements OnInit {
             min: 0,
             max: 100
           }
-        }
+        },
+        maintainAspectRatio: false,
+        responsive: true
       }
     });
   }

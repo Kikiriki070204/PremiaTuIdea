@@ -1,226 +1,4 @@
-<!--
-<nav class="bg-bw border-gray-100 dark:bg-gray-900 w-fit">
-  <div
-    class="flex flex-wrap justify-between items-center mx-auto max-w-full p-3"
-  >
-    @if(user_rol == null) {
-    <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-      <img src="../../assets/logoWhite.png" class="h-4" alt="Borgwarner Logo" />
-    </a>
-    } @else {
-    <a
-      [routerLink]="['/dashboard']"
-      class="flex items-center space-x-3 rtl:space-x-reverse"
-    >
-      <img src="../../assets/logoWhite.png" class="h-6" alt="Borgwarner Logo" />
-    </a>
-    } @if (user_id != null) {
-    <div class="flex items-center space-x-6 rtl:space-x-reverse">
-      <button
-        type="button"
-        class="flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-        id="user-menu-button"
-        aria-expanded="false"
-      >
-        <span class="sr-only">Open user menu</span>
-        <img
-          class="w-8 h-8 rounded-full"
-          src="../../assets/whiteProfile.png"
-          alt="user photo"
-        />
-      </button>
-
-      <button
-        (click)="logout()"
-        type="button"
-        class="text-white font-bold flex text-sm rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-        id="user-menu-button"
-        aria-expanded="false"
-      >
-        Log Out
-      </button>
-    </div>
-
-    } @else { }
-  </div>
-@if (user_id == 4) {
-<nav class="bg-gray-50 dark:bg-gray-700">
-  <div class="max-w-screen-xl px-4 py-3 mx-auto">
-    <div class="flex items-center">
-      <ul
-        class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
-      >
-        <li>
-          <a
-            [routerLink]="['/dashboard']"
-            class="text-gray-900 dark:text-white hover:underline"
-            aria-current="page"
-            >Inicio</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/ideas']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Mis Ideas</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/productos']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Productos</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/premios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Mis Premios</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-} @else if(user_id == 1) {
-<nav class="bg-gray-50 dark:bg-gray-700" style="width: 100%">
-  <div class="max-w-screen-xl px-4 py-3 mx-auto">
-    <div class="flex items-center">
-      <ul
-        class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
-      >
-        <li>
-          <a
-            [routerLink]="['/dashboard']"
-            class="text-gray-900 dark:text-white hover:underline"
-            aria-current="page"
-            >Inicio</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/ideas']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Ideas</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/usuarios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Usuarios</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/productos']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Productos</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/premios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Premios</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-} @else if(user_id == 2) {
-<nav class="bg-gray-50 dark:bg-gray-700" style="width: 100%">
-  <div class="max-w-screen-xl px-4 py-3 mx-auto">
-    <div class="flex items-center">
-      <ul
-        class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
-      >
-        <li>
-          <a
-            [routerLink]="['/dashboard']"
-            class="text-gray-900 dark:text-white hover:underline"
-            aria-current="page"
-            >Inicio</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/ideas']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Ideas</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/usuarios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Usuarios</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/productos']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Productos</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-} @else if(user_id == 3 ) {
-<nav class="bg-gray-50 dark:bg-gray-700 sm:w-fit">
-  <div class="max-w-screen-xl px-4 py-3 mx-auto">
-    <div class="flex items-center">
-      <ul
-        class="flex flex-row font-medium mt-0 space-x-8 rtl:space-x-reverse text-sm"
-      >
-        <li>
-          <a
-            [routerLink]="['/dashboard']"
-            class="text-gray-900 dark:text-white hover:underline"
-            aria-current="page"
-            >Inicio</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/ideas']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Mis Ideas</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/usuarios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Usuarios</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/productos']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Productos</a
-          >
-        </li>
-        <li>
-          <a
-            [routerLink]="['/premios']"
-            class="text-gray-900 dark:text-white hover:underline"
-            >Mis Premios</a
-          >
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
-}
--->
-
-<nav style="background-color: rgb(41, 47, 130)">
+<nav style="background-color: rgb(41, 47, 130)" class="shadow-lg">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -228,7 +6,7 @@
         <button
           type="button"
           (click)="toggleMobileMenu()"
-          class="relative inline-flex items-center justify-center rounded-md p-2 bg-blue-800 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="relative inline-flex items-center justify-center rounded-md p-2  text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -242,6 +20,7 @@
           <svg
             class="block size-6"
             fill="none"
+            *ngIf="!mobileMenuOpen"
             viewBox="0 0 24 24"
             stroke-width="1.5"
             stroke="currentColor"
@@ -260,7 +39,7 @@
             Menu open: "block", Menu closed: "hidden"
           -->
           <svg
-            class="hidden size-6"
+            class="size-6"
             fill="none"
             *ngIf="mobileMenuOpen"
             viewBox="0 0 24 24"
@@ -291,30 +70,40 @@
         </div>
         @if(user_id == 1){
         <div class="hidden sm:ml-6 sm:block">
-          <div class="flex mx-auto space-x-2">
+          <div class="flex space-x-2">
             <a
               [routerLink]="['/ideas']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Ideas</a
             >
             <a
-              [routerLink]="['/reportes']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLink]="['/reportes/puntos']"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Reportes</a
             >
             <a
               [routerLink]="['/productos']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Productos</a
             >
             <a
               [routerLink]="['/premios']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Premios</a
             >
             <a
               [routerLink]="['/usuarios']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Usuarios</a
             >
           </div>
@@ -324,17 +113,23 @@
           <div class="flex mx-auto space-x-2">
             <a
               [routerLink]="['/ideas']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl '"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Ideas</a
             >
             <a
               [routerLink]="['/productos']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Productos</a
             >
             <a
               [routerLink]="['/premios']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Premios</a
             >
           </div>
@@ -344,22 +139,28 @@
           <div class="flex mx-auto space-x-2">
             <a
               [routerLink]="['/ideas']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Mis ideas</a
             >
             <a
               [routerLink]="['/productos']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Productos</a
             >
             <a
               [routerLink]="['/premios']"
-              class="rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Mis premios</a
             >
           </div>
         </div>
-        }
+        } @else{}
       </div>
       <!-- Icono de notificaciones y perfil -->
       <div
@@ -367,34 +168,40 @@
       >
         <button
           type="button"
-          class="relative rounded-full p-2 bg-blue-800 text-white outline-none focus:ring-1 hover:ring-white hover:ring-offset-0 focus:ring-offset-gray-800"
+          class="transition ease-in-out delay-150 relative duration-300 hover:-translate-y-1 hover:scale-110 founded-full p-2 text-white outline-none"
         >
           <span class="absolute -inset-1.5"></span>
+          <!-- Bolita de notificacion-->
+          <span class="relative flex left-0 h-1.5 w-1.5">
+            <span
+              class="animate-ping delay-700 absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+            ></span>
+            <span
+              class="relative inline-flex rounded-full h-2 w-2 bg-sky-500"
+            ></span>
+          </span>
           <span class="sr-only">Ver notificaciones</span>
           <svg
-            class="size-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke-width="1.5"
-            stroke="currentColor"
-            aria-hidden="true"
-            data-slot="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-bell-fill size-6"
+            viewBox="0 0 16 16"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+              d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901"
             />
           </svg>
         </button>
 
         <!-- Perfil dropdown -->
-        <div class="relative ml-3">
+        <div class="relative ml-4">
           <div>
             <button
               type="button"
               (click)="toggleProfileMenu()"
-              class="relative flex rounded-full text-sm p-1 bg-blue-800 text-white outline-none focus:ring-1 hover:ring-white hover:ring-offset-0 focus:ring-offset-gray-800"
+              class="transition ease-in-out delay-150 relative duration-300 hover:-translate-y-1 focus:-translate-y-1 hover:scale-110 focus:scale-110 flex rounded-full text-sm p-1 text-white outline-none"
               id="user-menu-button"
               aria-expanded="false"
               aria-haspopup="true"
@@ -426,7 +233,7 @@
           >
             <a
               [routerLink]="['/myProfile']"
-              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-300 hover:text-gray-900"
               role="menuitem"
               tabindex="-1"
               id="user-menu-item-0"
@@ -447,34 +254,69 @@
   </div>
 
   <!-- Mobile menu -->
-  <div class="sm:hidden" *ngIf="mobileMenuOpen" id="mobile-menu">
+  <div class="md:hidden" *ngIf="mobileMenuOpen" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
+      @if(user_id == 1){
       <a
-        href="#"
+        [routerLink]="['/ideas']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         aria-current="page"
         >Ideas</a
       >
       <a
-        href="#"
+        [routerLink]="['/reportes/puntos']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Reportes</a
       >
       <a
-        href="#"
+        [routerLink]="['/productos']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Productos</a
       >
       <a
-        href="#"
+        [routerLink]="['/premios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Premios</a
       >
       <a
-        href=""
+        [routerLink]="['/usuarios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
         class="block rounden-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Usuarios</a
       >
+      } @else if(user_id == 2){
+      <a
+        [routerLink]="['/ideas']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        aria-current="page"
+        >Ideas</a
+      >
+      <a
+        [routerLink]="['/productos']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Productos</a
+      >
+      <a
+        [routerLink]="['/usuarios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Premios</a
+      >
+      } @else if(user_id == 3){ } @else { }
     </div>
   </div>
 </nav>
