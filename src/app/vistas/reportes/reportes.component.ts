@@ -7,7 +7,7 @@ import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Hist
 import { ReportesIdeas } from '../../interfaces/reportes';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { initFlowbite } from 'flowbite';
-import { RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
 Chart.register(...registerables)
 
 @Component({
@@ -100,11 +100,16 @@ export class ReportesComponent implements OnInit {
   ctx = document.getElementById('myChart');
   tab: number = 0
 
-  constructor(protected reporteService: ReportesService) { }
+  constructor(protected reporteService: ReportesService, private router: Router) { }
 
   ngOnInit(): void {
     this.initDate()
+    this.irPuntos()
 
+  }
+
+  irPuntos() {
+    this.router.navigateByUrl('/reportes/puntos')
   }
 
 

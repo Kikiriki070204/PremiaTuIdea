@@ -1,4 +1,4 @@
-<nav style="background-color: rgb(41, 47, 130)" class="shadow-lg">
+<nav style="background-color: rgb(41, 47, 130)" class="shadow-lg bg-cover">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -6,7 +6,7 @@
         <button
           type="button"
           (click)="toggleMobileMenu()"
-          class="relative inline-flex items-center justify-center rounded-md p-2  text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+          class="relative inline-flex items-center justify-center rounded-md p-2 text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
           aria-controls="mobile-menu"
           aria-expanded="false"
         >
@@ -59,7 +59,9 @@
       <div
         class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
       >
-        <div class="flex shrink-0 items-center">
+        <div
+          class="flex shrink-0 items-center transition ease-in-out delay-150 duration-300 hover:-translate-y-1 hover:scale-110"
+        >
           <a [routerLink]="['/dashboard']">
             <img
               src="../../assets/logoWhite.png"
@@ -70,18 +72,18 @@
         </div>
         @if(user_id == 1){
         <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-2">
+          <div class="flex space-x-4">
             <a
               [routerLink]="['/ideas']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActiveOptions]="{ exact: false }"
               class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Ideas</a
             >
             <a
-              [routerLink]="['/reportes/puntos']"
+              [routerLink]="['/reportes']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActiveOptions]="{ exact: false }"
               class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Reportes</a
             >
@@ -114,7 +116,7 @@
             <a
               [routerLink]="['/ideas']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl '"
-              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActiveOptions]="{ exact: false }"
               class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Ideas</a
             >
@@ -140,7 +142,7 @@
             <a
               [routerLink]="['/ideas']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
+              [routerLinkActiveOptions]="{ exact: false }"
               class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
               >Mis ideas</a
             >
@@ -160,11 +162,44 @@
             >
           </div>
         </div>
-        } @else{}
+        } @else if (user_id == 3){
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <a
+              [routerLink]="['/ideas']"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: false }"
+              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
+              >Ideas</a
+            >
+            <a
+              [routerLink]="['/productos']"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              >Productos</a
+            >
+            <a
+              [routerLink]="['/premios']"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              >Premios</a
+            >
+            <a
+              [routerLink]="['/usuarios']"
+              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
+              [routerLinkActiveOptions]="{ exact: true }"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              >Usuarios</a
+            >
+          </div>
+        </div>
+        } @else { }
       </div>
       <!-- Icono de notificaciones y perfil -->
       <div
-        class="absolute inset-y-0 right-0 flex items-center pr-0 sm:static sm:inset-auto sm:ml-6 sm:pr-0"
+        class="absolute inset-y-0 right-0 flex items-center pr-0 sm:static sm:ml-6 sm:pr-0"
       >
         <button
           type="button"
@@ -196,7 +231,7 @@
         </button>
 
         <!-- Perfil dropdown -->
-        <div class="relative ml-4">
+        <div class="relative ml-0">
           <div>
             <button
               type="button"
@@ -254,21 +289,21 @@
   </div>
 
   <!-- Mobile menu -->
-  <div class="md:hidden" *ngIf="mobileMenuOpen" id="mobile-menu">
+  <div class="lg:hidden" *ngIf="mobileMenuOpen" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
       @if(user_id == 1){
       <a
         [routerLink]="['/ideas']"
         [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         aria-current="page"
         >Ideas</a
       >
       <a
-        [routerLink]="['/reportes/puntos']"
+        [routerLink]="['/reportes']"
         [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Reportes</a
       >
@@ -297,7 +332,7 @@
       <a
         [routerLink]="['/ideas']"
         [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
+        [routerLinkActiveOptions]="{ exact: false }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         aria-current="page"
         >Ideas</a
@@ -316,7 +351,60 @@
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Premios</a
       >
-      } @else if(user_id == 3){ } @else { }
+      } @else if(user_id == 3){
+      <a
+        [routerLink]="['/ideas']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        aria-current="page"
+        >Ideas</a
+      >
+      <a
+        [routerLink]="['/productos']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Productos</a
+      >
+      <a
+        [routerLink]="['/premios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Premios</a
+      >
+      <a
+        [routerLink]="['/usuarios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounden-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Usuarios</a
+      >
+      } @else if(user_id == 4) {
+      <a
+        [routerLink]="['/ideas']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: false }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        aria-current="page"
+        >Ideas</a
+      >
+      <a
+        [routerLink]="['/productos']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Productos</a
+      >
+      <a
+        [routerLink]="['/premios']"
+        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
+        >Premios</a
+      >
+      } @else {}
     </div>
   </div>
 </nav>

@@ -15,7 +15,17 @@ export const routes: Routes =
         { path: 'usuarios/:id', loadComponent: () => import('./vistas/user-data/user-data.component').then(m => m.UserDataComponent), canActivate: [authenticateGuard] },
         { path: 'newUser', loadComponent: () => import('./vistas/new-user/new-user.component').then(m => m.NewUserComponent), canActivate: [authenticateGuard] },
         //Rutas de ideas
-        { path: 'ideas', loadComponent: () => import('./vistas/ideas/ideas.component').then(m => m.IdeasComponent), canActivate: [authenticateGuard] },
+        {
+            path: 'ideas',
+            loadComponent: () => import('./vistas/ideas/ideas.component').then(m => m.IdeasComponent),
+            canActivate: [authenticateGuard],
+            children: [
+                { path: 'revision', loadComponent: () => import('./vistas/ideas/ideas-revision/ideas-revision.component').then(m => m.IdeasRevisionComponent) },
+                { path: 'aceptadas', loadComponent: () => import('./vistas/ideas/ideas-aceptadas/ideas-aceptadas.component').then(m => m.IdeasAceptadasComponent) },
+                { path: 'implementadas', loadComponent: () => import('./vistas/ideas/ideas-implementadas/ideas-implementadas.component').then(m => m.IdeasImplementadasComponent) },
+                { path: 'rechazadas', loadComponent: () => import('./vistas/ideas/ideas-rechazadas/ideas-rechazadas.component').then(m => m.IdeasRechazadasComponent) }
+            ]
+        },
         { path: 'ideas/:id', loadComponent: () => import('./vistas/idea-data/idea-data.component').then(m => m.IdeaDataComponent), canActivate: [authenticateGuard] },
         { path: 'idea/:id', loadComponent: () => import('./vistas/idea-data-g/idea-data-g.component').then(m => m.IdeaDataGComponent), canActivate: [authenticateGuard] },
         { path: 'newIdea', loadComponent: () => import('./vistas/new-idea/new-idea.component').then(m => m.NewIdeaComponent), canActivate: [authenticateGuard] },
