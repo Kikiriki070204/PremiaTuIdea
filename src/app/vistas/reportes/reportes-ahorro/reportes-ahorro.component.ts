@@ -52,6 +52,8 @@ export class ReportesAhorroComponent implements OnInit {
   ahorros_totalByArea: number[] = []
   ahorros_percentages: number[] = []
   total_ahorros: number = 0
+  total_ahorros_dolares: number = 0
+  USD: string = 'USD'
   pxt: number = 0
 
   ngOnInit(): void {
@@ -91,11 +93,12 @@ export class ReportesAhorroComponent implements OnInit {
             self.ahorros_data = value
             self.ahorros = value.msg.ahorros_por_area
             self.total_ahorros = value.msg.total_ahorros
-            value.msg.ahorros_por_area.forEach(
-              area => {
-                self.ahorros_nombres.push(area.nombre_area + " ($" + area.total_ahorros + ")")
-                self.ahorros_totalByArea.push(area.total_ahorros)
-              })
+            self.total_ahorros_dolares = value.msg.total_ahorros_dolares
+            value.msg.ahorros_por_area.forEach(area => {
+              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
+              self.ahorros_nombres.push(label)
+              self.ahorros_totalByArea.push(area.total_ahorros)
+            })
             const total = this.total_ahorros
             self.ahorros_totalByArea.forEach(value => {
               self.pxt = (value / total) * 100
@@ -125,11 +128,12 @@ export class ReportesAhorroComponent implements OnInit {
             self.ahorros_data = value
             self.ahorros = value.msg.ahorros_por_area
             self.total_ahorros = value.msg.total_ahorros
-            value.msg.ahorros_por_area.forEach(
-              area => {
-                self.ahorros_nombres.push(area.nombre_area + " ($" + area.total_ahorros + ")")
-                self.ahorros_totalByArea.push(area.total_ahorros)
-              })
+            self.total_ahorros_dolares = value.msg.total_ahorros_dolares
+            value.msg.ahorros_por_area.forEach(area => {
+              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
+              self.ahorros_nombres.push(label)
+              self.ahorros_totalByArea.push(area.total_ahorros)
+            })
             const total = this.total_ahorros
             self.ahorros_totalByArea.forEach(value => {
               self.pxt = (value / total) * 100

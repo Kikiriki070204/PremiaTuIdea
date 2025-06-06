@@ -31,9 +31,7 @@ export class IdeasRechazadasComponent {
       const profile = await firstValueFrom(this.authService.meplus());
       this.userInfo = profile;
       this.user_rol = profile.rol_id;
-      console.log('Rol del usuario:', this.user_rol);
 
-      // Ejecutar lógica según el rol
       if (this.user_rol === 4) {
         this.misIdeas(3);
       } else {
@@ -49,14 +47,12 @@ export class IdeasRechazadasComponent {
     this.ideaService.allIdeas(estatus)
       .subscribe(myIdeas => {
         this.ideas = myIdeas.ideas;
-        console.log(this.ideas)
       });
   }
 
   allideasUsers(): void {
     this.ideaService.usersIdeas().subscribe(myIdeas => {
       this.ideasUsers = myIdeas.ideas;
-      console.log(this.ideasUsers)
     })
 
 
@@ -68,7 +64,6 @@ export class IdeasRechazadasComponent {
     this.ideaService.ideasByStatus(estatus)
       .subscribe(myIdeas => {
         this.ideasUsers = myIdeas.ideas;
-        console.log(this.ideasUsers)
       });
   }
   goToIdea(id: number) {

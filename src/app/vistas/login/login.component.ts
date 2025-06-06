@@ -18,14 +18,14 @@ import { NgIf } from '@angular/common';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent implements OnInit{
+export class LoginComponent implements OnInit {
   errorMessage: string | null = null;
-  ibm = new FormControl('',Validators.required)
-  password = new FormControl('', Validators.minLength(6)) 
+  ibm = new FormControl('', Validators.required)
+  password = new FormControl('', Validators.minLength(6))
   cargando = false;
-  
 
-  constructor(protected cookieService: CookieService, protected service: LoginService, protected authService: AuthService,  protected router: Router){}
+
+  constructor(protected cookieService: CookieService, protected service: LoginService, protected authService: AuthService, protected router: Router) { }
 
   ngOnInit() {
     this.ibm.valueChanges.subscribe(() => {
@@ -37,10 +37,10 @@ export class LoginComponent implements OnInit{
     });
   }
 
-  login(){
+  login() {
     let self = this
     let login: Login = {
-      ibm : (this.ibm.value !== null && this.ibm.value !== '') ? +this.ibm.value : 0,
+      ibm: (this.ibm.value !== null && this.ibm.value !== '') ? +this.ibm.value : 0,
       password: this.password.value ?? ""
     }
 
@@ -51,55 +51,51 @@ export class LoginComponent implements OnInit{
         self.cargando = true;
         localStorage.setItem('access_token', value.access_token)
         self.authService.meplus().subscribe({
-          next(user: Profile){
+          next(user: Profile) {
             self.authService.setCurrentUser(user);
-            self.cookieService.set('rol_id',user.rol_id.toString(),1)
-        self.cookieService.set('id',user.id.toString(),1)
-        self.router.navigate(['/dashboard'])
+            self.cookieService.set('rol_id', user.rol_id.toString(), 1)
+            self.cookieService.set('id', user.id.toString(), 1)
+            sessionStorage.setItem('desdeLogin', 'true');
+            self.router.navigate(['/dashboard'])
           }
         })
       },
       error(err: HttpResponse) {
 
-        switch(err.status)
-        {
+        switch (err.status) {
           case 401:
-            if(err.error.msg == "Usuario no activo")
-              {
+            if (err.error.msg == "Usuario no activo") {
               self.errorMessage = 'Cuenta inactiva';
-              }
-              else if(err.error.msg == "Usuario no registrado")
-              {
-                self.errorMessage = 'Debe activar su cuenta antes de iniciar sesion';
-              }
-              else{
-                self.errorMessage = 'Contraseña incorrecta';
-              }
+            }
+            else if (err.error.msg == "Usuario no registrado") {
+              self.errorMessage = 'Debe activar su cuenta antes de iniciar sesion';
+            }
+            else {
+              self.errorMessage = 'Contraseña incorrecta';
+            }
             break;
           case 422:
-            if(err.error.msg == "Usuario ya registrado")
-              {
-                  self.errorMessage = 'Usuario ya registrado, por favor inicie sesion';
-              }
-              else
-              {
-                self.errorMessage = 'Campos obligatorios, por favor introduzca datos validos';
-              }
-              break;
-            case 404:
-              self.errorMessage = 'Usuario no encontrado, si cree que es un error comuniquese con su administrador';
-              break;
-            default:
-                // Errores generales
-                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-                break;
+            if (err.error.msg == "Usuario ya registrado") {
+              self.errorMessage = 'Usuario ya registrado, por favor inicie sesion';
+            }
+            else {
+              self.errorMessage = 'Campos obligatorios, por favor introduzca datos validos';
+            }
+            break;
+          case 404:
+            self.errorMessage = 'Usuario no encontrado, si cree que es un error comuniquese con su administrador';
+            break;
+          default:
+            // Errores generales
+            self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            break;
         }
       },
     })
   }
 
-  clearError(): void{
+  clearError(): void {
     this.errorMessage = null;
   }
-  
+
 }

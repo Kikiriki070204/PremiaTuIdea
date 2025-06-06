@@ -82,8 +82,9 @@ export class AppNavbarComponent implements OnInit {
 
   logout() {
     this.authService.logout()
-
+    location.reload()
     this.router.navigate(['/'])
+
 
   }
 

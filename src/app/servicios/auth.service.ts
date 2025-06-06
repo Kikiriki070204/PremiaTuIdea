@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 import { PRECONNECT_CHECK_BLOCKLIST } from '@angular/common';
 import { environment } from '../../enviroment/enviroment';
@@ -10,6 +10,8 @@ import { Profile } from '../interfaces/profile';
   providedIn: 'root'
 })
 export class AuthService {
+  private userInfoSubject = new BehaviorSubject<Profile | null>(null);
+  public userInfo$ = this.userInfoSubject.asObservable();
 
   constructor(protected http: HttpClient, protected cookie: CookieService) { }
 
@@ -40,9 +42,14 @@ export class AuthService {
     return this.http.post<User>(`${environment.api_url}/auth/me`, undefined)
   }
 
+
+
+
   meplus(): Observable<Profile> {
     return this.http.get<Profile>(`${environment.api_url}/auth/meplus`)
   }
+
+
 
   logout() {
     localStorage.removeItem('access_token')

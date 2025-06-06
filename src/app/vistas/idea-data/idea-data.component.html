@@ -80,7 +80,7 @@
         Estatus de la idea
       </h6>
 
-      @if(user_rol == '1'){
+      @if(user_rol == 1){
       <select
         (change)="onEstadoChange($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -237,7 +237,7 @@
       >
         Tipo de idea
       </h6>
-      @if(contable == 0) { @if(user_rol == '1'){
+      @if(contable == 0) { @if(user_rol == 1){
       <div class="flex items-center mb-4">
         <input
           (change)="handleRadioChange($event)"
@@ -303,7 +303,7 @@
           >No contable</label
         >
       </div>
-      } } @else{ @if(user_rol == '1'){
+      } } @else{ @if(user_rol == 1){
       <div class="flex items-center mb-4">
         <input
           (change)="handleRadioChange($event)"
@@ -428,7 +428,7 @@
         Campos
       </h6>
 
-      @if(user_rol == '1'){
+      @if(user_rol == 1){
       <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
         <div class="mt-1 space-y-2">
           <div *ngFor="let campo of campos">
@@ -442,7 +442,7 @@
         </div>
       </div>
       } @else {
-      <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+      <div class="p-1 md:p-2 border-b rounded-t dark:border-gray-600">
         <div class="mt-1 space-y-2">
           <div *ngFor="let campo of campos">
             <input
@@ -459,8 +459,7 @@
     </div>
 
     <button
-      data-modal-target="puntos-modal"
-      data-modal-toggle="puntos-modal"
+      (click)="abrirModal()"
       type="button"
       class="ml-4 mt-4 text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2"
     >
@@ -497,8 +496,8 @@
   <div
     id="puntos-modal"
     tabindex="-1"
-    aria-hidden="true"
-    class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+    *ngIf="showModal"
+    class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
   >
     <div class="relative p-4 w-full max-w-md max-h-full">
       <!-- Modal content -->
@@ -512,6 +511,7 @@
           </h3>
           <button
             type="button"
+            (click)="cerrarModal()"
             class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
             data-modal-toggle="puntos-modal"
           >
@@ -605,7 +605,7 @@
   Actividades
 </h5>
 
-@if(user_rol == '1'){
+@if(user_rol == 1){
 <button
   style="margin-left: 3%; margin-top: 1%"
   (click)="newAct()"
@@ -637,7 +637,7 @@
             <th scope="col" class="px-6 py-3">Fecha de inicio</th>
             <th scope="col" class="px-6 py-3">Fecha de finalizacion</th>
             <th scope="col" class="px-6 py-3">Estatus</th>
-            @if(user_rol == '1'){
+            @if(user_rol == 1){
             <th scope="col" class="px-6 py-3">Opciones</th>
             } @else { }
           </tr>
@@ -679,7 +679,7 @@
             <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">
               Rechazada
             </td>
-            } @if(user_rol == '1'){
+            } @if(user_rol == 1){
 
             <td>
               <button

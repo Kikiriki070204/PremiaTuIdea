@@ -10,7 +10,7 @@ import { Profile } from '../../interfaces/profile';
 @Component({
   selector: 'app-premios',
   standalone: true,
-  imports: [AppNavbarComponent, RouterLink, NgFor],
+  imports: [RouterLink, NgFor],
   templateUrl: './premios.component.html',
   styleUrl: './premios.component.css'
 })

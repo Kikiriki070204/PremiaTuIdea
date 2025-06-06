@@ -13,32 +13,32 @@ import { Actividad, ActividadIdea, Actividades, ActivityData, EditEstado, EditEs
 @Injectable({
   providedIn: 'root'
 })
-export class IdeasService{
+export class IdeasService {
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
-  allIdeas(estatus: number | null ): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/`+ estatus);
+  allIdeas(estatus: number | null): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/` + estatus);
   }
 
-  ideasImp(): Observable<Ideas>{
+  ideasImp(): Observable<Ideas> {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeas`);
   }
 
-  ideasImpByUser(id: any): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeasImplementadas/`+id);
+  ideasImpByUser(id: any): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeasImplementadas/` + id);
   }
 
-  newIdea(data: FormData): Observable<Idea>{
-    return this.http.post<Idea>(`${environment.api_url}/ideass/create`,data);
+  newIdea(data: FormData): Observable<Idea> {
+    return this.http.post<Idea>(`${environment.api_url}/ideass/create`, data);
   }
 
-  usersIdeas(): Observable<Ideas>{
+  usersIdeas(): Observable<Ideas> {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll`)
   }
 
-  ideasByStatus(estatus: number | null ): Observable<Ideas>{
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/`+ estatus)
+  ideasByStatus(estatus: number | null): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/` + estatus)
   }
 
   // imageByIdea(idea: number | null): Observable<any>{
@@ -47,61 +47,55 @@ export class IdeasService{
 
   getImage(idea: any): Observable<any> {
     return this.http.get(`${environment.api_url}` + '/ideass/images/' + idea, { responseType: 'blob' });
-}
-
-  ideaData(idea_id: any): Observable<IdeaData>
-  {
-  return this.http.get<IdeaData>(`${environment.api_url}/ideass/show/` + idea_id);
   }
 
-  asignarPuntos(data: Puntos ): Observable<User>
-  {
+  ideaData(idea_id: any): Observable<IdeaData> {
+    return this.http.get<IdeaData>(`${environment.api_url}/ideass/show/` + idea_id);
+  }
+
+  asignarPuntos(data: Puntos): Observable<User> {
     return this.http.put<User>(`${environment.api_url}/ideass/puntos`, data);
   }
 
-  estadoIdeas(): Observable<EstadoIdeas>{
+  estadoIdeas(): Observable<EstadoIdeas> {
     return this.http.get<EstadoIdeas>(`${environment.api_url}/estadoideas/list`);
   }
 
-  deleteIdea(idea: any): Observable<any>{
-    return this.http.delete(`${environment.api_url}`+'/ideass/delete/'+ idea);
+  deleteIdea(idea: any): Observable<any> {
+    return this.http.delete(`${environment.api_url}` + '/ideass/delete/' + idea);
   }
 
-  editarEstado(data: Estado): Observable<Idea>
-  {
+  editarEstado(data: Estado): Observable<Idea> {
     return this.http.put<Idea>(`${environment.api_url}/ideass/update`, data)
   }
 
-  campos(num: any): Observable<Campos>{
-    return this.http.get<Campos>(`${environment.api_url}/campos/monetario/`+num)
+  campos(num: any): Observable<Campos> {
+    return this.http.get<Campos>(`${environment.api_url}/campos/monetario/` + num)
   }
 
 
-  editarColaboradores(data: EditColabs): Observable<Msg>{
+  editarColaboradores(data: EditColabs): Observable<Msg> {
     return this.http.post<Msg>(`${environment.api_url}/userteam/create`, data);
   }
 
   //SERVICIOS DE ACTIVIDADES
-  actividades(idea: any): Observable<Actividades>
-  {
-    return this.http.get<Actividades>(`${environment.api_url}/actividades/ideaActividades/`+ idea)
+  actividades(idea: any): Observable<Actividades> {
+    return this.http.get<Actividades>(`${environment.api_url}/actividades/ideaActividades/` + idea)
   }
 
-  newActivity(data: newActivity): Observable<Actividad>{
-  return this.http.post<Actividad>(`${environment.api_url}/actividades/create`, data);
+  newActivity(data: newActivity): Observable<Actividad> {
+    return this.http.post<Actividad>(`${environment.api_url}/actividades/create`, data);
   }
 
-  actividadData(id_actividad: any): Observable<ActivityData>
-  {
-    return this.http.get<ActivityData>(`${environment.api_url}/actividades/show/`+ id_actividad)
+  actividadData(id_actividad: any): Observable<ActivityData> {
+    return this.http.get<ActivityData>(`${environment.api_url}/actividades/show/` + id_actividad)
   }
 
-  getEstadoAct(): Observable<EstadoActividades>{
+  getEstadoAct(): Observable<EstadoActividades> {
     return this.http.get<EstadoActividades>(`${environment.api_url}/estadoactividades/list`)
   }
 
-  editarEstadoAct(data: EditEstado | EditEstado2): Observable<Actividad>
-  {
+  editarEstadoAct(data: EditEstado | EditEstado2): Observable<Actividad> {
     return this.http.put<Actividad>(`${environment.api_url}/actividades/update`, data)
   }
 

@@ -10,6 +10,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { AuthService } from '../../servicios/auth.service';
 import { IdeasService } from '../../servicios/ideas.service';
 import { HttpResponse } from '../../interfaces/http';
+import { Profile } from '../../interfaces/profile';
 
 @Component({
   selector: 'app-idea-data-g',
@@ -18,8 +19,8 @@ import { HttpResponse } from '../../interfaces/http';
   templateUrl: './idea-data-g.component.html',
   styleUrl: './idea-data-g.component.css'
 })
-export class IdeaDataGComponent implements OnInit{
-  user_rol: string | null = null
+export class IdeaDataGComponent implements OnInit {
+  user_rol: number | null = null
   errorMessage: string | null = null
   Message: string | null = null
   idea: IdeaData | null = null
@@ -29,7 +30,7 @@ export class IdeaDataGComponent implements OnInit{
   estados: EstadoIdea[] | null = null
   check = false
   //datos para editar
-  titulo= new FormControl
+  titulo = new FormControl
   antecedentes = new FormControl
   propuesta = new FormControl
   actividades: Actividad[] | null = null
@@ -38,27 +39,30 @@ export class IdeaDataGComponent implements OnInit{
   colaboradores_puntos: number[] = []
   contable: number = 0
   ahorro_valor: number = 0
-  
+
   fecha = new Date()
-fecha_puntos: string | null = null
+  fecha_puntos: string | null = null
   campos: Campo[] | null = null
   campos_idea: number[] = []
   //campo's properties:
   checkboxModel = new FormControl
   checkboxStates: { [id: number]: boolean } = {};
-  
+
+  userInfo: Profile | null = null
+
   public safeImage: SafeUrl | null = null;
-  ahorro = new FormControl('',Validators.required)
+  ahorro = new FormControl('', Validators.required)
   puntos = new FormControl(Validators.required)
-    constructor(protected authService: AuthService, protected sanitizer: DomSanitizer ,private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {}
-  
+  constructor(protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) { }
+
   ngOnInit() {
     this.activatedRoute.params.subscribe(params => {
-      var idea_id = params['id']; 
+      var idea_id = params['id'];
       this.idea_id = idea_id
       console.log(params['id'])
     });
-    this.getRol()
+    // this.getRol()
+    this.user()
     this.ideaData()
     this.estadoIdeas()
     this.getImage()
@@ -67,109 +71,129 @@ fecha_puntos: string | null = null
     // if(this.idea?.idea.estatus == 3){
     //   this.asignarDisabled()
     // }
-    
+
   }
-  
-  getRol(){
+
+  /*
+  getRol() {
     this.user_rol = this.authService.getRol()
-  }
-  
-  
+  } */
+
+
   private getImage(): void {
     this.ideaService.getImage(this.idea_id).subscribe(image => {
-    let blob: Blob = image;
-    let objectURL = URL.createObjectURL(blob);
-    this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
-  });
+      let blob: Blob = image;
+      let objectURL = URL.createObjectURL(blob);
+      this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    });
   }
-  
-  
-  ideaData()
-    {
-      let self = this
-      this.ideaService.ideaData(this.idea_id)
+
+  user() {
+    let self = this
+
+    this.authService.meplus().subscribe({
+      next(value: Profile) {
+        self.userInfo = value
+        self.user_rol = value.rol_id
+        console.log(self.userInfo)
+        console.log(self.user_rol)
+      },
+      error(err) {
+        console.log(err)
+      },
+    })
+  }
+
+
+  logout() {
+    this.authService.logout()
+    location.reload()
+    this.router.navigate(['/'])
+
+
+  }
+
+  ideaData() {
+    let self = this
+    this.ideaService.ideaData(this.idea_id)
       .subscribe({
-        next(value: IdeaData){
-            self.idea = value;
-            self.colaboradores = value.colaboradores
-            self.campos_init = value.campos
-            self.contable = value.idea.contable
-            self.ahorro_valor = value.idea.ahorro
-            console.log(value.idea.ahorro)
-            value.colaboradores.forEach(
-              colaborador =>{
-                self.colaboradores_id.push(colaborador.id)
-              }
-            )
-            value.campos.forEach(
-              campo =>{
-                self.campos_idea.push(campo.id)
-                self.checkboxStates[campo.id] = self.campos_idea.includes(campo.id);
-              }
-            )
-            console.log("campos seleccionados:", self.campos_idea)
+        next(value: IdeaData) {
+          self.idea = value;
+          self.colaboradores = value.colaboradores
+          self.campos_init = value.campos
+          self.contable = value.idea.contable
+          self.ahorro_valor = value.idea.ahorro
+          console.log(value.idea.ahorro)
+          value.colaboradores.forEach(
+            colaborador => {
+              self.colaboradores_id.push(colaborador.id)
+            }
+          )
+          value.campos.forEach(
+            campo => {
+              self.campos_idea.push(campo.id)
+              self.checkboxStates[campo.id] = self.campos_idea.includes(campo.id);
+            }
+          )
+          console.log("campos seleccionados:", self.campos_idea)
         },
-        error(err: HttpResponse){
-          self.router.navigate(['**']) 
+        error(err: HttpResponse) {
+          self.router.navigate(['**'])
           console.log(err)
         }
-      }); 
-    }
-  
-  
-    estadoIdeas(): void{
-      this.ideaService.estadoIdeas().subscribe(
-        estadosIdeas => {
-          this.estados = estadosIdeas.estados;
-          console.log(this.estados);
-        }
-      );
-    }
-  
-    onEstadoChange(event: any) {
-      const selectedValue = event.target.value;
-      this.selectedEstado = parseInt(selectedValue, 10);
-      console.log("estado: ",this.selectedEstado)
-    } 
-    actividadesByIdea()
-    {
-      this.ideaService.actividades(this.idea_id).subscribe(
-        actividadesIdea => {
+      });
+  }
+
+
+  estadoIdeas(): void {
+    this.ideaService.estadoIdeas().subscribe(
+      estadosIdeas => {
+        this.estados = estadosIdeas.estados;
+        console.log(this.estados);
+      }
+    );
+  }
+
+  onEstadoChange(event: any) {
+    const selectedValue = event.target.value;
+    this.selectedEstado = parseInt(selectedValue, 10);
+    console.log("estado: ", this.selectedEstado)
+  }
+  actividadesByIdea() {
+    this.ideaService.actividades(this.idea_id).subscribe(
+      actividadesIdea => {
         this.actividades = actividadesIdea.actividades
         console.log(this.actividades);
       })
-    }
-  
-    handleRadioChange(event: any){
-      const selectedValue = event.target.value;
-      this.contable = parseInt(selectedValue, 10);
-      console.log("contable: ",this.contable)
-      this.getCampos()
-    }
-  
-    getCampos()
-    {
-      if(this.contable == 0)
-        {
-          this.ideaService.campos(1).subscribe(
-            campos=>{
-              this.campos = campos.campos
-            }
-          )
-          console.log("campos contable: ", this.campos);
+  }
+
+  handleRadioChange(event: any) {
+    const selectedValue = event.target.value;
+    this.contable = parseInt(selectedValue, 10);
+    console.log("contable: ", this.contable)
+    this.getCampos()
+  }
+
+  getCampos() {
+    if (this.contable == 0) {
+      this.ideaService.campos(1).subscribe(
+        campos => {
+          this.campos = campos.campos
         }
-        else
-        {
-          this.ideaService.campos(2).subscribe(
-            campos=>{
-              this.campos = campos.campos
-            }
-          )
-          console.log("campos no contable: ", this.campos);
-        }
-  
+      )
+      console.log("campos contable: ", this.campos);
     }
-    
+    else {
+      this.ideaService.campos(2).subscribe(
+        campos => {
+          this.campos = campos.campos
+        }
+      )
+      console.log("campos no contable: ", this.campos);
+    }
+
+  }
+
   // asignarDisabled(){
   //   let state: boolean | null = null
   //   if(this.idea?.idea.estatus == 3)
@@ -182,5 +206,5 @@ fecha_puntos: string | null = null
   //   console.log("check!:", state)
   //   return state
   // }
-  
+
 }
