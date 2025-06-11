@@ -10,92 +10,100 @@ import { AuthService } from '../../servicios/auth.service';
 import { CookieService } from 'ngx-cookie-service';
 import { HttpResponse } from '../../interfaces/http';
 import { NgIf } from '@angular/common';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [AppNavbarComponent, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, RouterLink, NgIf],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent implements OnInit {
   errorMessage: string | null = null;
-  ibm = new FormControl('', Validators.required)
-  password = new FormControl('', Validators.minLength(6))
+  ibm = new FormControl('', Validators.required);
+  password = new FormControl('', Validators.minLength(6));
   cargando = false;
 
-
-  constructor(protected cookieService: CookieService, protected service: LoginService, protected authService: AuthService, protected router: Router) { }
+  constructor(
+    private cookieService: CookieService,
+    private service: LoginService,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.ibm.valueChanges.subscribe(() => {
-      this.clearError();
-    });
-
-    this.password.valueChanges.subscribe(() => {
-      this.clearError();
-    });
+    this.ibm.valueChanges.subscribe(() => this.clearError());
+    this.password.valueChanges.subscribe(() => this.clearError());
   }
 
   login() {
-    let self = this
-    let login: Login = {
-      ibm: (this.ibm.value !== null && this.ibm.value !== '') ? +this.ibm.value : 0,
-      password: this.password.value ?? ""
-    }
+    this.errorMessage = null;
+    const login: Login = {
+      ibm: this.ibm.value ? +this.ibm.value : 0,
+      password: this.password.value ?? ''
+    };
 
+    this.cargando = true;
 
     this.service.login(login).subscribe({
-      next(value: User) {
-        // llevarlo a su dashboard.
-        self.cargando = true;
-        localStorage.setItem('access_token', value.access_token)
-        self.authService.meplus().subscribe({
-          next(user: Profile) {
-            self.authService.setCurrentUser(user);
-            self.cookieService.set('rol_id', user.rol_id.toString(), 1)
-            self.cookieService.set('id', user.id.toString(), 1)
+      next: (value: User) => {
+        const token = value.access_token;
+        localStorage.setItem('access_token', token);
+
+        this.authService.meplus().subscribe({
+          next: (user: Profile) => {
+            this.authService.setUser(user, token);
             sessionStorage.setItem('desdeLogin', 'true');
-            self.router.navigate(['/dashboard'])
+
+
+            switch (user.rol_id) {
+              case 1:
+                this.router.navigate(['/dashboard']);
+                break;
+              case 3:
+                this.router.navigate(['/dashboard']);
+                break;
+              default:
+                this.router.navigate(['/dashboard']);
+                break;
+            }
+          },
+          error: () => {
+            this.errorMessage = 'No se pudo cargar el perfil del usuario.';
+            this.cargando = false;
           }
-        })
+        });
       },
-      error(err: HttpResponse) {
+      error: (err: HttpErrorResponse) => {
+
+        this.cargando = false;
 
         switch (err.status) {
           case 401:
-            if (err.error.msg == "Usuario no activo") {
-              self.errorMessage = 'Cuenta inactiva';
-            }
-            else if (err.error.msg == "Usuario no registrado") {
-              self.errorMessage = 'Debe activar su cuenta antes de iniciar sesion';
-            }
-            else {
-              self.errorMessage = 'Contraseña incorrecta';
-            }
+            this.errorMessage = err.error.msg === 'Usuario no activo'
+              ? 'Cuenta inactiva'
+              : (err.error.msg === 'Usuario no registrado'
+                ? 'Debe activar su cuenta antes de iniciar sesión'
+                : 'Contraseña incorrecta');
             break;
           case 422:
-            if (err.error.msg == "Usuario ya registrado") {
-              self.errorMessage = 'Usuario ya registrado, por favor inicie sesion';
-            }
-            else {
-              self.errorMessage = 'Campos obligatorios, por favor introduzca datos validos';
-            }
+            this.errorMessage = err.error.msg === 'Usuario ya registrado'
+              ? 'Usuario ya registrado, por favor inicie sesión'
+              : 'Campos obligatorios, por favor introduzca datos válidos';
             break;
           case 404:
-            self.errorMessage = 'Usuario no encontrado, si cree que es un error comuniquese con su administrador';
+            this.errorMessage = 'Usuario no encontrado, comuníquese con su administrador';
             break;
           default:
-            // Errores generales
-            self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            this.errorMessage = 'Ha ocurrido un error. Inténtelo de nuevo.';
             break;
         }
-      },
-    })
+      }
+    });
   }
 
-  clearError(): void {
+  clearError() {
     this.errorMessage = null;
   }
-
 }

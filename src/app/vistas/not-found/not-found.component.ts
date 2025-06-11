@@ -9,22 +9,21 @@ import { AuthService } from '../../servicios/auth.service';
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.css'
 })
-export class NotFoundComponent implements OnInit{
-user_token : string | null = null
-constructor(protected authService: AuthService, protected router: Router){
-}
+export class NotFoundComponent implements OnInit {
+  user_token: string | null = null
+  constructor(protected authService: AuthService, protected router: Router) {
+  }
 
-ngOnInit(): void {
-  const accessToken = this.authService.getToken(); 
-  if (accessToken.trim() === '') {
-    console.log('Access token is empty.');
-  } else {
-    this.getToken()
-}
-}
+  ngOnInit(): void {
+    const accessToken = this.authService.getToken();
+    if (accessToken === null || accessToken.trim() === '') {
+      console.log('Access token is empty.');
+    } else {
+      this.getToken()
+    }
+  }
 
-getToken()
-{
-  this.user_token = this.authService.getToken()
-}
+  getToken() {
+    this.user_token = this.authService.getToken()
+  }
 }

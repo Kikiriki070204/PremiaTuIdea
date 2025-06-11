@@ -1,10 +1,14 @@
-import { HttpInterceptorFn } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import {
+  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest
+} from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { AuthService } from '../servicios/auth.service';
-import { inject } from '@angular/core';
 import { environment } from '../../enviroment/enviroment';
+import { HttpInterceptorFn } from '@angular/common/http';
 
-export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
+export const authInterceptor: HttpInterceptorFn = (req, next) => {  /*
   const authToken : string = inject(AuthService).getToken();
 
   const authReq = req.clone({
@@ -15,4 +19,20 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   });
 
   return next(authReq1);
+  */
+
+
+  const token = localStorage.getItem('access_token');
+
+  if (token) {
+    const authReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    return next(authReq);
+  }
+
+  return next(req);
 };
+

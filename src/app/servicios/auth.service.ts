@@ -10,52 +10,41 @@ import { Profile } from '../interfaces/profile';
   providedIn: 'root'
 })
 export class AuthService {
-  private userInfoSubject = new BehaviorSubject<Profile | null>(null);
-  public userInfo$ = this.userInfoSubject.asObservable();
+  private currentUser: Profile | null = null;
 
-  constructor(protected http: HttpClient, protected cookie: CookieService) { }
-
-  getToken(): string {
-    return localStorage.getItem('access_token') ?? '';
+  constructor(private http: HttpClient) {
+    const userData = localStorage.getItem('user');
+    if (userData) this.currentUser = JSON.parse(userData);
   }
 
-  getId(): string {
-    console.log(this.cookie.get('id'))
-    return this.cookie.get('id') ?? '';
-  }
-  getRol(): string {
-    console.log(this.cookie.get('rol_id'))
-    return this.cookie.get('rol_id') ?? '';
-  }
-
-  currentUser: Profile | null = null
-
-  setCurrentUser(user: Profile): void {
+  setUser(user: Profile, token: string) {
     this.currentUser = user;
+    localStorage.setItem('user', JSON.stringify(user.rol_id));
+    localStorage.setItem('access_token', token);
   }
 
-  getCurrentUser(): Profile | null {
+  getUser(): Profile | null {
     return this.currentUser;
   }
 
-  me(): Observable<User> {
-    return this.http.post<User>(`${environment.api_url}/auth/me`, undefined)
+  getRoleId(): number | null {
+    return this.currentUser?.rol_id || null;
   }
-
-
-
 
   meplus(): Observable<Profile> {
     return this.http.get<Profile>(`${environment.api_url}/auth/meplus`)
   }
 
-
-
   logout() {
-    localStorage.removeItem('access_token')
-    this.cookie.delete('rol_id', '/', 'localhost', false, 'Lax')
-    this.cookie.delete('id', '/', 'localhost', false, 'Lax')
-    this.cookie.deleteAll()
+    this.currentUser = null;
+    localStorage.clear();
   }
 
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('access_token');
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('access_token');
+  }
 }
