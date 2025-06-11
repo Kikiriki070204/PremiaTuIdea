@@ -52,6 +52,17 @@ export const routes: Routes =
             ]
         },
         { path: 'chart', component: ChartsComponent },
+
+        // Dashboard Administrativo
+        {
+            path: 'admin',
+            loadComponent: () => import('./vistas/dashboard-admin/dashboard-admin.component').then(m => m.DashboardAdminComponent),
+            canActivate: [authenticateGuard],
+            data: { hideNavbar: true },
+            children: [
+
+            ]
+        },
         //wildcard
         { path: '**', loadComponent: () => import('./vistas/not-found/not-found.component').then(m => m.NotFoundComponent) },
     ];
