@@ -25,27 +25,7 @@ export class IdeasRevisionComponent implements OnInit {
   constructor(protected authService: AuthService, protected ideaService: IdeasService, protected router: Router) { }
 
   ngOnInit(): void {
-    this.user()
-  }
-
-  async user(): Promise<void> {
-    try {
-      const profile = await firstValueFrom(this.authService.meplus());
-      this.userInfo = profile;
-      this.user_rol = profile.rol_id;
-
-
-      if (this.user_rol === 4) {
-        this.misIdeas(1);
-        console.log("rol 4")
-      } else {
-        console.log("hola")
-        this.ideasbyStatus(1);
-      }
-
-    } catch (err) {
-      console.error('Error al obtener perfil:', err);
-    }
+    this.misIdeas(1);
   }
 
   misIdeas(estatus: number | null = null): void {
@@ -83,18 +63,5 @@ export class IdeasRevisionComponent implements OnInit {
     this.router.navigate(['/idea/', id])
   }
 
-  delete(idea: number) {
-    const confirmation = window.confirm("¿Estás seguro de querer eliminar esta idea? Una vez hecho, no se podrá recuperar.");
 
-    if (confirmation) {
-      this.ideaService.deleteIdea(idea).subscribe({
-        next: () => {
-          this.router.navigate(['/dashboard']);
-        },
-        error: (err) => {
-          console.error('Error al eliminar la idea:', err);
-        }
-      });
-    }
-  }
 }

@@ -1,0 +1,131 @@
+<div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+  <table
+    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+  >
+    <thead
+      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+    >
+      <tr>
+        <th scope="col" class="px-6 py-3">Titulo</th>
+        <th scope="col" class="px-6 py-3">Estatus</th>
+        <th scope="col" class="px-6 py-3">Opciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let idea of ideasUsers">
+        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+          {{ idea.titulo }}
+        </td>
+        <td
+          scope="row"
+          style="font-weight: 700"
+          class="px-6 py-4 font-medium text-yellow-500 whitespace-nowrap dark:text-white"
+        >
+          En revision
+        </td>
+        <td>
+          <button
+            (click)="delete(idea.id)"
+            type="button"
+            class="ml-4 text-red-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-trash3-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"
+              />
+            </svg>
+            <span class="sr-only">Icon description</span>
+          </button>
+          <a [routerLink]="['/idea/', idea.id]">
+            <button
+              type="button"
+              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-eye-fill"
+                viewBox="0 0 16 16"
+              >
+                <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+                <path
+                  d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+                />
+              </svg>
+            </button>
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="grid items-center gap-3 justify-center">
+    <ul class="inline-flex items-center -space-x-px text-sm text-blue-700">
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-blue-900 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >Previous</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-blue-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >1</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-blue-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >2</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          aria-current="page"
+          class="flex items-center justify-center px-3 h-8 text-blue-900 border border-gray-300 bg-blue-50 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
+          >3</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-blue-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >4</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-blue-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >5</a
+        >
+      </li>
+      <li>
+        <a
+          href="#"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-blue-900 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+          >Next</a
+        >
+      </li>
+    </ul>
+    <span class="text-sm text-gray-700 dark:text-gray-400">
+      Mostrando
+      <span class="font-semibold text-gray-900 dark:text-white">1</span> a
+      <span class="font-semibold text-gray-900 dark:text-white">20</span> de
+      <span class="font-semibold text-gray-900 dark:text-white">100</span>
+      ideas
+    </span>
+  </div>
+</div>

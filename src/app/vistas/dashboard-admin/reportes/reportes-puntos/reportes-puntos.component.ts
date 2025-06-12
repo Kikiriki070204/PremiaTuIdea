@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../interfaces/reportes';
+import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
 import { Chart, registerables } from 'chart.js';
-import { ReportesService } from '../../../servicios/reportes.service';
+import { ReportesService } from '../../../../servicios/reportes.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 Chart.register(...registerables)

@@ -1,6 +1,8 @@
 import { Routes } from '@angular/router';
 import { authenticateGuard } from './guards/authenticate.guard';
+
 import { ChartsComponent } from './charts/charts.component';
+import { authAdminGuard } from './guards/admin.guard';
 //Ya hay lazy load
 // Ya hay un guard!
 export const routes: Routes =
@@ -43,12 +45,12 @@ export const routes: Routes =
         //reportes
         {
             path: 'reportes',
-            loadComponent: () => import('./vistas/reportes/reportes.component').then(m => m.ReportesComponent),
+            loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes.component').then(m => m.ReportesComponent),
             canActivate: [authenticateGuard],
             children: [
-                { path: 'puntos', loadComponent: () => import('./vistas/reportes/reportes-puntos/reportes-puntos.component').then(m => m.ReportesPuntosComponent) },
-                { path: 'ideas', loadComponent: () => import('./vistas/reportes/reportes-ideas/reportes-ideas.component').then(m => m.ReportesIdeasComponent) },
-                { path: 'ahorro', loadComponent: () => import('./vistas/reportes/reportes-ahorro/reportes-ahorro.component').then(m => m.ReportesAhorroComponent) },
+                { path: 'puntos', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-puntos/reportes-puntos.component').then(m => m.ReportesPuntosComponent) },
+                { path: 'ideas', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-ideas/reportes-ideas.component').then(m => m.ReportesIdeasComponent) },
+                { path: 'ahorro', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-ahorro/reportes-ahorro.component').then(m => m.ReportesAhorroComponent) },
             ]
         },
         { path: 'chart', component: ChartsComponent },
@@ -57,12 +59,63 @@ export const routes: Routes =
         {
             path: 'admin',
             loadComponent: () => import('./vistas/dashboard-admin/dashboard-admin.component').then(m => m.DashboardAdminComponent),
-            canActivate: [authenticateGuard],
+            canActivate: [authAdminGuard],
             data: { hideNavbar: true },
             children: [
-
+                {
+                    path: 'reportes-admin', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes.component').then(m => m.ReportesComponent),
+                    canActivate: [authAdminGuard],
+                    data: { hideNavbar: true },
+                    children: [
+                        {
+                            path: 'puntos', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-puntos/reportes-puntos.component').then(m => m.ReportesPuntosComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'ideas', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-ideas/reportes-ideas.component').then(m => m.ReportesIdeasComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'ahorro', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-ahorro/reportes-ahorro.component').then(m => m.ReportesAhorroComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                    ]
+                },
+                {
+                    path: 'ideas-admin', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-admin.component').then(m => m.IdeasAdminComponent),
+                    canActivate: [authAdminGuard],
+                    data: { hideNavbar: true },
+                    children: [
+                        {
+                            path: 'revision', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-revision-admin/ideas-revision-admin.component').then(m => m.IdeasRevisionAdminComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'aceptadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-aceptadas-admin/ideas-aceptadas-admin.component').then(m => m.IdeasAceptadasAdminComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'implementadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-implementadas-admin/ideas-implementadas-admin.component').then(m => m.IdeasImplementadasAdminComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'rechazadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-rechazadas-admin/ideas-rechazadas-admin.component').then(m => m.IdeasRechazadasAdminComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                    ]
+                }
             ]
         },
         //wildcard
-        { path: '**', loadComponent: () => import('./vistas/not-found/not-found.component').then(m => m.NotFoundComponent) },
+        {
+            path: '**', loadComponent: () => import('./vistas/not-found/not-found.component').then(m => m.NotFoundComponent),
+            data: { hideNavbar: true }
+        },
     ];

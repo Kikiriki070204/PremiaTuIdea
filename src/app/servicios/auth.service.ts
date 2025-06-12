@@ -10,7 +10,7 @@ import { Profile } from '../interfaces/profile';
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUser: Profile | null = null;
+  private currentUser: any | null = null;
 
   constructor(private http: HttpClient) {
     const userData = localStorage.getItem('user');
@@ -19,11 +19,11 @@ export class AuthService {
 
   setUser(user: Profile, token: string) {
     this.currentUser = user;
-    localStorage.setItem('user', JSON.stringify(user.rol_id));
+    localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('access_token', token);
   }
 
-  getUser(): Profile | null {
+  getUser() {
     return this.currentUser;
   }
 

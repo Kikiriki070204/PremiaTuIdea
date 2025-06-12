@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../interfaces/reportes';
-import { ReportesService } from '../../../servicios/reportes.service';
+import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
+import { ReportesService } from '../../../../servicios/reportes.service';
 import { Chart, registerables } from 'chart.js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';

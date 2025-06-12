@@ -23,25 +23,9 @@ export class IdeasAceptadasComponent {
   constructor(protected authService: AuthService, protected ideaService: IdeasService, protected router: Router) { }
 
   ngOnInit(): void {
-    this.user()
+    this.misIdeas(2);
   }
 
-  async user(): Promise<void> {
-    try {
-      const profile = await firstValueFrom(this.authService.meplus());
-      this.userInfo = profile;
-      this.user_rol = profile.rol_id;
-
-      if (this.user_rol === 4) {
-        this.misIdeas(2);
-      } else {
-        this.ideasbyStatus(2);
-      }
-
-    } catch (err) {
-      console.error('Error al obtener perfil:', err);
-    }
-  }
 
   misIdeas(estatus: number | null = null): void {
     this.ideaService.allIdeas(estatus)

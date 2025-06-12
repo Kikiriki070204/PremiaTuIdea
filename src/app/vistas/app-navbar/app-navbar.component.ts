@@ -21,8 +21,8 @@ import { Profile } from '../../interfaces/profile';
 })
 export class AppNavbarComponent implements OnInit {
   user_token: string | null = null
-  userInfo: Profile | null = null
-  user_rol: string | null = null
+  user_info: Profile | null = null
+  user_rol: number | null = null
   user_id: number | null = null
 
   profileMenuOpen = false;
@@ -33,50 +33,16 @@ export class AppNavbarComponent implements OnInit {
   constructor(protected cookie: CookieService, protected authService: AuthService, protected router: Router) { }
 
   ngOnInit(): void {
-
     this.user()
     initFlowbite();
-
-    /*
-    const accessToken = this.authService.getToken();
-
-    if (accessToken.trim() === '') {
-      console.log('Access token is empty.');
-    } else {
-      this.getToken()
-      this.getRol()
-      this.getId()
-    }
-  }
-  
-  getId() {
-    this.user_id = this.authService.getId()
   }
 
-  getRol() {
-    this.user_rol = this.authService.getRol()
-    console.log(this.user_rol)
-  }
-  getToken() {
-    this.user_token = this.authService.getToken()
-  }
-  
-  */
-  }
   user() {
-    let self = this
-
-    this.authService.meplus().subscribe({
-      next(value: Profile) {
-        self.userInfo = value
-        self.user_id = value.rol_id
-        console.log(self.userInfo)
-        console.log(self.user_id)
-      },
-      error(err) {
-        console.log(err)
-      },
-    })
+    if (this.authService.isLoggedIn()) {
+      this.user_rol = this.authService.getRoleId();
+    } else {
+      console.log('Role not found')
+    }
   }
 
 
@@ -84,8 +50,6 @@ export class AppNavbarComponent implements OnInit {
     this.authService.logout()
     location.reload()
     this.router.navigate(['/'])
-
-
   }
 
   toggleProfileMenu() {
@@ -96,6 +60,7 @@ export class AppNavbarComponent implements OnInit {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+  // Para cerrar dropdown de perfil
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event) {
     const target = event.target as HTMLElement;
