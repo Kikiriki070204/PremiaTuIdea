@@ -1,1 +1,316 @@
-<p>usuarios-admin works!</p>
+<div class="container px-4 pt-6">
+  <h4 class="mb-4 text-3xl md:text-4xl font-bold text-blue-900 dark:text-white">
+    Todos los usuarios
+  </h4>
+</div>
+
+<div
+  class="container px-4 grid gap-3 md:flex md:items-center md:justify-start md:gap-4"
+>
+  <!-- Botón Nuevo usuario -->
+  <div>
+    <button
+      [routerLink]="['/newUser']"
+      type="button"
+      class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300 ease-in-out"
+    >
+      Nuevo usuario
+    </button>
+  </div>
+
+  <!-- Botón cargar todos -->
+  <div>
+    <button
+      (click)="getUsers(1)"
+      type="button"
+      class="flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 transition duration-300 ease-in-out"
+    >
+      Cargar todos los usuarios
+    </button>
+  </div>
+
+  <!-- Formulario de búsqueda -->
+  <form
+    class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full max-w-md"
+  >
+    <div class="relative flex-1">
+      <div
+        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+      >
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 18 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M3 5v10M3 5a2 2 0 1 0 0-4 2 2 0 0 0 0 4Zm0 10a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm12 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm0 0V6a3 3 0 0 0-3-3H9m1.5-2-2 2 2 2"
+          />
+        </svg>
+      </div>
+      <input
+        [formControl]="nombre"
+        type="text"
+        id="simple-search"
+        class="block w-full ps-10 p-2.5 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition duration-300 ease-in-out"
+        placeholder="Buscar por nombre..."
+        required
+      />
+    </div>
+
+    @if (nombre.value == null) {
+    <button
+      (click)="getUsers(1)"
+      class="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300 ease-in-out"
+    >
+      <svg
+        class="w-4 h-4"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+        />
+      </svg>
+      <span class="sr-only">Buscar</span>
+    </button>
+    } @else {
+    <button
+      (click)="usersByName()"
+      class="flex items-center justify-center px-3 py-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 transition duration-300 ease-in-out"
+    >
+      <svg
+        class="w-4 h-4"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 20 20"
+      >
+        <path
+          stroke="currentColor"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+        />
+      </svg>
+      <span class="sr-only">Buscar</span>
+    </button>
+    }
+  </form>
+</div>
+
+<div style="margin-top: 2%; margin-left: 6%; margin-right: 20%">
+  @if(usersList.length == 0) {
+  <h5
+    class="ml-8 hover:animate-bounce mb-2 text-3xl font-bold text-blue-600 dark:text-white"
+  >
+    Sin resultados..
+  </h5>
+  } @else{
+  <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+    <table
+      class="w-fit text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+    >
+      <thead
+        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+      >
+        <tr>
+          <th scope="col" class="px-6 py-3">IBM</th>
+          <th scope="col" class="px-6 py-3">Nombre</th>
+          <th scope="col" class="px-6 py-3">Departamento y Area</th>
+          <th scope="col" class="px-6 py-3">Locacion</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let usuario of usersList.data">
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            <a [routerLink]="['/usuarios/', usuario.id]">{{ usuario.ibm }}</a>
+          </td>
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            {{ usuario.nombre }}
+          </td>
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            {{ usuario.departamento }}, {{ usuario.area }}
+          </td>
+          @if(usuario.locacion == null) {
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            N/A
+          </td>
+          } @else {
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+            {{ usuario.locacion }}
+          </td>
+          }
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginacion 
+    <div
+      class="flex flex-col items-end gap-3 mr-4 mb-6 justify-center mt-2"
+      *ngIf="usersList"
+    >
+      <ul class="inline-flex items-center -space-x-px text-sm text-gray-900">
+        
+        <li>
+          <button
+            (click)="getUsers(usersList.current_page - 1)"
+            [disabled]="usersList.current_page === 1"
+            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-900 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Anterior
+          </button>
+        </li>
+
+        <!-- Números de página 
+    <li *ngFor="let page of getPages()">
+      <button
+        (click)="getUsers(page)"
+        [ngClass]="{
+          'bg-gray-200': usersList.current_page === page,
+          'bg-white': usersList.current_page !== page
+        }"
+        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-900 border border-gray-300 hover:bg-gray-100 hover:text-gray-700"
+      >
+        {{ page }}
+      </button>
+    </li> 
+
+        
+        <li>
+          <button
+            (click)="getUsers(usersList.current_page + 1)"
+            [disabled]="usersList.current_page === usersList.last_page"
+            class="flex items-center justify-center px-3 h-8 leading-tight text-gray-900 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            Siguiente
+          </button>
+        </li>
+      </ul>
+
+     
+      <span class="text-sm text-gray-700 dark:text-gray-400">
+        Mostrando
+        <span class="font-semibold text-gray-900 dark:text-white">{{
+          (usersList.current_page - 1) * usersList.per_page + 1
+        }}</span>
+        a
+        <span class="font-semibold text-gray-900 dark:text-white">{{
+          Math.min(usersList.current_page * usersList.per_page, usersList.total)
+        }}</span>
+        de
+        <span class="font-semibold text-gray-900 dark:text-white">{{
+          usersList.total
+        }}</span>
+        usuarios
+      </span>
+    </div>
+
+    -->
+
+    <div
+      class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+      *ngIf="usersList"
+    >
+      <div class="flex flex-1 justify-between sm:hidden">
+        <button
+          (click)="getUsers(usersList.current_page - 1)"
+          [disabled]="usersList.current_page === 1"
+          class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+        <button
+          (click)="getUsers(usersList.current_page + 1)"
+          [disabled]="usersList.current_page === usersList.last_page"
+          class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
+      </div>
+      <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <span class="text-sm text-gray-700 dark:text-gray-400">
+            Mostrando de
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              (usersList.current_page - 1) * usersList.per_page + 1
+            }}</span>
+            a
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              Math.min(
+                usersList.current_page * usersList.per_page,
+                usersList.total
+              )
+            }}</span>
+            de
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              usersList.total
+            }}</span>
+            usuarios
+          </span>
+        </div>
+        <div>
+          <nav
+            class="isolate inline-flex -space-x-px rounded-md shadow-xs"
+            aria-label="Pagination"
+          >
+            <button
+              (click)="getUsers(usersList.current_page - 1)"
+              [disabled]="usersList.current_page === 1"
+              class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+            >
+              <span class="sr-only">Previous</span>
+              <svg
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
+            <button
+              (click)="getUsers(usersList.current_page + 1)"
+              [disabled]="usersList.current_page === usersList.last_page"
+              class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+            >
+              <span class="sr-only">Next</span>
+              <svg
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+</div>

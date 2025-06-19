@@ -8,7 +8,7 @@
         <button
           data-drawer-target="logo-sidebar"
           data-drawer-toggle="logo-sidebar"
-          aria-controls="logo-sidebar"
+          aria-controls="logo-sidebar "
           type="button"
           class="inline-flex items-center p-2 text-sm text-white rounded-lg sm:hidden focus:outline-none dark:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
         >
@@ -135,7 +135,7 @@
   aria-label="Sidebar"
 >
   <div class="h-full mt-3 px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
-    <ul class="space-y-2 font-medium">
+    <ul class="space-y-5 font-medium">
       <li>
         <a
           [routerLink]="['/admin/reportes-admin']"
@@ -149,7 +149,7 @@
             height="16"
             fill="currentColor"
             [routerLinkActive]="'text-red-600'"
-            class="bi bi-bar-chart-line-fill w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-white"
+            class="bi bi-bar-chart-line-fill w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-white"
             viewBox="0 0 16 16"
           >
             <path
@@ -172,7 +172,7 @@
             height="16"
             fill="currentColor"
             [routerLinkActive]="'text-yellow-400'"
-            class="bi bi-lightbulb-fill w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-yellow-400 dark:group-hover:text-white"
+            class="bi bi-lightbulb-fill w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-yellow-400 dark:group-hover:text-white"
             viewBox="0 0 16 16"
           >
             <path
@@ -184,7 +184,9 @@
       </li>
       <li>
         <a
-          href="#"
+          [routerLink]="['/admin/premios-admin']"
+          [routerLinkActive]="'text-gray-900 bg-gray-100'"
+          [routerLinkActiveOptions]="{ exact: false }"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
@@ -192,24 +194,28 @@
             width="16"
             height="16"
             fill="currentColor"
-            class="bi bi-gift-fill text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-blue-700 dark:group-hover:text-white"
+            [routerLinkActive]="'text-blue-700'"
+            class="bi bi-gift-fill transition duration-75 dark:text-gray-400 group-hover:text-blue-700 dark:group-hover:text-white"
             viewBox="0 0 16 16"
           >
             <path
               d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A3 3 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 1 0-3 0c0 .085.002.274.045.43zM9 3h2.932l.023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0zm6 4v7.5a1.5 1.5 0 0 1-1.5 1.5H9V7zM2.5 16A1.5 1.5 0 0 1 1 14.5V7h6v9z"
             />
           </svg>
-          <span class="flex-1 ms-3 whitespace-nowrap">Premios</span>
+          <span class="ms-3">Premios</span>
         </a>
       </li>
       <li>
         <a
-          href="#"
+          [routerLink]="['/admin/usuarios-admin']"
+          [routerLinkActive]="'text-gray-900 bg-gray-100'"
+          [routerLinkActiveOptions]="{ exact: false }"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
-            class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-orange-500 dark:group-hover:text-white"
+            class="shrink-0 w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-orange-500 dark:group-hover:text-white"
             aria-hidden="true"
+            [routerLinkActive]="'text-orange-500'"
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
             viewBox="0 0 20 18"
@@ -223,15 +229,18 @@
       </li>
       <li>
         <a
-          href="#"
+          [routerLink]="['/admin/productos-admin']"
+          [routerLinkActive]="'text-gray-900 bg-gray-100'"
+          [routerLinkActiveOptions]="{ exact: false }"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
+            [routerLinkActive]="'text-gray-500'"
             height="16"
             fill="currentColor"
-            class="bi bi-earbuds text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            class="bi bi-earbuds transition duration-75 dark:text-gray-400 group-hover:text-gray-500 dark:group-hover:text-white"
             viewBox="0 0 16 16"
           >
             <path
@@ -242,18 +251,20 @@
           <span class="flex-1 ms-3 whitespace-nowrap">Productos</span>
         </a>
       </li>
-      <li></li>
       <li>
         <a
-          href="#"
+          [routerLink]="['/admin/bonos-admin']"
+          [routerLinkActive]="'text-gray-900 bg-gray-100'"
+          [routerLinkActiveOptions]="{ exact: false }"
           class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
             height="16"
+            [routerLinkActive]="'text-green-500'"
             fill="currentColor"
-            class="bi bi-currency-dollar text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-white"
+            class="bi bi-currency-dollar transition duration-75 dark:text-gray-400 group-hover:text-green-500 dark:group-hover:text-white"
             viewBox="0 0 16 16"
           >
             <path
@@ -266,10 +277,10 @@
       <li>
         <a
           href="#"
-          class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+          class="absolute bottom-0 mb-7 flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
         >
           <svg
-            class="shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
+            class="shrink-0 w-5 h-5 transition duration-75 dark:text-gray-400 group-hover:text-red-600 dark:group-hover:text-white"
             aria-hidden="true"
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

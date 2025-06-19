@@ -5,7 +5,7 @@ import { AuthService } from '../../servicios/auth.service';
 @Component({
   selector: 'app-not-found',
   standalone: true,
-  imports: [RouterLink],
+  imports: [],
   templateUrl: './not-found.component.html',
   styleUrl: './not-found.component.css'
 })
@@ -25,5 +25,13 @@ export class NotFoundComponent implements OnInit {
 
   getToken() {
     this.user_token = this.authService.getToken()
+  }
+
+  goBack() {
+    history.back()
+  }
+
+  goToLogin() {
+    this.router.navigateByUrl('/login')
   }
 }

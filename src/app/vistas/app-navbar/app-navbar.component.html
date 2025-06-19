@@ -94,13 +94,6 @@
               class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Premios</a
             >
-            <a
-              [routerLink]="['/usuarios']"
-              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
-              >Usuarios</a
-            >
           </div>
         </div>
         } @else if(user_rol == 2){
@@ -178,13 +171,6 @@
               [routerLinkActiveOptions]="{ exact: true }"
               class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
               >Premios</a
-            >
-            <a
-              [routerLink]="['/usuarios']"
-              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
-              >Usuarios</a
             >
           </div>
         </div>
@@ -327,13 +313,6 @@
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Premios</a
       >
-      <a
-        [routerLink]="['/usuarios']"
-        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="block rounden-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
-        >Usuarios</a
-      >
       } @else if(user_rol == 2){
       <a
         [routerLink]="['/ideas']"
@@ -351,7 +330,7 @@
         >Productos</a
       >
       <a
-        [routerLink]="['/usuarios']"
+        [routerLink]="['/premios']"
         [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
         [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
@@ -379,13 +358,6 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Premios</a
-      >
-      <a
-        [routerLink]="['/usuarios']"
-        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="block rounden-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
-        >Usuarios</a
       >
       } @else if(user_rol == 4) {
       <a

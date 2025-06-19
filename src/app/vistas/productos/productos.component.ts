@@ -11,7 +11,7 @@ import { Canjear } from '../../interfaces/producto';
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [AppNavbarComponent, RouterLink, NgFor],
+  imports: [RouterLink, NgFor],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })

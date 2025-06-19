@@ -10,42 +10,41 @@ import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angu
 @Component({
   selector: 'app-usuarios',
   standalone: true,
-  imports: [AppNavbarComponent, RouterLink, NgFor, ReactiveFormsModule, FormsModule],
+  imports: [RouterLink, NgFor, ReactiveFormsModule, FormsModule],
   templateUrl: './usuarios.component.html',
   styleUrl: './usuarios.component.css'
 })
 export class UsuariosComponent implements OnInit {
-usuarios: Usuario[] = []
-nombre = new FormControl(null,Validators.required)
+  usuarios: Usuario[] = []
+  nombre = new FormControl(null, Validators.required)
 
-constructor(protected userService: UsersService){}
-ngOnInit(): void {
-  this.allUsers()
-  console.log("nombre Input: ",this.nombre.value)
-}
-
-allUsers(): void
-{
-  this.userService.allUsers()
-    .subscribe(users => {
-      this.usuarios = users.users;
-      console.log("usuarios")
-      console.log(this.usuarios)
-    }); 
-}
-
-usersByName(): void{
-  let self = this
-  let nombre: UserName = {
-    nombre: this.nombre.value ?? ""
+  constructor(protected userService: UsersService) { }
+  ngOnInit(): void {
+    this.allUsers()
+    console.log("nombre Input: ", this.nombre.value)
   }
 
-  this.userService.usersByName(nombre).subscribe(
-    usuarios=>{
-      this.usuarios = usuarios.users
+  allUsers(): void {
+    this.userService.allUsers()
+      .subscribe(users => {
+        this.usuarios = users.users;
+        console.log("usuarios")
+        console.log(this.usuarios)
+      });
+  }
+
+  usersByName(): void {
+    let self = this
+    let nombre: UserName = {
+      nombre: this.nombre.value ?? ""
     }
-  )
-  
-}
+
+    this.userService.usersByName(nombre).subscribe(
+      usuarios => {
+        this.usuarios = usuarios.users
+      }
+    )
+
+  }
 
 }

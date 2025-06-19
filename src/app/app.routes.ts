@@ -110,6 +110,26 @@ export const routes: Routes =
                             canActivate: [authAdminGuard],
                         },
                     ]
+                },
+                {
+                    path: 'premios-admin', loadComponent: () => import('./vistas/dashboard-admin/premios-admin/premios-admin.component').then(m => m.PremiosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                {
+                    path: 'usuarios-admin', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/usuarios-admin.component').then(m => m.UsuariosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                {
+                    path: 'productos-admin', loadComponent: () => import('./vistas/dashboard-admin/productos-admin/productos-admin.component').then(m => m.ProductosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                {
+                    path: 'bonos-admin', loadComponent: () => import('./vistas/dashboard-admin/bonos-admin/bonos-admin.component').then(m => m.BonosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
                 }
             ]
         },
