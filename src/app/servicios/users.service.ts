@@ -29,8 +29,16 @@ export class UsersService {
     return this.http.put<User>(`${environment.api_url}/users/update`, data);
   }
 
-  premiosDisponibles(): Observable<Productos> {
-    return this.http.get<Productos>(`${environment.api_url}/productos/list`);
+  premiosDisponibles(page: number = 1): Observable<Productos> {
+    return this.http.get<Productos>(`${environment.api_url}/productos/list?page=${page}`);
+  }
+
+  premiosDisponiblesAsc(page: number = 1): Observable<Productos> {
+    return this.http.get<Productos>(`${environment.api_url}/productos/list/asc?page=${page}`);
+  }
+
+  premiosDisponiblesDsc(page: number = 1): Observable<Productos> {
+    return this.http.get<Productos>(`${environment.api_url}/productos/list/dsc?page=${page}`);
   }
   usersByName(data: UserName): Observable<UsersList> {
     return this.http.post<UsersList>(`${environment.api_url}/users/nombre`, data);

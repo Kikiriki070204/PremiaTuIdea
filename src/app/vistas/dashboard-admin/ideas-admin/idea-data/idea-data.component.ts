@@ -1,21 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { IdeasService } from '../../servicios/ideas.service';
-import { Campo, EditColabs, EstadoIdea, IdeaData, Puntos } from '../../interfaces/idea';
-import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
+import { IdeasService } from '../../../../servicios/ideas.service';
+import { Campo, EditColabs, EstadoIdea, IdeaData, Puntos } from '../../../../interfaces/idea';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
-import { Colaborador, User } from '../../interfaces/user';
+import { Colaborador, User } from '../../../../interfaces/user';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Estado } from '../../interfaces/idea';
-import { Actividad } from '../../interfaces/actividad';
-import { HttpResponse } from '../../interfaces/http';
-import { Imagen } from '../../interfaces/ideas';
-import { environment } from '../../../enviroment/enviroment';
+import { Estado } from '../../../../interfaces/idea';
+import { Actividad } from '../../../../interfaces/actividad';
+import { HttpResponse } from '../../../../interfaces/http';
+import { Imagen } from '../../../../interfaces/ideas';
+import { environment } from '../../../../../enviroment/enviroment';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
-import { AuthService } from '../../servicios/auth.service';
+import { AuthService } from '../../../../servicios/auth.service';
 import { Subject, debounceTime } from 'rxjs';
-import { UsersService } from '../../servicios/users.service';
-import { Profile } from '../../interfaces/profile';
+import { UsersService } from '../../../../servicios/users.service';
+import { Profile } from '../../../../interfaces/profile';
 import { initFlowbite } from 'flowbite';
 
 @Component({
@@ -465,6 +464,10 @@ export class IdeaDataComponent implements OnInit {
   // }
 
   newAct() {
-    this.router.navigate(['/newActivity/', this.idea_id])
+    this.router.navigate(['/admin/nueva-actividad/', this.idea_id])
+  }
+
+  goBack() {
+    history.back();
   }
 }

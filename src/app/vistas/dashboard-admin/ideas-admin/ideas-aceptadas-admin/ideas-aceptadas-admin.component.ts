@@ -1,4 +1,4 @@
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../../../../servicios/auth.service';
@@ -9,15 +9,18 @@ import { Profile } from '../../../../interfaces/profile';
 @Component({
   selector: 'app-ideas-aceptadas-admin',
   standalone: true,
-  imports: [RouterModule, NgFor],
+  imports: [RouterModule, NgFor, CommonModule],
   templateUrl: './ideas-aceptadas-admin.component.html',
   styleUrl: './ideas-aceptadas-admin.component.css'
 })
 export class IdeasAceptadasAdminComponent {
-  ideas: Idea[] = []
-  ideasUsers: Idea[] = []
+  ideasUsers: any = []
   userInfo: Profile | null = null
   user_rol: number | null = null
+  totalItems: number = 0
+  pageSize: number = 15
+  currentPage: number = 1
+  Math = Math;
 
 
   constructor(
@@ -27,15 +30,27 @@ export class IdeasAceptadasAdminComponent {
   ) { }
 
   ngOnInit(): void {
-    this.ideasbyStatus(2);
+    this.ideasbyStatus(2, this.currentPage);
   }
 
-  ideasbyStatus(estatus: number | null = null): void {
+  ideasbyStatus(estatus: number | null = null, page: number) {
+    this.currentPage = page;
     this.ideasUsers = []
-    this.ideaService.ideasByStatus(estatus)
+    this.ideaService.ideasByStatus(estatus, page)
       .subscribe(myIdeas => {
         this.ideasUsers = myIdeas.ideas
       });
+  }
+
+  getPages(): number[] {
+    if (!this.ideasUsers) return [];
+
+    const total = this.ideasUsers.last_page || 1;
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  onPageChange(page: number): void {
+    this.ideasbyStatus(2, page);
   }
 
   goToIdea(id: number) {

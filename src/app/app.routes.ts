@@ -27,7 +27,7 @@ export const routes: Routes =
                 { path: 'rechazadas', loadComponent: () => import('./vistas/ideas/ideas-rechazadas/ideas-rechazadas.component').then(m => m.IdeasRechazadasComponent) }
             ]
         },
-        { path: 'ideas/:id', loadComponent: () => import('./vistas/idea-data/idea-data.component').then(m => m.IdeaDataComponent), canActivate: [authenticateGuard] },
+        { path: 'ideas/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/idea-data/idea-data.component').then(m => m.IdeaDataComponent), canActivate: [authenticateGuard] },
         { path: 'idea/:id', loadComponent: () => import('./vistas/idea-data-g/idea-data-g.component').then(m => m.IdeaDataGComponent), canActivate: [authenticateGuard] },
         { path: 'newIdea', loadComponent: () => import('./vistas/new-idea/new-idea.component').then(m => m.NewIdeaComponent), canActivate: [authenticateGuard] },
         //Rutas de equipo
@@ -36,8 +36,8 @@ export const routes: Routes =
         { path: 'productos', loadComponent: () => import('./vistas/productos/productos.component').then(m => m.ProductosComponent), canActivate: [authenticateGuard] },
         { path: 'premios', loadComponent: () => import('./vistas/premios/premios.component').then(m => m.PremiosComponent), canActivate: [authenticateGuard] },
         //Actividades
-        { path: 'newActivity/:id', loadComponent: () => import('./vistas/new-activity/new-activity.component').then(m => m.NewActivityComponent), canActivate: [authenticateGuard] },
-        { path: 'actividad/:id', loadComponent: () => import('./vistas/actividad-data/actividad-data.component').then(m => m.ActividadDataComponent), canActivate: [authenticateGuard] },
+        { path: 'newActivity/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/new-activity/new-activity.component').then(m => m.NewActivityComponent), canActivate: [authenticateGuard] },
+        { path: 'actividad/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/actividad-data/actividad-data.component').then(m => m.ActividadDataComponent), canActivate: [authenticateGuard] },
         //reportes
         {
             path: 'reportes',
@@ -110,6 +110,25 @@ export const routes: Routes =
                         },
                     ]
                 },
+                {
+                    path: 'ideas/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/idea-data/idea-data.component').then(m => m.IdeaDataComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                // ideas actividades
+                {
+                    path: 'nueva-actividad/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/new-activity/new-activity.component').then(m => m.NewActivityComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                {
+                    path: 'actividad/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/actividad-data/actividad-data.component').then(m => m.ActividadDataComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+
+
+
                 // premios
                 {
                     path: 'premios-admin', loadComponent: () => import('./vistas/dashboard-admin/premios-admin/premios-admin.component').then(m => m.PremiosAdminComponent),

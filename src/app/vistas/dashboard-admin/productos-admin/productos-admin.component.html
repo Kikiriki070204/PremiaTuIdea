@@ -18,23 +18,57 @@
 <div style="margin-top: 2%; margin-left: 6%; margin-right: 20%">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table
-      class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
+      class="w-full text-sm text-left rtl:text-right text-gray-900 dark:text-gray-400"
     >
       <thead
-        class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400"
+        class="text-xs text-white uppercase bg-blue-900 dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
           <th scope="col" class="px-16 py-3">
-            <span class="sr-only">Image</span>
+            <span class="">Imagen</span>
           </th>
           <th scope="col" class="px-6 py-3">Producto</th>
-          <th scope="col" class="px-6 py-3">Valor</th>
+          <th scope="col" class="px-6 py-3">
+            <div class="flex items-center gap-2">
+              Valor @if(this.listaProductos === false) {
+              <button (click)="productosDsc(1)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-caret-up-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4 9h8a.5.5 0 0 0 .374-.832l-4-4.5a.5.5 0 0 0-.748 0l-4 4.5A.5.5 0 0 0 4 11"
+                  />
+                </svg>
+              </button>
+              } @if(this.listaProductos === true) {
+              <button (click)="productosAsc(1)">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-caret-down-square-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4 4a.5.5 0 0 0-.374.832l4 4.5a.5.5 0 0 0 .748 0l4-4.5A.5.5 0 0 0 12 6z"
+                  />
+                </svg>
+              </button>
+              }
+            </div>
+          </th>
           <th scope="col" class="px-6 py-3">Opciones</th>
           <th scope="col" class="px-6 py-3"></th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let producto of productos">
+        <tr *ngFor="let producto of productos.data">
           <td class="p-4">
             <!--Hay que validar el index del producto -->
             <img
@@ -77,7 +111,96 @@
         </tr>
       </tbody>
     </table>
+    <div
+      class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+      *ngIf="productos"
+    >
+      <div class="flex flex-1 justify-between sm:hidden">
+        <button
+          (click)="onPageChange(productos.current_page - 1)"
+          [disabled]="productos.current_page === 1"
+          class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Previous
+        </button>
+        <button
+          (click)="onPageChange(productos.current_page + 1)"
+          [disabled]="productos.current_page === productos.last_page"
+          class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
+        >
+          Next
+        </button>
+      </div>
+      <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
+        <div>
+          <span class="text-sm text-gray-700 dark:text-gray-400">
+            Mostrando de
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              (productos.current_page - 1) * productos.per_page + 1
+            }}</span>
+            a
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              Math.min(
+                productos.current_page * productos.per_page,
+                productos.total
+              )
+            }}</span>
+            de
+            <span class="font-semibold text-gray-900 dark:text-white">{{
+              productos.total
+            }}</span>
+            productos
+          </span>
+        </div>
+        <div>
+          <nav
+            class="isolate inline-flex -space-x-px rounded-md shadow-xs"
+            aria-label="Pagination"
+          >
+            <button
+              (click)="onPageChange(productos.current_page - 1)"
+              [disabled]="productos.current_page === 1"
+              class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+            >
+              <span class="sr-only">Previous</span>
+              <svg
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+            <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
+            <button
+              (click)="onPageChange(productos.current_page + 1)"
+              [disabled]="productos.current_page === productos.last_page"
+              class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
+            >
+              <span class="sr-only">Next</span>
+              <svg
+                class="size-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                aria-hidden="true"
+                data-slot="icon"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </nav>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-
-<div class="h-10"></div>

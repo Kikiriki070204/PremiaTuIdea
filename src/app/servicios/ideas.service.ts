@@ -37,8 +37,8 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll`)
   }
 
-  ideasByStatus(estatus: number | null): Observable<Ideas> {
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/` + estatus)
+  ideasByStatus(estatus: number | null, page: number = 1): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/` + estatus + `?page=${page}`)
   }
 
   // imageByIdea(idea: number | null): Observable<any>{

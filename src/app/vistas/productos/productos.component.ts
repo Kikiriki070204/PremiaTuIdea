@@ -22,7 +22,7 @@ export class ProductosComponent implements OnInit {
   user: Profile | null = null
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
   ngOnInit(): void {
-    this.meplus()
+
     this.premiosDisponibles()
     this.getRol()
   }

@@ -17,7 +17,7 @@ export class AuthService {
     if (userData) this.currentUser = JSON.parse(userData);
   }
 
-  setUser(user: Profile, token: string) {
+  setUser(user: any, token: string) {
     this.currentUser = user;
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('access_token', token);

@@ -1,35 +1,34 @@
 import { Component, OnInit } from '@angular/core';
-import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
-import { UsersService } from '../../servicios/users.service';
-import { User } from '../../interfaces/user';
+import { UsersService } from '../../../../servicios/users.service';
+import { User } from '../../../../interfaces/user';
 import { ActivatedRoute, Router } from '@angular/router';
-import { newActivity } from '../../interfaces/actividad';
-import { IdeasService } from '../../servicios/ideas.service';
-import { HttpResponse } from '../../interfaces/http';
+import { newActivity } from '../../../../interfaces/actividad';
+import { IdeasService } from '../../../../servicios/ideas.service';
+import { HttpResponse } from '../../../../interfaces/http';
 
 @Component({
   selector: 'app-new-activity',
   standalone: true,
-  imports: [AppNavbarComponent, ReactiveFormsModule, FormsModule, NgFor, NgIf],
+  imports: [ReactiveFormsModule, FormsModule, NgFor, NgIf],
   templateUrl: './new-activity.component.html',
   styleUrl: './new-activity.component.css'
 })
-export class NewActivityComponent implements OnInit{
+export class NewActivityComponent implements OnInit {
   errorMessage: string | null = null
   colabSelected: number | null = null
   colaboradores: User[] = []
   responsable: number | null = null
-selectedItem: number | null = null
-selectModel = new FormControl
-titulo = new FormControl
-date1: string | null = null
+  selectedItem: number | null = null
+  selectModel = new FormControl
+  titulo = new FormControl
+  date1: string | null = null
 
-id: number | null = null
-fecha = new Date()
-fecha_inicio: string | null = null
-  constructor(private datePipe: DatePipe, protected ideaService: IdeasService, protected userService: UsersService, private route: ActivatedRoute, protected router: Router){
+  id: number | null = null
+  fecha = new Date()
+  fecha_inicio: string | null = null
+  constructor(private datePipe: DatePipe, protected ideaService: IdeasService, protected userService: UsersService, private route: ActivatedRoute, protected router: Router) {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.id = id
@@ -40,7 +39,7 @@ fecha_inicio: string | null = null
 
   ngOnInit(): void {
     this.getColaboradores()
-    console.log("id de idea:",this.id)
+    console.log("id de idea:", this.id)
   }
   getColaboradores(): void {
     this.userService.colaboradores().subscribe(
@@ -50,7 +49,7 @@ fecha_inicio: string | null = null
       }
     );
   }
-  
+
   inputChanged($event: any): void {
     const value = $event.target.value.toLowerCase();
     if (value.length <= 0) {
@@ -65,16 +64,15 @@ fecha_inicio: string | null = null
     console.log(items)
     this.colaboradores = items;
   }
-  
-  selected(item: any){
+
+  selected(item: any) {
     this.selectedItem = item
-    
+
     console.log(this.selectedItem)
   }
 
-  asignarActividad()
-  {
-    let self =  this
+  asignarActividad() {
+    let self = this
     let newAct: newActivity = {
       id_idea: this.id ?? 0,
       titulo: this.titulo.value ?? "",
@@ -88,21 +86,20 @@ fecha_inicio: string | null = null
         self.router.navigate(['/ideas/', self.id])
       },
       error(err: HttpResponse) {
-        switch(err.status)
-        {
+        switch (err.status) {
           case 422:
-              self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
-              console.log(err)
-              break;
-            case 404:
-              self.errorMessage = 'Idea no encontrada';
-              console.log(err)
-              break;
-            default:
-                // Errores generales
-                self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-                console.log(err)
-                break;
+            self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
+            console.log(err)
+            break;
+          case 404:
+            self.errorMessage = 'Idea no encontrada';
+            console.log(err)
+            break;
+          default:
+            // Errores generales
+            self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            console.log(err)
+            break;
         }
       },
     })
