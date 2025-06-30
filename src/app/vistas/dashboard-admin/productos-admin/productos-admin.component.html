@@ -1,14 +1,14 @@
 <div class="container flex" style="margin-left: 5%; padding-top: 1%">
-  <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">
+  <h4 class="mb-2 text-3xl md:text-4xl font-bold text-blue-900 dark:text-white">
     Productos
   </h4>
 </div>
 <div style="margin-top: 1%; margin-left: 6%; margin-right: 20%">
   <div class="w-fit" style="margin-bottom: 1%">
     <button
-      [routerLink]="['/newProduct']"
+      [routerLink]="['/admin/nuevo-producto']"
       type="button"
-      class="text-white bg-gradient-to-br from-green-400 to-blue-600 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2"
+      class="text-white bg-blue-800 hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2 transition duration-300 ease-in-out"
     >
       Agregar producto
     </button>
@@ -49,19 +49,28 @@
           <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
             {{ producto.valor }} puntos
           </td>
-          <td>
+          <td class="items-center">
             <button
-              [routerLink]="['/productos/', producto.id]"
+              [routerLink]="['/admin/productos/', producto.id]"
               type="button"
-              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-800 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
             >
-              <img
-                class="w-4 h-4"
-                aria-hidden="true"
-                src="../../../assets/edit.png"
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
                 fill="currentColor"
-                viewBox="0 0 18 18"
-              />
+                class="bi bi-pencil-square"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"
+                />
+                <path
+                  fill-rule="evenodd"
+                  d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"
+                />
+              </svg>
               <span class="sr-only">Icon description</span>
             </button>
           </td>

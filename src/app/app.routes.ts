@@ -14,8 +14,7 @@ export const routes: Routes =
         { path: 'dashboard', loadComponent: () => import('./vistas/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [authenticateGuard] },
         { path: 'myProfile', loadComponent: () => import('./vistas/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authenticateGuard] },
         { path: 'usuarios', loadComponent: () => import('./vistas/usuarios/usuarios.component').then(m => m.UsuariosComponent), canActivate: [authenticateGuard] },
-        { path: 'usuarios/:id', loadComponent: () => import('./vistas/user-data/user-data.component').then(m => m.UserDataComponent), canActivate: [authenticateGuard] },
-        { path: 'newUser', loadComponent: () => import('./vistas/new-user/new-user.component').then(m => m.NewUserComponent), canActivate: [authenticateGuard] },
+        { path: 'newUser', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/new-user/new-user.component').then(m => m.NewUserComponent), canActivate: [authenticateGuard] },
         //Rutas de ideas
         {
             path: 'ideas',
@@ -35,10 +34,7 @@ export const routes: Routes =
         { path: 'newIdea/add/:id', loadComponent: () => import('./vistas/equipo/equipo.component').then(m => m.EquipoComponent), canActivate: [authenticateGuard] },
         //Rutas de productos
         { path: 'productos', loadComponent: () => import('./vistas/productos/productos.component').then(m => m.ProductosComponent), canActivate: [authenticateGuard] },
-        { path: 'newProduct', loadComponent: () => import('./vistas/new-producto/new-producto.component').then(m => m.NewProductoComponent), canActivate: [authenticateGuard] },
-        { path: 'productos/:id', loadComponent: () => import('./vistas/producto-data/producto-data.component').then(m => m.ProductoDataComponent), canActivate: [authenticateGuard] },
         { path: 'premios', loadComponent: () => import('./vistas/premios/premios.component').then(m => m.PremiosComponent), canActivate: [authenticateGuard] },
-        { path: 'premios/:id', loadComponent: () => import('./vistas/premio-data/premio-data.component').then(m => m.PremioDataComponent), canActivate: [authenticateGuard] },
         //Actividades
         { path: 'newActivity/:id', loadComponent: () => import('./vistas/new-activity/new-activity.component').then(m => m.NewActivityComponent), canActivate: [authenticateGuard] },
         { path: 'actividad/:id', loadComponent: () => import('./vistas/actividad-data/actividad-data.component').then(m => m.ActividadDataComponent), canActivate: [authenticateGuard] },
@@ -62,6 +58,7 @@ export const routes: Routes =
             canActivate: [authAdminGuard],
             data: { hideNavbar: true },
             children: [
+                // reportes
                 {
                     path: 'reportes-admin', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes.component').then(m => m.ReportesComponent),
                     canActivate: [authAdminGuard],
@@ -84,6 +81,8 @@ export const routes: Routes =
                         },
                     ]
                 },
+
+                // ideas
                 {
                     path: 'ideas-admin', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-admin.component').then(m => m.IdeasAdminComponent),
                     canActivate: [authAdminGuard],
@@ -111,21 +110,57 @@ export const routes: Routes =
                         },
                     ]
                 },
+                // premios
                 {
                     path: 'premios-admin', loadComponent: () => import('./vistas/dashboard-admin/premios-admin/premios-admin.component').then(m => m.PremiosAdminComponent),
                     data: { hideNavbar: true },
                     canActivate: [authAdminGuard],
+
                 },
+                {
+                    path: 'premios/:id', loadComponent: () => import('./vistas/dashboard-admin/premios-admin/premio-data/premio-data.component').then(m => m.PremioDataComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+
+                },
+
+                // usuarios
                 {
                     path: 'usuarios-admin', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/usuarios-admin.component').then(m => m.UsuariosAdminComponent),
                     data: { hideNavbar: true },
                     canActivate: [authAdminGuard],
                 },
                 {
+                    path: 'nuevo-usuario', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/new-user/new-user.component').then(m => m.NewUserComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authenticateGuard]
+                },
+                {
+                    path: 'usuario/:id', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/user-data/user-data.component').then(m => m.UserDataComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authenticateGuard]
+                },
+
+                // productos 
+                {
                     path: 'productos-admin', loadComponent: () => import('./vistas/dashboard-admin/productos-admin/productos-admin.component').then(m => m.ProductosAdminComponent),
                     data: { hideNavbar: true },
                     canActivate: [authAdminGuard],
                 },
+                {
+                    path: 'productos/:id', loadComponent: () => import('./vistas/dashboard-admin/productos-admin/producto-data/producto-data.component').then(m => m.ProductoDataComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+                {
+                    path: 'nuevo-producto', loadComponent: () => import('./vistas/dashboard-admin/productos-admin/new-producto/new-producto.component').then(m => m.NewProductoComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+
+
+
+                // bonos
                 {
                     path: 'bonos-admin', loadComponent: () => import('./vistas/dashboard-admin/bonos-admin/bonos-admin.component').then(m => m.BonosAdminComponent),
                     data: { hideNavbar: true },

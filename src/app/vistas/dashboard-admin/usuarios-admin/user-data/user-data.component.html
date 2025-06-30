@@ -78,13 +78,23 @@
         <option value="0">Inactivo</option>
       </select>
 
-      <button
-        (click)="editar()"
-        type="button"
-        class="mt-4 text-white bg-gradient-to-br from-indigo-400 to-indigo-700 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-green-200 dark:focus:ring-green-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2"
-      >
-        Editar datos
-      </button>
+      <div class="felx justify-center gap-2">
+        <button
+          (click)="editar()"
+          type="button"
+          class="mt-4 text-white bg-blue-800 hover:bg-blue-900 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2 transition duration-300 ease-in-out"
+        >
+          Editar datos
+        </button>
+
+        <button
+          (click)="goBack()"
+          type="button"
+          class="mt-4 text-white bg-red-600 hover:bg-red-800 font-bold rounded-lg text-sm w-32 py-2 text-center me-2 mb-2 transition duration-300 ease-in-out"
+        >
+          Regresar
+        </button>
+      </div>
 
       <div class="flex mt-4 md:mt-6"></div>
     </div>
