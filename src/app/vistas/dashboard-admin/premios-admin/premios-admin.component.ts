@@ -30,7 +30,7 @@ export class PremiosAdminComponent implements OnInit {
   }
 
   premiosCanjeados(): void {
-    this.userService.premiosCanjeados().subscribe(
+    this.userService.premiosCanjeadosAdmin().subscribe(
       premiosCanj => {
         this.premios = premiosCanj.premios
         console.log(this.premios)

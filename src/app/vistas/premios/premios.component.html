@@ -1,37 +1,33 @@
-@if(user_id == 1) {
-<div class="container flex" style="margin-left: 5%; padding-top: 1%">
-  <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">
-    Premios canjeados
-  </h4>
-</div>
-} @else {
 <div class="container flex" style="margin-left: 5%; padding-top: 1%">
   <h4 class="mb-2 text-4xl font-bold text-blue-900 dark:text-white">
     Tus premios
   </h4>
 </div>
-}
+
 <div style="margin-top: 2%; margin-left: 6%; margin-right: 20%">
   <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
     <table
       class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
     >
       <thead
-        class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400"
+        class="text-xs text-white uppercase bg-blue-800 dark:bg-gray-700 dark:text-gray-400"
       >
         <tr>
           <th scope="col" class="px-6 py-3">Folio</th>
           <th scope="col" class="px-6 py-3">Producto</th>
-          @if(user_id == 1){
-          <th scope="col" class="px-6 py-3">Usuario</th>
-          }
+
           <th scope="col" class="px-6 py-3">Estado</th>
-          @if(user_id == 1){
-          <th scope="col" class="px-6 py-3">Opciones</th>
-          }
         </tr>
       </thead>
       <tbody>
+        @if(premios?.length === 0) {
+        <tr>
+          <td colspan="3" class="px-6 py-4 text-center text-gray-500">
+            No hay premios a su nombre disponibles.
+          </td>
+        </tr>
+
+        } @else {
         <tr *ngFor="let premio of premios">
           <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
             {{ premio.folio }}
@@ -50,33 +46,11 @@
               </figcaption>
             </figure>
           </td>
-          @if(user_id== 1){
-          <td class="px-6 py-4 font-semibold text-lime-700 dark:text-white">
-            {{ premio.usuario }}
-          </td>
-          }
           <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
             {{ premio.estado }}
           </td>
-          @if(user_id == 1){
-          <td>
-            <button
-              [routerLink]="['/premios/', premio.id]"
-              type="button"
-              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-            >
-              <img
-                class="w-4 h-4"
-                aria-hidden="true"
-                src="../../../assets/edit.png"
-                fill="currentColor"
-                viewBox="0 0 18 18"
-              />
-              <span class="sr-only">Icon description</span>
-            </button>
-          </td>
-          }
         </tr>
+        }
       </tbody>
     </table>
   </div>

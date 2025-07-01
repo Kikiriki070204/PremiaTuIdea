@@ -11,7 +11,7 @@ import { Profile } from '../../interfaces/profile';
   selector: 'app-premios',
   standalone: true,
 
-  imports: [RouterLink, NgFor],
+  imports: [NgFor],
   templateUrl: './premios.component.html',
   styleUrl: './premios.component.css'
 })

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppNavbarComponent } from '../app-navbar/app-navbar.component';
 import { Route, Router, RouterLink } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { Producto } from '../../interfaces/producto';
 import { Profile } from '../../interfaces/profile';
 import { UsersService } from '../../servicios/users.service';
@@ -11,23 +11,29 @@ import { Canjear } from '../../interfaces/producto';
 @Component({
   selector: 'app-productos',
   standalone: true,
-  imports: [RouterLink, NgFor],
+  imports: [NgFor, CommonModule],
   templateUrl: './productos.component.html',
   styleUrl: './productos.component.css'
 })
 export class ProductosComponent implements OnInit {
-  productos: Producto[] = []
+  productos: any = []
   user_rol: number | null = null
+  listaProductos: boolean | null = null// false es asc y true dsc
+  totalItems: number = 0
+  pageSize: number = 15
+  currentPage: number = 1
+  Math = Math;
 
-  user: Profile | null = null
+  user: any | null = null
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
   ngOnInit(): void {
-
-    this.premiosDisponibles()
+    this.listaProductos = false
+    this.meplus()
+    this.productosDsc(this.currentPage)
     this.getRol()
   }
 
-  premiosDisponibles(): void {
+  premiosDisponibles(page: number): void {
     this.userService.premiosDisponibles()
       .subscribe(myProducts => {
         this.productos = myProducts.productos;
@@ -53,6 +59,29 @@ export class ProductosComponent implements OnInit {
     })
   }
 
+  getPages(): number[] {
+    if (!this.productos) return [];
+
+    const total = this.productos.last_page || 1;
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  onPageChange(page: number): void {
+    if (this.listaProductos === false) {
+      this.productosAsc(page)
+
+    } else if (this.listaProductos === true) {
+      this.productosDsc(page)
+    } else {
+      this.premiosDisponibles(page);
+
+    }
+  }
+
+  getUser() {
+    this.user = this.authService.getUser()
+  }
+
   canjearProducto(id_producto: any) {
     let self = this
 
@@ -70,6 +99,27 @@ export class ProductosComponent implements OnInit {
         },
       }
     )
+  }
+
+  productosAsc(page: number) {
+    this.listaProductos = false
+    console.log(this.listaProductos)
+    this.userService.premiosDisponiblesAsc(page)
+      .subscribe(myProducts => {
+        this.productos = myProducts.productos;
+      });
+
+
+  }
+
+  productosDsc(page: number) {
+    this.listaProductos = true
+    console.log(this.listaProductos)
+
+    this.userService.premiosDisponiblesDsc(page)
+      .subscribe(myProducts => {
+        this.productos = myProducts.productos;
+      });
   }
 
 

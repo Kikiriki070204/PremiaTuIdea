@@ -26,7 +26,7 @@ export class ProductosAdminComponent implements OnInit {
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
   ngOnInit(): void {
     this.listaProductos = false
-    this.premiosDisponibles(this.currentPage)
+    this.productosDsc(this.currentPage)
     this.getRol()
   }
 
