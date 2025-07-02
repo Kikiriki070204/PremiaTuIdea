@@ -1,135 +1,134 @@
-<div
-  style="
-    margin-top: 2%;
-    margin-left: 20%;
-    margin-right: 20%;
-    margin-bottom: 10%;
-  "
->
+<div class="mx-auto max-w-6xl px-4 py-8">
   <h5
-    class="text-2xl mb-2 font-medium text-blue-700 dark:text-white"
-    style="font-weight: bold; text-align: center"
+    class="text-center text-3xl sm:text-4xl font-bold text-blue-900 dark:text-white mb-6"
   >
     Describe tu idea
   </h5>
+
   <div
     *ngIf="errorMessage"
-    class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+    class="mb-6 p-3 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-gray-800 dark:text-red-400 w-full max-w-xl mx-auto"
     role="alert"
   >
     <span class="font-medium">{{ errorMessage }}</span>
   </div>
 
   <div
-    class="flex p-3 min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg"
-    style="align-items: center; justify-content: center"
+    class="flex flex-col lg:flex-row gap-10 justify-center items-start bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"
   >
-    <form class="max-w-lg min-w-96">
-      <label
-        for="titulo"
-        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Titulo</label
-      >
-
-      <div class="flex">
+    <form class="flex-1 space-y-4 w-full max-w-lg">
+      <div>
+        <label
+          for="titulo"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Título</label
+        >
         <input
           [formControl]="titulo"
           type="text"
-          name="titulo"
           id="titulo"
-          class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="Titulo de tu idea"
+          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          placeholder="Título de tu idea"
           required
         />
       </div>
-      <br />
-      <label
-        for="fecha_inicial"
-        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Fecha Inicio</label
-      >
-      <div class="flex">
+
+      <div>
+        <label
+          for="fecha_inicial"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Fecha inicio</label
+        >
         <input
           [formControl]="fecha_inicial"
           type="date"
-          name="fecha_inicial"
           id="fecha_inicial"
-          class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="08/30/2024"
+          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           required
         />
       </div>
-      <br />
-      <label
-        for="antecedente"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Antecedente</label
-      >
-      <textarea
-        [formControl]="antecedentes"
-        id="antecedente"
-        rows="4"
-        class="mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="..."
-      ></textarea>
 
-      <label
-        for="propuesta"
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        >Tu propuesta</label
-      >
-      <textarea
-        [formControl]="propuesta"
-        id="propuesta"
-        rows="4"
-        class="mb-4 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-        placeholder="..."
-      ></textarea>
+      <div>
+        <label
+          for="antecedente"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Antecedente</label
+        >
+        <textarea
+          [formControl]="antecedentes"
+          id="antecedente"
+          rows="4"
+          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          placeholder="Describe el contexto..."
+        ></textarea>
+      </div>
+
+      <!-- Propuesta -->
+      <div>
+        <label
+          for="propuesta"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Tu propuesta</label
+        >
+        <textarea
+          [formControl]="propuesta"
+          id="propuesta"
+          rows="4"
+          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          placeholder="¿Qué propones?"
+        ></textarea>
+      </div>
     </form>
 
-    <form class="max-w-sm pt-20" style="margin-left: 10%">
-      <label
-        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-        for="user_avatar"
-        >Condicion actual</label
-      >
-      <input
-        class="mb-4 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
-        aria-describedby="user_avatar_help"
-        id="user_avatar"
-        type="file"
-        (change)="onFileSelected($event)"
-      />
+    <form class="flex-1 w-full max-w-sm space-y-6">
+      <div>
+        <label
+          for="user_avatar"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Condición actual</label
+        >
+        <input
+          id="user_avatar"
+          type="file"
+          (change)="onFileSelected($event)"
+          class="w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-blue-800 text-white focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
+        />
+      </div>
 
-      <label
-        for="area"
-        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Area</label
-      >
-      <select
-        (change)="onAreaChange($event)"
-        class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option disabled selected hidden>Asigne un area</option>
-        <option *ngFor="let area of areas" [value]="area.id">
-          {{ area.nombre }}
-        </option>
-      </select>
+      <div>
+        <label
+          for="area"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+          >Área</label
+        >
+        <select
+          id="area"
+          (change)="onAreaChange($event)"
+          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+        >
+          <option disabled selected hidden>Seleccione un área</option>
+          <option *ngFor="let area of areas" [value]="area.id">
+            {{ area.nombre }}
+          </option>
+        </select>
+      </div>
 
-      <button
-        (click)="idea()"
-        type="button"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
-      >
-        Siguiente</button
-      ><br />
-      <button
-        (click)="goBack()"
-        type="button"
-        class="text-white bg-gray-500 hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-500 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:border-gray-700"
-      >
-        Cancelar
-      </button>
+      <div class="flex flex-wrap gap-4">
+        <button
+          (click)="idea()"
+          type="button"
+          class="flex-1 text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus:ring-blue-700"
+        >
+          Siguiente
+        </button>
+        <button
+          (click)="goBack()"
+          type="button"
+          class="flex-1 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-900 font-medium rounded-lg text-sm px-5 py-2.5 transition dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-500"
+        >
+          Cancelar
+        </button>
+      </div>
     </form>
   </div>
 </div>

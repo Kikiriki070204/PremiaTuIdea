@@ -1,103 +1,113 @@
-<div
-  style="margin-top: 2%; margin-left: 6%; margin-right: 20%; margin-bottom: 10%"
->
+<div class="flex flex-col items-center mt-8 mb-10 px-4 sm:px-6 lg:px-8">
   <h5
-    class="mb-2 justify-center text-3xl md:text-4xl font-bold text-blue-900 dark:text-white"
-    style="font-weight: bold"
+    class="mb-6 text-center text-3xl md:text-4xl font-bold text-blue-900 dark:text-white"
   >
     Nueva Actividad
   </h5>
 
-  <div class="container w-fit max-w-sm dark:bg-gray-800 dark:border-gray-700">
+  <div
+    class="w-full max-w-lg bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 p-6"
+  >
     <div
       *ngIf="errorMessage"
-      class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
-      role="alert"
+      class="mb-4 p-3 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-gray-800 dark:text-red-400"
     >
       <span class="font-medium">{{ errorMessage }}</span>
     </div>
-  </div>
 
-  <div
-    class="container w-fit max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
-    style="margin-top: 3%"
-  >
-    <form class="max-w-lg min-w-96">
-      <label
-        for="titulo"
-        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Titulo</label
-      >
-
-      <div class="flex w-72">
+    <form class="space-y-4">
+      <div>
+        <label
+          for="titulo"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Título
+        </label>
         <input
           [formControl]="titulo"
           type="text"
-          name="titulo"
           id="titulo"
-          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-          placeholder="Titulo descriptivo de la actividad"
+          class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          placeholder="Título descriptivo de la actividad"
           required
         />
       </div>
 
-      <label
-        for="fecha_inicial"
-        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Fecha Inicio</label
-      >
-      <div class="flex w-72">
+      <div>
+        <label
+          for="date1"
+          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
+        >
+          Fecha Inicio
+        </label>
         <input
           [(ngModel)]="date1"
           type="date"
-          name="date1"
           id="date1"
-          class="mb-2 rounded-s-lg rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="08/30/2024"
+          class="w-full p-2.5 text-sm text-gray-900 bg-gray-50 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
           required
         />
       </div>
     </form>
 
-    <form class="max-w-sm">
+    <div class="mt-6">
       <label
-        for="url"
-        class="mt-2 block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >Responsable de la actividad</label
+        class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
       >
-
-      <div class="md:p-2 border-b rounded-t dark:border-gray-600">
+        Responsable de la actividad
+      </label>
+      <div class="border border-gray-300 rounded-lg dark:border-gray-600">
         <input
           (input)="inputChanged($event)"
           type="text"
-          class="border rounded p-2"
+          class="w-full p-2 border-b dark:bg-gray-800 dark:text-white"
+          placeholder="Buscar colaborador…"
         />
-        <ng-container *ngIf="colaboradores.length > 0">
-          <div class="mt-4 space-y-2">
-            <label
-              *ngFor="let colaborador of colaboradores"
-              class="cursor-pointer flex items-center"
-            >
-              <input
-                type="radio"
-                [value]="colaborador.id"
-                (change)="selected(colaborador.id)"
-                [formControl]="selectModel"
-                class="mr-2"
-              />
-              <span>{{ colaborador.nombre }}</span>
-            </label>
-          </div>
-        </ng-container>
-      </div>
-    </form>
 
-    <button
-      (click)="asignarActividad()"
-      type="button"
-      class="mt-9 font-semibold text-white bg-blue-800 hover:bg-blue-900 rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out"
-    >
-      Agregar
-    </button>
+        <div
+          *ngIf="colaboradores.length > 0; else noColabs"
+          class="max-h-48 overflow-y-auto p-2 space-y-2 bg-white dark:bg-gray-800"
+        >
+          <label
+            *ngFor="let colaborador of colaboradores"
+            class="flex items-center cursor-pointer"
+          >
+            <input
+              type="radio"
+              [value]="colaborador.id"
+              (change)="selected(colaborador.id)"
+              [formControl]="selectModel"
+              class="mr-2"
+            />
+            <span class="text-gray-900 dark:text-white">{{
+              colaborador.nombre
+            }}</span>
+          </label>
+        </div>
+        <ng-template #noColabs>
+          <p class="p-2 text-sm text-gray-500 dark:text-gray-400">
+            No hay colaboradores
+          </p>
+        </ng-template>
+      </div>
+    </div>
+
+    <div class="mt-6 flex justify-between">
+      <button
+        (click)="asignarActividad()"
+        type="button"
+        class="justi inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-blue-800 rounded-lg hover:bg-blue-900 transition"
+      >
+        Agregar
+      </button>
+
+      <button
+        (click)="goBack()"
+        type="button"
+        class="inline-flex items-center px-5 py-2.5 text-sm font-semibold text-white bg-red-600 rounded-lg hover:bg-red-800 transition"
+      >
+        Regresar
+      </button>
+    </div>
   </div>
 </div>

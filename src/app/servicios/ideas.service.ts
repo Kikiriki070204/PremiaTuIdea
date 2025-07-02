@@ -17,8 +17,8 @@ export class IdeasService {
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
-  allIdeas(estatus: number | null): Observable<Ideas> {
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/` + estatus);
+  allIdeas(estatus: number | null, page: number = 1): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/` + estatus + `?page=${page}`);
   }
 
   ideasImp(): Observable<Ideas> {

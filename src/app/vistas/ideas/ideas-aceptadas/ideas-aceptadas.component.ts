@@ -4,52 +4,52 @@ import { IdeasService } from '../../../servicios/ideas.service';
 import { AuthService } from '../../../servicios/auth.service';
 import { Idea } from '../../../interfaces/idea';
 import { Router, RouterModule } from '@angular/router';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-ideas-aceptadas',
   standalone: true,
-  imports: [RouterModule, NgFor],
+  imports: [RouterModule, NgFor, CommonModule],
   templateUrl: './ideas-aceptadas.component.html',
   styleUrl: './ideas-aceptadas.component.css'
 })
 export class IdeasAceptadasComponent {
-  ideas: Idea[] = []
-  ideasUsers: Idea[] = []
+  ideas: any = []
   userInfo: Profile | null = null
   user_rol: number | null = null
+
+  totalItems: number = 0
+  pageSize: number = 15
+  currentPage: number = 1
+  Math = Math;
 
   constructor(protected authService: AuthService, protected ideaService: IdeasService, protected router: Router) { }
 
   ngOnInit(): void {
-    this.misIdeas(2);
+    this.misIdeas(2, this.currentPage);
   }
 
 
-  misIdeas(estatus: number | null = null): void {
-    this.ideaService.allIdeas(estatus)
+  misIdeas(estatus: number | null = null, page: number): void {
+    this.ideaService.allIdeas(estatus, page)
       .subscribe(myIdeas => {
         this.ideas = myIdeas.ideas;
       });
   }
 
-  allideasUsers(): void {
-    this.ideaService.usersIdeas().subscribe(myIdeas => {
-      this.ideasUsers = myIdeas.ideas;
-    })
+  getPages(): number[] {
+    if (!this.ideas) return [];
 
+    const total = this.ideas.last_page || 1;
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
 
+  onPageChange(estatus: number, page: number): void {
+    this.misIdeas(estatus, page);
   }
 
 
-  ideasbyStatus(estatus: number | null = null): void {
-    this.ideasUsers = []
-    this.ideaService.ideasByStatus(estatus)
-      .subscribe(myIdeas => {
-        this.ideasUsers = myIdeas.ideas;
-      });
-  }
   goToIdea(id: number) {
     this.router.navigate(['/ideas/', id])
   }

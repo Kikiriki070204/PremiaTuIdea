@@ -105,4 +105,8 @@ export class NewActivityComponent implements OnInit {
     })
   }
 
+  goBack() {
+    history.back();
+  }
+
 }

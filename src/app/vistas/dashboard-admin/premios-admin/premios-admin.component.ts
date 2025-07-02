@@ -4,19 +4,25 @@ import { Router, RouterLink, RouterModule } from '@angular/router';
 import { UsuarioPremio } from '../../../interfaces/producto';
 import { Profile } from '../../../interfaces/profile';
 import { AuthService } from '../../../servicios/auth.service';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-premios-admin',
   standalone: true,
-  imports: [RouterLink, NgFor, RouterModule],
+  imports: [RouterLink, NgFor, RouterModule, CommonModule],
   templateUrl: './premios-admin.component.html',
   styleUrl: './premios-admin.component.css'
 })
 export class PremiosAdminComponent implements OnInit {
-  premios: UsuarioPremio[] | null = null
+  premios: any = []
   user_id: number | null = null
   userInfo: Profile | null = null
+
+  // paginacion
+  totalItems: number = 0
+  pageSize: number = 15
+  currentPage: number = 1
+  Math = Math;
 
   constructor(
     protected userService: UsersService,
@@ -26,17 +32,29 @@ export class PremiosAdminComponent implements OnInit {
 
   ngOnInit(): void {
     this.user()
-    this.premiosCanjeados()
+    this.premiosCanjeados(this.currentPage)
   }
 
-  premiosCanjeados(): void {
-    this.userService.premiosCanjeadosAdmin().subscribe(
+  premiosCanjeados(page: number): void {
+    this.userService.premiosCanjeadosAdmin(page).subscribe(
       premiosCanj => {
         this.premios = premiosCanj.premios
         console.log(this.premios)
       }
     )
   }
+
+  getPages(): number[] {
+    if (!this.premios) return [];
+
+    const total = this.premios.last_page || 1;
+    return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  onPageChange(page: number): void {
+    this.premiosCanjeados(page);
+  }
+
   user() {
     this.user_id = this.authService.getRoleId()
 

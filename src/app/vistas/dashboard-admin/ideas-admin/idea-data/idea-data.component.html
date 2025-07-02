@@ -181,46 +181,65 @@
             </div>
 
             <!-- Modal body -->
-            <form class="p-4 md:p-5">
-              <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+            <form class="p-4 md:p-5 flex flex-col">
+              <div class="p-2 md:p-2 border-b dark:border-gray-600">
                 <input
                   (input)="inputChanged($event)"
                   type="text"
-                  class="border rounded p-2"
+                  class="border rounded p-2 w-full"
+                  placeholder="Buscar colaborador…"
                 />
-                <ng-container *ngIf="colaboradores_modal.length > 0">
-                  <div class="mt-4 space-y-2">
-                    <div *ngFor="let colaborador of colaboradores_modal">
-                      <input
-                        type="checkbox"
-                        [checked]="
-                          checkboxStatesColabs[colaborador.id] || false
-                        "
-                        (change)="checkboxColabsChanged(colaborador.id, $event)"
-                      />
-                      {{ colaborador.nombre }}
-                    </div>
+              </div>
+
+              <!-- Contenedor scrollable -->
+              <div
+                class="mt-4 space-y-2 overflow-y-auto"
+                style="max-height: 240px"
+              >
+                <ng-container
+                  *ngIf="colaboradores_modal.length > 0; else empty"
+                >
+                  <div
+                    *ngFor="let colaborador of colaboradores_modal"
+                    class="flex items-center"
+                  >
+                    <input
+                      type="checkbox"
+                      [checked]="checkboxStatesColabs[colaborador.id] || false"
+                      (change)="checkboxColabsChanged(colaborador.id, $event)"
+                      class="me-2"
+                    />
+                    <label>{{ colaborador.nombre }}</label>
                   </div>
                 </ng-container>
+                <ng-template #empty>
+                  <p class="text-sm text-gray-500">No hay colaboradores</p>
+                </ng-template>
               </div>
-              <button
-                (click)="agregarColab()"
-                class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+
+              <!-- Botón siempre fijo abajo -->
+              <div
+                class="mt-4 pt-4 border-t dark:border-gray-600 flex justify-end"
               >
-                <svg
-                  class="me-1 -ms-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                  (click)="agregarColab()"
+                  type="button"
+                  class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Guardar cambios
-              </button>
+                  <svg
+                    class="me-1 -ms-1 w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Guardar cambios
+                </button>
+              </div>
             </form>
           </div>
         </div>

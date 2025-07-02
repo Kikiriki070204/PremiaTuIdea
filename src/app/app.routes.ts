@@ -50,6 +50,11 @@ export const routes: Routes =
             ]
         },
         { path: 'chart', component: ChartsComponent },
+        {
+            path: 'terminos-condiciones',
+            loadComponent: () => import('./vistas/terminos-condiciones/terminos-condiciones.component').then(m => m.TerminosCondicionesComponent),
+            canActivate: [authenticateGuard]
+        },
 
         // Dashboard Administrativo
         {

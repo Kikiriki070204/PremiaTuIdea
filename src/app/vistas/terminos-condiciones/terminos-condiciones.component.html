@@ -1,0 +1,103 @@
+<div class="min-h-screen bg-gray-100 flex justify-center p-4 pt-20">
+  <div
+    class="w-full max-w-6xl bg-white shadow-lg rounded-t-2xl overflow-hidden"
+  >
+    <div class="border-b">
+      <!-- dropdown -->
+      <div class="md:hidden p-4">
+        <select
+          [(ngModel)]="activeTab"
+          class="w-full border border-gray-300 rounded p-2"
+        >
+          <option value="sec1">Ideas (Premia tu idea)</option>
+          <option value="sec2">Lean Workshops</option>
+          <option value="sec3">Cambio de nivel de técnicos</option>
+          <option value="sec4">Scrap y mejora continua</option>
+          <option value="sec5">OE</option>
+        </select>
+      </div>
+
+      <div class="hidden md:flex">
+        <button
+          (click)="activeTab = 'sec1'"
+          [ngClass]="
+            activeTab === 'sec1'
+              ? 'text-blue-600 border-blue-500'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+        >
+          Ideas (Premia tu idea)
+        </button>
+        <button
+          (click)="activeTab = 'sec2'"
+          [ngClass]="
+            activeTab === 'sec2'
+              ? 'text-blue-600 border-blue-500'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+        >
+          Lean Workshops
+        </button>
+        <button
+          (click)="activeTab = 'sec3'"
+          [ngClass]="
+            activeTab === 'sec3'
+              ? 'text-blue-600 border-blue-500'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+        >
+          Cambio de nivel de técnicos
+        </button>
+        <button
+          (click)="activeTab = 'sec4'"
+          [ngClass]="
+            activeTab === 'sec4'
+              ? 'text-blue-600 border-blue-500'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+        >
+          Scrap y mejora continua
+        </button>
+        <button
+          (click)="activeTab = 'sec5'"
+          [ngClass]="
+            activeTab === 'sec5'
+              ? 'text-blue-600 border-blue-500'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+        >
+          OE
+        </button>
+      </div>
+    </div>
+
+    <!-- contenido -->
+    <div class="p-4 sm:p-6 text-sm sm:text-base">
+      <div *ngIf="activeTab === 'sec1'">
+        <h2 class="text-xl font-bold mb-2">Contenido de la PTI</h2>
+        <p class="text-gray-700">Aquí va la información de la sección PTI.</p>
+      </div>
+      <div *ngIf="activeTab === 'sec2'">
+        <h2 class="text-xl font-bold mb-2">Contenido de la Workshops</h2>
+        <p class="text-gray-700">Aquí va la información de la Workshops.</p>
+      </div>
+      <div *ngIf="activeTab === 'sec3'">
+        <h2 class="text-xl font-bold mb-2">Contenido de la Tecnicos</h2>
+        <p class="text-gray-700">Aquí va la información de la Tecnicos.</p>
+      </div>
+      <div *ngIf="activeTab === 'sec4'">
+        <h2 class="text-xl font-bold mb-2">Contenido de la Scrap</h2>
+        <p class="text-gray-700">Aquí va la información de la Scrap.</p>
+      </div>
+      <div *ngIf="activeTab === 'sec5'">
+        <h2 class="text-xl font-bold mb-2">Contenido de la OE</h2>
+        <p class="text-gray-700">Aquí va la información de la OE.</p>
+      </div>
+    </div>
+  </div>
+</div>

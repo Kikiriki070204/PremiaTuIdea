@@ -78,8 +78,8 @@ export class UsersService {
     return this.http.get<Premios>(`${environment.api_url}/usuariopremios/list`)
   }
 
-  premiosCanjeadosAdmin(): Observable<Premios> {
-    return this.http.get<Premios>(`${environment.api_url}/usuariopremios/list/admin`)
+  premiosCanjeadosAdmin(page: number): Observable<Premios> {
+    return this.http.get<Premios>(`${environment.api_url}/usuariopremios/list/admin?page=${page}`)
   }
 
   usuarioPremioData(id: any): Observable<UsuarioPremio2> {
