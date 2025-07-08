@@ -30,4 +30,9 @@ export class DashboardAdminComponent implements OnInit {
     this.router.navigate(['admin/reportes-admin'])
   }
 
+  logout() {
+    this.authService.logout()
+    this.router.navigate(['/login'])
+  }
+
 }

@@ -20,6 +20,10 @@ export class UsersService {
     return this.http.get<Usuarios>(`${environment.api_url}/users/colaboradores`);
   }
 
+  setetarContraseña(data: any): Observable<any> {
+    return this.http.post(`${environment.api_url}/users/updatePasswordAdmin`, data);
+  }
+
   //Aqui va la lista de usuarios con la consulta de nombres, por eso se usa la interfaz UsersList y no Usuarios
   allUsers(page: number = 1): Observable<UsersList> {
     return this.http.get<UsersList>(`${environment.api_url}/users/usuariosAll?page=${page}`);
@@ -44,8 +48,12 @@ export class UsersService {
     return this.http.post<UsersList>(`${environment.api_url}/users/nombre`, data);
   }
 
-  newUsert(data: NewUser | NoLocation): Observable<User> {
+  newUser(data: any | NoLocation): Observable<User> {
     return this.http.post<User>(`${environment.api_url}/users/create`, data);
+  }
+
+  register(data: any | NoLocation): Observable<User> {
+    return this.http.post<User>(`${environment.api_url}/auth/register`, data);
   }
 
   userData(id: any): Observable<Profile> {

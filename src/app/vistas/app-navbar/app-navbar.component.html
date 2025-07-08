@@ -3,6 +3,8 @@
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
         <!-- Boton para celular-->
+        @if(user_rol){
+
         <button
           type="button"
           (click)="toggleMobileMenu()"
@@ -47,6 +49,7 @@
             />
           </svg>
         </button>
+        }
       </div>
       <div
         class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start"
@@ -62,38 +65,40 @@
             />
           </a>
         </div>
+        @if (user_rol) {
         <div class="hidden sm:ml-6 sm:block">
           <div class="flex space-x-4">
             <a
               [routerLink]="['/ideas']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
               [routerLinkActiveOptions]="{ exact: false }"
-              class="rounded-sm h-full px-3 py-2 text-sm hover:border-b-2 font-medium text-gray-300 hover:text-white"
+              class="rounded-sm h-full px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
               >Ideas</a
             >
             <a
               [routerLink]="['/productos']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
               >Productos</a
             >
             <a
               [routerLink]="['/premios']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
               >Premios</a
             >
             <a
               [routerLink]="['/terminos-condiciones']"
               [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
               [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white hover:border-b-2"
+              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
               >Términos y condiciones</a
             >
           </div>
         </div>
+        }
       </div>
       <!-- Icono de notificaciones y perfil -->
       @if(user_rol){
@@ -200,6 +205,7 @@
   </div>
 
   <!-- Mobile menu -->
+  @if(user_rol){
   <div class="lg:hidden" *ngIf="mobileMenuOpen" id="mobile-menu">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <a
@@ -234,4 +240,5 @@
       >
     </div>
   </div>
+  }
 </nav>

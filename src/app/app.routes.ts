@@ -11,6 +11,7 @@ export const routes: Routes =
         //Rutas de usuario
         { path: 'activar', loadComponent: () => import('./vistas/activate/activate.component').then(m => m.ActivateComponent) },
         { path: 'login', loadComponent: () => import('./vistas/login/login.component').then(m => m.LoginComponent) },
+        { path: 'register', loadComponent: () => import('./vistas/register/register.component').then(m => m.RegisterComponent) },
         { path: 'dashboard', loadComponent: () => import('./vistas/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [authenticateGuard] },
         { path: 'myProfile', loadComponent: () => import('./vistas/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authenticateGuard] },
         { path: 'usuarios', loadComponent: () => import('./vistas/usuarios/usuarios.component').then(m => m.UsuariosComponent), canActivate: [authenticateGuard] },

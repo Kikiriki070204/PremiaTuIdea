@@ -11,7 +11,7 @@ import { HttpResponse } from '../../../../interfaces/http';
 @Component({
   selector: 'app-new-user',
   standalone: true,
-  imports: [AppNavbarComponent, RouterLink, FormsModule, ReactiveFormsModule, NgFor, NgIf],
+  imports: [FormsModule, ReactiveFormsModule, NgFor, NgIf],
   templateUrl: './new-user.component.html',
   styleUrl: './new-user.component.css'
 })
@@ -99,7 +99,7 @@ export class NewUserComponent implements OnInit {
 
   newUser() {
     let self = this
-    let newUser: NewUser = {
+    let newUser = {
       ibm: (this.ibm.value !== null) ? +this.ibm.value : 0,
       nombre: this.nombre.value ?? "",
       rol_id: this.selectedRol ?? 0,
@@ -108,7 +108,7 @@ export class NewUserComponent implements OnInit {
       locacion_id: this.selectedLoc ?? null
     }
 
-    this.userService.newUsert(newUser).subscribe({
+    this.userService.newUser(newUser).subscribe({
       next(value: User) {
         console.log("si jala!")
         self.router.navigate(['/usuarios'])
@@ -139,7 +139,7 @@ export class NewUserComponent implements OnInit {
       area_id: this.selectedArea ?? 0,
     }
 
-    this.userService.newUsert(newUser).subscribe({
+    this.userService.newUser(newUser).subscribe({
       next(value: User) {
         console.log("si jala!")
         self.router.navigate(['/usuarios'])

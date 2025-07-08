@@ -47,4 +47,11 @@ export class AuthService {
   getToken(): string | null {
     return localStorage.getItem('access_token');
   }
+
+  actualizarContraseña(data: any): Observable<any> {
+    return this.http.post(`${environment.api_url}/users/updatePassword`, data);
+  }
+
+
+
 }

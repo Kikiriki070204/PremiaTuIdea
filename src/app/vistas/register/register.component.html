@@ -1,0 +1,323 @@
+<div class="flex flex-col items-center justify-center h-screen bg-gray-100">
+  <div class="w-full max-w-lg p-6 bg-white rounded-lg shadow-md">
+    <h5
+      class="text-4xl font-medium text-blue-900 dark:text-white mb-4"
+      style="font-weight: bold"
+    >
+      Regístrate
+    </h5>
+    <!-- <form [formGroup]="formRegister" (ngSubmit)="register()"> -->
+    <form [formGroup]="form" (ngSubmit)="registrarse()">
+      <div class="mb-4">
+        <label
+          for="name"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Nombre</label
+        >
+        <input
+          formControlName="nombre"
+          type="text"
+          id="name"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          placeholder="Ingresa tu nombre"
+          required
+        />
+        @if(nombre?.invalid && (nombre?.dirty || nombre?.touched)){ @if
+        (nombre?.hasError('required')) {
+        <small class="text-danger">Tu nombre o nombres son obligatorios.</small>
+        } }
+      </div>
+      <div class="mb-4 flex justify-between">
+        <div class="flex-col w-1/2 pr-2">
+          <label
+            for="apellido_paterno"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Apellido Paterno</label
+          >
+          <input
+            formControlName="apellido_paterno"
+            type="text"
+            id="apellido_paterno"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Ingresa tu apellido paterno"
+            required
+          />
+
+          @if(apellido_paterno?.invalid && (apellido_paterno?.dirty ||
+          apellido_paterno?.touched)){ @if
+          (apellido_paterno?.hasError('required')) {
+          <small class="text-danger">Tu apellido paterno es obligatorio.</small>
+          } }
+        </div>
+
+        <div class="flex-col w-1/2 pl-2">
+          <label
+            for="apellido_materno"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Apellido Materno</label
+          >
+          <input
+            formControlName="apellido_materno"
+            type="text"
+            id="apellido_materno"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Ingresa tu apellido materno"
+            required
+          />
+
+          @if(apellido_materno?.invalid && (apellido_materno?.dirty ||
+          apellido_materno?.touched)){ @if
+          (apellido_materno?.hasError('required')) {
+          <small class="text-danger">Tu apellido materno obligatorio.</small>
+          } }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="ibm"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >IBM</label
+        >
+        <input
+          formControlName="ibm"
+          type="number"
+          id="text"
+          name="ibm"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+          placeholder="Ingresa tu ibm de la empresa"
+          required
+        />
+        @if(ibm?.invalid && (ibm?.dirty || ibm?.touched)){ @if
+        (ibm?.hasError('required')) {
+        <small class="text-danger">Tu IBM es obligatorio.</small>
+        } }
+      </div>
+
+      <div class="mb-4 flex justify-between">
+        <div class="flex-col w-1/2 pr-2">
+          <label
+            for="email"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Departamento</label
+          >
+          <select
+            (change)="onDepChange($event)"
+            formControlName="selectedDepControl"
+            class="w-full p-2.5 rounded-lg border bg-gray-50 text-sm text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          >
+            <option disabled selected>Asigne un departamento</option>
+            <option
+              *ngFor="let departamento of departamentos"
+              [value]="departamento.id"
+            >
+              {{ departamento.nombre }}
+            </option>
+          </select>
+          <p class="text-xs text-gray-500">Este espacio puede ir en blanco.</p>
+        </div>
+
+        <div class="flex-col w-1/2 pl-2">
+          <label
+            for="email"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Area</label
+          >
+
+          <select
+            (change)="onAreaChange($event)"
+            formControlName="selectedAreaControl"
+            class="w-full p-2.5 rounded-lg border bg-gray-50 text-sm text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+          >
+            <option disabled selected>Asigne un área</option>
+            <option *ngFor="let area of areas" [value]="area.id">
+              {{ area.nombre }}
+            </option>
+          </select>
+        </div>
+        @if(selectedAreaControl?.invalid && (selectedAreaControl?.dirty ||
+        selectedAreaControl?.touched)){ @if
+        (selectedAreaControl?.hasError('required')) {
+        <small class="text-danger">Tu IBM es obligatorio.</small>
+        } }
+      </div>
+
+      @if (selectedArea) {
+      <div class="mb-2">
+        <label class="block text-sm font-medium text-gray-900 dark:text-white"
+          >Locación</label
+        >
+        <select
+          formControlName="selectedLocControl"
+          (change)="onLocChange($event)"
+          class="w-full p-2.5 rounded-lg border bg-gray-50 text-sm text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
+        >
+          <option disabled selected hidden class="text-gray-300">
+            Asigne una locación
+          </option>
+          <option *ngFor="let locacion of locaciones" [value]="locacion.id">
+            {{ locacion.nombre }}
+          </option>
+        </select>
+        @if(selectedLocControl?.invalid && (selectedLocControl?.dirty ||
+        selectedLocControl?.touched)){ @if
+        (selectedLocControl?.hasError('required')) {
+        <small class="text-danger">Tu IBM es obligatorio.</small>
+        } } @else {
+        <p class="text-xs text-gray-500">Este espacio puede ir en blanco.</p>
+
+        }
+      </div>
+      }
+
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Contraseña</label
+        >
+        <div class="flex gap-2">
+          <input
+            [type]="showPassword ? 'text' : 'password'"
+            formControlName="password"
+            type="password"
+            id="password"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Ingresa tu contraseña"
+            required
+          />
+          <button (click)="togglePasswordVisibility()">
+            <svg
+              *ngIf="!showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-eye-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+              <path
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+              />
+            </svg>
+            <svg
+              *ngIf="showPassword"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-eye-slash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"
+              />
+              <path
+                d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"
+              />
+            </svg>
+          </button>
+        </div>
+        @if(password?.invalid && (password?.dirty || password?.touched)){ @if
+        (password?.hasError('required')) {
+        <small class="text-danger">Tu contraseña es obligatoria.</small>
+        } @if(password?.hasError('minlength')) {
+        <small class="text-danger"
+          >Tu contraseña debe tener al menos 8 caracteres.</small
+        >
+        } }
+      </div>
+
+      <div class="mb-4">
+        <label
+          for="password"
+          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+          >Confirmar Contraseña</label
+        >
+        <div class="flex gap-2">
+          <input
+            [type]="showPasswordConfirmation ? 'text' : 'password'"
+            formControlName="confirmed_password"
+            type="password"
+            id="confirmed_password"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+            placeholder="Confirma tu contraseña"
+            required
+          />
+          <button
+            type="button"
+            (click)="toggleNewPasswordConfirmationVisibility()"
+          >
+            <svg
+              *ngIf="!showPasswordConfirmation"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-eye-fill"
+              viewBox="0 0 16 16"
+            >
+              <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
+              <path
+                d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
+              />
+            </svg>
+            <svg
+              *ngIf="showPasswordConfirmation"
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              class="bi bi-eye-slash-fill"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="m10.79 12.912-1.614-1.615a3.5 3.5 0 0 1-4.474-4.474l-2.06-2.06C.938 6.278 0 8 0 8s3 5.5 8 5.5a7 7 0 0 0 2.79-.588M5.21 3.088A7 7 0 0 1 8 2.5c5 0 8 5.5 8 5.5s-.939 1.721-2.641 3.238l-2.062-2.062a3.5 3.5 0 0 0-4.474-4.474z"
+              />
+              <path
+                d="M5.525 7.646a2.5 2.5 0 0 0 2.829 2.829zm4.95.708-2.829-2.83a2.5 2.5 0 0 1 2.829 2.829zm3.171 6-12-12 .708-.708 12 12z"
+              />
+            </svg>
+          </button>
+        </div>
+        @if(passwordConfirmation?.invalid && (passwordConfirmation?.dirty ||
+        passwordConfirmation?.touched)){ @if
+        (passwordConfirmation?.hasError('required')) {
+        <small class="text-danger"
+          >La confirmacion de tu contraseña es obligatoria.</small
+        >
+        } @if(passwordConfirmation?.hasError('minlength')) {
+        <small class="text-danger"
+          >La confirmacion de tu contraseña debe tener al menos 8
+          caracteres.</small
+        >
+        } }
+        <br />
+        @if (form.errors?.['passwordMismatch'] &&
+        (form.get('confirmed_password')?.touched ||
+        form.get('confirmed_password')?.dirty)) {
+        <small class="text-red-500">Las contraseñas no coinciden.</small>
+        }
+      </div>
+
+      <div class="flex flex-col items-center">
+        <button
+          type="submit"
+          [disabled]="!form.valid"
+          class="w-1/2 justify-center h-9 mt-3 rounded-md text-white bg-blue-800 hover:bg-blue-900 transition duration-300 ease-in-out disabled:bg-gray-300 disabled:cursor-not-allowed disabled:text-gray-500"
+        >
+          Registrarse
+        </button>
+      </div>
+      <div class="flex flex-col mt-3 text-sm items-center text-gray-500">
+        ¿Ya tienes una cuenta?
+        <a
+          routerLink="/login"
+          class="text-blue-600 hover:underline dark:text-blue-500"
+          >Inicia sesión</a
+        >
+      </div>
+    </form>
+  </div>
+</div>

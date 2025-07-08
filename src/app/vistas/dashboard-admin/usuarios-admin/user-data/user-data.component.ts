@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgFor } from '@angular/common';
+import { CommonModule, NgClass, NgFor } from '@angular/common';
 import { UsersService } from '../../../../servicios/users.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Profile, UpdateUser } from '../../../../interfaces/profile';
@@ -7,12 +7,13 @@ import { IdeasService } from '../../../../servicios/ideas.service';
 import { Idea } from '../../../../interfaces/idea';
 import { User } from '../../../../interfaces/user';
 import { HttpResponse } from '../../../../interfaces/http';
-import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { passwordMatchValidatorProfile } from '../../../profile/profile.component';
 
 @Component({
   selector: 'app-user-data',
   standalone: true,
-  imports: [NgFor, FormsModule, ReactiveFormsModule],
+  imports: [NgFor, FormsModule, ReactiveFormsModule, NgClass, CommonModule],
   templateUrl: './user-data.component.html',
   styleUrl: './user-data.component.css'
 })
@@ -23,6 +24,15 @@ export class UserDataComponent implements OnInit {
   ideas: Idea[] | null = null
   selectedActive: number | null = null
   puntos = new FormControl('', Validators.required)
+
+  showNewPassword = false;
+  showNewPasswordConfirmation = false;
+
+  form = new FormGroup({
+    new_password: new FormControl('', [Validators.required, Validators.minLength(8)]),
+    new_password_confirmation: new FormControl('', [Validators.required, Validators.minLength(8)])
+
+  }, { validators: passwordMatchValidatorProfile })
 
   constructor(protected ideasService: IdeasService, protected userService: UsersService, protected router: Router, private route: ActivatedRoute) {
     this.route.params.subscribe(params => {
@@ -94,7 +104,6 @@ export class UserDataComponent implements OnInit {
             console.log(err)
             break;
           default:
-            // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
             console.log(err)
             break;
@@ -104,9 +113,60 @@ export class UserDataComponent implements OnInit {
 
   }
 
+  setPassword() {
+    if (this.form.valid) {
+
+      const formData = {
+        user: this.id,
+        new_password: this.form.value.new_password ?? '',
+        new_password_confirmation: this.form.value.new_password_confirmation ?? ''
+      }
+
+      let self = this
+
+      this.userService.setetarContraseña(formData).subscribe({
+        next(value: User) {
+          console.log(value)
+          self.errorMessage = null
+          self.form.reset();
+          self.router.navigate(['/admin/usuarios-admin'])
+        },
+        error(err: HttpResponse) {
+          switch (err.status) {
+            case 401:
+              self.errorMessage = 'Contraseña incorrecta';
+              break;
+            case 422:
+              self.errorMessage = 'Datos no válidos';
+              break;
+            default:
+              self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              break;
+          }
+        }
+      })
+    }
+  }
+
+  toggleNewPasswordVisibility() {
+    this.showNewPassword = !this.showNewPassword;
+  }
+
+  toggleNewPasswordConfirmationVisibility() {
+    this.showNewPasswordConfirmation = !this.showNewPasswordConfirmation;
+  }
+
   goBack() {
     history.back();
   }
 
+  get newPassword() {
+    return this.form.get('new_password')
+  }
+
+
+  get newPasswordConfirmation() {
+    return this.form.get('new_password_confirmation')
+  }
 
 }
