@@ -78,10 +78,56 @@
 
     <!-- contenido -->
     <div class="p-4 sm:p-6 text-sm sm:text-base">
-      <div *ngIf="activeTab === 'sec1'">
-        <h2 class="text-xl font-bold mb-2">Contenido de la PTI</h2>
-        <p class="text-gray-700">Aquí va la información de la sección PTI.</p>
+      <div *ngIf="activeTab === 'sec1'" class="p-6">
+        <h2 class="text-xl font-bold mb-4">Contenido de la PTI</h2>
+        <p class="text-gray-700 mb-6">
+          Aquí va la información de la sección PTI.
+        </p>
+
+        <!-- Primera fila: Tres columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="flex flex-col items-center text-center">
+            <img
+              src="ruta/imagen1.jpg"
+              alt="Imagen 1"
+              class="w-32 h-32 object-cover rounded-full mb-4"
+            />
+            <h3 class="text-lg font-semibold">Título 1</h3>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <img
+              src="ruta/imagen2.jpg"
+              alt="Imagen 2"
+              class="w-32 h-32 object-cover rounded-full mb-4"
+            />
+            <h3 class="text-lg font-semibold">Título 2</h3>
+          </div>
+          <div class="flex flex-col items-center text-center">
+            <img
+              src="ruta/imagen3.jpg"
+              alt="Imagen 3"
+              class="w-32 h-32 object-cover rounded-full mb-4"
+            />
+            <h3 class="text-lg font-semibold">Título 3</h3>
+          </div>
+        </div>
+
+        <div class="space-y-2">
+          <p class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span> Punto de información
+            relevante 1.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span> Punto de información
+            relevante 2.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-600 mr-2">•</span> Punto de información
+            relevante 3.
+          </p>
+        </div>
       </div>
+
       <div *ngIf="activeTab === 'sec2'">
         <h2 class="text-xl font-bold mb-2">Contenido de la Workshops</h2>
         <p class="text-gray-700">Aquí va la información de la Workshops.</p>
