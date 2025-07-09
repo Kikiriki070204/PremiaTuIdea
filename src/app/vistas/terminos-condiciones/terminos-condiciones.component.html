@@ -22,10 +22,10 @@
           (click)="activeTab = 'sec1'"
           [ngClass]="
             activeTab === 'sec1'
-              ? 'text-blue-600 border-blue-500'
+              ? 'text-blue-800 border-blue-800'
               : 'text-gray-600 border-transparent'
           "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
         >
           Ideas (Premia tu idea)
         </button>
@@ -33,10 +33,10 @@
           (click)="activeTab = 'sec2'"
           [ngClass]="
             activeTab === 'sec2'
-              ? 'text-blue-600 border-blue-500'
+              ? 'text-blue-800 border-blue-800'
               : 'text-gray-600 border-transparent'
           "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
         >
           Lean Workshops
         </button>
@@ -44,10 +44,10 @@
           (click)="activeTab = 'sec3'"
           [ngClass]="
             activeTab === 'sec3'
-              ? 'text-blue-600 border-blue-500'
+              ? 'text-blue-800 border-blue-800'
               : 'text-gray-600 border-transparent'
           "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
         >
           Cambio de nivel de técnicos
         </button>
@@ -55,10 +55,10 @@
           (click)="activeTab = 'sec4'"
           [ngClass]="
             activeTab === 'sec4'
-              ? 'text-blue-600 border-blue-500'
+              ? 'text-blue-800 border-blue-800'
               : 'text-gray-600 border-transparent'
           "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
         >
           Scrap y mejora continua
         </button>
@@ -66,10 +66,10 @@
           (click)="activeTab = 'sec5'"
           [ngClass]="
             activeTab === 'sec5'
-              ? 'text-blue-600 border-blue-500'
+              ? 'text-blue-800 border-blue-800'
               : 'text-gray-600 border-transparent'
           "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-600 focus:outline-none border-b-2"
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
         >
           OE
         </button>
@@ -77,64 +77,217 @@
     </div>
 
     <!-- contenido -->
+
     <div class="p-4 sm:p-6 text-sm sm:text-base">
+      <!-- SECCION PREMIA TU IDEA -->
       <div *ngIf="activeTab === 'sec1'" class="p-6">
-        <h2 class="text-xl font-bold mb-4">Contenido de la PTI</h2>
-        <p class="text-gray-700 mb-6">
-          Aquí va la información de la sección PTI.
-        </p>
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">
+            Bases y reglas de puntaje para las ideas
+          </h2>
+        </div>
 
-        <!-- Primera fila: Tres columnas -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
+            por el comité OpEx, el estatus del proyecto o idea se encontrará
+            disponible dentro de la sección de tus ideas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
+            proyecto que se te haya asignado por tus funciones o
+            responsabilidades.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
+            colectiva, los puntos se dividirán entre los colaboradores de la
+            idea.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Los puntos serán
+            acumulales.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La vigencia de los puntos
+            es del año actual, es decir, al término del año se reiniciarán los
+            puntos para todo el personal.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+        <!-- 2 columnas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
           <div class="flex flex-col items-center text-center">
             <img
-              src="ruta/imagen1.jpg"
+              src="../../../assets/ideas no contables.png"
               alt="Imagen 1"
-              class="w-32 h-32 object-cover rounded-full mb-4"
+              class="object-cover mb-4 border-2 border-black"
             />
-            <h3 class="text-lg font-semibold">Título 1</h3>
+            <h3 class="text-xl font-semibold">Ideas no contables</h3>
           </div>
           <div class="flex flex-col items-center text-center">
             <img
-              src="ruta/imagen2.jpg"
+              src="../../../assets/ideas contables.png"
               alt="Imagen 2"
-              class="w-32 h-32 object-cover rounded-full mb-4"
+              class="h-3/4 object-cover mb-4 border-2 border-black"
             />
-            <h3 class="text-lg font-semibold">Título 2</h3>
+            <h3 class="text-xl font-semibold">Ideas contables</h3>
           </div>
+        </div>
+
+        <!-- 1 columna -->
+        <div class="flex justify-center mb-8">
           <div class="flex flex-col items-center text-center">
             <img
-              src="ruta/imagen3.jpg"
+              src="../../../assets/tabulacion de puntos.png"
               alt="Imagen 3"
-              class="w-32 h-32 object-cover rounded-full mb-4"
+              class="h-3/5 object-cover mb-4 border-2 border-black"
             />
-            <h3 class="text-lg font-semibold">Título 3</h3>
+            <h3 class="text-xl font-semibold">
+              Tabulación de puntaje en base al ahorro
+            </h3>
           </div>
         </div>
+      </div>
+      <!-- SECCION LEAN WORKSHOPS -->
+      <div *ngIf="activeTab === 'sec2'">
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">
+            Bases y reglas de puntaje para workshops
+          </h2>
+        </div>
 
-        <div class="space-y-2">
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
           <p class="flex items-start">
-            <span class="text-blue-600 mr-2">•</span> Punto de información
-            relevante 1.
+            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
+            por el comité OpEx, el estatus del proyecto o idea se encontrará
+            disponible dentro de la sección de tus ideas.
           </p>
           <p class="flex items-start">
-            <span class="text-blue-600 mr-2">•</span> Punto de información
-            relevante 2.
+            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
+            proyecto que se te haya asignado por tus funciones o
+            responsabilidades.
           </p>
           <p class="flex items-start">
-            <span class="text-blue-600 mr-2">•</span> Punto de información
-            relevante 3.
+            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
+            colectiva, los puntos se dividirán entre los colaboradores de la
+            idea.
           </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Los puntos serán
+            acumulales.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La vigencia de los puntos
+            es del año actual, es decir, al término del año se reiniciarán los
+            puntos para todo el personal.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> El premio en puntos será
+            evaluado con el 10% del excedente de la meta establecida y seguirá
+            las reglas aplicadas en el origen de Premia Tu Idea.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Se otorgarán 15 puntos de
+            gratificación por haber participado.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Recursos humanos otorgará
+            un diploma por la participación y un presente.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-8">
+          <div class="flex flex-col items-center text-center">
+            <img
+              src="../../../assets/tabulacion de puntos.png"
+              alt="Imagen 3"
+              class="h-3/5 object-cover mb-4 border-2 border-black"
+            />
+            <h3 class="text-xl font-semibold">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+          </div>
         </div>
       </div>
 
-      <div *ngIf="activeTab === 'sec2'">
-        <h2 class="text-xl font-bold mb-2">Contenido de la Workshops</h2>
-        <p class="text-gray-700">Aquí va la información de la Workshops.</p>
-      </div>
+      <!-- SECCION CAMBIO DE NIVEL -->
       <div *ngIf="activeTab === 'sec3'">
-        <h2 class="text-xl font-bold mb-2">Contenido de la Tecnicos</h2>
-        <p class="text-gray-700">Aquí va la información de la Tecnicos.</p>
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">
+            Bases y reglas de puntaje para cambio de nivel de técnicos
+          </h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Solo se podrá realizar un
+            proyecto por año y deberá ser uno aprobado por su jefe y seguridad.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Solo se puede subir un
+            nivel anualmente, independientemente del ahorro en USD logrado
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> En caso de superar la meta
+            establecida para su cambio de nivel, se te asignará el 10% del
+            excedente del ahorro en puntos para poder intercambiarlos por
+            premios.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Existen 6 niveles de
+            técnicos, técnico 1, 2 y 3, y técnico especial 1, 2, y 3. Para pasar
+            de nivel 1 a 2 de técnico se necesita llegar a una meta mínima de
+            1200 USD y así va aumentando el mínimo en 200 USD para los
+            siguientes niveles.
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> El premio será el 10% del
+            excedente de la meta establecida, siguiendo el criterio de Premia Tu
+            Idea.
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> En caso de no exceder la
+            meta establecida se gratificará con 15 puntos.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-8">
+          <div class="flex flex-col items-center text-center">
+            <img
+              src="../../../assets/tabulacion de puntos.png"
+              alt="Imagen 3"
+              class="h-3/5 object-cover mb-4 border-2 border-black"
+            />
+            <h3 class="text-xl font-semibold">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+          </div>
+        </div>
       </div>
       <div *ngIf="activeTab === 'sec4'">
         <h2 class="text-xl font-bold mb-2">Contenido de la Scrap</h2>
