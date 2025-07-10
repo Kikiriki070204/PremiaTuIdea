@@ -35,7 +35,7 @@ export class RegisterComponent implements OnInit {
     password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     confirmed_password: new FormControl('', [Validators.required, Validators.minLength(8)]),
     selectedAreaControl: new FormControl(null, [Validators.required]),
-    selectedDepControl: new FormControl(null),
+    selectedDepControl: new FormControl(null, [Validators.required]),
     selectedLocControl: new FormControl(null)
   }, { validators: passwordMatchValidator });
 

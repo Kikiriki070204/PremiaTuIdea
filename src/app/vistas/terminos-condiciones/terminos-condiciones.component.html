@@ -14,6 +14,7 @@
           <option value="sec3">Cambio de nivel de técnicos</option>
           <option value="sec4">Scrap y mejora continua</option>
           <option value="sec5">OE</option>
+          <option value="sec6">Ahorro de energía</option>
         </select>
       </div>
 
@@ -73,6 +74,17 @@
         >
           OE
         </button>
+        <button
+          (click)="activeTab = 'sec6'"
+          [ngClass]="
+            activeTab === 'sec6'
+              ? 'text-blue-800 border-blue-800'
+              : 'text-gray-600 border-transparent'
+          "
+          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
+        >
+          Ahorro de energía
+        </button>
       </div>
     </div>
 
@@ -130,7 +142,7 @@
           </div>
           <div class="flex flex-col items-center text-center">
             <img
-              src="../../../assets/ideas contables.png"
+              src="../../../assets/ideas contables2.png"
               alt="Imagen 2"
               class="h-3/4 object-cover mb-4 border-2 border-black"
             />
@@ -306,13 +318,174 @@
           </div>
         </div>
       </div>
+      <!-- SECCION SCAP -->
       <div *ngIf="activeTab === 'sec4'">
-        <h2 class="text-xl font-bold mb-2">Contenido de la Scrap</h2>
-        <p class="text-gray-700">Aquí va la información de la Scrap.</p>
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4 text-center">
+            Bases y reglas de puntaje para proyectos de scrap y mejora continua
+          </h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg mt-4">
+          <p class="flex items-start">
+            El rendimiento por medio de bonos se realizará cuando los proyectos
+            llevel el % de scrap vs ventas por debajo de su meta.
+          </p>
+          <p class="flex items-start mt-1">
+            <span class="text-blue-800 mr-2">•</span> El bono será repartido
+            entre los miembros del equipo de Solución de Problemas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> El bono será calculado de
+            manera mensual y se pagará de manera trimestral.
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Si los proyectos están
+            enfocados en 1 segmento de línea, la meta del % del scrap vs ventas
+            será calculada diviendo el métrico de toda la línea entre el número
+            de segmentos con equipos de solucion de problemas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> El bono de los proyectos
+            cerrados no es acumulativo, cada proyecto serpa premiado solo una
+            vez.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>El retrabajo o contenciones
+            de claidad no serán consideradas como acciones correctivas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La efectividad de las
+            acciones correctivas será evaluada 1 mes después de la
+            implementación de estas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Las metas de % de scrap vs
+            ventas serán redefinidas después de la implementación de acciones
+            correctivas de proyectos.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>Las mejoras relaionadas a
+            cambios de diseño generados externamente o mejoras de precios de
+            componentes no serán consideradas como acciones correctivas.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            El porcentaje del bono será calculado en base al 10% del ahorro del
+            proyecto con un tope máximo de 11,000 pesos.
+          </p>
+
+          <p class="flex items-start text-gray-500 text-sm">
+            Cualquier otra situación que no ha sido considerada en la
+            condiciones será evaluada por el Staff de la planta.
+          </p>
+        </div>
       </div>
+
+      <!-- SECCION DE OE -->
       <div *ngIf="activeTab === 'sec5'">
-        <h2 class="text-xl font-bold mb-2">Contenido de la OE</h2>
-        <p class="text-gray-700">Aquí va la información de la OE.</p>
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4 text-center">
+            Bases y reglas de puntaje para proyectos de OE
+          </h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg mt-4">
+          <p class="flex items-start">
+            El reconocimiento con bono se obtendrá cuando el proyecto lleve el
+            impacto en %OE por "Equipment Breakdown" registrado en OMS por
+            debajo de la meta definida.
+          </p>
+          <p class="flex items-start mt-1">
+            <span class="text-blue-800 mr-2">•</span>
+            El bono será repartido entre los miembros del equipo de solución de
+            problemas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>
+            Los equipos deberán ser conformados por al menos 1 coordinador de
+            mantenimiento y un técnico de mantenimiento, el número máximo de
+            miembros en el equipo es de 3 personas.
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>
+            El reconocimiento-bono del proyecto cerrado no es acumulativo, cada
+            proyecto será premiado solo 1 vez.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>
+            La efectividad de las acciones correctivas será evaluada 1 mes
+            después de la implementación.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span>Los eventos con una causa
+            especial("1 timer") no serán considerados como proyectos de mejora.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Los meses atípicos con
+            bajas ventas o paros de línea no serán considerados para el cálculo
+            del bono.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> El bono será calculado de
+            manera mensual y se pagará de manera trimestral.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            El bono será calculado en base a los siguientes criterios de
+            impacto:
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">1. </span> Tiempo extra: El gasto
+            en dólares evitado por la producción no realizada por las fallas del
+            equipo.
+          </p>
+
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">2. </span> Mejoras en tiempos de
+            ciclo que ayudarán a incrementar la salida de piezas.
+          </p>
+
+          <p class="flex items-start text-gray-500 text-sm">
+            Cualquier otra situación que no ha sido considerada en la
+            condiciones será evaluada por el Staff de la planta.
+          </p>
+        </div>
+      </div>
+      <div *ngIf="activeTab === 'sec6'">
+        <div class="flex items-center h-screen">
+          <div class="mx-auto text-center">
+            <h1 class="text-3xl text-gray-600">
+              ¡Se está actualizando esta sección!
+            </h1>
+            <img
+              src="https://static.vecteezy.com/system/resources/previews/016/136/670/non_2x/wrench-and-screwdriver-icon-in-flat-style-spanner-key-illustration-on-white-isolated-background-repair-equipment-business-concept-vector.jpg"
+              alt=""
+              height="200"
+              width="200"
+              class="mx-auto my-4"
+            />
+          </div>
+        </div>
       </div>
     </div>
   </div>

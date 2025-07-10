@@ -114,7 +114,11 @@
               {{ departamento.nombre }}
             </option>
           </select>
-          <p class="text-xs text-gray-500">Este espacio puede ir en blanco.</p>
+          @if(selectedDepControl?.invalid && (selectedDepControl?.dirty ||
+          selectedDepControl?.touched)){ @if
+          (selectedDepControl?.hasError('required')) {
+          <small class="text-danger">El departamento es obligatorio.</small>
+          } }
         </div>
 
         <div class="flex-col w-1/2 pl-2">
@@ -141,34 +145,6 @@
         <small class="text-danger">Tu IBM es obligatorio.</small>
         } }
       </div>
-
-      @if (selectedArea) {
-      <div class="mb-2">
-        <label class="block text-sm font-medium text-gray-900 dark:text-white"
-          >Locación</label
-        >
-        <select
-          formControlName="selectedLocControl"
-          (change)="onLocChange($event)"
-          class="w-full p-2.5 rounded-lg border bg-gray-50 text-sm text-gray-900 border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white dark:border-gray-600"
-        >
-          <option disabled selected hidden class="text-gray-300">
-            Asigne una locación
-          </option>
-          <option *ngFor="let locacion of locaciones" [value]="locacion.id">
-            {{ locacion.nombre }}
-          </option>
-        </select>
-        @if(selectedLocControl?.invalid && (selectedLocControl?.dirty ||
-        selectedLocControl?.touched)){ @if
-        (selectedLocControl?.hasError('required')) {
-        <small class="text-danger">Tu IBM es obligatorio.</small>
-        } } @else {
-        <p class="text-xs text-gray-500">Este espacio puede ir en blanco.</p>
-
-        }
-      </div>
-      }
 
       <div class="mb-4">
         <label
