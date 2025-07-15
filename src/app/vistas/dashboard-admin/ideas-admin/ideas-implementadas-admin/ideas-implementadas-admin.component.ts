@@ -62,10 +62,10 @@ export class IdeasImplementadasAdminComponent implements OnInit {
     if (confirmation) {
       this.ideaService.deleteIdea(idea).subscribe({
         next: () => {
-          this.router.navigate(['/admin/ideas-admin/revision']);
+          this.ideasbyStatus(3, this.currentPage);
         },
         error: (err) => {
-          console.error('Error al eliminar la idea:', err);
+          window.alert("Error al eliminar la idea: " + err.error.message);
         }
       });
     }

@@ -30,7 +30,8 @@ export const routes: Routes =
         },
         { path: 'ideas/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/idea-data/idea-data.component').then(m => m.IdeaDataComponent), canActivate: [authenticateGuard] },
         { path: 'idea/:id', loadComponent: () => import('./vistas/idea-data-g/idea-data-g.component').then(m => m.IdeaDataGComponent), canActivate: [authenticateGuard] },
-        { path: 'newIdea', loadComponent: () => import('./vistas/new-idea/new-idea.component').then(m => m.NewIdeaComponent), canActivate: [authenticateGuard] },
+        { path: 'newIdea/:id', loadComponent: () => import('./vistas/new-idea/new-idea.component').then(m => m.NewIdeaComponent), canActivate: [authenticateGuard] },
+        { path: 'categoriaIdea', loadComponent: () => import('./vistas/categoria-idea/categoria-idea.component').then(m => m.CategoriaIdeaComponent), canActivate: [authenticateGuard] },
         //Rutas de equipo
         { path: 'newIdea/add/:id', loadComponent: () => import('./vistas/equipo/equipo.component').then(m => m.EquipoComponent), canActivate: [authenticateGuard] },
         //Rutas de productos

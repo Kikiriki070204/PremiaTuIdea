@@ -3,7 +3,7 @@
     class="container w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700"
     style="margin-top: 3%"
   >
-    <h5 class="text-center mb-2 text-3xl font-bold inline-block text-blue-950">
+    <h5 class="text-center mb-2 text-4xl font-bold inline-block text-blue-900">
       ¿Deseas agregar colaboradores?
     </h5>
 
@@ -12,7 +12,7 @@
       <button
         data-modal-target="colaborador-modal"
         data-modal-toggle="colaborador-modal"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        class="text-white bg-blue-800 hover:bg-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 transition duration-300 ease-in-out"
         type="button"
       >
         Si
@@ -23,11 +23,13 @@
         id="colaborador-modal"
         tabindex="-1"
         aria-hidden="true"
-        class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full"
+        class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full overflow-y-auto"
       >
-        <div class="relative p-4 w-full max-w-md max-h-full">
+        <div class="relative p-4 w-full max-w-md">
           <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+          <div
+            class="relative bg-white rounded-lg shadow dark:bg-gray-700 max-h-[90vh] overflow-y-auto"
+          >
             <!-- Modal header -->
             <div
               class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
@@ -59,56 +61,73 @@
               </button>
             </div>
 
-            <!-- Modal body -->
-            <form class="p-4 md:p-5">
-              <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+            <form class="p-4 md:p-5 flex flex-col">
+              <div class="p-2 md:p-2 border-b dark:border-gray-600">
                 <input
                   (input)="inputChanged($event)"
                   type="text"
-                  class="border rounded p-2"
+                  class="border rounded p-2 w-full"
+                  placeholder="Buscar colaborador…"
                 />
-                <ng-container *ngIf="colaboradores.length > 0">
-                  <div class="mt-4 space-y-2">
-                    <div *ngFor="let colaborador of colaboradores">
-                      <input
-                        type="checkbox"
-                        [checked]="checkboxStates[colaborador.id] || false"
-                        (change)="checkboxChanged(colaborador.id, $event)"
-                      />
-                      {{ colaborador.nombre }}
-                    </div>
+              </div>
+
+              <!-- Contenedor scrollable -->
+              <div
+                class="mt-4 space-y-2 overflow-y-auto"
+                style="max-height: 240px"
+              >
+                <ng-container *ngIf="colaboradores.length > 0; else empty">
+                  <div
+                    *ngFor="let colaborador of colaboradores"
+                    class="flex items-center"
+                  >
+                    <input
+                      type="checkbox"
+                      [checked]="checkboxStates[colaborador.id] || false"
+                      (change)="checkboxChanged(colaborador.id, $event)"
+                      class="me-2"
+                    />
+                    <label>{{ colaborador.nombre }}</label>
                   </div>
                 </ng-container>
+                <ng-template #empty>
+                  <p class="text-sm text-gray-500">No hay colaboradores</p>
+                </ng-template>
               </div>
-              <button
-                (click)="agregarColab()"
-                class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+
+              <!-- Botón siempre fijo abajo -->
+              <div
+                class="mt-4 pt-4 border-t dark:border-gray-600 flex justify-end"
               >
-                <svg
-                  class="me-1 -ms-1 w-5 h-5"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                  xmlns="http://www.w3.org/2000/svg"
+                <button
+                  (click)="agregarColab()"
+                  type="button"
+                  class="text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
-                  <path
-                    fill-rule="evenodd"
-                    d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                    clip-rule="evenodd"
-                  ></path>
-                </svg>
-                Agregar
-              </button>
+                  <svg
+                    class="me-1 -ms-1 w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fill-rule="evenodd"
+                      d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                      clip-rule="evenodd"
+                    />
+                  </svg>
+                  Guardar cambios
+                </button>
+              </div>
             </form>
           </div>
         </div>
       </div>
 
       <!--aqui acaba el modal-->
-
       <button
         (click)="goBack()"
         type="button"
-        class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+        class="text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 transition duration-300 ease-in-out"
       >
         No
       </button>

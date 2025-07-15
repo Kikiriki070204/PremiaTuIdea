@@ -15,7 +15,7 @@ import { Profile } from '../../interfaces/profile';
 @Component({
   selector: 'app-idea-data-g',
   standalone: true,
-  imports: [AppNavbarComponent, NgFor, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
+  imports: [NgFor, FormsModule, ReactiveFormsModule, RouterLink],
   templateUrl: './idea-data-g.component.html',
   styleUrl: './idea-data-g.component.css'
 })
@@ -192,6 +192,10 @@ export class IdeaDataGComponent implements OnInit {
       console.log("campos no contable: ", this.campos);
     }
 
+  }
+
+  goBack() {
+    history.back()
   }
 
   // asignarDisabled(){
