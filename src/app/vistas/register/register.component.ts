@@ -137,6 +137,10 @@ export class RegisterComponent implements OnInit {
               self.errorMessage = 'Campos obligatorios, por favor rellena todos los campos requeridos';
               console.log(err)
               break;
+            case 409:
+              self.errorMessage = 'El usuario ya existe, por favor intenta con otro IBM.';
+              console.log(err)
+              break;
             default:
               // Errores generales
               self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';

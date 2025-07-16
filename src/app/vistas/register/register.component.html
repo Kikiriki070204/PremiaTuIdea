@@ -274,6 +274,10 @@
         (form.get('confirmed_password')?.touched ||
         form.get('confirmed_password')?.dirty)) {
         <small class="text-red-500">Las contraseñas no coinciden.</small>
+        } @if (this.errorMessage) {
+        <span class="text-sm text-red-500">
+          {{ errorMessage }}
+        </span>
         }
       </div>
 
