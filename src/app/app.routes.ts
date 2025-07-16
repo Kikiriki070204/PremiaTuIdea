@@ -3,15 +3,16 @@ import { authenticateGuard } from './guards/authenticate.guard';
 
 import { ChartsComponent } from './charts/charts.component';
 import { authAdminGuard } from './guards/admin.guard';
+import { sesionActivaGuard } from './guards/sesionActiva.guard';
 //Ya hay lazy load
 // Ya hay un guard!
 export const routes: Routes =
     [
         { path: '', loadComponent: () => import('./vistas/index/index.component').then(m => m.IndexComponent) },
         //Rutas de usuario
-        { path: 'activar', loadComponent: () => import('./vistas/activate/activate.component').then(m => m.ActivateComponent) },
-        { path: 'login', loadComponent: () => import('./vistas/login/login.component').then(m => m.LoginComponent) },
-        { path: 'register', loadComponent: () => import('./vistas/register/register.component').then(m => m.RegisterComponent) },
+        //{ path: 'activar', loadComponent: () => import('./vistas/activate/activate.component').then(m => m.ActivateComponent) },
+        { path: 'login', loadComponent: () => import('./vistas/login/login.component').then(m => m.LoginComponent), canActivate: [sesionActivaGuard] },
+        { path: 'register', loadComponent: () => import('./vistas/register/register.component').then(m => m.RegisterComponent), canActivate: [sesionActivaGuard] },
         { path: 'dashboard', loadComponent: () => import('./vistas/dashboard/dashboard.component').then(m => m.DashboardComponent), canActivate: [authenticateGuard] },
         { path: 'myProfile', loadComponent: () => import('./vistas/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authenticateGuard] },
         { path: 'usuarios', loadComponent: () => import('./vistas/usuarios/usuarios.component').then(m => m.UsuariosComponent), canActivate: [authenticateGuard] },
