@@ -11,40 +11,67 @@
           alt="User Icon"
         />
         <h5
-          class="mb-1 text-xl font-bold text-center text-gray-900 dark:text-white text-blue-900"
+          class="mb-1 text-xl font-bold text-center dark:text-white text-blue-900"
         >
           {{ userProfile?.nombre }}
         </h5>
-        <span class="text-sm font-semibold text-gray-500 dark:text-gray-400">{{
-          userProfile?.ibm
-        }}</span>
+
+        <div class="flex items-center border-b border-blue-500 py-2 mb-4">
+          <input
+            [formControl]="ibm"
+            name="puntos"
+            class="rounded-md w-32 bg-transparent text-gray-700 py-1 px-2 text-md focus:outline-none dark:text-white"
+            type="number"
+            min="5"
+            placeholder="puntos"
+            [value]="userProfile?.ibm"
+          />
+          <h6 class="ml-2 text-lg font-semibold text-blue-800 dark:text-white">
+            IBM
+          </h6>
+        </div>
       </div>
 
       <div class="space-y-2 text-sm md:text-base mt-4">
         <div>
-          <h6 class="font-bold text-gray-900 dark:text-white">Departamento</h6>
-          <p class="text-gray-900 dark:text-white">
-            {{ userProfile?.departamento }}
-          </p>
+          <label for="departamento" class="font-bold">Departamento</label>
+          <select
+            [formControl]="departamento_id"
+            id="departamento"
+            class="form-control"
+          >
+            <option *ngFor="let dep of departamentos" [value]="dep.id">
+              {{ dep.nombre }}
+            </option>
+          </select>
         </div>
 
+        <label for="area" class="font-bold">Área</label>
+        <select [formControl]="area_id" id="area" class="form-control">
+          <option *ngFor="let area of areas" [value]="area.id">
+            {{ area.nombre }}
+          </option>
+        </select>
+
+        <!--
         <div>
           <h6 class="font-bold text-gray-900 dark:text-white">Área</h6>
           <p class="text-gray-900 dark:text-white">{{ userProfile?.area }}</p>
         </div>
 
+        
         <div>
           <h6 class="font-bold text-gray-900 dark:text-white">Locación</h6>
           <p class="text-gray-900 dark:text-white">
             {{ userProfile?.locacion != null ? userProfile?.locacion : "N/A" }}
           </p>
         </div>
-
+      -->
         <div>
           <h6 class="font-bold text-gray-900 dark:text-white">Estado</h6>
           <select
             (change)="onEstadoChange($event)"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white w-full mt-2"
           >
             <option [value]="userProfile?.is_active" disabled selected hidden>
               {{ userProfile?.is_active ? "Activo" : "Inactivo" }}

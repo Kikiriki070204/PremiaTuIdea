@@ -39,6 +39,8 @@ export class IdeaDataGComponent implements OnInit {
   colaboradores_puntos: number[] = []
   contable: number = 0
   ahorro_valor: number = 0
+  categoria: number | null = null
+  categoriaNombre: string | null = null
 
   fecha = new Date()
   fecha_puntos: string | null = null
@@ -68,6 +70,7 @@ export class IdeaDataGComponent implements OnInit {
     this.getImage()
     this.actividadesByIdea()
     this.getCampos()
+    this.getCategoriaNombres()
     // if(this.idea?.idea.estatus == 3){
     //   this.asignarDisabled()
     // }
@@ -123,7 +126,8 @@ export class IdeaDataGComponent implements OnInit {
           self.campos_init = value.campos
           self.contable = value.idea.contable
           self.ahorro_valor = value.idea.ahorro
-          console.log(value.idea.ahorro)
+          self.categoria = value.idea.categoria_id
+          console.log(value.idea.categoria_id)
           value.colaboradores.forEach(
             colaborador => {
               self.colaboradores_id.push(colaborador.id)
@@ -192,6 +196,29 @@ export class IdeaDataGComponent implements OnInit {
       console.log("campos no contable: ", this.campos);
     }
 
+  }
+
+  getCategoriaNombres() {
+    switch (this.categoria) {
+      case 1:
+        this.categoriaNombre = "Ideas de mejora"
+        break
+      case 2:
+        this.categoriaNombre = "Lean workshops"
+        break
+      case 3:
+        this.categoriaNombre = "Cambio de nivel de técnicos"
+        break
+      case 4:
+        this.categoriaNombre = "Scrap/CI"
+        break
+      case 5:
+        this.categoriaNombre = "OE"
+        break
+      default:
+        this.categoriaNombre = "Ideas de mejora"
+        break
+    }
   }
 
   goBack() {

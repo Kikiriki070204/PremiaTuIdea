@@ -1,17 +1,17 @@
 import { User } from "./user"
 
 export interface Idea {
-id: number
-titulo: string
-antecedente: string
-condiciones: File
-propuesta: string
-estatus: number
-user_id: number
+	id: number
+	titulo: string
+	antecedente: string
+	condiciones: File
+	propuesta: string
+	estatus: number
+	user_id: number
 }
 
-export interface IdeaData{
-    idea: {
+export interface IdeaData {
+	idea: {
 		id: 9,
 		titulo: string
 		antecedente: string
@@ -24,64 +24,65 @@ export interface IdeaData{
 		ahorro: number
 		contable: number
 		puntos: number
+		categoria_id: number
 	},
 	colaboradores: User[
-		
+
 	],
-	campos:[
+	campos: [
 		Campo
 	]
 }
 
-export interface Puntos{
+export interface Puntos {
 	id: number
 	id_usuarios: number[]
 	puntos: number[]
 	fecha: string
 }
 
-export interface EstadoIdea{
+export interface EstadoIdea {
 	id: number
 	nombre: string
 	is_active: boolean
 }
 
-export interface EstadoIdeas{
-estados: EstadoIdea[]
+export interface EstadoIdeas {
+	estados: EstadoIdea[]
 }
 
-export interface Estado{
+export interface Estado {
 	id: number
-    titulo: string
-    antecedentes: string
-    propuesta : string
+	titulo: string
+	antecedentes: string
+	propuesta: string
 	puntos: number | undefined
-	estatus : number
+	estatus: number
 	contable: number
 	campos_id: number[] | null
-	ahorro: number |  null | undefined
+	ahorro: number | null | undefined
 	fecha_fin: string | null
 }
 
-export interface EstatusIdea{
+export interface EstatusIdea {
 	estatus: number
 }
 
-export interface Campo{
+export interface Campo {
 	id: number
 	nombre: number
 	is_active: boolean
 }
 
-export interface Campos{
+export interface Campos {
 	campos: Campo[]
 }
 
-export interface EditColabs{
+export interface EditColabs {
 	id_usuarios: number[]
 	id: number
 }
 
-export interface Msg{
+export interface Msg {
 	msg: string
 }

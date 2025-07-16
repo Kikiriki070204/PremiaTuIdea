@@ -15,7 +15,7 @@ export class DashboardAdminComponent implements OnInit {
   constructor(private router: Router, private authService: AuthService) { }
 
   ngOnInit(): void {
-    // this.goToReportes()
+    this.goToReportes()
     initFlowbite()
     this.getUser()
   }

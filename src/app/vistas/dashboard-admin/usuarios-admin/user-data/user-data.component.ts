@@ -9,6 +9,7 @@ import { User } from '../../../../interfaces/user';
 import { HttpResponse } from '../../../../interfaces/http';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatchValidatorProfile } from '../../../profile/profile.component';
+import { Area, Departamento } from '../../../../interfaces/activar';
 
 @Component({
   selector: 'app-user-data',
@@ -19,11 +20,19 @@ import { passwordMatchValidatorProfile } from '../../../profile/profile.componen
 })
 export class UserDataComponent implements OnInit {
   errorMessage: string | null = null
+  departamentos: Departamento[] | null = null
+  areas: Area[] | null = null
+
   id: number | null = null
   userProfile: Profile | null = null
   ideas: Idea[] | null = null
   selectedActive: number | null = null
   puntos = new FormControl('', Validators.required)
+
+  ibm = new FormControl<number | null>(null, Validators.required)
+  departamento_id = new FormControl<number | null>(null, Validators.required);
+  area_id = new FormControl<number | null>(null, Validators.required);
+
 
   showNewPassword = false;
   showNewPasswordConfirmation = false;
@@ -45,6 +54,8 @@ export class UserDataComponent implements OnInit {
     console.log("id: ", this.id)
     this.userData()
     this.userImplementedIdeas()
+    this.getDeps()
+    this.getAreas()
   }
 
   userData() {
@@ -53,6 +64,9 @@ export class UserDataComponent implements OnInit {
       .subscribe({
         next(value: Profile) {
           self.userProfile = value;
+          self.ibm.setValue(value.ibm)
+          self.departamento_id.setValue(value.departamento_id)
+          self.area_id.setValue(value.area_id)
         },
         error(err: HttpResponse) {
           if (err.status == 401) {
@@ -79,11 +93,11 @@ export class UserDataComponent implements OnInit {
     let self = this
     let active: UpdateUser = {
       id: this.id ?? 0,
-      ibm: this.userProfile?.ibm ?? 0,
+      ibm: Number(this.ibm.value) ?? 0,
       nombre: this.userProfile?.nombre ?? "",
       rol_id: this.userProfile?.rol_id ?? 0,
-      departamento_id: this.userProfile?.departamento_id ?? null,
-      area_id: this.userProfile?.area_id ?? 0,
+      departamento_id: Number(this.departamento_id.value) ?? this.userProfile?.departamento_id,
+      area_id: Number(this.area_id.value) ?? this.userProfile?.area_id,
       is_active: this.selectedActive ?? this.userProfile?.is_active,
       locacion_id: this.userProfile?.locacion_id ?? null,
       puntos: (this.puntos.value !== null && this.puntos.value !== '') ? +this.puntos.value : this.userProfile?.puntos
@@ -91,7 +105,7 @@ export class UserDataComponent implements OnInit {
 
     this.userService.updateUser(active).subscribe({
       next(value) {
-        self.router.navigate(['/usuarios'])
+        self.router.navigate(['/admin/usuarios-admin'])
       },
       error(err: HttpResponse) {
         switch (err.status) {
@@ -158,6 +172,22 @@ export class UserDataComponent implements OnInit {
 
   goBack() {
     history.back();
+  }
+
+  getDeps(): void {
+    this.userService.allDeps()
+      .subscribe(Deps => {
+        this.departamentos = Deps.departamentos;
+        console.log(this.departamentos)
+      });
+  }
+
+  getAreas(): void {
+    this.userService.allAreas()
+      .subscribe(Areas => {
+        this.areas = Areas.areas;
+        console.log(this.areas)
+      });
   }
 
   get newPassword() {
