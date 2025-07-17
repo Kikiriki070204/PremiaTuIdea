@@ -17,7 +17,7 @@ export class CategoriaIdeaComponent {
     { id: 3, nombre: 'Cambio de nivel de técnicos' },
     { id: 4, nombre: 'Scrap/CI' },
     { id: 5, nombre: 'OE' },
-    { id: 6, nombre: 'Ahorro de energía' }
+    { id: 10, nombre: 'Ahorro de energía' }
   ];
   errorMessage: string | null = null;
 

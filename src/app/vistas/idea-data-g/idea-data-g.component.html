@@ -6,9 +6,16 @@
     <div
       class="w-full bg-white border border-gray-200 rounded-lg p-6 dark:bg-gray-800 dark:border-gray-700"
     >
+      @if(this.categoria === 1 || this.categoria === null) {
+
       <h5 class="mb-4 text-2xl font-bold text-blue-800 dark:text-white">
         Título de la idea
       </h5>
+      } @else{
+      <h5 class="mb-4 text-2xl font-bold text-blue-800 dark:text-white">
+        Título del proyecto
+      </h5>
+      }
       <h6
         class="mb-4 text-xl font-semibold uppercase text-gray-900 dark:text-white"
       >
@@ -28,9 +35,16 @@
       }
 
       <!-- Propuesta -->
+      @if(this.categoria === 1 || this.categoria === null) {
+
       <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
         Propuesta
       </h5>
+      } @else {
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Descripción del proyecto
+      </h5>
+      }
       <div class="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
         <p class="text-lg text-gray-700 dark:text-gray-300">
           {{ idea?.idea?.propuesta }}
@@ -101,8 +115,8 @@
         <span class="font-bold text-gray-700 dark:text-white">
           @switch (this.categoria) { @case (1) { Ideas de mejora } @case (2) {
           Lean workshops } @case(3) { Cambio de nivel de técnicos } @case(4) {
-          Scrap/CI } @case(5) { OE } @case(6) { Ahorro de energía } @default {No
-          asignado} }
+          Scrap/CI } @case(5) { OE } @case(10) { Ahorro de energía } @default
+          {No asignado} }
         </span>
 
         <!-- Tipo de idea -->

@@ -152,7 +152,7 @@ export class NewIdeaComponent implements OnInit {
       case 5:
         this.categoria = "OE";
         break;
-      case 6:
+      case 10:
         this.categoria = "Ahorro de energía";
         break;
       default:
