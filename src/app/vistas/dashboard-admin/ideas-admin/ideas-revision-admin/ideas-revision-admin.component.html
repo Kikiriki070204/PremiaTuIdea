@@ -1,4 +1,23 @@
 <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
+  <div class="mb-4 p-2">
+    <label for="departamento" class="font-bold text-blue-900 text-2xl mt-2">
+      Origen de mejora
+    </label>
+    <select
+      id="departamento"
+      class="form-control mt-3 font-bold"
+      [(ngModel)]="selectedCategoria"
+      (change)="onCategoriaChange()"
+    >
+      <option [value]="1" class="font-bold">Ideas de mejora</option>
+      <option [value]="2" class="font-bold">Lean workshops</option>
+      <option [value]="3" class="font-bold">Cambio de nivel de técnicos</option>
+      <option [value]="4" class="font-bold">Scrap/CI</option>
+      <option [value]="5" class="font-bold">OE</option>
+      <option [value]="10" class="font-bold">Ahorro de energía</option>
+    </select>
+  </div>
+
   <table
     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
@@ -27,7 +46,7 @@
           <button
             (click)="delete(idea.id)"
             type="button"
-            class="ml-4 text-red-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
+            class="ml-4 p-2 text-red-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +87,7 @@
       @if(ideasUsers.data.length === 0){
       <tr>
         <td colspan="3" class="text-center py-4">
-          <p class="text-gray-500">No hay ideas en revision</p>
+          <p class="text-gray-500">No hay ideas/proyectos en revision</p>
         </td>
       </tr>
       }
@@ -82,14 +101,18 @@
   >
     <div class="flex flex-1 justify-between sm:hidden">
       <button
-        (click)="ideasbyStatus(1, ideasUsers.current_page - 1)"
+        (click)="
+          ideasbyStatus(1, ideasUsers.current_page - 1, this.selectedCategoria)
+        "
         [disabled]="ideasUsers.current_page === 1"
         class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Previous
       </button>
       <button
-        (click)="ideasbyStatus(1, ideasUsers.current_page + 1)"
+        (click)="
+          ideasbyStatus(1, ideasUsers.current_page + 1, this.selectedCategoria)
+        "
         [disabled]="ideasUsers.current_page === ideasUsers.last_page"
         class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
       >
@@ -114,7 +137,7 @@
           <span class="font-semibold text-gray-900 dark:text-white">{{
             ideasUsers.total
           }}</span>
-          ideas en revision
+          ideas/proyectos rechazados.
         </span>
       </div>
       <div>
@@ -123,7 +146,13 @@
           aria-label="Pagination"
         >
           <button
-            (click)="ideasbyStatus(1, ideasUsers.current_page - 1)"
+            (click)="
+              ideasbyStatus(
+                1,
+                ideasUsers.current_page - 1,
+                this.selectedCategoria
+              )
+            "
             [disabled]="ideasUsers.current_page === 1"
             class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
           >
@@ -144,7 +173,13 @@
           </button>
           <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
           <button
-            (click)="ideasbyStatus(1, ideasUsers.current_page + 1)"
+            (click)="
+              ideasbyStatus(
+                1,
+                ideasUsers.current_page + 1,
+                this.selectedCategoria
+              )
+            "
             [disabled]="ideasUsers.current_page === ideasUsers.last_page"
             class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
           >

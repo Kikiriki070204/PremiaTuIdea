@@ -1,65 +1,69 @@
 <!--Hay q modificar el diseno, me voy a chambear en otros request-->
 
-<div class="myContainer">
-  <div class="profileCard" style="width: 60%">
+<div class="flex flex-col lg:flex-row gap-4 p-4">
+  <div class="w-full lg:w-1/2">
     <div
-      class="min-w-full p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700"
+      class="p-4 text-left bg-white border border-gray-200 rounded-lg sm:p-8 dark:bg-gray-800 dark:border-gray-700"
     >
+      @if(this.categoria_id === 1 || this.categoria_id === null) {
       <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
         Titulo de la idea
       </h5>
-      <h6
-        class="mb-1 text-xl font-medium dark:text-white text-gray-900"
-        style="font-weight: 600"
-      >
+      } @else {
+      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
+        Titulo del proyecto
+      </h5>
+      }
+
+      <h6 class="mb-1 text-xl dark:text-white text-gray-900 font-semibold">
         {{ idea?.idea?.titulo }}
       </h6>
-      <!--antecedentes-->
+
+      @if(this.categoria_id === 1 || this.categoria_id === null) {
       <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
-        Antecedentes
+        Contexto actual
       </h5>
       <div
-        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+        class="mb-2 p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
       >
         <p class="mb-3 text-gray-600 dark:text-gray-400 text-lg">
           {{ idea?.idea?.antecedente }}
         </p>
       </div>
+      }
 
-      <!--propuesta-->
       <h5
         class="mb-2 text-2xl font-bold inline-block text-transparent bg-clip-text dark:text-blue-300 bg-gradient-to-r from-blue-600 via-green-500 to-teal-300"
       >
         Propuesta
       </h5>
       <div
-        class="mb-2 max-w-lg p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
+        class="mb-2 p-2 bg-white border border-gray-200 rounded-lg dark:bg-gray-800 dark:border-gray-700"
       >
         <p class="mb-3 text-gray-700 dark:text-gray-400 text-lg">
           {{ idea?.idea?.propuesta }}
         </p>
       </div>
+      @if(this.categoria_id === 1 || this.categoria_id === null) {
+
       <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
         Condiciones actuales
       </h5>
 
-      <figure class="max-w-lg">
-        <img
-          class="h-auto max-w-full rounded-lg"
-          [src]="safeImage"
-          alt="imagen"
-        />
+      <figure>
+        <img class="h-auto w-full rounded-lg" [src]="safeImage" alt="imagen" />
         <figcaption
           class="mt-2 text-sm text-center text-gray-500 dark:text-gray-400"
         >
           Condiciones
         </figcaption>
       </figure>
+      }
     </div>
   </div>
 
   <div
-    class="w-full max-w-80 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard"
+    class="w-full lg:w-1/2 bg-white border border-gray-200 rounded-lg dark:border-gray-700 profileCard"
   >
     <div class="flex justify-end px-4 pt-4"></div>
     <div class="flex flex-col pb-2" style="text-align: left; margin-left: 5%">
@@ -77,7 +81,8 @@
         class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
         style="font-weight: 700"
       >
-        Estatus de la idea
+        @if(this.categoria_id === 1 || this.categoria_id === null) { Estatus de
+        la idea } @else {Estatus del proyecto}
       </h6>
 
       @if(user_rol == 1){
@@ -108,10 +113,11 @@
       }
       <div class="flex">
         <h6
-          class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+          class="mt-2 text-xl font-medium text-blue-800 dark:text-white"
           style="font-weight: 700"
         >
-          Colaboradores de la idea
+          @if(this.categoria_id === 1 || this.categoria_id === null) {
+          Colaboradores de la idea } @else{Colaboradores del proyecto}
         </h6>
         <button
           data-modal-target="colaborador-modal"
@@ -260,12 +266,12 @@
       </ul>
 
       <h6
-        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        class="mt-2 mb-1 text-xl font-medium text-blue-800 dark:text-white"
         style="font-weight: 700"
       >
         Tipo de idea
       </h6>
-      @if(contable == 0) { @if(user_rol == 1){
+      @if(contable == 0) {
       <div class="flex items-center mb-4">
         <input
           (change)="handleRadioChange($event)"
@@ -297,41 +303,8 @@
           >No contable</label
         >
       </div>
-      } @else {
-      <div class="flex items-center mb-4">
-        <input
-          disabled="true"
-          (change)="handleRadioChange($event)"
-          id="default-radio-1"
-          type="radio"
-          value="1"
-          name="default-radio"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label
-          for="default-radio-1"
-          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >Contable</label
-        >
-      </div>
-      <div class="flex items-center">
-        <input
-          disabled="true"
-          (change)="handleRadioChange($event)"
-          checked
-          id="default-radio-2"
-          type="radio"
-          value="0"
-          name="default-radio"
-          class="w-4 h-2 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label
-          for="default-radio-2"
-          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >No contable</label
-        >
-      </div>
-      } } @else{ @if(user_rol == 1){
+
+      } @else{
       <div class="flex items-center mb-4">
         <input
           (change)="handleRadioChange($event)"
@@ -365,7 +338,21 @@
       </div>
 
       <h6
-        class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
+        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
+        style="font-weight: 700"
+      >
+        Origen de mejora
+      </h6>
+
+      <span class="font-bold text-gray-900 dark:text-white">
+        @switch (this.categoria_id) { @case (1) { Ideas de mejora } @case (2) {
+        Lean workshops } @case(3) { Cambio de nivel de técnicos } @case(4) {
+        Scrap/CI } @case(5) { OE } @case(10) { Ahorro de energía } @default {No
+        asignado} }
+      </span>
+
+      <h6
+        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
         style="font-weight: 700"
       >
         Ahorro
@@ -383,51 +370,7 @@
           required
         />
       </div>
-      } @else {
-      <div class="flex items-center mb-4">
-        <input
-          disabled="true"
-          (change)="handleRadioChange($event)"
-          checked
-          id="default-radio-1"
-          type="radio"
-          value="1"
-          name="default-radio"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label
-          for="default-radio-1"
-          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >Contable</label
-        >
-      </div>
-      <div class="flex items-center">
-        <input
-          disabled="true"
-          (change)="handleRadioChange($event)"
-          id="default-radio-2"
-          type="radio"
-          value="0"
-          name="default-radio"
-          class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-        />
-        <label
-          for="default-radio-2"
-          class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-          >No contable</label
-        >
-      </div>
-      <h6
-        class="mb-1 mt-2 text-xl font-medium text-blue-800 dark:text-white"
-        style="font-weight: 700"
-      >
-        Ahorro
-      </h6>
-      <div class="flex relative z-0 w-full mb-1 group">
-        <p class="block py-2.5 px-0 w-2 text-sm">${{ idea?.idea?.ahorro }}</p>
-      </div>
-      } } @if(idea?.idea?.puntos == 0){ } @else { @if(idea?.idea?.estatus == 3)
-      {
+      } @if(idea?.idea?.puntos == 0){ } @else { @if(idea?.idea?.estatus == 3) {
 
       <h6
         class="mb-1 text-xl font-medium text-blue-800 dark:text-white"
@@ -456,7 +399,6 @@
         Campos
       </h6>
 
-      @if(user_rol == 1){
       <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
         <div class="mt-1 space-y-2">
           <div *ngFor="let campo of campos">
@@ -469,25 +411,12 @@
           </div>
         </div>
       </div>
-      } @else {
-      <div class="p-1 md:p-2 border-b rounded-t dark:border-gray-600">
-        <div class="mt-1 space-y-2">
-          <div *ngFor="let campo of campos">
-            <input
-              disabled="true"
-              type="checkbox"
-              [checked]="checkboxStates[campo.id] || false"
-              (change)="checkboxChanged(campo.id, $event)"
-            />
-            {{ campo.nombre }}
-          </div>
-        </div>
-      </div>
-      }
     </div>
 
     <div class="flex"></div>
 
+    @if(categoria_id === 1 || categoria_id === 2 || categoria_id === 3 ||
+    categoria_id === 10 || categoria_id === null) {
     <button
       (click)="abrirModal()"
       type="button"
@@ -495,7 +424,15 @@
     >
       Asignar puntos
     </button>
-    @if(selectedEstado == null) {
+    } @else {
+    <button
+      (click)="abrirModal()"
+      type="button"
+      class="ml-4 mt-4 items-center, text-white bg-green-600 hover:bg-green-800 font-bold rounded-lg text-sm px-4 py-2 text-center me-2 mb-2 transition duration-300 ease-in-out"
+    >
+      Asignar bonos
+    </button>
+    } @if(selectedEstado == null) {
     <button
       (click)="editarSinEstado()"
       type="button"
@@ -530,7 +467,7 @@
     </div>
   </div>
 
-  <!-- Main modal -->
+  <!-- Puntos modal -->
   <div
     id="puntos-modal"
     tabindex="-1"
@@ -631,8 +568,110 @@
       </div>
     </div>
   </div>
+  <!--aqui acaba el puntos modal-->
 
-  <!--aqui acaba el modal-->
+  <!-- Bonos modal -->
+  <div
+    id="puntos-modal"
+    tabindex="-1"
+    *ngIf="showModal"
+    class="fixed inset-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden"
+  >
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div
+          class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+            Asignar bonos a los colaboradores
+          </h3>
+          <button
+            type="button"
+            (click)="cerrarModal()"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="puntos-modal"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+
+        <!-- Modal body -->
+        <form class="p-4 md:p-5">
+          <div class="p-2 md:p-2 border-b rounded-t dark:border-gray-600">
+            <div
+              class="flex items-center border-b py-2"
+              *ngFor="let colaborador of colaboradores"
+            >
+              <label
+                class="block mr-2 text-sm font-medium text-gray-900 dark:text-white"
+                >{{ colaborador.nombre }}</label
+              >
+              <input
+                [(ngModel)]="colaborador.puntos"
+                name="puntos_{{ colaborador.id }}"
+                class="border-blue-500 rounded-md w-fit appearance-none bg-transparent border-none text-gray-700 mr-3 py-1 px-2 text-sm leading-tight focus:outline-none"
+                type="number"
+                min="5"
+                placeholder="bono"
+                aria-label="puntos"
+              />
+            </div>
+          </div>
+
+          <div
+            *ngIf="Message"
+            class="mt-3 p-3 mb-4 text-sm w-fit text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400"
+            role="alert"
+          >
+            <span class="font-medium">{{ Message }}</span>
+          </div>
+          <div
+            *ngIf="errorMessage"
+            class="mt-3 p-3 mb-4 text-sm w-fit text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            role="alert"
+          >
+            <span class="font-medium">{{ errorMessage }}</span>
+          </div>
+          <button
+            (click)="asignarBonos()"
+            class="mt-4 text-white inline-flex items-center bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            <svg
+              class="me-1 -ms-1 w-5 h-5"
+              fill="currentColor"
+              viewBox="0 0 20 20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"
+              ></path>
+            </svg>
+            Guardar
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <!-- aquí acaba el bonos modal -->
 </div>
 
 <!--Actividades-->
@@ -643,7 +682,6 @@
   Actividades
 </h5>
 
-@if(user_rol == 1){
 <button
   style="margin-left: 3%; margin-top: 1%"
   (click)="newAct()"
@@ -652,7 +690,7 @@
 >
   Nueva Actividad
 </button>
-} @else { }
+
 <div class="myContainer mb-10">
   @if(actividades?.length == 0) {
   <h5

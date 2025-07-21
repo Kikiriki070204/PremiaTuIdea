@@ -3,6 +3,7 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { IdeasService } from '../../../../servicios/ideas.service';
 import { Campo, EditColabs, EstadoIdea, IdeaData, Puntos } from '../../../../interfaces/idea';
 import { DatePipe, NgFor, NgIf } from '@angular/common';
+
 import { Colaborador, User } from '../../../../interfaces/user';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Estado } from '../../../../interfaces/idea';
@@ -15,12 +16,12 @@ import { AuthService } from '../../../../servicios/auth.service';
 import { Subject, debounceTime } from 'rxjs';
 import { UsersService } from '../../../../servicios/users.service';
 import { Profile } from '../../../../interfaces/profile';
-import { initFlowbite } from 'flowbite';
+// import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-idea-data',
   standalone: true,
-  imports: [NgFor, FormsModule, ReactiveFormsModule, RouterLink, NgIf],
+  imports: [NgFor, FormsModule, ReactiveFormsModule, RouterLink, NgIf, DatePipe],
   templateUrl: './idea-data.component.html',
   styleUrl: './idea-data.component.css'
 
@@ -73,6 +74,8 @@ export class IdeaDataComponent implements OnInit {
   colaboradores_puntos: number[] = []
   contable: number = 0
   ahorro_valor: number = 0
+  categoria_id: number | null = null
+  categoriaNombre: string | null = null
 
   userInfo: Profile | null = null
 
@@ -86,6 +89,7 @@ export class IdeaDataComponent implements OnInit {
   ahorro = new FormControl('', Validators.required)
   puntos = new FormControl(Validators.required)
   puntos_x_idea = new FormControl('', Validators.required)
+
   constructor(private datePipe: DatePipe, protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
     this.searchChanged.pipe(
       debounceTime(500)
@@ -97,7 +101,7 @@ export class IdeaDataComponent implements OnInit {
   }
 
   ngOnInit() {
-    initFlowbite()
+
     this.activatedRoute.params.subscribe(params => {
       var idea_id = params['id'];
       this.idea_id = idea_id
@@ -105,12 +109,15 @@ export class IdeaDataComponent implements OnInit {
       this.getAllColaboradores()
     });
     // this.getRol()
-    this.user()
+    // this.user()
     this.ideaData()
+
+    this.getCategoriaNombres()
     this.estadoIdeas()
     this.getImage()
     this.actividadesByIdea()
-    this.getCampos()
+
+
     // if(this.idea?.idea.estatus == 3){
     //   this.asignarDisabled()
     // }
@@ -202,7 +209,7 @@ export class IdeaDataComponent implements OnInit {
 
     this.ideaService.editarColaboradores(editarColabs).subscribe({
       next(value) {
-        self.router.navigate(['/ideas'])
+        self.router.navigate(['/admin/ideas/', self.idea_id])
       },
       error(err: HttpResponse) {
         switch (err.status) {
@@ -240,10 +247,13 @@ export class IdeaDataComponent implements OnInit {
           self.colaboradores = value.colaboradores
           self.campos_init = value.campos
           self.contable = value.idea.contable
+
           self.ahorro_valor = value.idea.ahorro
           self.puntos_idea = value.idea.puntos
           self.ahorro_idea = value.idea.ahorro
-          console.log(value.idea.ahorro)
+          self.categoria_id = value.idea.categoria_id
+          console.log(value)
+          self.getCampos()
           value.colaboradores.forEach(
             colaborador => {
               self.colaboradores_id.push(colaborador.id)
@@ -287,7 +297,7 @@ export class IdeaDataComponent implements OnInit {
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User) {
         console.log("puntos asignados correctamente!")
-        self.router.navigate(['/ideas'])
+        self.router.navigate(['/admin/ideas/', self.idea_id])
         self.Message = '¡Puntos asignados correctamente!'
         //hay que poner un alert bonito que diga puntos asignados
       },
@@ -308,6 +318,48 @@ export class IdeaDataComponent implements OnInit {
       },
     })
   }
+
+  asignarBonos() {
+    let self = this;
+
+    const usuariosBonos = self.colaboradores?.map((colaborador) => {
+      return {
+        usuario_id: colaborador.id,
+        bono: colaborador.puntos ?? 0
+      };
+    });
+
+    const payload = {
+      id: this.idea_id ?? 0,
+      usuarios_bonos: usuariosBonos
+    };
+
+    const totalBonos = usuariosBonos?.reduce((acc, curr) => acc + curr.bono, 0);
+    self.puntos_idea_edit = totalBonos ?? 0;
+
+    this.ideaService.asignarBonos(payload).subscribe({
+      next(value: User) {
+        console.log("Bonos asignados");
+        self.router.navigate(['/admin/ideas/', self.idea_id]);
+        self.Message = '¡Bonos asignados correctamente!';
+      },
+      error(err: HttpResponse) {
+        switch (err.status) {
+          case 422:
+            self.errorMessage = 'Por favor introduzca datos válidos';
+            break;
+          case 404:
+            self.errorMessage = 'Usuarios no encontrados';
+            break;
+          default:
+            self.errorMessage = 'Ha ocurrido un error. Inténtelo de nuevo.';
+            break;
+        }
+      },
+    });
+  }
+
+
 
   estadoIdeas(): void {
     this.ideaService.estadoIdeas().subscribe(
@@ -342,7 +394,9 @@ export class IdeaDataComponent implements OnInit {
     this.ideaService.editarEstado(estado).subscribe({
       next(value) {
         console.log("editado correctamente!")
-        self.router.navigate(['/ideas'])
+        self.router.navigate(['/admin/ideas-admin/revision'])
+
+        // self.router.navigate(['/admin/ideas/', self.idea_id])
       },
       error(err: HttpResponse) {
         switch (err.status) {
@@ -380,7 +434,7 @@ export class IdeaDataComponent implements OnInit {
     this.ideaService.editarEstado(estado).subscribe({
       next(value) {
         console.log("editado correctamente!")
-        self.router.navigate(['/ideas'])
+        self.router.navigate(['/ideas/ideas-admin'])
       },
       error(err: HttpResponse) {
         switch (err.status) {
@@ -416,7 +470,7 @@ export class IdeaDataComponent implements OnInit {
   }
 
   getCampos() {
-    if (this.contable == 0) {
+    if (this.contable === 0) {
       this.ideaService.campos(1).subscribe(
         campos => {
           this.campos = campos.campos
@@ -450,18 +504,28 @@ export class IdeaDataComponent implements OnInit {
     }
   }
 
-  // asignarDisabled(){
-  //   let state: boolean | null = null
-  //   if(this.idea?.idea.estatus == 3)
-  //   {
-  //       state = true
-  //   }
-  //   else{
-  //     state = false
-  //   }
-  //   console.log("check!:", state)
-  //   return state
-  // }
+  getCategoriaNombres() {
+    switch (this.categoria_id) {
+      case 1:
+        this.categoriaNombre = "Ideas de mejora"
+        break
+      case 2:
+        this.categoriaNombre = "Lean workshops"
+        break
+      case 3:
+        this.categoriaNombre = "Cambio de nivel de técnicos"
+        break
+      case 4:
+        this.categoriaNombre = "Scrap/CI"
+        break
+      case 5:
+        this.categoriaNombre = "OE"
+        break
+      default:
+        this.categoriaNombre = "Ideas de mejora"
+        break
+    }
+  }
 
   newAct() {
     this.router.navigate(['/admin/nueva-actividad/', this.idea_id])

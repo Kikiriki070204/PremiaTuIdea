@@ -21,6 +21,7 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/userideasall/` + estatus + `?page=${page}`);
   }
 
+
   ideasImp(): Observable<Ideas> {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeas`);
   }
@@ -41,6 +42,10 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/` + estatus + `?page=${page}`)
   }
 
+  ideasByStatusAndCategory(estatus: number | null, categoria: number | null, page: number = 1): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAllCategoria/` + estatus + `/` + categoria + `?page=${page}`)
+  }
+
   // imageByIdea(idea: number | null): Observable<any>{
   //   return this.http.get<any>(`${environment.api_url}/ideas/images/`+idea,{ responseType: 'blob' })
   // }
@@ -55,6 +60,10 @@ export class IdeasService {
 
   asignarPuntos(data: Puntos): Observable<User> {
     return this.http.put<User>(`${environment.api_url}/ideass/puntos`, data);
+  }
+
+  asignarBonos(data: any): Observable<User> {
+    return this.http.put<User>(`${environment.api_url}/ideass/bonos`, data);
   }
 
   estadoIdeas(): Observable<EstadoIdeas> {

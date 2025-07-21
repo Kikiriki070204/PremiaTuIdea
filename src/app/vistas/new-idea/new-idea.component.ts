@@ -94,13 +94,16 @@ export class NewIdeaComponent implements OnInit {
     } else {
       formData.append('area_id', "6");
     }
-    formData.append('categoria_id', String(this.idCategoriaSeleccionado ?? 1));
+    formData.append('categoria_id', String(this.idCategoriaSeleccionado ?? 1))
+
+    if (this.idCategoriaSeleccionado != 1) {
+      formData.append('contable', "1")
+    }
 
 
 
     this.ideaService.newIdea(formData).subscribe({
       next(value: Idea) {
-        debugger
         console.log("idea id:", value.id)
         self.router.navigate(['/newIdea/add', value.id])
       },

@@ -67,7 +67,7 @@ export class PremioDataComponent implements OnInit {
 
     this.userService.editarEstado(editar).subscribe({
       next(value) {
-        self.router.navigate(['/premios'])
+        self.router.navigate(['/admin/premios-admin'])
       },
       error(err: HttpResponse) {
         switch (err.status) {
