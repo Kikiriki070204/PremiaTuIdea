@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Actividad, ActivityData, EditEstado, EditEstado2, EstadoAct } from '../../../../interfaces/actividad';
 import { HttpResponse } from '../../../../interfaces/http';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-actividad-data',
@@ -80,11 +81,23 @@ export class ActividadDataComponent implements OnInit {
 
     this.actService.editarEstadoAct(estado).subscribe({
       next(value) {
-        console.log("editado correctamente!")
-        self.router.navigate(['/ideas/', self.actividad?.actividad.id_idea])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El estado de la actividad fue editado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/ideas/', self.actividad?.actividad.id_idea])
+        });
       },
       error(err) {
-        console.log(err)
+        let errorM = 'Ha ocurrido un error al editar el estado de la actividad, inténtalo de nuevo'
+        self.errorAlert(errorM);
+
       },
     })
   }
@@ -102,28 +115,55 @@ export class ActividadDataComponent implements OnInit {
 
     this.actService.editarEstadoAct(estado).subscribe({
       next(value) {
-        console.log("editado correctamente!")
-        self.router.navigate(['/ideas/', self.actividad?.actividad.id_idea])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'El estado de la actividad fue editado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/ideas/', self.actividad?.actividad.id_idea])
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Debes seleccionar un estado';
+            self.errorAlert(self.errorMessage);
             break;
           case 404:
             self.errorMessage = 'Idea no encontrada';
+            self.errorAlert(self.errorMessage);
             break;
           default:
             // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            self.errorAlert(self.errorMessage);
             break;
         }
       },
     })
   }
 
+  errorAlert($message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: $message,
+      icon: 'error',
+      confirmButtonText: 'Intentar de nuevo',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+      }
+    });
+
+  }
+
   goBack() {
-    history.back()
+    this.router.navigate(['/admin/ideas-admin/revision'])
+
   }
 
 }

@@ -16,7 +16,10 @@ import { AuthService } from '../../../../servicios/auth.service';
 import { Subject, debounceTime } from 'rxjs';
 import { UsersService } from '../../../../servicios/users.service';
 import { Profile } from '../../../../interfaces/profile';
+import { initFlowbite } from 'flowbite';
+import Swal from 'sweetalert2';
 // import { initFlowbite } from 'flowbite';
+
 
 @Component({
   selector: 'app-idea-data',
@@ -37,13 +40,23 @@ export class IdeaDataComponent implements OnInit {
   checkboxStates: { [id: number]: boolean } = {};
 
   showModal: boolean = false;
+  showBonosModal: boolean = false;
+
 
   abrirModal(): void {
     this.showModal = true;
   }
 
+  abrirBonosModal(): void {
+    this.showBonosModal = true;
+  }
+
   cerrarModal(): void {
     this.showModal = false;
+  }
+
+  cerrarBonosModal(): void {
+    this.showBonosModal = false;
   }
   colabs: number[] = []
   selectedItem: number | null = null
@@ -90,7 +103,7 @@ export class IdeaDataComponent implements OnInit {
   puntos = new FormControl(Validators.required)
   puntos_x_idea = new FormControl('', Validators.required)
 
-  constructor(private datePipe: DatePipe, protected userService: UsersService, protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
+  constructor(protected userService: UsersService, private datePipe: DatePipe, protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
     this.searchChanged.pipe(
       debounceTime(500)
     ).subscribe(value => {
@@ -101,7 +114,7 @@ export class IdeaDataComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    initFlowbite();
     this.activatedRoute.params.subscribe(params => {
       var idea_id = params['id'];
       this.idea_id = idea_id
@@ -209,12 +222,24 @@ export class IdeaDataComponent implements OnInit {
 
     this.ideaService.editarColaboradores(editarColabs).subscribe({
       next(value) {
-        self.router.navigate(['/admin/ideas/', self.idea_id])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Colaboradores agregados correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/ideas/', self.idea_id]);
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Por favor introduzca datos validos';
+
             break;
           case 404:
             self.errorMessage = 'Usuarios no encontrada';
@@ -296,23 +321,32 @@ export class IdeaDataComponent implements OnInit {
     console.log("puntos totales: ", self.puntos_idea_edit)
     this.ideaService.asignarPuntos(puntos).subscribe({
       next(value: User) {
-        console.log("puntos asignados correctamente!")
-        self.router.navigate(['/admin/ideas/', self.idea_id])
-        self.Message = '¡Puntos asignados correctamente!'
-        //hay que poner un alert bonito que diga puntos asignados
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Puntos asignados correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/ideas/', self.idea_id]);
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Por favor introduzca datos validos';
-            console.log(err)
+            self.errorAlert(self.errorMessage);
             break;
           case 404:
             self.errorMessage = 'Usuarios no encontrada';
+            self.errorAlert(self.errorMessage);
             break;
           default:
-            // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            self.errorAlert(self.errorMessage);
             break;
         }
       },
@@ -339,24 +373,50 @@ export class IdeaDataComponent implements OnInit {
 
     this.ideaService.asignarBonos(payload).subscribe({
       next(value: User) {
-        console.log("Bonos asignados");
-        self.router.navigate(['/admin/ideas/', self.idea_id]);
-        self.Message = '¡Bonos asignados correctamente!';
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Bonos asignados correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/ideas/', self.idea_id]);
+        });
       },
       error(err: HttpResponse) {
+
         switch (err.status) {
           case 422:
             self.errorMessage = 'Por favor introduzca datos válidos';
+            self.errorAlert(self.errorMessage);
             break;
           case 404:
             self.errorMessage = 'Usuarios no encontrados';
+            self.errorAlert(self.errorMessage);
             break;
           default:
             self.errorMessage = 'Ha ocurrido un error. Inténtelo de nuevo.';
+            self.errorAlert(self.errorMessage);
             break;
         }
       },
     });
+  }
+
+  errorAlert($message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: $message,
+      icon: 'error',
+      confirmButtonText: 'Intentar de nuevo',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 transition duration-300 ease-in-out font-bold rounded-lg text-sm px-4 py-2',
+      }
+    });
+
   }
 
 
@@ -393,23 +453,32 @@ export class IdeaDataComponent implements OnInit {
 
     this.ideaService.editarEstado(estado).subscribe({
       next(value) {
-        console.log("editado correctamente!")
-        self.router.navigate(['/admin/ideas-admin/revision'])
-
-        // self.router.navigate(['/admin/ideas/', self.idea_id])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Datos editados correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/ideas/', self.idea_id]);
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Por favor escoja datos válidos';
-            console.log(err)
+            self.errorAlert(self.errorMessage);
             break;
           case 404:
             self.errorMessage = 'Idea no encontrada';
+            self.errorAlert(self.errorMessage);
             break;
           default:
-            // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            self.errorAlert(self.errorMessage);
             break;
         }
       },
@@ -433,21 +502,32 @@ export class IdeaDataComponent implements OnInit {
 
     this.ideaService.editarEstado(estado).subscribe({
       next(value) {
-        console.log("editado correctamente!")
-        self.router.navigate(['/ideas/ideas-admin'])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Datos editados correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/ideas/', self.idea_id]);
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Por favor escoja datos válidos';
-            console.log(err)
+            self.errorAlert(self.errorMessage);
             break;
           case 404:
             self.errorMessage = 'Idea no encontrada';
+            self.errorAlert(self.errorMessage);
             break;
           default:
-            // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            self.errorAlert(self.errorMessage);
             break;
         }
       },

@@ -6,6 +6,7 @@ import { IdeasService } from '../../../../servicios/ideas.service';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-ideas-rechazadas-admin',
@@ -57,20 +58,50 @@ export class IdeasRechazadasAdminComponent {
   }
 
   delete(idea: number) {
-    const confirmation = window.confirm(
-      '¿Estás seguro de querer eliminar esta idea? Una vez hecho, no se podrá recuperar.'
-    );
-
-    if (confirmation) {
-      this.ideaService.deleteIdea(idea).subscribe({
-        next: () => {
-          this.router.navigate(['/admin/ideas-admin/revision']);
-        },
-        error: (err) => {
-          window.alert('Error al eliminar la idea: ' + err.error.message);
-        },
-      });
-    }
+    Swal.fire({
+      title: 'Eliminar idea',
+      text: '¿Estás seguro de querer eliminar esta idea? Una vez hecho, no se podrá recuperar.',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Eliminar',
+      cancelButtonText: 'Cancelar',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+        cancelButton: 'bg-gray-300 text-gray-800 hover:bg-gray-400 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+        actions: 'flex gap-4 justify-center'
+      },
+      buttonsStyling: false
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.ideaService.deleteIdea(idea).subscribe({
+          next: () => {
+            Swal.fire({
+              title: '¡Éxito!',
+              text: 'Idea eliminada correctamente',
+              icon: 'success',
+              confirmButtonText: 'Aceptar',
+              customClass: {
+                confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+              },
+              buttonsStyling: false
+            }).then(() => {
+              this.ideasbyStatus(1, this.currentPage, this.selectedCategoria);
+            });
+          },
+          error: () => {
+            Swal.fire({
+              title: 'Error',
+              text: 'No se pudo eliminar la idea. Por favor, inténtalo de nuevo más tarde.',
+              icon: 'error',
+              confirmButtonText: 'Aceptar',
+              customClass: {
+                confirmButton: 'bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+              }
+            });
+          },
+        });
+      }
+    });
   }
 }
 
