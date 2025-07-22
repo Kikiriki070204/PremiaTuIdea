@@ -130,45 +130,51 @@
         <div class="flex justify-center mt-12">
           <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
         </div>
+
         <!-- 2 columnas -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+          <!-- Tarjeta 1 -->
           <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-2">Ideas no contables</h3>
             <img
               src="../../../assets/ideas no contables.png"
               alt="Imagen 1"
-              class="object-cover mb-4 border-2 border-black"
+              class="object-cover border-2 border-black"
             />
-            <h3 class="text-xl font-semibold">Ideas no contables</h3>
           </div>
+        
+          <!-- Tarjeta 2 -->
           <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-2">Ideas contables</h3>
             <img
               src="../../../assets/ideas contables2.png"
               alt="Imagen 2"
-              class="h-3/4 object-cover mb-4 border-2 border-black"
+              class="h-3/4 object-cover border-2 border-black"
             />
-            <h3 class="text-xl font-semibold">Ideas contables</h3>
           </div>
         </div>
+        
 
         <!-- 1 columna -->
-        <div class="flex justify-center mb-8">
+        <div class="flex justify-center mt-8">
           <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-4">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+        
             <img
               src="../../../assets/tabulacion de puntos2.png"
               alt="Imagen 3"
               class="h-3/5 object-cover mb-4 border-2 border-black"
             />
-
+  
             <p class="text-gray-500 w-3/5 text-sm">
-              Despues de los $4500 usd de ahorro se dará 1100 puntos
-              independientemente de cuanto ahorro se consiga.
+              Después de los $4500 USD de ahorro se darán 1100 puntos
+              independientemente de cuánto ahorro se consiga.
             </p>
-
-            <h3 class="text-xl font-semibold mt-4">
-              Tabulación de puntaje en base al ahorro
-            </h3>
           </div>
         </div>
+        
       </div>
       <!-- SECCION LEAN WORKSHOPS -->
       <div *ngIf="activeTab === 'sec2'">
@@ -229,20 +235,20 @@
 
         <div class="flex justify-center mt-8">
           <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-4">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+        
             <img
               src="../../../assets/tabulacion de puntos2.png"
               alt="Imagen 3"
               class="h-3/5 object-cover mb-4 border-2 border-black"
             />
-
+  
             <p class="text-gray-500 w-3/5 text-sm">
-              Despues de los $4500 usd de ahorro se dará 1100 puntos
-              independientemente de cuanto ahorro se consiga.
+              Después de los $4500 USD de ahorro se darán 1100 puntos
+              independientemente de cuánto ahorro se consiga.
             </p>
-
-            <h3 class="text-xl font-semibold mt-4">
-              Tabulación de puntaje en base al ahorro
-            </h3>
           </div>
         </div>
       </div>
@@ -302,22 +308,24 @@
 
         <div class="flex justify-center mt-8">
           <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-4">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+        
             <img
               src="../../../assets/tabulacion de puntos2.png"
               alt="Imagen 3"
               class="h-3/5 object-cover mb-4 border-2 border-black"
             />
+  
             <p class="text-gray-500 w-3/5 text-sm">
-              Despues de los $4500 usd de ahorro se dará 1100 puntos
-              independientemente de cuanto ahorro se consiga.
+              Después de los $4500 USD de ahorro se darán 1100 puntos
+              independientemente de cuánto ahorro se consiga.
             </p>
-
-            <h3 class="text-xl font-semibold mt-4">
-              Tabulación de puntaje en base al ahorro
-            </h3>
           </div>
         </div>
       </div>
+
       <!-- SECCION SCAP -->
       <div *ngIf="activeTab === 'sec4'">
         <div class="flex justify-center">
@@ -471,19 +479,67 @@
           </p>
         </div>
       </div>
+
+      <!-- SECCION DE AHORRO DE ENERGIA -->
       <div *ngIf="activeTab === 'sec6'">
-        <div class="flex items-center h-screen">
-          <div class="mx-auto text-center">
-            <h1 class="text-3xl text-gray-600">
-              ¡Se está actualizando esta sección!
-            </h1>
+        <div class="flex justify-center">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">
+            Bases y reglas de puntaje para proyectos de ahorro de energía
+          </h2>
+        </div>
+
+        <!-- viñetas -->
+        <div class="space-y-2 w-fit text-lg">
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
+            por el comité OpEx, el estatus del proyecto o idea se encontrará
+            disponible dentro de la sección de tus ideas.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
+            proyecto que se te haya asignado por tus funciones o
+            responsabilidades.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
+            colectiva, los puntos se dividirán entre los colaboradores de la
+            idea.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> Los puntos serán
+            acumulales.
+          </p>
+          <p class="flex items-start">
+            <span class="text-blue-800 mr-2">•</span> La vigencia de los puntos
+            es del año actual, es decir, al término del año se reiniciarán los
+            puntos para todo el personal.
+          </p>
+        </div>
+
+        <div class="flex justify-center mt-12">
+          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
+        </div>
+
+        <!-- viñetas -->
+       
+        
+
+        <div class="flex justify-center mt-8">
+          <div class="flex flex-col items-center text-center">
+            <h3 class="text-xl font-semibold mb-4">
+              Tabulación de puntaje en base al ahorro
+            </h3>
+        
             <img
-              src="https://static.vecteezy.com/system/resources/previews/016/136/670/non_2x/wrench-and-screwdriver-icon-in-flat-style-spanner-key-illustration-on-white-isolated-background-repair-equipment-business-concept-vector.jpg"
-              alt=""
-              height="200"
-              width="200"
-              class="mx-auto my-4"
+              src="../../../assets/tabulacion de puntos2.png"
+              alt="Imagen 3"
+              class="h-3/5 object-cover mb-4 border-2 border-black"
             />
+  
+            <p class="text-gray-500 w-3/5 text-sm">
+              Después de los $4500 USD de ahorro se darán 1100 puntos
+              independientemente de cuánto ahorro se consiga.
+            </p>
           </div>
         </div>
       </div>
