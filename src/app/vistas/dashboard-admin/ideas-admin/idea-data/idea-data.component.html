@@ -85,7 +85,6 @@
         la idea } @else {Estatus del proyecto}
       </h6>
 
-      @if(user_rol == 1){
       <select
         (change)="onEstadoChange($event)"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -97,20 +96,7 @@
           {{ estado.nombre }}
         </option>
       </select>
-      } @else {
-      <select
-        disabled="true"
-        (change)="onEstadoChange($event)"
-        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-40 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-100 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-      >
-        <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
-          {{ idea?.idea?.estatus_idea }}
-        </option>
-        <option *ngFor="let estado of estados" [value]="estado.id">
-          {{ estado.nombre }}
-        </option>
-      </select>
-      }
+
       <div class="flex">
         <h6
           class="mt-2 text-xl font-medium text-blue-800 dark:text-white"

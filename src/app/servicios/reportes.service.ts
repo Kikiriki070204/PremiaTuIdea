@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, ReportesIdeas, ReportesIdeas2, ReportesPuntos } from '../interfaces/reportes';
+import { AhorroArea, AhorroTotal, AhorroTotalCategoria, FechasAhorros, FechasIdeas, FechasPuntos, Historial, ReportesIdeas, ReportesIdeas2, ReportesPuntos } from '../interfaces/reportes';
 import { environment } from '../../enviroment/enviroment.prod';
 
 @Injectable({
@@ -78,5 +78,14 @@ export class ReportesService {
   ahorroHistorico(): Observable<AhorroTotal> {
     return this.http.get<AhorroTotal>(`${environment.api_url}/ideass/ahorroHistorico`)
   }
+
+  ahorroHistoricoPorCategoria(): Observable<AhorroTotalCategoria> {
+    return this.http.get<AhorroTotalCategoria>(`${environment.api_url}/ideass/ahorroHistoricoCategoria`)
+  }
+
+  ahorroHistoricoPorCategoriaFechas(fechas: FechasAhorros): Observable<AhorroTotalCategoria> {
+    return this.http.post<AhorroTotalCategoria>(`${environment.api_url}/ideass/ahorroHistoricoCategoriaFechas`, fechas)
+  }
+
 
 }

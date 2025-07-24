@@ -34,7 +34,7 @@
     </div>
 
     <button
-      (click)="mostrarDatosFiltrados()"
+      (click)="mostrarDatosFiltradosPorFecha()"
       class="flex items-center justify-center p-2 text-sm font-medium text-white bg-blue-800 rounded-lg border hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-auto"
     >
       <svg
@@ -81,7 +81,7 @@
     >
       <div
         *ngFor="let ahorro of ahorros"
-        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow"
+        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
       >
         <h3
           class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
@@ -90,9 +90,9 @@
         </h3>
 
         <div class="mt-2 border-t pt-2">
-          <span class="text-gray-900 text-sm"
-            >Ahorros totales: ${{ ahorro.total_ahorros_dolares }} USD</span
-          >
+          <span class="text-gray-900 text-sm">
+            Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
+          </span>
         </div>
       </div>
     </div>
@@ -108,4 +108,28 @@
   <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
     Ahorro por origen de mejora
   </h4>
+  <span class="text-sm text-gray-600"
+    >Total de ahorro: ${{ total_ahorros_categoria_dolares }} USD</span
+  >
+
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-4 mt-8"
+  >
+    <div
+      *ngFor="let ahorro of ahorros_categoria"
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3
+        class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center uppercase"
+      >
+        {{ ahorro.nombre_categoria }}
+      </h3>
+
+      <div class="mt-2 border-t pt-2">
+        <span class="text-gray-900 text-sm">
+          Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
+        </span>
+      </div>
+    </div>
+  </div>
 </div>

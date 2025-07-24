@@ -44,6 +44,14 @@ export interface AhorroArea {
     nombre_area: string
     total_ahorros: number
     total_ahorros_dolares: number
+    valor_animado: number
+}
+
+export interface AhorroCategoria {
+    nombre_categoria: string
+    total_ahorros: number
+    total_ahorros_dolares: number
+    valor_animado: number
 }
 
 export interface AhorroTotal {
@@ -51,6 +59,14 @@ export interface AhorroTotal {
         total_ahorros: number
         total_ahorros_usd: number
         ahorros_por_area: AhorroArea[]
+    }
+}
+
+export interface AhorroTotalCategoria {
+    msg: {
+        total_ahorros: number
+        total_ahorros_usd: number
+        ahorros_por_categoria: AhorroCategoria[]
     }
 }
 

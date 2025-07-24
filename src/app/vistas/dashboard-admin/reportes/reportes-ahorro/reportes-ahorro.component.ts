@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
+import { AhorroArea, AhorroCategoria, AhorroTotal, AhorroTotalCategoria, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
 import { ReportesService } from '../../../../servicios/reportes.service';
 import { Chart, registerables } from 'chart.js';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -56,19 +56,24 @@ export class ReportesAhorroComponent implements OnInit {
   USD: string = 'USD'
   pxt: number = 0
 
-  areas = [
-    { nombre: 'EACV', ahorro: 0 },
-    { nombre: 'Exhaust', ahorro: 30307.14 },
-    { nombre: 'Ignicion', ahorro: 0 },
-    { nombre: 'SRA', ahorro: 0 },
-    { nombre: 'Otros', ahorro: 5112.23 }
 
-  ]
+  ahorros_categoria_data: AhorroTotalCategoria | null = null
+  ahorros_categoria: AhorroCategoria[] | null = null
+  total_ahorros_categoria: number = 0
+  total_ahorros_categoria_dolares: number = 0
+  ahorros_categoria_nombres: string[] = []
+  ahorros_categoria_totalByArea: number[] = []
+
+
+
 
   ngOnInit(): void {
     this.initDate()
+    this.ahorrosHistoricosPorCategoria()
+    this.ahorrosPorCategoriaFechas()
     this.renderAhorrosHistoricos()
   }
+
 
   mostrarDatosHistoricos() {
     this.cleanCharts()
@@ -92,72 +97,176 @@ export class ReportesAhorroComponent implements OnInit {
     }
   }
 
+  mostrarDatosFiltradosPorFecha() {
+    this.cleanCharts()
+    this.renderAhorrosFiltrados()
+    this.ahorrosPorCategoriaFechas()
+  }
+
   // Fuente de info
   async ahorrosHistoricos() {
-    let self = this
+    let self = this;
     try {
       return new Promise<void>((resolve, reject) => {
         this.reporteService.ahorroHistorico().subscribe({
           next: (value: AhorroTotal) => {
-            self.ahorros_data = value
-            self.ahorros = value.msg.ahorros_por_area.filter(area => area.nombre_area !== 'NULA');
-            self.total_ahorros = value.msg.total_ahorros
-            self.total_ahorros_dolares = value.msg.total_ahorros_usd
+            self.ahorros_data = value;
+            self.ahorros = value.msg.ahorros_por_area
+              .filter(area => area.nombre_area !== 'NULA')
+              .map(area => ({
+                ...area,
+                valor_animado: 0
+              }));
+
+            self.total_ahorros = value.msg.total_ahorros;
+            self.total_ahorros_dolares = value.msg.total_ahorros_usd;
+
             value.msg.ahorros_por_area.forEach(area => {
-              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
-              self.ahorros_nombres.push(label)
-              self.ahorros_totalByArea.push(area.total_ahorros)
-            })
-            const total = this.total_ahorros
-            self.ahorros_totalByArea.forEach(value => {
-              self.pxt = (value / total) * 100
-              self.ahorros_percentages.push(this.pxt)
+              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`;
+              self.ahorros_nombres.push(label);
+              self.ahorros_totalByArea.push(area.total_ahorros);
             });
+
+            const total = this.total_ahorros;
+            self.ahorros_totalByArea.forEach(value => {
+              self.pxt = (value / total) * 100;
+              self.ahorros_percentages.push(this.pxt);
+            });
+
+            self.ahorros.forEach(area => {
+              this.animarValor(area, 'total_ahorros_dolares', 'valor_animado');
+            });
+
             resolve();
           },
           error: (error) => reject(error)
         });
       });
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
-    catch (error) {
+  }
+
+
+
+  async ahorrosHistoricosPorCategoria() {
+    let self = this;
+    try {
+      return new Promise<void>((resolve, reject) => {
+        this.reporteService.ahorroHistoricoPorCategoria().subscribe({
+          next: (value: AhorroTotalCategoria) => {
+            self.ahorros_categoria_data = value;
+            self.ahorros_categoria = value.msg.ahorros_por_categoria
+              .map(area => ({
+                ...area,
+                valor_animado: 0
+              }));
+
+            self.total_ahorros_categoria = value.msg.total_ahorros;
+            self.total_ahorros_categoria_dolares = value.msg.total_ahorros_usd;
+
+
+            self.ahorros_categoria.forEach(area => {
+              this.animarValor(area, 'total_ahorros_dolares', 'valor_animado');
+            });
+
+          },
+          error: (error) => reject(error)
+        });
+      });
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  }
+
+  async ahorrosPorCategoriaFechas() {
+    let self = this;
+    let fechas: FechasAhorros = {
+      fecha_inicio: this.date0 ?? '',
+      fecha_fin: this.date1 ?? ''
+    };
+
+    try {
+      return new Promise<void>((resolve, reject) => {
+        this.reporteService.ahorroHistoricoPorCategoriaFechas(fechas).subscribe({
+          next: (value: AhorroTotalCategoria) => {
+            self.ahorros_categoria_data = value;
+            self.ahorros_categoria = value.msg.ahorros_por_categoria
+              .map(area => ({
+                ...area,
+                valor_animado: 0
+              }));
+
+            self.total_ahorros_categoria = value.msg.total_ahorros;
+            self.total_ahorros_categoria_dolares = value.msg.total_ahorros_usd;
+
+
+            self.ahorros_categoria.forEach(area => {
+              this.animarValor(area, 'total_ahorros_dolares', 'valor_animado');
+            });
+
+          },
+          error: (error) => reject(error)
+        });
+      });
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
 
   async ahorrosFiltrados() {
-    let self = this
+    let self = this;
     let fechas: FechasAhorros = {
       fecha_inicio: this.date0 ?? '',
       fecha_fin: this.date1 ?? ''
-    }
+    };
+
     try {
       return new Promise<void>((resolve, reject) => {
         this.reporteService.ahorro(fechas).subscribe({
           next: (value: AhorroTotal) => {
-            self.ahorros_data = value
+            self.ahorros_data = value;
+
+            self.ahorros_nombres = [];
+            self.ahorros_totalByArea = [];
+            self.ahorros_percentages = [];
+
             self.ahorros = value.msg.ahorros_por_area
-            self.total_ahorros = value.msg.total_ahorros
-            self.total_ahorros_dolares = value.msg.total_ahorros_usd
-            value.msg.ahorros_por_area.forEach(area => {
-              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
-              self.ahorros_nombres.push(label)
-              self.ahorros_totalByArea.push(area.total_ahorros)
-            })
-            const total = this.total_ahorros
-            self.ahorros_totalByArea.forEach(value => {
-              self.pxt = (value / total) * 100
-              self.ahorros_percentages.push(this.pxt)
+              .filter(area => area.nombre_area !== 'NULA')
+              .map(area => ({
+                ...area,
+                valor_animado: 0
+              }));
+
+            self.total_ahorros = value.msg.total_ahorros;
+            self.total_ahorros_dolares = value.msg.total_ahorros_usd;
+
+            self.ahorros.forEach(area => {
+              const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`;
+              self.ahorros_nombres.push(label);
+              self.ahorros_totalByArea.push(area.total_ahorros);
             });
+
+            const total = self.total_ahorros;
+            self.ahorros_totalByArea.forEach(value => {
+              self.pxt = (value / total) * 100;
+              self.ahorros_percentages.push(self.pxt);
+            });
+
+            self.ahorros.forEach(area => {
+              this.animarValor(area, 'total_ahorros_dolares', 'valor_animado');
+            });
+
             resolve();
           },
           error: (error) => reject(error)
         });
       });
-    }
-    catch (error) {
+    } catch (error) {
       console.error('Error fetching data:', error);
     }
   }
+
 
   async renderAhorrosHistoricos() {
     await this.ahorrosHistoricos()
@@ -207,7 +316,9 @@ export class ReportesAhorroComponent implements OnInit {
             min: 0,
             max: 100
           }
-        }
+        },
+        responsive: true,
+        maintainAspectRatio: false,
       }
     });
   }
@@ -335,4 +446,23 @@ export class ReportesAhorroComponent implements OnInit {
     this.blankdays = blankdaysArray;
     this.no_of_days = daysArray;
   }
+
+  animarValor(obj: any, campoFinal: string, campoAnimado: string) {
+    const duracion = 1000; // en ms
+    const fps = 60;
+    const pasos = duracion / (1000 / fps);
+    const incremento = obj[campoFinal] / pasos;
+    let contador = 0;
+
+    const intervalo = setInterval(() => {
+      contador++;
+      obj[campoAnimado] += incremento;
+
+      if (contador >= pasos) {
+        obj[campoAnimado] = obj[campoFinal];
+        clearInterval(intervalo);
+      }
+    }, 1000 / fps);
+  }
+
 }
