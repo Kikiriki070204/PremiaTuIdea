@@ -49,7 +49,7 @@ export interface AhorroArea {
 export interface AhorroTotal {
     msg: {
         total_ahorros: number
-        total_ahorros_dolares: number
+        total_ahorros_usd: number
         ahorros_por_area: AhorroArea[]
     }
 }

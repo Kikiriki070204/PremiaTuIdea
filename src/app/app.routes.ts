@@ -66,14 +66,30 @@ export const routes: Routes =
             canActivate: [authAdminGuard],
             data: { hideNavbar: true },
             children: [
+                {
+                    path: '',
+                    redirectTo: 'reportes-admin',
+                    pathMatch: 'full'
+                },
                 // reportes
                 {
                     path: 'reportes-admin', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes.component').then(m => m.ReportesComponent),
                     canActivate: [authAdminGuard],
                     data: { hideNavbar: true },
                     children: [
+
+                        {
+                            path: '',
+                            redirectTo: 'puntos',
+                            pathMatch: 'full'
+                        },
                         {
                             path: 'puntos', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-puntos/reportes-puntos.component').then(m => m.ReportesPuntosComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'bonos', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-bonos/reportes-bonos.component').then(m => m.ReportesBonosComponent),
                             data: { hideNavbar: true },
                             canActivate: [authAdminGuard],
                         },
@@ -83,7 +99,18 @@ export const routes: Routes =
                             canActivate: [authAdminGuard],
                         },
                         {
+                            path: 'proyectos', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-proyectos/reportes-proyectos.component').then(m => m.ReportesProyectosComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+
+                        },
+                        {
                             path: 'ahorro', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-ahorro/reportes-ahorro.component').then(m => m.ReportesAhorroComponent),
+                            data: { hideNavbar: true },
+                            canActivate: [authAdminGuard],
+                        },
+                        {
+                            path: 'premios', loadComponent: () => import('./vistas/dashboard-admin/reportes/reportes-premios/reportes-premios.component').then(m => m.ReportesPremiosComponent),
                             data: { hideNavbar: true },
                             canActivate: [authAdminGuard],
                         },

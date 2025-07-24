@@ -56,6 +56,15 @@ export class ReportesAhorroComponent implements OnInit {
   USD: string = 'USD'
   pxt: number = 0
 
+  areas = [
+    { nombre: 'EACV', ahorro: 0 },
+    { nombre: 'Exhaust', ahorro: 30307.14 },
+    { nombre: 'Ignicion', ahorro: 0 },
+    { nombre: 'SRA', ahorro: 0 },
+    { nombre: 'Otros', ahorro: 5112.23 }
+
+  ]
+
   ngOnInit(): void {
     this.initDate()
     this.renderAhorrosHistoricos()
@@ -91,9 +100,9 @@ export class ReportesAhorroComponent implements OnInit {
         this.reporteService.ahorroHistorico().subscribe({
           next: (value: AhorroTotal) => {
             self.ahorros_data = value
-            self.ahorros = value.msg.ahorros_por_area
+            self.ahorros = value.msg.ahorros_por_area.filter(area => area.nombre_area !== 'NULA');
             self.total_ahorros = value.msg.total_ahorros
-            self.total_ahorros_dolares = value.msg.total_ahorros_dolares
+            self.total_ahorros_dolares = value.msg.total_ahorros_usd
             value.msg.ahorros_por_area.forEach(area => {
               const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
               self.ahorros_nombres.push(label)
@@ -128,7 +137,7 @@ export class ReportesAhorroComponent implements OnInit {
             self.ahorros_data = value
             self.ahorros = value.msg.ahorros_por_area
             self.total_ahorros = value.msg.total_ahorros
-            self.total_ahorros_dolares = value.msg.total_ahorros_dolares
+            self.total_ahorros_dolares = value.msg.total_ahorros_usd
             value.msg.ahorros_por_area.forEach(area => {
               const label = `${area.nombre_area} ($${area.total_ahorros} / $${area.total_ahorros_dolares} USD)`
               self.ahorros_nombres.push(label)

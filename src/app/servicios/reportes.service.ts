@@ -12,6 +12,15 @@ export class ReportesService {
 
   constructor(protected http: HttpClient, protected router: Router) { }
 
+  // TIPO DE CAMBIO
+  tipoCambio(): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/ideass/tipoCambio`);
+  }
+
+  actualizarTipoCambio(data: any): Observable<any> {
+    return this.http.put<any>(`${environment.api_url}/ideass/tipoCambio`, data);
+  }
+
   // IDEAS CONTABLES Y NO CONTABLES (FILTRADOS)
   ideasTotales(fechas: FechasIdeas): Observable<ReportesIdeas2> {
     return this.http.post<ReportesIdeas2>(`${environment.api_url}/ideass/ideastotales`, fechas)

@@ -1,7 +1,6 @@
-<div id="default-tab-content">
-  <!-- calendarios inputs -->
+<div>
   <div
-    class="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 items-start md:items-end mt-6"
+    class="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 items-start md:items-end mt-2"
   >
     <div
       class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto"
@@ -11,7 +10,6 @@
       >
       <input
         type="date"
-        [(ngModel)]="date0"
         name="date0"
         id="date0"
         class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -26,7 +24,6 @@
       >
       <input
         type="date"
-        [(ngModel)]="date1"
         name="date1"
         id="date1"
         class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -34,8 +31,7 @@
     </div>
 
     <button
-      (click)="mostrarDatosFiltrados()"
-      class="flex items-center justify-center p-2 text-sm font-medium text-white bg-blue-800 rounded-lg border hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-auto"
+      class="flex items-center justify-center p-2 text-sm font-medium text-white bg-blue-800 rounded-lg border border-blue-700 hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-auto"
     >
       <svg
         class="w-4 h-4 mr-1"
@@ -55,57 +51,57 @@
     </button>
 
     <button
-      (click)="mostrarDatosHistoricos()"
       type="button"
       class="flex items-center justify-center p-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full md:w-auto"
     >
       Datos históricos
     </button>
   </div>
+  <h4
+    class="mt-6 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+  >
+    Total de ideas por estatus y área
+  </h4>
 
   <div
-    class="p-2 rounded-lg dark:bg-gray-800"
-    id="ahorros"
-    role="tabpanel"
-    aria-labelledby="ahorros-tab"
+    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-4 mt-8"
   >
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
-      Ahorro por area (Ideas de mejora)
-    </h4>
-    <span class="text-sm text-gray-600"
-      >Total de ahorro: ${{ total_ahorros_dolares }} USD</span
-    >
-    <!-- Cards -->
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 my-4 mt-8"
+      *ngFor="let area of categorias"
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow"
     >
-      <div
-        *ngFor="let ahorro of ahorros"
-        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow"
+      <h3
+        class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
       >
-        <h3
-          class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
-        >
-          {{ ahorro.nombre_area }}
-        </h3>
-
-        <div class="mt-2 border-t pt-2">
-          <span class="text-gray-900 text-sm"
-            >Ahorros totales: ${{ ahorro.total_ahorros_dolares }} USD</span
+        {{ area.categoria }}
+      </h3>
+      <ul class="space-y-1 text-sm text-gray-700 dark:text-gray-300">
+        <li>
+          <strong class="text-yellow-600 dark:text-blue-400"
+            >En revisión:</strong
           >
-        </div>
-      </div>
-    </div>
-
-    <!-- Gráfica -->
-    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-      <div class="w-full h-72 sm:h-96">
-        <canvas id="ahorro"> </canvas>
+          {{ area.revision }}
+        </li>
+        <li>
+          <strong class="text-green-600 dark:text-green-400">Aceptadas:</strong>
+          {{ area.aceptadas }}
+        </li>
+        <li>
+          <strong class="text-blue-600 dark:text-indigo-400"
+            >Implementadas:</strong
+          >
+          {{ area.implementadas }}
+        </li>
+        <li>
+          <strong class="text-red-700 dark:text-red-400">Rechazadas:</strong>
+          {{ area.rechazadas }}
+        </li>
+      </ul>
+      <div class="mt-4 border-t pt-2">
+        <span class="text-gray-600 text-sm"
+          >Ideas totales: {{ area.total }}</span
+        >
       </div>
     </div>
   </div>
-
-  <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
-    Ahorro por origen de mejora
-  </h4>
 </div>

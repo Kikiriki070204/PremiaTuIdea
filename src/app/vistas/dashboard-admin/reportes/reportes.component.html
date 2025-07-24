@@ -1,11 +1,38 @@
-<div
-  class="container flex gap-2 items-center"
-  style="margin-left: 5%; padding-top: 3%"
->
-  <h4 class="text-4xl font-bold text-blue-900 dark:text-white">Reportes</h4>
+<div class="container w-full px-4 py-4">
+  <div
+    class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 w-full"
+  >
+    <!-- Título -->
+    <h4 class="text-3xl md:text-4xl font-bold text-blue-900 dark:text-white">
+      Reportes
+    </h4>
+
+    <!-- Controles a la derecha -->
+    <div
+      class="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto"
+    >
+      <label for="dolarInput" class="font-bold text-gray-700 dark:text-white">
+        Tipo de cambio
+      </label>
+      <input
+        value="{{ valorCambio }}"
+        type="number"
+        [(ngModel)]="valorCambio"
+        name="dolarInput"
+        id="dolarInput"
+        class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full sm:w-48 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+      />
+      <button
+        (click)="actualizarTipoCambio()"
+        class="px-4 py-2 text-sm font-medium text-white bg-blue-800 rounded-lg hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full sm:w-auto"
+      >
+        Actualizar
+      </button>
+    </div>
+  </div>
 </div>
 
-<div class="mt-2" style="margin-left: 6%; margin-right: 20%">
+<div class="mt-2 w-full px-4">
   <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
     <ul
       class="flex flex-wrap -mb-px text-sm font-medium text-center"
@@ -31,6 +58,22 @@
       </li>
       <li class="me-2" role="presentation">
         <button
+          [routerLink]="['/admin/reportes-admin/bonos']"
+          routerLinkActive="border-b-2 border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-block p-4 hover:border-b-2 hover:border-blue-800 hover:text-blue-800 rounded-t-lg"
+          id="puntos-tab"
+          data-tabs-target="#puntos"
+          type="button"
+          role="tab"
+          aria-controls="puntos"
+          aria-selected="false"
+        >
+          Bonos
+        </button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button
           [routerLink]="['/admin/reportes-admin/ideas']"
           routerLinkActive="border-b-2 border-blue-800 text-blue-800 font-bold"
           [routerLinkActiveOptions]="{ exact: true }"
@@ -42,7 +85,23 @@
           aria-controls="ideas"
           aria-selected="false"
         >
-          Ideas
+          Ideas de mejora
+        </button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button
+          [routerLink]="['/admin/reportes-admin/proyectos']"
+          routerLinkActive="border-b-2 border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-block p-4 hover:border-b-2 hover:border-blue-800 hover:text-blue-800 rounded-t-lg"
+          id="ideas-tab"
+          data-tabs-target="#ideas"
+          type="button"
+          role="tab"
+          aria-controls="ideas"
+          aria-selected="false"
+        >
+          Proyectos
         </button>
       </li>
       <li class="me-2" role="presentation">
@@ -59,6 +118,22 @@
           aria-selected="false"
         >
           Ahorro
+        </button>
+      </li>
+      <li class="me-2" role="presentation">
+        <button
+          [routerLink]="['/admin/reportes-admin/premios']"
+          routerLinkActive="border-b-2 border-blue-800 text-blue-800 font-bold"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="inline-block p-4 hover:border-b-2 hover:border-blue-800 hover:text-blue-800 rounded-t-lg"
+          id="ahorros-tab"
+          data-tabs-target="#ahorros"
+          type="button"
+          role="tab"
+          aria-controls="ahorros"
+          aria-selected="false"
+        >
+          Premios
         </button>
       </li>
     </ul>

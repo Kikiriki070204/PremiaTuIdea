@@ -65,6 +65,16 @@ export class ReportesIdeasComponent implements OnInit {
 
   pxt: number = 0
 
+  // estatus por area
+  areas = [
+    { nombre: 'EACV', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
+    { nombre: 'Exhaust', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
+    { nombre: 'Ignicion', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
+    { nombre: 'SRA', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
+    { nombre: 'Otros', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
+  ];
+
+
   ngOnInit(): void {
     this.initDate()
     this.mostrarDatosHistoricos()

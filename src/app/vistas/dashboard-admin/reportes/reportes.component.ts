@@ -8,6 +8,8 @@ import { ReportesIdeas } from '../../../interfaces/reportes';
 import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { initFlowbite } from 'flowbite';
 import { Router, RouterLink, RouterModule, RouterOutlet } from '@angular/router';
+import { IdeasService } from '../../../servicios/ideas.service';
+import Swal from 'sweetalert2';
 Chart.register(...registerables)
 
 @Component({
@@ -100,11 +102,55 @@ export class ReportesComponent implements OnInit {
   ctx = document.getElementById('myChart');
   tab: number = 0
 
-  constructor(protected reporteService: ReportesService, private router: Router) { }
+  valorCambio: number = 0;
+
+  constructor(protected reporteService: ReportesService, private router: Router, protected reportesService: ReportesService) { }
+
+  private initialized = false;
 
   ngOnInit(): void {
-    this.irPuntos()
 
+    if (!this.initialized) {
+      this.initialized = true;
+      this.cargarDatosIniciales();
+    }
+
+  }
+  cargarDatosIniciales() {
+    this.reportesService.tipoCambio().subscribe((valor) => {
+      this.valorCambio = valor.valor
+    });
+  }
+
+  actualizarTipoCambio() {
+    const data = {
+      valor: this.valorCambio
+    };
+    this.reportesService.actualizarTipoCambio(data).subscribe({
+      next: () => {
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Valor actualizado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        })
+      }, error: () => {
+        Swal.fire({
+          title: 'Error',
+          text: 'No se pudo actualizar el valor, ingresa datos válidos',
+          icon: 'error',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        })
+      }
+    });
   }
 
   irPuntos() {
