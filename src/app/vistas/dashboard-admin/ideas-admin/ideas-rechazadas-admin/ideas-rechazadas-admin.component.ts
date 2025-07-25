@@ -26,6 +26,8 @@ export class IdeasRechazadasAdminComponent {
   Math = Math;
 
   selectedCategoria: number = 1; // por defecto, categoría 1
+  selectedArea: number | null = null;
+
 
   constructor(
     protected authService: AuthService,
@@ -40,11 +42,13 @@ export class IdeasRechazadasAdminComponent {
   ideasbyStatus(
     estatus: number | null = null,
     page: number,
-    categoria: number | null = null
+    categoria: number | null = null,
+    area_id: number | null = null
+
   ) {
     this.currentPage = page;
     this.ideasUsers = [];
-    this.ideaService.ideasByStatusAndCategory(estatus, categoria, page).subscribe((myIdeas) => {
+    this.ideaService.ideasByStatusAndCategory(estatus, categoria, page, area_id).subscribe((myIdeas) => {
       this.ideasUsers = myIdeas.ideas;
     });
   }
@@ -55,6 +59,11 @@ export class IdeasRechazadasAdminComponent {
 
   onPageChange(page: number): void {
     this.ideasbyStatus(4, page, this.selectedCategoria);
+  }
+
+  onAreaChange(): void {
+    this.ideasbyStatus(4, 1, this.selectedCategoria, this.selectedArea);
+
   }
 
   delete(idea: number) {

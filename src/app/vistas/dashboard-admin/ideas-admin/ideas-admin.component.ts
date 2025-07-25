@@ -16,7 +16,7 @@ export class IdeasAdminComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.router.navigateByUrl('/admin/ideas-admin/revision');
+    // this.router.navigateByUrl('/admin/ideas-admin/revision');
   }
 
 

@@ -124,6 +124,11 @@ export const routes: Routes =
                     data: { hideNavbar: true },
                     children: [
                         {
+                            path: '',
+                            redirectTo: 'revision',
+                            pathMatch: 'full'
+                        },
+                        {
                             path: 'revision', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-revision-admin/ideas-revision-admin.component').then(m => m.IdeasRevisionAdminComponent),
                             data: { hideNavbar: true },
                             canActivate: [authAdminGuard],

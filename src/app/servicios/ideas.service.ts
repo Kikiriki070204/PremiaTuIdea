@@ -42,8 +42,19 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAll/` + estatus + `?page=${page}`)
   }
 
-  ideasByStatusAndCategory(estatus: number | null, categoria: number | null, page: number = 1): Observable<Ideas> {
-    return this.http.get<Ideas>(`${environment.api_url}/ideass/ideasAllCategoria/` + estatus + `/` + categoria + `?page=${page}`)
+  ideasByStatusAndCategory(
+    estatus: number | null,
+    categoria: number | null,
+    page: number = 1,
+    area_id?: number | null
+  ): Observable<Ideas> {
+    let url = `${environment.api_url}/ideass/ideasAllCategoria/${estatus}/${categoria}?page=${page}`;
+
+    if (area_id !== null && area_id !== undefined) {
+      url += `&area_id=${area_id}`;
+    }
+
+    return this.http.get<Ideas>(url);
   }
 
   // imageByIdea(idea: number | null): Observable<any>{

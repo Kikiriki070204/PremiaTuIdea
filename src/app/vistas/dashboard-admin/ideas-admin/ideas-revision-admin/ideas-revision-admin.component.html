@@ -1,5 +1,5 @@
 <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
-  <div class="mb-4 p-2">
+  <div class="mb-1 p-2">
     <label for="departamento" class="font-bold text-blue-900 text-2xl mt-2">
       Origen de mejora
     </label>
@@ -18,6 +18,30 @@
     </select>
   </div>
 
+  @if(selectedCategoria == 1){
+  <div class="mb-4 p-2">
+    <label for="departamento" class="font-bold text-blue-900 text-2xl mt-2">
+      Área
+    </label>
+    <select
+      id="departamento"
+      class="form-control mt-3 font-bold"
+      [(ngModel)]="selectedArea"
+      (change)="onAreaChange()"
+      required
+    >
+      <option value="" disabled selected class="font-bold">
+        Selecciona un área
+      </option>
+      <option [value]="1" class="font-bold">Exhaust</option>
+      <option [value]="2" class="font-bold">Ignicion</option>
+      <option [value]="3" class="font-bold">EACV</option>
+      <option [value]="4" class="font-bold">Otros</option>
+      <option [value]="5" class="font-bold">SRA</option>
+    </select>
+  </div>
+
+  }
   <table
     class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
   >
@@ -93,7 +117,6 @@
       }
     </tbody>
   </table>
-
   <!-- Paginacion -->
   <div
     class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
@@ -102,7 +125,12 @@
     <div class="flex flex-1 justify-between sm:hidden">
       <button
         (click)="
-          ideasbyStatus(1, ideasUsers.current_page - 1, this.selectedCategoria)
+          ideasbyStatus(
+            1,
+            ideasUsers.current_page - 1,
+            this.selectedCategoria,
+            this.selectedArea
+          )
         "
         [disabled]="ideasUsers.current_page === 1"
         class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -111,7 +139,12 @@
       </button>
       <button
         (click)="
-          ideasbyStatus(1, ideasUsers.current_page + 1, this.selectedCategoria)
+          ideasbyStatus(
+            1,
+            ideasUsers.current_page + 1,
+            this.selectedCategoria,
+            this.selectedArea
+          )
         "
         [disabled]="ideasUsers.current_page === ideasUsers.last_page"
         class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
@@ -150,7 +183,8 @@
               ideasbyStatus(
                 1,
                 ideasUsers.current_page - 1,
-                this.selectedCategoria
+                this.selectedCategoria,
+                this.selectedArea
               )
             "
             [disabled]="ideasUsers.current_page === 1"
@@ -177,7 +211,8 @@
               ideasbyStatus(
                 1,
                 ideasUsers.current_page + 1,
-                this.selectedCategoria
+                this.selectedCategoria,
+                this.selectedArea
               )
             "
             [disabled]="ideasUsers.current_page === ideasUsers.last_page"

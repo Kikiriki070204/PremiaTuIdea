@@ -26,6 +26,7 @@ export class IdeasRevisionAdminComponent implements OnInit {
   Math = Math;
 
   selectedCategoria: number = 1; // por defecto, categoría 1
+  selectedArea: number | null = null;
 
   constructor(
     protected authService: AuthService,
@@ -40,11 +41,12 @@ export class IdeasRevisionAdminComponent implements OnInit {
   ideasbyStatus(
     estatus: number | null = null,
     page: number,
-    categoria: number | null = null
+    categoria: number | null = null,
+    area_id: number | null = null
   ) {
     this.currentPage = page;
     this.ideasUsers = [];
-    this.ideaService.ideasByStatusAndCategory(estatus, categoria, page).subscribe((myIdeas) => {
+    this.ideaService.ideasByStatusAndCategory(estatus, categoria, page, area_id).subscribe((myIdeas) => {
       this.ideasUsers = myIdeas.ideas;
     });
   }
@@ -53,8 +55,13 @@ export class IdeasRevisionAdminComponent implements OnInit {
     this.ideasbyStatus(1, 1, this.selectedCategoria); // siempre reinicia en página 1 al cambiar
   }
 
+  onAreaChange(): void {
+    this.ideasbyStatus(1, 1, this.selectedCategoria, this.selectedArea);
+
+  }
+
   onPageChange(page: number): void {
-    this.ideasbyStatus(1, page, this.selectedCategoria);
+    this.ideasbyStatus(1, page, this.selectedCategoria, this.selectedArea);
   }
 
   delete(idea: number) {
@@ -85,7 +92,7 @@ export class IdeasRevisionAdminComponent implements OnInit {
               },
               buttonsStyling: false
             }).then(() => {
-              this.ideasbyStatus(1, this.currentPage, this.selectedCategoria);
+              this.ideasbyStatus(1, this.currentPage, this.selectedCategoria, this.selectedArea);
             });
           },
           error: () => {
