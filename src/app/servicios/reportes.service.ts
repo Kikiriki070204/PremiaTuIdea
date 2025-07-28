@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AhorroArea, AhorroTotal, AhorroTotalCategoria, FechasAhorros, FechasIdeas, FechasPuntos, Historial, ReportesIdeas, ReportesIdeas2, ReportesPuntos } from '../interfaces/reportes';
+import { AhorroArea, AhorroTotal, AhorroTotalCategoria, AreaStats, CategoriaStats, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasVsUsuarios, ParticipacionEmpleados, ReportesIdeas, ReportesIdeas2, ReportesPuntos } from '../interfaces/reportes';
 import { environment } from '../../enviroment/enviroment.prod';
 
 @Injectable({
@@ -41,6 +41,47 @@ export class ReportesService {
   }
   ideasNoContablesHistoricas(): Observable<ReportesIdeas> {
     return this.http.get<ReportesIdeas>(`${environment.api_url}/ideass/ideasNoContablesHistoricas`)
+
+
+  }
+
+  getIdeasHistoricasEstatusArea(): Observable<AreaStats[]> {
+    return this.http.get<AreaStats[]>(`${environment.api_url}/ideass/ideasHistoricasEstatusArea`);
+  }
+
+  getIdeasHistoricasEstatusAreaFechas(fecha_inicio: string, fecha_fin: string): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}/ideass/ideasHistoricasEstatusArea`, {
+      fecha_inicio,
+      fecha_fin
+    });
+  }
+
+  getIdeasPorCategoria(): Observable<{ total_ideas: number; ideas_por_categoria: CategoriaStats[] }> {
+    return this.http.get<{ total_ideas: number; ideas_por_categoria: CategoriaStats[] }>(
+      `${environment.api_url}/ideass/ideasHistoricasEstatusCategoria`
+    );
+  }
+
+  getIdeasPorCategoriaFechas(fecha_inicio: string, fecha_fin: string): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}/ideass/ideasHistoricasEstatusCategoria`, {
+      fecha_inicio,
+      fecha_fin
+    });
+  }
+
+  // Reportaje de empleados
+
+  getIdeasVsUsuarios(body: any = {}): Observable<IdeasVsUsuarios> {
+    return this.http.post<IdeasVsUsuarios>(
+      `${environment.api_url}/ideass/reporteTrimestral`,
+      body
+    );
+  }
+
+  getParticipacionEmpleados(body: any): Observable<ParticipacionEmpleados> {
+    return this.http.post<ParticipacionEmpleados>(
+      `${environment.api_url}/ideass/reporteMensual`, body
+    );
   }
 
   // PUNTOS CONTABLES Y NO CONTABLES (FILTRADOS)

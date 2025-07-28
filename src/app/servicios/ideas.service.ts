@@ -9,6 +9,7 @@ import { NewIdea } from '../interfaces/new-idea';
 import { HttpParams } from '@angular/common/http';
 import { User } from '../interfaces/user';
 import { Actividad, ActividadIdea, Actividades, ActivityData, EditEstado, EditEstado2, EstadoAct, EstadoActividades, newActivity } from '../interfaces/actividad';
+import { AreaStats } from '../interfaces/reportes';
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,8 @@ export class IdeasService {
 
     return this.http.get<Ideas>(url);
   }
+
+
 
   // imageByIdea(idea: number | null): Observable<any>{
   //   return this.http.get<any>(`${environment.api_url}/ideas/images/`+idea,{ responseType: 'blob' })

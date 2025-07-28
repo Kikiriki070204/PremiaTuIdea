@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReportesService } from '../../../../servicios/reportes.service';
-import { AhorroArea, AhorroTotal, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, PuntosArea, ReportesIdeas, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
+import { AhorroArea, AhorroTotal, AreaStats, FechasAhorros, FechasIdeas, FechasPuntos, Historial, IdeasCN, ParticipacionEmpleados, PuntosArea, ReportesIdeas, ReportesIdeas2, ReportesPuntos, Top10User } from '../../../../interfaces/reportes';
 import { Chart, registerables } from 'chart.js';
 
 Chart.register(...registerables)
@@ -63,6 +63,8 @@ export class ReportesIdeasComponent implements OnInit {
   areas_non_data: IdeasCN[] | null = null
   areas_cont_data: IdeasCN[] | null = null
 
+
+
   pxt: number = 0
 
   // estatus por area
@@ -74,10 +76,20 @@ export class ReportesIdeasComponent implements OnInit {
     { nombre: 'Otros', revision: 2, aceptadas: 1, implementadas: 3, rechazadas: 0, total: 6 },
   ];
 
+  total_ideas: number = 0
+  total_ideas_contables: number = 0
+  total_ideas_no_contables: number = 0
+
+  areasEstatus: AreaCard[] = [];
+
+  reporte?: ParticipacionEmpleados;
+
+
 
   ngOnInit(): void {
     this.initDate()
     this.mostrarDatosHistoricos()
+    this.ideasHistoricasEstatusArea()
   }
   mostrarDatosHistoricos() {
     this.cleanCharts()
@@ -91,6 +103,7 @@ export class ReportesIdeasComponent implements OnInit {
     this.renderIdeasTotalesFiltradas()
     this.renderIdeasContablesFiltradas()
     this.renderIdeasNoContablesFiltradas()
+    this.ideasHistoricasEstatusAreaFechas()
   }
 
   // Limpiar gráficas
@@ -122,6 +135,36 @@ export class ReportesIdeasComponent implements OnInit {
   }
 
   // Fuente de info 
+
+
+  ideasHistoricasEstatusArea() {
+    this.reporteService.getIdeasHistoricasEstatusArea()
+      .subscribe({
+        next: (data: any) => {
+          const areasData = data.ideas_por_area; // <- AQUÍ es donde debes aplicar .map()
+
+          this.areasEstatus = areasData.map((area: any) => {
+            const mapByName = (name: string) =>
+              area.estatus.find((e: any) => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
+
+            return {
+              nombre: area.nombre_area,
+              revision: mapByName('Revision'),
+              aceptadas: mapByName('Aceptada'),
+              implementadas: mapByName('Implementada'),
+              rechazadas: mapByName('Rechazada'),
+              total: area.total_ideas,
+            };
+          });
+
+        },
+        error: err => {
+          console.log(err)
+        }
+      });
+  }
+
+
   async ideasTotalesHistoricas() {
     let self = this
     try {
@@ -129,6 +172,7 @@ export class ReportesIdeasComponent implements OnInit {
         this.reporteService.ideasTotalesHistoricas().subscribe({
           next: (value: ReportesIdeas2) => {
             self.areas_tot_data = value.ideas_por_area
+            self.total_ideas = value.total_ideas
             console.log(self.areas_tot_data)
             value.ideas_por_area.forEach(
               area => {
@@ -151,6 +195,42 @@ export class ReportesIdeasComponent implements OnInit {
     }
   }
 
+  ideasHistoricasEstatusAreaFechas(): void {
+    if (!this.date0 || !this.date1) {
+      return;
+    }
+
+
+    this.areasEstatus = [];
+
+    this.reporteService.getIdeasHistoricasEstatusAreaFechas(this.date0, this.date1)
+      .subscribe({
+        next: (data: any) => {
+          const areasData = data.ideas_por_area;
+
+          this.areasEstatus = areasData.map((area: any) => {
+            const mapByName = (name: string) =>
+              area.estatus.find((e: any) => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
+
+            return {
+              nombre: area.nombre_area,
+              revision: mapByName('Revision'),
+              aceptadas: mapByName('Aceptada'),
+              implementadas: mapByName('Implementada'),
+              rechazadas: mapByName('Rechazada'),
+              total: area.total_ideas,
+            };
+          });
+
+        },
+        error: err => {
+
+          console.error(err);
+        }
+      });
+  }
+
+
   async ideasTotalesFiltradas() {
     let self = this
     let fechas: FechasIdeas = {
@@ -162,6 +242,7 @@ export class ReportesIdeasComponent implements OnInit {
         this.reporteService.ideasTotales(fechas).subscribe({
           next: (value: ReportesIdeas2) => {
             self.areas_tot_data = value.ideas_por_area
+            self.total_ideas = value.total_ideas
             console.log(self.areas_tot_data)
             value.ideas_por_area.forEach(
               area => {
@@ -191,6 +272,7 @@ export class ReportesIdeasComponent implements OnInit {
         this.reporteService.ideasContablesHistoricas().subscribe({
           next: (value: ReportesIdeas2) => {
             self.areas_cont_data = value.ideas_por_area
+            self.total_ideas_contables = value.total_ideas
             console.log(self.areas_cont_data)
             value.ideas_por_area.forEach(
               area => {
@@ -224,6 +306,7 @@ export class ReportesIdeasComponent implements OnInit {
         this.reporteService.ideasContables(fechas).subscribe({
           next: (value: ReportesIdeas2) => {
             self.areas_cont_data = value.ideas_por_area
+            self.total_ideas_contables = value.total_ideas
             console.log(self.areas_cont_data)
             value.ideas_por_area.forEach(
               area => {
@@ -255,6 +338,7 @@ export class ReportesIdeasComponent implements OnInit {
           next: (value: ReportesIdeas) => {
 
             self.areas_non_data = value.msg.ideas_por_area
+            self.total_ideas_no_contables = value.msg.total_ideas
             console.log(self.areas_non_data)
             value.msg.ideas_por_area.forEach(
               area => {
@@ -290,6 +374,7 @@ export class ReportesIdeasComponent implements OnInit {
           next: (value: ReportesIdeas) => {
 
             self.areas_non_data = value.msg.ideas_por_area
+            self.total_ideas_no_contables = value.msg.total_ideas
             console.log(self.areas_non_data)
             value.msg.ideas_por_area.forEach(
               area => {
@@ -723,4 +808,13 @@ export class ReportesIdeasComponent implements OnInit {
     this.no_of_days = daysArray;
   }
 
+}
+
+interface AreaCard {
+  nombre: string;
+  revision: number;
+  aceptadas: number;
+  implementadas: number;
+  rechazadas: number;
+  total: number;
 }

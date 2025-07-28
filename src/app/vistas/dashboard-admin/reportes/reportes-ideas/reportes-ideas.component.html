@@ -63,6 +63,8 @@
   </div>
 
   <!--Ideas -->
+
+  <div></div>
   <div
     class="p-2 rounded-lg dark:bg-gray-800"
     id="ideas"
@@ -70,10 +72,10 @@
     aria-labelledby="ideas-tab"
   >
     <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
-      Total de ideas de mejora
+      Total de ideas de mejora registradas
     </h4>
     <span class="text-sm text-gray-600"
-      >Ideas totales de cualquier estatus</span
+      >Total de ideas: {{ this.total_ideas }}</span
     >
     <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
       <div class="w-full h-72 sm:h-96">
@@ -85,15 +87,16 @@
     <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
       Total de ideas por estatus y área
     </h4>
+
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 my-4 mt-8"
     >
       <div
-        *ngFor="let area of areas"
-        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow"
+        *ngFor="let area of areasEstatus"
+        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
       >
         <h3
-          class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
+          class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center"
         >
           {{ area.nombre }}
         </h3>
@@ -132,7 +135,9 @@
     <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
       Contables e implementadas
     </h4>
-    <span class="text-sm text-gray-600">Ideas implementadas totales: 7</span>
+    <span class="text-sm text-gray-600"
+      >Ideas implementadas totales: {{ this.total_ideas_contables }}</span
+    >
     <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
       <div class="w-full h-72 sm:h-96">
         <canvas id="ideasContables"> </canvas>
@@ -143,7 +148,8 @@
       No contables e implementadas
     </h4>
     <span class="text-sm text-gray-600"
-      >Ideas no contables implementadas totales: 15</span
+      >Ideas no contables implementadas totales:
+      {{ this.total_ideas_no_contables }}</span
     >
     <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
       <div class="w-full h-72 sm:h-96">
