@@ -64,6 +64,15 @@ export class ReportesAhorroComponent implements OnInit {
   ahorros_categoria_nombres: string[] = []
   ahorros_categoria_totalByArea: number[] = []
 
+  nombresPersonalizados: Record<string, string> = {
+    'ideas': 'Ideas generales',
+    'lean': 'Lean workshops',
+    'rh': 'Cambio de nivel de técnicos',
+    'scrap': 'Scrap/CI',
+    'oe': 'OE',
+    'energia': 'Ahorro de energía',
+  };
+
 
 
 
@@ -155,21 +164,22 @@ export class ReportesAhorroComponent implements OnInit {
       return new Promise<void>((resolve, reject) => {
         this.reporteService.ahorroHistoricoPorCategoria().subscribe({
           next: (value: AhorroTotalCategoria) => {
-            self.ahorros_categoria_data = value;
-            self.ahorros_categoria = value.msg.ahorros_por_categoria
-              .map(area => ({
-                ...area,
-                valor_animado: 0
-              }));
+            this.ahorros_categoria_data = value;
 
-            self.total_ahorros_categoria = value.msg.total_ahorros;
-            self.total_ahorros_categoria_dolares = value.msg.total_ahorros_usd;
+            this.ahorros_categoria = value.msg.ahorros_por_categoria.map(area => ({
+              ...area,
+              nombre_categoria: this.nombresPersonalizados[area.nombre_categoria?.toLowerCase()] || area.nombre_categoria,
+              valor_animado: 0
+            }));
 
+            this.total_ahorros_categoria = value.msg.total_ahorros;
+            this.total_ahorros_categoria_dolares = value.msg.total_ahorros_usd;
 
-            self.ahorros_categoria.forEach(area => {
+            this.ahorros_categoria.forEach(area => {
               this.animarValor(area, 'total_ahorros_dolares', 'valor_animado');
             });
 
+            resolve();
           },
           error: (error) => reject(error)
         });

@@ -71,10 +71,12 @@
     role="tabpanel"
     aria-labelledby="ideas-tab"
   >
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-4 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Total de ideas de mejora registradas
     </h4>
-    <span class="text-sm text-gray-600"
+    <span class="text-sm mb-2 text-gray-600 text-center block"
       >Total de ideas: {{ this.total_ideas }}</span
     >
     <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -84,7 +86,9 @@
     </div>
 
     <!-- Cards -->
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Total de ideas por estatus y área
     </h4>
 
@@ -132,10 +136,12 @@
       </div>
     </div>
 
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Contables e implementadas
     </h4>
-    <span class="text-sm text-gray-600"
+    <span class="text-sm mb-2 text-gray-600 text-center block"
       >Ideas implementadas totales: {{ this.total_ideas_contables }}</span
     >
     <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
@@ -144,10 +150,12 @@
       </div>
     </div>
     <br />
-    <h4 class="mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mb-2 text-xl font-bold text-blue-900 dark:text-white text-center"
+    >
       No contables e implementadas
     </h4>
-    <span class="text-sm text-gray-600"
+    <span class="text-sm text-gray-600 mb-2 text-center block"
       >Ideas no contables implementadas totales:
       {{ this.total_ideas_no_contables }}</span
     >

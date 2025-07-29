@@ -21,6 +21,16 @@ export class ReportesProyectosComponent implements OnInit {
 
   reporteEmpleados?: IdeasVsUsuarios;
 
+  nombresPersonalizados: Record<string, string> = {
+    'ideas': 'Ideas generales',
+    'lean': 'Lean workshops',
+    'rh': 'Cambio de nivel de técnicos',
+    'scrap': 'Scrap/CI',
+    'oe': 'OE',
+    'energia': 'Ahorro de energía',
+  };
+
+
 
 
   constructor(private reportesService: ReportesService) { }
@@ -45,8 +55,11 @@ export class ReportesProyectosComponent implements OnInit {
           const mapByName = (name: string) =>
             cat.estatus.find(e => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
 
+          const nombreOriginal = cat.nombre_categoria?.toLowerCase() ?? '';
+          const nombrePersonalizado = this.nombresPersonalizados[nombreOriginal] || cat.nombre_categoria;
+
           return {
-            nombre: cat.nombre_categoria,
+            nombre: nombrePersonalizado,
             revision: mapByName('Revision'),
             aceptadas: mapByName('Aceptada'),
             implementadas: mapByName('Implementada'),
@@ -54,6 +67,7 @@ export class ReportesProyectosComponent implements OnInit {
             total: cat.total_ideas,
           };
         });
+
       },
       error: err => {
 
@@ -77,8 +91,11 @@ export class ReportesProyectosComponent implements OnInit {
             const mapByName = (name: string) =>
               cat.estatus.find((e: any) => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
 
+            const nombreOriginal = cat.nombre_categoria?.toLowerCase() ?? '';
+            const nombreTransformado = this.nombresPersonalizados[nombreOriginal] || cat.nombre_categoria;
+
             return {
-              nombre: cat.nombre_categoria,
+              nombre: nombreTransformado,
               revision: mapByName('Revision'),
               aceptadas: mapByName('Aceptada'),
               implementadas: mapByName('Implementada'),
@@ -86,6 +103,7 @@ export class ReportesProyectosComponent implements OnInit {
               total: cat.total_ideas,
             };
           });
+
 
         },
         error: err => {

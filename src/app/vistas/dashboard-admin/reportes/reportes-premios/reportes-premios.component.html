@@ -1,1 +1,108 @@
-<p>reportes-premios works!</p>
+<h4
+  class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+>
+  Resumen premios
+</h4>
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-4 mt-8"
+>
+  <!-- Premios entregados -->
+  <div
+    class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+  >
+    <h3
+      class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+    >
+      Premios entregados
+    </h3>
+    <div class="mt-4 border-t pt-2 text-center">
+      <span class="text-lg text-gray-800">
+        {{ animPremiosEntregados }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Premios en proceso -->
+  <div
+    class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+  >
+    <h3
+      class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+    >
+      Premios en proceso
+    </h3>
+    <div class="mt-4 border-t pt-2 text-center">
+      <span class="text-lg text-gray-800">
+        {{ animPremiosProceso }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div
+  class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-4 my-4 mt-8"
+>
+  <!-- Usuarios que han canjeado -->
+  <div
+    class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+  >
+    <h3
+      class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+    >
+      Número de colaboradores que han canjeado
+    </h3>
+    <div class="mt-4 border-t pt-2 text-center">
+      <span class="text-lg text-gray-800">
+        {{ animUsuarios }}
+      </span>
+    </div>
+  </div>
+
+  <!-- Monto total gastado -->
+  <div
+    class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+  >
+    <h3
+      class="text-xl font-bold text-gray-900 dark:text-white mb-2 text-center"
+    >
+      Monto gastado en premios (MXN)
+    </h3>
+    <div class="mt-4 border-t pt-2 text-center">
+      <span class="text-lg text-gray-800">
+        ${{ animTotalMXN | number : "1.2-2" }}
+      </span>
+    </div>
+  </div>
+</div>
+
+<div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow mt-4">
+  <h3 class="text-2xl font-bold text-center text-blue-900 dark:text-white mb-4">
+    Top 10 productos más entregados
+  </h3>
+
+  <div class="flex justify-center mb-4">
+    <button
+      (click)="cambiarTipo()"
+      class="px-4 py-2 text-sm font-medium text-white bg-blue-800 rounded hover:bg-blue-900 transition duration-300 ease-in-out"
+    >
+      Cambiar a {{ chartType === "bar" ? "pastel" : "barra" }}
+    </button>
+  </div>
+
+  <div
+    [ngClass]="{
+      'flex justify-center items-center': chartType === 'doughnut',
+      'w-full': chartType === 'bar'
+    }"
+    class="h-72 sm:h-96"
+  >
+    <canvas
+      id="topProductosChart"
+      [ngClass]="{
+        'w-[280px] h-[280px]': chartType === 'doughnut',
+        'w-full h-full': chartType === 'bar'
+      }"
+    ></canvas>
+  </div>
+</div>

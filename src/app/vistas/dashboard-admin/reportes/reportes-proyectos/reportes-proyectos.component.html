@@ -61,7 +61,9 @@
       Datos históricos
     </button>
   </div>
-  <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+  <h4
+    class="mt-4 mb-4 text-2xl font-bold text-blue-900 dark:text-white text-center"
+  >
     Total de ideas por estatus y categoría
   </h4>
 
@@ -73,7 +75,7 @@
       class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
     >
       <h3
-        class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
+        class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center"
       >
         {{ categoria.nombre }}
       </h3>
@@ -108,71 +110,97 @@
   </div>
 
   <div class="mt-2 p-2">
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Ideas por empleado
     </h4>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 my-4 mt-8">
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Total de Ideas
       </h3>
-      <p class="text-3xl font-semibold">{{ reporteEmpleados?.total_ideas }}</p>
+      <p class="text-3xl border-t-2 font-semibold">
+        {{ reporteEmpleados?.total_ideas }}
+      </p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Total de Usuarios
       </h3>
-      <p class="text-3xl font-semibold">
+      <p class="text-3xl border-t-2 font-semibold">
         {{ reporteEmpleados?.total_usuarios }}
       </p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         % Ideas por Usuario
       </h3>
-      <p class="text-3xl font-semibold">
+      <p class="text-3xl border-t-2 font-semibold text-gray-800">
         {{ reporteEmpleados?.porcentaje_por_usuario }}%
       </p>
     </div>
   </div>
 
   <div class="mt-2 p-2">
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Participación de empleados
     </h4>
   </div>
 
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 my-4 mt-8">
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Total Ideas
       </h3>
-      <p class="text-3xl font-semibold">{{ reporte?.total_ideas }}</p>
+      <p class="text-3xl border-t-2 font-semibold">
+        {{ reporte?.total_ideas }}
+      </p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Colaboradores
       </h3>
-      <p class="text-3xl font-semibold">{{ reporte?.total_colaboradores }}</p>
+      <p class="text-3xl border-t-2 font-semibold">
+        {{ reporte?.total_colaboradores }}
+      </p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Empleados
       </h3>
-      <p class="text-3xl font-semibold">{{ reporte?.total_empleados }}</p>
+      <p class="text-3xl border-t-2 font-semibold">
+        {{ reporte?.total_empleados }}
+      </p>
     </div>
 
-    <div class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center">
-      <h3 class="text-lg font-bold text-blue-900 dark:text-white mb-2">
+    <div
+      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow text-center transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
+    >
+      <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-2">
         Participación (%)
       </h3>
-      <p class="text-3xl font-semibold">
+      <p class="text-3xl border-t-2 font-semibold">
         {{ reporte?.porcentaje_participacion }}%
       </p>
     </div>

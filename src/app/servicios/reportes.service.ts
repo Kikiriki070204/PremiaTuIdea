@@ -128,5 +128,12 @@ export class ReportesService {
     return this.http.post<AhorroTotalCategoria>(`${environment.api_url}/ideass/ahorroHistoricoCategoriaFechas`, fechas)
   }
 
+  // PREMIOS
+  getResumenPremios(): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/estado/resumenPremios`)
+  }
 
+  getTopProductosEntregados(): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/estado/top10ProductosEntregados`)
+  }
 }

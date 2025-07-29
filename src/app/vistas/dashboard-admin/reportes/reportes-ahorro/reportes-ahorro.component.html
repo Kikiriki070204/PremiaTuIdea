@@ -69,12 +69,14 @@
     role="tabpanel"
     aria-labelledby="ahorros-tab"
   >
-    <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+    <h4
+      class="mt-4 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+    >
       Ahorro por area (Ideas de mejora)
     </h4>
-    <span class="text-sm text-gray-600"
-      >Total de ahorro: ${{ total_ahorros_dolares }} USD</span
-    >
+    <span class="text-sm text-gray-600 text-center block"
+      >Total de ahorro: ${{ total_ahorros_dolares }} USD
+    </span>
     <!-- Cards -->
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 my-4 mt-8"
@@ -84,13 +86,13 @@
         class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
       >
         <h3
-          class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center"
+          class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center"
         >
           {{ ahorro.nombre_area }}
         </h3>
 
         <div class="mt-2 border-t pt-2">
-          <span class="text-gray-900 text-sm">
+          <span class="text-gray-800 text-sm">
             Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
           </span>
         </div>
@@ -105,10 +107,12 @@
     </div>
   </div>
 
-  <h4 class="mt-2 mb-2 text-xl font-bold text-blue-900 dark:text-white">
+  <h4
+    class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
+  >
     Ahorro por origen de mejora
   </h4>
-  <span class="text-sm text-gray-600"
+  <span class="text-sm text-gray-600 text-center block"
     >Total de ahorro: ${{ total_ahorros_categoria_dolares }} USD</span
   >
 
@@ -120,13 +124,13 @@
       class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
     >
       <h3
-        class="text-lg font-bold text-blue-900 dark:text-white mb-2 text-center uppercase"
+        class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center uppercase"
       >
         {{ ahorro.nombre_categoria }}
       </h3>
 
       <div class="mt-2 border-t pt-2">
-        <span class="text-gray-900 text-sm">
+        <span class="text-gray-800 text-sm">
           Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
         </span>
       </div>
