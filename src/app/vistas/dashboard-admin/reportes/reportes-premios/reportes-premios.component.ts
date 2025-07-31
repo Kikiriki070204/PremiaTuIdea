@@ -106,13 +106,7 @@ export class ReportesPremiosComponent {
               }
             },
             scales: this.chartType === 'bar' ? {
-              y: {
-                beginAtZero: true,
-                ticks: { color: '#4B5563' }
-              },
-              x: {
-                ticks: { color: '#4B5563', font: { weight: 'bold' } }
-              }
+
             } : undefined
           }
         });

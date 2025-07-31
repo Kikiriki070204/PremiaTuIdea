@@ -1,40 +1,44 @@
 export interface Producto {
-    id:number
+    id: number
     nombre: string
     url: string
-    valor: number 
+    valor: number
     is_active: boolean
 }
 
 export interface ProductoData {
     producto: {
-    id:number
-    nombre: string
-    url: string
-    valor: number 
-    is_active: boolean
+        id: number
+        nombre: string
+        url: string
+        valor: number
+        is_active: number
+        precio: number
     }
 }
 
-export interface EditarProducto{
-    id:number
+export interface EditarProducto {
+    id: number
     nombre: string
     valor: number | undefined
-    is_active: number 
+    is_active: number
+    precio: number | undefined
 }
 
-export interface NuevoProducto{
+export interface NuevoProducto {
     nombre: string
     valor: number
     url: string
+    precio: number,
+    imagen: File
 }
-export interface Canjear{
+export interface Canjear {
     id: number
 }
-export interface UsuarioPremio{
+export interface UsuarioPremio {
 
     id: number
-    folio:number
+    folio: number
     id_usuario: number
     id_producto: number
     id_estado: number
@@ -45,42 +49,42 @@ export interface UsuarioPremio{
 
 }
 
-export interface UsuarioPremio2{
-premio:{
+export interface UsuarioPremio2 {
+    premio: {
+        id: number
+        folio: number
+        id_usuario: number
+        id_producto: number
+        id_estado: number
+        usuario: string
+        producto: string
+        estado: string
+        url: string
+    }
+
+}
+
+export interface Premios {
+    premios: UsuarioPremio[]
+}
+
+export interface ProductoId {
     id: number
-    folio:number
-    id_usuario: number
-    id_producto: number
-    id_estado: number
-    usuario: string
-    producto: string
-    estado: string
-    url: string
 }
 
-}
-
-export interface Premios{
-premios: UsuarioPremio[]
-}
-
-export interface ProductoId{
+export interface EstadoPremio {
     id: number
-}
-
-export interface EstadoPremio{
-    id:number
     estado: string
     activo: boolean
 }
 
-export interface EstadosPremios{
+export interface EstadosPremios {
     estado: EstadoPremio[]
 }
 
-export interface EditarEstadoP{
+export interface EditarEstadoP {
     id: number
-    id_usuario : number
+    id_usuario: number
     id_producto: number
-    id_estado: number 
+    id_estado: number
 }

@@ -72,10 +72,18 @@
           <td class="p-4">
             <!--Hay que validar el index del producto -->
             <img
-              src="{{ producto.url }}"
+              [src]="
+                producto.imagen?.imagen
+                  ? getImageUrl(producto.imagen.imagen)
+                  : producto.url
+              "
               class="w-16 md:w-32 max-w-full max-h-full"
               alt="Borgwarner"
             />
+            <span class="text-xs text-gray-500 dark:text-gray-400 justify-">
+              Esta imagen es solo de ejemplo, no es la imagen del producto que
+              se otorgará
+            </span>
           </td>
           <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
             {{ producto.nombre }}

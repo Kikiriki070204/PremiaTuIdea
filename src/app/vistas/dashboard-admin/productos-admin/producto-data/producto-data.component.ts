@@ -2,14 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EditarProducto, Producto, ProductoData } from '../../../../interfaces/producto';
 import { UsersService } from '../../../../servicios/users.service';
-import { NgFor, NgIf } from '@angular/common';
+import { CommonModule, NgFor, NgIf } from '@angular/common';
 import { FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { HttpResponse } from '../../../../interfaces/http';
+import Swal from 'sweetalert2';
+import { ProductoService } from '../../../../servicios/producto.service';
 
 @Component({
   selector: 'app-producto-data',
   standalone: true,
-  imports: [RouterLink, NgFor, NgIf, ReactiveFormsModule, FormsModule],
+  imports: [NgIf, ReactiveFormsModule, FormsModule, CommonModule],
   templateUrl: './producto-data.component.html',
   styleUrl: './producto-data.component.css'
 })
@@ -19,11 +21,15 @@ export class ProductoDataComponent implements OnInit {
   errorMessage: string | null = null
   selectedActive: number | null = null
 
+  imagenUrl: string | null = null;
+
+
   valor = new FormControl('', Validators.required)
   nombre = new FormControl('', Validators.required)
+  precio = new FormControl('', Validators.required)
 
 
-  constructor(protected productoService: UsersService, protected router: Router, private route: ActivatedRoute) {
+  constructor(protected productoService: UsersService, protected router: Router, private route: ActivatedRoute, protected productoServiceImagen: ProductoService) {
     this.route.params.subscribe(params => {
       const id = params['id'];
       this.id = id
@@ -32,6 +38,7 @@ export class ProductoDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.productData()
+
     console.log("activo: ", this.selectedActive)
   }
 
@@ -40,9 +47,31 @@ export class ProductoDataComponent implements OnInit {
     this.productoService.productoData(this.id).subscribe(
       product => {
         this.producto = product
+        this.selectedActive = this.producto.producto.is_active
         console.log(this.producto)
+        this.productoImagen()
       }
+
+
     )
+
+  }
+
+  productoImagen() {
+    const id = this.producto?.producto?.id;
+
+    if (id) {
+      this.productoServiceImagen.getImagenProducto(id).subscribe({
+        next: (blob) => {
+          this.imagenUrl = URL.createObjectURL(blob);
+          console.log('Imagen obtenida correctamente:', this.imagenUrl);
+        },
+        error: (err) => {
+          console.error('Error al obtener imagen:', err);
+          this.imagenUrl = null;
+        }
+      });
+    }
   }
 
   onEstadoChange(event: any) {
@@ -53,66 +82,80 @@ export class ProductoDataComponent implements OnInit {
   }
 
   editar() {
-    let self = this
-    let editarP: EditarProducto = {
-      id: this.producto?.producto.id ?? 0,
-      nombre: this.producto?.producto.nombre ?? "",
-      valor: (this.valor.value !== null && this.valor.value !== '') ? +this.valor.value : this.producto?.producto.valor,
-      is_active: this.selectedActive ?? 0
+    const formData = new FormData();
+
+    formData.append('id', String(this.producto?.producto.id ?? 0));
+    formData.append('nombre', this.nombre.value || this.producto?.producto.nombre || '');
+    formData.append('valor', String(
+      this.valor.value !== null && this.valor.value !== ''
+        ? +this.valor.value
+        : this.producto?.producto.valor
+    ));
+    formData.append('precio', String(
+      this.precio.value !== null && this.precio.value !== ''
+        ? +this.precio.value
+        : this.producto?.producto.precio
+    ));
+    formData.append('is_active', String(this.selectedActive ?? this.producto?.producto.is_active ?? 0));
+
+    if (this.selectedFile) {
+      formData.append('imagen', this.selectedFile);
     }
 
-    this.productoService.editarProducto(editarP).subscribe({
-      next(value) {
-        console.log(editarP)
-        self.router.navigate(['/admin/productos-admin'])
+    this.productoService.editarProducto(formData).subscribe({
+      next: () => {
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Producto editado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          this.router.navigate(['/admin/productos-admin']);
+        });
       },
-      error(err: HttpResponse) {
+      error: (err: HttpResponse) => {
         switch (err.status) {
           case 422:
-            self.errorMessage = 'Datos no válidos';
-            console.log(err)
+            this.errorMessage = 'Datos no válidos';
             break;
           case 404:
-            self.errorMessage = 'Producto no encontrado';
+            this.errorMessage = 'Producto no encontrado';
             break;
           default:
-            self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+            this.errorMessage = 'Ha ocurrido un error. Inténtelo de nuevo.';
             break;
         }
+        this.errorAlert(this.errorMessage);
       }
-    })
-
+    });
   }
 
-  editar2() {
-    let self = this
-    let editarP: EditarProducto = {
-      id: this.producto?.producto.id ?? 0,
-      nombre: this.producto?.producto.nombre ?? "",
-      valor: (this.valor.value !== null && this.valor.value !== '') ? +this.valor.value : this.producto?.producto.valor,
-      is_active: this.selectedActive ?? 1
-    }
 
-    this.productoService.editarProducto(editarP).subscribe({
-      next(value) {
-        console.log(editarP)
-        self.router.navigate(['/productos'])
-      },
-      error(err: HttpResponse) {
-        switch (err.status) {
-          case 422:
-            self.errorMessage = 'Datos no válidos';
-            console.log(err)
-            break;
-          case 404:
-            self.errorMessage = 'Producto no encontrado';
-            break;
-          default:
-            self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-            break;
-        }
+  selectedFile: File | null = null;
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.selectedFile = input.files[0];
+    }
+  }
+
+
+
+  errorAlert($message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: $message,
+      icon: 'error',
+      confirmButtonText: 'Intentar de nuevo',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 transition duration-300 ease-in-out font-bold rounded-lg text-sm px-4 py-2',
       }
-    })
+    });
 
   }
 

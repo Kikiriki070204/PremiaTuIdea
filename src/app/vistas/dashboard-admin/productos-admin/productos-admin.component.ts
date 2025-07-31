@@ -5,6 +5,8 @@ import { Profile } from '../../../interfaces/profile';
 import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../servicios/auth.service';
 import { CommonModule, NgFor } from '@angular/common';
+import { ProductoService } from '../../../servicios/producto.service';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-productos-admin',
@@ -23,7 +25,10 @@ export class ProductosAdminComponent implements OnInit {
   currentPage: number = 1
   Math = Math;
 
-  constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
+  imagenUrl: string | null = null;
+
+
+  constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService, protected productoServiceImagen: ProductoService) { }
   ngOnInit(): void {
     this.listaProductos = false
     this.productosDsc(this.currentPage)
@@ -38,6 +43,10 @@ export class ProductosAdminComponent implements OnInit {
         this.productos = myProducts.productos;
         console.log(this.productos)
       });
+  }
+
+  getImageUrl(path: string): string {
+    return `${environment.api_url_images}/storage/` + path.replace('public/', '')
   }
 
 

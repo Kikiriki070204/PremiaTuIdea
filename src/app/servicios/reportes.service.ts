@@ -136,4 +136,19 @@ export class ReportesService {
   getTopProductosEntregados(): Observable<any> {
     return this.http.get<any>(`${environment.api_url}/estado/top10ProductosEntregados`)
   }
+
+  // BONOS
+
+  getUsuariosBonos(fechaInicio?: string | null, fechaFin?: string | null): Observable<any> {
+
+    const params: any = {};
+    if (fechaInicio && fechaFin) {
+      params.fecha_inicio = fechaInicio;
+      params.fecha_fin = fechaFin;
+    }
+
+
+    return this.http.get<any>(`${environment.api_url}/usuariosBonos`, { params });
+  }
+
 }

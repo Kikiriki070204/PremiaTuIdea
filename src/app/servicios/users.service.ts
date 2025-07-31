@@ -105,7 +105,8 @@ export class UsersService {
     return this.http.get<ProductoData>(`${environment.api_url}/productos/show/` + id)
   }
 
-  editarProducto(data: EditarProducto): Observable<ProductoData> {
-    return this.http.put<ProductoData>(`${environment.api_url}/productos/update`, data);
+  editarProducto(data: FormData): Observable<ProductoData> {
+    return this.http.post<ProductoData>(`${environment.api_url}/productos/update`, data);
   }
+
 }
