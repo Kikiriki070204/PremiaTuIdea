@@ -17,6 +17,10 @@ export class ReportesProyectosComponent implements OnInit {
   date0: string | null = null;
   date1: string | null = null;
 
+  date2: string | null = null;
+  date3: string | null = null;
+  empleados: number | null = null;
+
   reporte?: ParticipacionEmpleados;
 
   reporteEmpleados?: IdeasVsUsuarios;
@@ -37,13 +41,16 @@ export class ReportesProyectosComponent implements OnInit {
 
   ngOnInit(): void {
     this.getIdeasCategoriasHistoricas()
-    this.filtrarParticipacion()
-    this.filtrarIdeasVsUsuarios()
+
 
   }
 
   mostrarDatosFiltrados() {
     this.getIdeasCategoriasHistoricasFiltradas()
+
+  }
+
+  mostrarDatosFiltradosEmpleados() {
     this.filtrarParticipacion()
     this.filtrarIdeasVsUsuarios()
   }
@@ -116,10 +123,10 @@ export class ReportesProyectosComponent implements OnInit {
   filtrarParticipacion(): void {
 
     const body: any = {};
-    if (this.date0 && this.date1) {
-      body.fecha_inicio = this.date0;
-      body.fecha_fin = this.date1;
-    }
+
+    body.fecha_inicio = this.date2;
+    body.fecha_fin = this.date3;
+    body.empleados = this.empleados;
 
     this.reporte = undefined;
 
@@ -138,10 +145,10 @@ export class ReportesProyectosComponent implements OnInit {
   filtrarIdeasVsUsuarios(): void {
     const body: any = {};
 
-    if (this.date0 && this.date1) {
-      body.fecha_inicio = this.date0;
-      body.fecha_fin = this.date1;
-    }
+    body.fecha_inicio = this.date2;
+    body.fecha_fin = this.date3;
+    body.empleados = this.empleados;
+
 
     this.reporte = undefined;
 
