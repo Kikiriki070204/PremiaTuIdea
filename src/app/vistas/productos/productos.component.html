@@ -61,7 +61,11 @@
           <td class="p-4">
             <!--Hay que validar el index del producto -->
             <img
-              src="{{ producto.url }}"
+              [src]="
+                producto.imagen?.imagen
+                  ? getImageUrl(producto.imagen.imagen)
+                  : producto.url
+              "
               class="w-16 md:w-32 max-w-full max-h-full"
               alt="Borgwarner"
             />

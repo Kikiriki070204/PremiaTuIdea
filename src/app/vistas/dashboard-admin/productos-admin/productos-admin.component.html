@@ -63,6 +63,7 @@
               }
             </div>
           </th>
+          <th scope="col" class="px-6 py-3">Estado</th>
           <th scope="col" class="px-6 py-3">Opciones</th>
           <th scope="col" class="px-6 py-3"></th>
         </tr>
@@ -77,21 +78,41 @@
                   ? getImageUrl(producto.imagen.imagen)
                   : producto.url
               "
-              class="w-16 md:w-32 max-w-full max-h-full"
+              class="w-16 md:w-32 max-w-full max-h-full mx-auto"
               alt="Borgwarner"
             />
-            <span class="text-xs text-gray-500 dark:text-gray-400 justify-">
+            <span
+              class="text-xs text-gray-500 text-center dark:text-gray-400 justify-"
+            >
               Esta imagen es solo de ejemplo, no es la imagen del producto que
               se otorgará
             </span>
           </td>
-          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+          <td
+            class="px-6 py-4 font-semibold text-center text-gray-900 dark:text-white"
+          >
             {{ producto.nombre }}
           </td>
-          <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
+          <td
+            class="px-6 py-4 font-semibold text-blue-800 dark:text-white text-center"
+          >
             {{ producto.valor }} puntos
           </td>
-          <td class="items-center">
+          <td class="px-6 py-4 text-center">
+            @if(producto.is_active){
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300"
+            >
+              Activo </span
+            >} @else {
+            <span
+              class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white dark:bg-red-700 dark:text-white-300"
+            >
+              Inactivo
+            </span>
+            }
+          </td>
+          <td class="px-6 py-4 text-center">
             <button
               [routerLink]="['/admin/productos/', producto.id]"
               type="button"

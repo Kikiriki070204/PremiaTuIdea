@@ -5,6 +5,7 @@ import { UsuarioPremio } from '../../../interfaces/producto';
 import { Profile } from '../../../interfaces/profile';
 import { AuthService } from '../../../servicios/auth.service';
 import { CommonModule, NgFor } from '@angular/common';
+import { environment } from '../../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-premios-admin',
@@ -24,6 +25,9 @@ export class PremiosAdminComponent implements OnInit {
   currentPage: number = 1
   Math = Math;
 
+  imagenUrl: string | null = null;
+
+
   constructor(
     protected userService: UsersService,
     protected router: Router,
@@ -42,6 +46,10 @@ export class PremiosAdminComponent implements OnInit {
         console.log(this.premios)
       }
     )
+  }
+
+  getImageUrl(path: string): string {
+    return `${environment.api_url_images}/storage/` + path.replace('public/', '')
   }
 
   getPages(): number[] {

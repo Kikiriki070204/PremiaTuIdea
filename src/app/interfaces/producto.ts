@@ -46,6 +46,7 @@ export interface UsuarioPremio {
     producto: string
     estado: string
     url: string
+    imagen: string
 
 }
 

@@ -7,6 +7,7 @@ import { Profile } from '../../interfaces/profile';
 import { UsersService } from '../../servicios/users.service';
 import { AuthService } from '../../servicios/auth.service';
 import { Canjear } from '../../interfaces/producto';
+import { environment } from '../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-productos',
@@ -25,6 +26,9 @@ export class ProductosComponent implements OnInit {
   Math = Math;
 
   user: any | null = null
+
+  imagenUrl: string | null = null;
+
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
   ngOnInit(): void {
     this.listaProductos = false
@@ -44,6 +48,10 @@ export class ProductosComponent implements OnInit {
   getRol() {
     this.user_rol = this.authService.getRoleId()
     console.log("user rol: ", this.user_rol)
+  }
+
+  getImageUrl(path: string): string {
+    return `${environment.api_url_images}/storage/` + path.replace('public/', '')
   }
 
   meplus() {

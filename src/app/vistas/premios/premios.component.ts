@@ -6,6 +6,7 @@ import { UsersService } from '../../servicios/users.service';
 import { UsuarioPremio } from '../../interfaces/producto';
 import { AuthService } from '../../servicios/auth.service';
 import { Profile } from '../../interfaces/profile';
+import { environment } from '../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-premios',
@@ -19,6 +20,9 @@ export class PremiosComponent implements OnInit {
   premios: UsuarioPremio[] | null = null
   user_id: number | null = null
   userInfo: Profile | null = null
+
+  imagenUrl: string | null = null;
+
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
 
   ngOnInit(): void {
@@ -34,6 +38,11 @@ export class PremiosComponent implements OnInit {
       }
     )
   }
+
+  getImageUrl(path: string): string {
+    return `${environment.api_url_images}/storage/` + path.replace('public/', '')
+  }
+
   user() {
     this.user_id = this.authService.getRoleId()
 

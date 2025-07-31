@@ -35,14 +35,14 @@
           <td
             class="px-6 py-4 font-semibold text-blue-800 dark:text-white items-center"
           >
-            <figure class="max-w-lg">
+            <figure class="max-w-lg text-center">
               <img
-                src="{{ premio.url }}"
-                class="w-16 md:w-32 max-w-full max-h-full"
+                [src]="premio.imagen ? getImageUrl(premio.imagen) : premio.url"
+                class="w-16 md:w-32 max-w-full max-h-full text-center mx-auto"
                 alt="Borgwarner"
               />
               <figcaption class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                ¿ {{ premio.producto }}
+                {{ premio.producto }}
               </figcaption>
             </figure>
           </td>
