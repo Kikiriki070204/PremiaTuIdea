@@ -8,6 +8,7 @@ import { UsersService } from '../../servicios/users.service';
 import { AuthService } from '../../servicios/auth.service';
 import { Canjear } from '../../interfaces/producto';
 import { environment } from '../../../enviroment/enviroment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-productos',
@@ -100,9 +101,30 @@ export class ProductosComponent implements OnInit {
     this.userService.canjearProducto(canjear).subscribe(
       {
         next(value) {
-          self.router.navigate(['/premios'])
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Producto canjeado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+            },
+            buttonsStyling: false
+          }).then(() => {
+            self.router.navigate(['/premios'])
+          });
+
         },
         error(err) {
+          Swal.fire({
+            title: 'Error',
+            text: err,
+            icon: 'error',
+            confirmButtonText: 'Intentar de nuevo',
+            customClass: {
+              confirmButton: 'bg-red-600 text-white hover:bg-red-700 transition duration-300 ease-in-out font-bold rounded-lg text-sm px-4 py-2',
+            }
+          });
           console.log(err)
         },
       }

@@ -6,14 +6,14 @@ import { IdeasService } from '../../servicios/ideas.service';
 import { Idea } from '../../interfaces/idea';
 import { NewIdea } from '../../interfaces/new-idea';
 import { HttpResponse } from '../../interfaces/http';
-import { DatePipe, NgFor, NgIf, NgClass } from '@angular/common';
+import { DatePipe, NgFor, NgIf, NgClass, CommonModule } from '@angular/common';
 import { UsersService } from '../../servicios/users.service';
 import { Area } from '../../interfaces/activar';
 
 @Component({
   selector: 'app-new-idea',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor, CommonModule],
   templateUrl: './new-idea.component.html',
   styleUrl: './new-idea.component.css'
 })
@@ -26,11 +26,13 @@ export class NewIdeaComponent implements OnInit {
 
   errorMessage: string | null = null
   titulo = new FormControl('', Validators.required)
-  antecedentes = new FormControl('', Validators.maxLength(4000))
-  propuesta = new FormControl('', Validators.maxLength(4000))
+  antecedentes = new FormControl('', Validators.required)
+  propuesta = new FormControl('', Validators.required)
   condiciones: File | null = null
   fecha_inicial = new FormControl('', Validators.required)
-  area = new FormControl()
+  area = new FormControl('', Validators.required)
+
+  formTocado = false;
 
   categoria: string | null = null
 
@@ -67,6 +69,27 @@ export class NewIdeaComponent implements OnInit {
   }
 
   async idea() {
+    this.formTocado = true;
+
+    if (this.idCategoriaSeleccionado == 1) {
+      if (
+        this.titulo.invalid ||
+        this.antecedentes.invalid ||
+        this.propuesta.invalid ||
+        this.fecha_inicial.invalid ||
+        this.area.invalid) {
+        return
+      }
+    }
+    if (this.idCategoriaSeleccionado != 1) {
+      if (
+        this.titulo.invalid ||
+        this.propuesta.invalid ||
+        this.fecha_inicial.invalid) {
+        return
+      }
+    }
+
     let self = this
     let formData: FormData = new FormData();
     formData.append('titulo', this.titulo.value ?? "");
@@ -104,7 +127,6 @@ export class NewIdeaComponent implements OnInit {
 
     this.ideaService.newIdea(formData).subscribe({
       next(value: Idea) {
-        console.log("idea id:", value.id)
         self.router.navigate(['/newIdea/add', value.id])
       },
       error(err: HttpResponse) {

@@ -24,16 +24,27 @@
         <label
           for="titulo"
           class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Título</label
         >
+          Título
+        </label>
         <input
           [formControl]="titulo"
           type="text"
           id="titulo"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+          class="w-full p-2.5 text-sm rounded-lg bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white border focus:ring-blue-500 focus:border-blue-500"
+          [ngClass]="{
+            'border-red-500': formTocado && titulo.invalid,
+            'border-gray-300': !formTocado || titulo.valid
+          }"
           placeholder="Escribe el título de tu idea o proyecto aquí"
           required
         />
+        <p
+          *ngIf="formTocado && titulo.invalid"
+          class="text-red-500 text-sm mt-1"
+        >
+          El título es obligatorio
+        </p>
       </div>
 
       <div>
@@ -49,6 +60,12 @@
           class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           required
         />
+        <p
+          *ngIf="formTocado && fecha_inicial.invalid"
+          class="text-red-500 text-sm mt-1"
+        >
+          La fecha de inicio es obligatoria
+        </p>
       </div>
 
       <!-- Propuesta -->
@@ -66,6 +83,12 @@
           class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
           placeholder="Describe el contexto aquí..."
         ></textarea>
+        <p
+          *ngIf="formTocado && antecedentes.invalid"
+          class="text-red-500 text-sm mt-1"
+        >
+          El contexto actual es obligatorio
+        </p>
       </div>
       }
 
@@ -92,6 +115,12 @@
           placeholder="Describe tu proyecto aquí..."
         ></textarea>
         }
+        <p
+          *ngIf="formTocado && propuesta.invalid"
+          class="text-red-500 text-sm mt-1"
+        >
+          La descripción es obligatoria
+        </p>
       </div>
     </form>
 
@@ -118,6 +147,7 @@
           >Área</label
         >
         <select
+          [formControl]="area"
           id="area"
           (change)="onAreaChange($event)"
           class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
@@ -127,6 +157,9 @@
             {{ area.nombre }}
           </option>
         </select>
+        <p *ngIf="formTocado && area.invalid" class="text-red-500 text-sm mt-1">
+          El área es obligatoria
+        </p>
       </div>
       }
 

@@ -7,6 +7,7 @@ import { Area, Departamento, Locacion, Rol } from '../../../../interfaces/activa
 import { AreaId, NewUser, NoLocation, User } from '../../../../interfaces/user';
 import { NgFor, NgIf } from '@angular/common';
 import { HttpResponse } from '../../../../interfaces/http';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-user',
@@ -110,23 +111,45 @@ export class NewUserComponent implements OnInit {
 
     this.userService.newUser(newUser).subscribe({
       next(value: User) {
-        console.log("si jala!")
-        self.router.navigate(['/usuarios'])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Uusario creado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/usuarios-admin'])
+
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
-            self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
-            console.log(err)
+            self.errorMessage = 'Llena todos los campos del formulario.';
+            self.errorAlert(self.errorMessage)
             break;
           default:
-            // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-            console.log(err)
+            self.errorAlert(self.errorMessage)
             break;
         }
       },
     })
+  }
+  errorAlert($message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: $message,
+      icon: 'error',
+      confirmButtonText: 'Intentar de nuevo',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 transition duration-300 ease-in-out font-bold rounded-lg text-sm px-4 py-2',
+      }
+    });
+
   }
 
   noLocationUser() {
@@ -141,19 +164,30 @@ export class NewUserComponent implements OnInit {
 
     this.userService.newUser(newUser).subscribe({
       next(value: User) {
-        console.log("si jala!")
-        self.router.navigate(['/usuarios'])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Uusario creado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/usuarios-admin'])
+
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
-            self.errorMessage = 'Campos obligatorios, por favor introduce un valor adecuado';
-            console.log(err)
+            self.errorMessage = 'Llena todos los campos del formulario.';
+            self.errorAlert(self.errorMessage)
             break;
           default:
             // Errores generales
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-            console.log(err)
+            self.errorAlert(self.errorMessage)
             break;
         }
       },

@@ -80,6 +80,20 @@
             <option value="0">Inactivo</option>
           </select>
         </div>
+
+        <div>
+          <h6 class="font-bold text-gray-900 dark:text-white">Rol</h6>
+          <select
+            (change)="onRolChange($event)"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white w-full mt-2"
+          >
+            <option [value]="userProfile?.rol_id" disabled selected hidden>
+              {{ userProfile?.rol_id === 1 ? "Administrador" : "Usuario" }}
+            </option>
+            <option value="1">Administrador</option>
+            <option value="4">Usuario</option>
+          </select>
+        </div>
       </div>
 
       <div class="flex flex-col sm:flex-row justify-center gap-4 mt-6">

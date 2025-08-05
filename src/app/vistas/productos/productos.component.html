@@ -9,7 +9,7 @@
       class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
     >
       <thead
-        class="text-xs text-white uppercase bg-blue-800 dark:bg-gray-700 dark:text-gray-400"
+        class="text-xs text-white uppercase bg-blue-800 dark:bg-gray-700 dark:text-gray-400 text-center"
       >
         <tr>
           <th scope="col" class="px-16 py-3">
@@ -56,7 +56,7 @@
           <th scope="col" class="px-6 py-3"></th>
         </tr>
       </thead>
-      <tbody>
+      <tbody class="text-center">
         <tr *ngFor="let producto of productos.data">
           <td class="p-4">
             <!--Hay que validar el index del producto -->
@@ -66,23 +66,35 @@
                   ? getImageUrl(producto.imagen.imagen)
                   : producto.url
               "
-              class="w-16 md:w-32 max-w-full max-h-full"
+              class="w-16 md:w-32 max-w-full max-h-full mx-auto"
               alt="Borgwarner"
             />
+            <span
+              class="text-xs text-gray-500 text-center dark:text-gray-400 mt-4"
+            >
+              Esta imagen es solo de ejemplo, no es la imagen del producto que
+              se otorgará
+            </span>
           </td>
-          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+          <td
+            class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-center"
+          >
             {{ producto.nombre }}
           </td>
-          <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
+          <td
+            class="px-6 py-4 font-semibold text-blue-800 dark:text-white text-center"
+          >
             {{ producto.valor }} puntos
           </td>
-          <td class="px-6 py-4 font-semibold text-lime-700 dark:text-white">
+          <td
+            class="px-6 py-4 font-semibold text-lime-700 dark:text-white text-center"
+          >
             @if(user!.puntos >= producto.valor) {
             <button
               (click)="canjearProducto(producto.id)"
               style="font-weight: 700"
               type="button"
-              class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+              class="text-white bg-blue-800 hover:bg-blue-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 transition duration-300 ease-in-out"
             >
               Canjear
             </button>

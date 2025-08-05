@@ -10,6 +10,7 @@ import { HttpResponse } from '../../../../interfaces/http';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatchValidatorProfile } from '../../../profile/profile.component';
 import { Area, Departamento } from '../../../../interfaces/activar';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-user-data',
@@ -27,6 +28,8 @@ export class UserDataComponent implements OnInit {
   userProfile: Profile | null = null
   ideas: Idea[] | null = null
   selectedActive: number | null = null
+  selectedRol: number | null = null
+
   puntos = new FormControl('', Validators.required)
 
   ibm = new FormControl<number | null>(null, Validators.required)
@@ -89,13 +92,19 @@ export class UserDataComponent implements OnInit {
     console.log("estado: ", this.selectedActive)
   }
 
+  onRolChange(event: any) {
+    const selectedValue = event.target.value;
+    this.selectedRol = parseInt(selectedValue, 10);
+
+  }
+
   editar() {
     let self = this
     let active: UpdateUser = {
       id: this.id ?? 0,
       ibm: Number(this.ibm.value) ?? 0,
       nombre: this.userProfile?.nombre ?? "",
-      rol_id: this.userProfile?.rol_id ?? 0,
+      rol_id: this.selectedRol ?? this.userProfile?.rol_id ?? 0,
       departamento_id: Number(this.departamento_id.value) ?? this.userProfile?.departamento_id,
       area_id: Number(this.area_id.value) ?? this.userProfile?.area_id,
       is_active: this.selectedActive ?? this.userProfile?.is_active,
@@ -105,21 +114,33 @@ export class UserDataComponent implements OnInit {
 
     this.userService.updateUser(active).subscribe({
       next(value) {
-        self.router.navigate(['/admin/usuarios-admin'])
+        Swal.fire({
+          title: '¡Éxito!',
+          text: 'Uusario editado correctamente',
+          icon: 'success',
+          confirmButtonText: 'Aceptar',
+          customClass: {
+            confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+          },
+          buttonsStyling: false
+        }).then(() => {
+          self.router.navigate(['/admin/usuarios-admin'])
+
+        });
       },
       error(err: HttpResponse) {
         switch (err.status) {
           case 422:
             self.errorMessage = 'Debes seleccionar un estado';
-            console.log(err)
+            self.errorAlert(self.errorMessage)
             break;
           case 404:
             self.errorMessage = 'Usuario no encontrado';
-            console.log(err)
+            self.errorAlert(self.errorMessage)
             break;
           default:
             self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
-            console.log(err)
+            self.errorAlert(self.errorMessage)
             break;
         }
       }
@@ -140,26 +161,52 @@ export class UserDataComponent implements OnInit {
 
       this.userService.setetarContraseña(formData).subscribe({
         next(value: User) {
-          console.log(value)
           self.errorMessage = null
           self.form.reset();
-          self.router.navigate(['/admin/usuarios-admin'])
+          Swal.fire({
+            title: '¡Éxito!',
+            text: 'Uusario editado correctamente',
+            icon: 'success',
+            confirmButtonText: 'Aceptar',
+            customClass: {
+              confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
+            },
+            buttonsStyling: false
+          }).then(() => {
+            self.router.navigate(['/admin/usuarios-admin'])
+          });
         },
         error(err: HttpResponse) {
           switch (err.status) {
             case 401:
               self.errorMessage = 'Contraseña incorrecta';
+              self.errorAlert(self.errorMessage)
               break;
             case 422:
               self.errorMessage = 'Datos no válidos';
+              self.errorAlert(self.errorMessage)
               break;
             default:
               self.errorMessage = 'Ha ocurrido un error. Intentelo de nuevo.';
+              self.errorAlert(self.errorMessage)
               break;
           }
         }
       })
     }
+  }
+
+  errorAlert($message: string) {
+    Swal.fire({
+      title: 'Error',
+      text: $message,
+      icon: 'error',
+      confirmButtonText: 'Intentar de nuevo',
+      customClass: {
+        confirmButton: 'bg-red-600 text-white hover:bg-red-700 transition duration-300 ease-in-out font-bold rounded-lg text-sm px-4 py-2',
+      }
+    });
+
   }
 
   toggleNewPasswordVisibility() {
