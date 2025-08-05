@@ -61,6 +61,7 @@ export interface UsuarioPremio2 {
         producto: string
         estado: string
         url: string
+        imagen: string
     }
 
 }

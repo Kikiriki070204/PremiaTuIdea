@@ -1,0 +1,12 @@
+<div *ngIf="notificaciones.length > 0; else noNotis">
+  <div *ngFor="let noti of notificaciones" class="p-4 border-b border-gray-300">
+    <p class="text-sm text-gray-700">{{ noti.mensaje }}</p>
+    <span class="text-xs text-gray-500">{{
+      noti.created_at | date : "short"
+    }}</span>
+  </div>
+</div>
+
+<ng-template #noNotis>
+  <p class="text-center text-gray-400 mt-4">No tienes notificaciones nuevas.</p>
+</ng-template>

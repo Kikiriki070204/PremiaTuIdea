@@ -17,6 +17,7 @@ export const routes: Routes =
         { path: 'myProfile', loadComponent: () => import('./vistas/profile/profile.component').then(m => m.ProfileComponent), canActivate: [authenticateGuard] },
         { path: 'usuarios', loadComponent: () => import('./vistas/usuarios/usuarios.component').then(m => m.UsuariosComponent), canActivate: [authenticateGuard] },
         { path: 'newUser', loadComponent: () => import('./vistas/dashboard-admin/usuarios-admin/new-user/new-user.component').then(m => m.NewUserComponent), canActivate: [authenticateGuard] },
+        { path: 'notificaciones', loadComponent: () => import('./vistas/notificaciones/notificaciones.component').then(m => m.NotificacionesComponent), canActivate: [authenticateGuard] },
         //Rutas de ideas
         {
             path: 'ideas',

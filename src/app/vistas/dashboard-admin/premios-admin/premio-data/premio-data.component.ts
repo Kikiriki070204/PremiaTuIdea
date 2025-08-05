@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { NgFor, NgIf } from '@angular/common';
 import { EditEstado } from '../../../../interfaces/actividad';
 import { HttpResponse } from '../../../../interfaces/http';
+import { environment } from '../../../../../enviroment/enviroment';
 
 @Component({
   selector: 'app-premio-data',
@@ -16,7 +17,7 @@ import { HttpResponse } from '../../../../interfaces/http';
 export class PremioDataComponent implements OnInit {
   errorMessage: string | null = null
   id: number | null = null
-  userPremio: UsuarioPremio2 | null = null
+  userPremio: any
   estados: EstadoPremio[] | null = null
   selectedEstado: number | null = null
   constructor(protected userService: UsersService, protected router: Router, private route: ActivatedRoute) {
@@ -84,6 +85,11 @@ export class PremioDataComponent implements OnInit {
       },
     })
   }
+
+  getImageUrl(path: string): string {
+    return `${environment.api_url_images}/storage/` + path.replace('public/', '')
+  }
+
 
   goBack() {
     history.back();

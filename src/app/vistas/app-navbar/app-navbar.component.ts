@@ -5,9 +5,10 @@ import { User } from '../../interfaces/user';
 import { Router, RouterLink, RouterLinkActive, RouterModule } from '@angular/router';
 import { CookieOptions, CookieService } from 'ngx-cookie-service';
 import { AuthService } from '../../servicios/auth.service';
-import { isEmpty } from 'rxjs';
+import { BehaviorSubject, catchError, interval, isEmpty, startWith, switchMap } from 'rxjs';
 import { NgIf } from '@angular/common';
 import { Profile } from '../../interfaces/profile';
+import { Notificacion, NotificacionesService } from '../../servicios/notificaciones.service';
 
 
 
@@ -28,14 +29,20 @@ export class AppNavbarComponent implements OnInit {
   profileMenuOpen = false;
   mobileMenuOpen = false;
 
+  hayNotisSinLeer = false;
+
+  constructor(protected cookie: CookieService, protected authService: AuthService, protected router: Router, protected notiService: NotificacionesService) {
+  }
 
 
-  constructor(protected cookie: CookieService, protected authService: AuthService, protected router: Router) { }
 
   ngOnInit(): void {
     this.user()
+    this.notiService.hayNoLeidas$.subscribe(flag => this.hayNotisSinLeer = flag);
     initFlowbite();
   }
+
+
 
   user() {
     if (this.authService.isLoggedIn()) {
