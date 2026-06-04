@@ -65,13 +65,18 @@ export class ReportesProyectosComponent implements OnInit {
           const nombreOriginal = cat.nombre_categoria?.toLowerCase() ?? '';
           const nombrePersonalizado = this.nombresPersonalizados[nombreOriginal] || cat.nombre_categoria;
 
+          const revision = mapByName('Revision');
+          const aceptadas = mapByName('Aceptada');
+          const implementadas = mapByName('Implementada');
+          const rechazadas = mapByName('Rechazada');
+
           return {
             nombre: nombrePersonalizado,
-            revision: mapByName('Revision'),
-            aceptadas: mapByName('Aceptada'),
-            implementadas: mapByName('Implementada'),
-            rechazadas: mapByName('Rechazada'),
-            total: cat.total_ideas,
+            revision,
+            aceptadas,
+            implementadas,
+            rechazadas,
+            total: revision + aceptadas + implementadas + rechazadas,
           };
         });
 
@@ -101,13 +106,18 @@ export class ReportesProyectosComponent implements OnInit {
             const nombreOriginal = cat.nombre_categoria?.toLowerCase() ?? '';
             const nombreTransformado = this.nombresPersonalizados[nombreOriginal] || cat.nombre_categoria;
 
+            const revision = mapByName('Revision');
+            const aceptadas = mapByName('Aceptada');
+            const implementadas = mapByName('Implementada');
+            const rechazadas = mapByName('Rechazada');
+
             return {
               nombre: nombreTransformado,
-              revision: mapByName('Revision'),
-              aceptadas: mapByName('Aceptada'),
-              implementadas: mapByName('Implementada'),
-              rechazadas: mapByName('Rechazada'),
-              total: cat.total_ideas,
+              revision,
+              aceptadas,
+              implementadas,
+              rechazadas,
+              total: revision + aceptadas + implementadas + rechazadas,
             };
           });
 

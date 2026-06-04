@@ -1,5 +1,4 @@
-import { Component } from '@angular/core';
-import { Idea } from '../../../../interfaces/idea';
+import { Component, OnInit } from '@angular/core';
 import { Profile } from '../../../../interfaces/profile';
 import { AuthService } from '../../../../servicios/auth.service';
 import { IdeasService } from '../../../../servicios/ideas.service';
@@ -7,6 +6,8 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule, NgFor } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-ideas-rechazadas-admin',
@@ -15,19 +16,17 @@ import Swal from 'sweetalert2';
   templateUrl: './ideas-rechazadas-admin.component.html',
   styleUrl: './ideas-rechazadas-admin.component.css'
 })
-export class IdeasRechazadasAdminComponent {
+export class IdeasRechazadasAdminComponent implements OnInit {
+  allIdeas: any[] = [];
+  filteredIdeas: any[] = [];
+  clientPage = 1;
+  readonly clientPageSize = 15;
+  isLoading = false;
 
-  ideasUsers: any = [];
-  userInfo: Profile | null = null;
-  user_rol: number | null = null;
-  totalItems: number = 0;
-  pageSize: number = 15;
-  currentPage: number = 1;
-  Math = Math;
-
-  selectedCategoria: number = 1; // por defecto, categoría 1
+  selectedCategoria: number = 1;
   selectedArea: number | null = null;
-
+  searchQuery: string = '';
+  searchDate: string = '';
 
   constructor(
     protected authService: AuthService,
@@ -36,34 +35,107 @@ export class IdeasRechazadasAdminComponent {
   ) { }
 
   ngOnInit(): void {
-    this.ideasbyStatus(4, this.currentPage, this.selectedCategoria);
+    this.loadAllData();
   }
 
-  ideasbyStatus(
-    estatus: number | null = null,
-    page: number,
-    categoria: number | null = null,
-    area_id: number | null = null
+  get pagedIdeas(): any[] {
+    const start = (this.clientPage - 1) * this.clientPageSize;
+    return this.filteredIdeas.slice(start, start + this.clientPageSize);
+  }
 
-  ) {
-    this.currentPage = page;
-    this.ideasUsers = [];
-    this.ideaService.ideasByStatusAndCategory(estatus, categoria, page, area_id).subscribe((myIdeas) => {
-      this.ideasUsers = myIdeas.ideas;
+  get totalPages(): number {
+    return Math.ceil(this.filteredIdeas.length / this.clientPageSize);
+  }
+
+  get showingFrom(): number {
+    return this.filteredIdeas.length === 0 ? 0 : (this.clientPage - 1) * this.clientPageSize + 1;
+  }
+
+  get showingTo(): number {
+    return Math.min(this.clientPage * this.clientPageSize, this.filteredIdeas.length);
+  }
+
+  loadAllData(): void {
+    this.isLoading = true;
+    this.allIdeas = [];
+    this.filteredIdeas = [];
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (this.ideaService.ideasByStatusAndCategory(4, this.selectedCategoria, 1, this.selectedArea) as any).subscribe({
+      next: (firstRes: any) => {
+        const firstData: any[] = firstRes?.ideas?.data ?? [];
+        const lastPage: number = firstRes?.ideas?.last_page ?? 1;
+
+        if (lastPage <= 1) {
+          this.allIdeas = firstData;
+          this.applyFilters();
+          this.isLoading = false;
+          return;
+        }
+
+        const requests = [];
+        for (let p = 2; p <= lastPage; p++) {
+          requests.push(
+            (this.ideaService.ideasByStatusAndCategory(4, this.selectedCategoria, p, this.selectedArea) as any)
+              .pipe(map((r: any) => r?.ideas?.data ?? []))
+          );
+        }
+
+        forkJoin(requests).subscribe({
+          next: (pages: any) => {
+            this.allIdeas = [...firstData, ...(pages as any[]).flat()];
+            this.applyFilters();
+            this.isLoading = false;
+          },
+          error: () => {
+            this.allIdeas = firstData;
+            this.applyFilters();
+            this.isLoading = false;
+          }
+        });
+      },
+      error: () => { this.isLoading = false; }
     });
   }
 
-  onCategoriaChange(): void {
-    this.ideasbyStatus(4, 1, this.selectedCategoria); // siempre reinicia en página 1 al cambiar
+  applyFilters(): void {
+    let result = [...this.allIdeas];
+
+    if (this.searchQuery.trim()) {
+      const q = this.searchQuery.toLowerCase().trim();
+      result = result.filter((idea: any) => idea.titulo?.toLowerCase().includes(q));
+    }
+
+    if (this.searchDate) {
+      result = result.filter((idea: any) => (idea.created_at ?? '').slice(0, 10) === this.searchDate);
+    }
+
+    this.filteredIdeas = result;
+    this.clientPage = 1;
   }
 
-  onPageChange(page: number): void {
-    this.ideasbyStatus(4, page, this.selectedCategoria);
+  onSearchChange(): void {
+    this.applyFilters();
+  }
+
+  onDateChange(): void {
+    this.applyFilters();
+  }
+
+  clearFilters(): void {
+    this.searchQuery = '';
+    this.searchDate = '';
+    this.applyFilters();
+  }
+
+  onCategoriaChange(): void {
+    this.searchQuery = '';
+    this.searchDate = '';
+    this.loadAllData();
   }
 
   onAreaChange(): void {
-    this.ideasbyStatus(4, 1, this.selectedCategoria, this.selectedArea);
-
+    this.loadAllData();
   }
 
   delete(idea: number) {
@@ -93,9 +165,7 @@ export class IdeasRechazadasAdminComponent {
                 confirmButton: 'bg-blue-800 text-white hover:bg-blue-900 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
               },
               buttonsStyling: false
-            }).then(() => {
-              this.ideasbyStatus(1, this.currentPage, this.selectedCategoria);
-            });
+            }).then(() => { this.loadAllData(); });
           },
           error: () => {
             Swal.fire({
@@ -107,10 +177,9 @@ export class IdeasRechazadasAdminComponent {
                 confirmButton: 'bg-red-600 text-white hover:bg-red-700 font-bold rounded-lg text-sm px-4 py-2 transition duration-300 ease-in-out',
               }
             });
-          },
+          }
         });
       }
     });
   }
 }
-

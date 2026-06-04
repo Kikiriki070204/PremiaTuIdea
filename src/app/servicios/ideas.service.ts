@@ -47,15 +47,27 @@ export class IdeasService {
     estatus: number | null,
     categoria: number | null,
     page: number = 1,
-    area_id?: number | null
+    area_id?: number | null,
+    search?: string,
+    fecha?: string
   ): Observable<Ideas> {
-    let url = `${environment.api_url}/ideass/ideasAllCategoria/${estatus}/${categoria}?page=${page}`;
+    let url = `${environment.api_url}/ideass/ideasAllCategoria/${estatus}/${categoria}`;
+    
+    let params = new HttpParams().set('page', page.toString());
 
-    if (area_id !== null && area_id !== undefined) {
-      url += `&area_id=${area_id}`;
+    if (area_id !== null && area_id !== undefined && area_id !== 0) {
+      params = params.set('area_id', area_id.toString());
+    }
+    
+    if (search) {
+      params = params.set('search', search);
     }
 
-    return this.http.get<Ideas>(url);
+    if (fecha) {
+      params = params.set('fecha', fecha);
+    }
+
+    return this.http.get<Ideas>(url, { params });
   }
 
 

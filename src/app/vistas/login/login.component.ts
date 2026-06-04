@@ -24,6 +24,7 @@ export class LoginComponent implements OnInit {
   ibm = new FormControl('', Validators.required);
   password = new FormControl('', Validators.minLength(6));
   cargando = false;
+  showPassword = false;
 
   constructor(
     private cookieService: CookieService,
@@ -105,5 +106,9 @@ export class LoginComponent implements OnInit {
 
   clearError() {
     this.errorMessage = null;
+  }
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
   }
 }

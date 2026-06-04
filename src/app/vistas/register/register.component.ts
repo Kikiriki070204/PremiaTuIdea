@@ -44,7 +44,6 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this.getDeps();
     this.getAreas();
-    this.getLocaciones();
   }
 
   togglePasswordVisibility() {
@@ -114,7 +113,7 @@ export class RegisterComponent implements OnInit {
       const nombreCompleto = `${nombre || ''} ${apellido_paterno || ''} ${apellido_materno || ''}`.trim();
 
       const formData = {
-        ibm,
+        ibm: ibm ? Number(ibm) : null,
         nombre: nombreCompleto,
         password,
         rol_id: 4,
@@ -134,11 +133,13 @@ export class RegisterComponent implements OnInit {
           let self = this;
           switch (err.status) {
             case 422:
-              self.errorMessage = 'Campos obligatorios, por favor rellena todos los campos requeridos';
+              self.errorMessage = err.error?.msg === 'Usuario ya registrado'
+                ? 'Este IBM ya está registrado, intenta con otro.'
+                : 'Por favor rellena todos los campos requeridos correctamente.';
               console.log(err)
               break;
             case 409:
-              self.errorMessage = 'El usuario ya existe, por favor intenta con otro IBM.';
+              self.errorMessage = 'Este IBM ya está registrado. Si olvidaste tu contraseña, contacta a tu administrador.';
               console.log(err)
               break;
             default:
@@ -179,13 +180,13 @@ export class RegisterComponent implements OnInit {
   }
 
   get selectedAreaControl() {
-    return this.form.get('selectedArea');
+    return this.form.get('selectedAreaControl');
   }
   get selectedDepControl() {
-    return this.form.get('selectedDep');
+    return this.form.get('selectedDepControl');
   }
   get selectedLocControl() {
-    return this.form.get('selectedLoc');
+    return this.form.get('selectedLocControl');
   }
 }
 

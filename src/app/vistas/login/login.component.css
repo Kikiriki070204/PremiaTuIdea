@@ -1,6 +1,439 @@
-#container{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+/* ═══════════════════════════════════════════════════════════
+   LOGIN PAGE  —  White-first, blue accent
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Layout principal ─────────────────────────────────────── */
+.login-page {
+  display: flex;
+  min-height: 100vh;
+  background: #f0f4f8;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PANEL IZQUIERDO — decorativo / branding
+   ══════════════════════════════════════════════════════════ */
+.brand-panel {
+  position: relative;
+  width: 45%;
+  background: linear-gradient(145deg, #0d2a5c 0%, #1a4080 45%, #1565c0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Brillo central animado */
+.brand-glow {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(255,255,255,0.07) 0%, transparent 70%);
+  animation: pulseGlow 4s ease-in-out infinite alternate;
+}
+
+@keyframes pulseGlow {
+  from { opacity: 0.6; transform: scale(1); }
+  to   { opacity: 1;   transform: scale(1.08); }
+}
+
+/* Círculos decorativos flotantes */
+.brand-circles { position: absolute; inset: 0; pointer-events: none; }
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,0.15);
+}
+.c1 {
+  width: 300px; height: 300px;
+  bottom: -80px; left: -80px;
+  animation: floatCircle 7s ease-in-out infinite alternate;
+}
+.c2 {
+  width: 180px; height: 180px;
+  top: 40px; right: -40px;
+  animation: floatCircle 5s ease-in-out infinite alternate-reverse;
+}
+.c3 {
+  width: 90px; height: 90px;
+  top: 55%; left: 15%;
+  animation: floatCircle 6s ease-in-out infinite alternate;
+  background: rgba(255,255,255,0.04);
+}
+
+@keyframes floatCircle {
+  from { transform: translate(0, 0); }
+  to   { transform: translate(12px, -18px); }
+}
+
+/* Contenido del panel */
+.brand-content {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 2.5rem;
+  animation: fadeSlideUp 0.8s ease both;
+}
+
+.brand-logo {
+  height: 52px;
+  object-fit: contain;
+  margin-bottom: 2.5rem;
+  filter: drop-shadow(0 2px 12px rgba(0,0,0,0.25));
+}
+
+.brand-headline {
+  color: #ffffff;
+  font-size: 1.75rem;
+  font-weight: 700;
+  line-height: 1.35;
+  margin: 0 0 1rem 0;
+  text-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+
+.brand-desc {
+  color: rgba(255,255,255,0.7);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ══════════════════════════════════════════════════════════
+   PANEL DERECHO — formulario
+   ══════════════════════════════════════════════════════════ */
+.form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background: #f8fafc;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 420px;
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 2.75rem 2.5rem;
+  box-shadow:
+    0 1px 3px rgba(0,0,0,0.06),
+    0 8px 24px rgba(0,0,0,0.08),
+    0 24px 64px rgba(13,42,92,0.06);
+  animation: fadeSlideUp 0.6s ease both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ── Cabecera del formulario ──────────────────────────────── */
+.form-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.form-logo {
+  height: 36px;
+  object-fit: contain;
+  margin-bottom: 1.25rem;
+}
+
+.form-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #0d2a5c;
+  margin: 0 0 0.3rem 0;
+}
+
+.form-subtitle {
+  font-size: 0.875rem;
+  color: #64748b;
+  margin: 0;
+}
+
+/* ── Campos ───────────────────────────────────────────────── */
+.field-group {
+  margin-bottom: 1.25rem;
+}
+
+.field-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 0.4rem;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 0.9rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  pointer-events: none;
+  transition: color 0.2s;
+}
+
+.field-input {
+  width: 100%;
+  padding: 0.8rem 0.9rem 0.8rem 2.75rem;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #0f172a;
+  background: #f8fafc;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+  box-sizing: border-box;
+  /* quita flechas del input number */
+  -moz-appearance: textfield;
+}
+.field-input::-webkit-outer-spin-button,
+.field-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
+.field-input:focus {
+  border-color: #1a4080;
+  background: #ffffff;
+  box-shadow: 0 0 0 3.5px rgba(26, 64, 128, 0.12);
+}
+
+/* El foco del input mueve color del icono */
+.input-wrapper:focus-within .input-icon {
+  color: #1a4080;
+}
+
+.field-input.has-eye {
+  padding-right: 2.75rem;
+}
+
+/* ── Botón ojo ────────────────────────────────────────────── */
+.eye-btn {
+  position: absolute;
+  right: 0.85rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  transition: color 0.2s, transform 0.15s;
+}
+
+.eye-btn:hover {
+  color: #1a4080;
+  transform: scale(1.15);
+}
+
+/* ── Alert de error ───────────────────────────────────────── */
+.error-alert {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.6rem;
+  background: #fff1f2;
+  border: 1.5px solid #fecdd3;
+  border-radius: 10px;
+  padding: 0.75rem 1rem;
+  font-size: 0.84rem;
+  color: #be123c;
+  margin-bottom: 1.1rem;
+  animation: shakeIn 0.4s ease both;
+}
+
+@keyframes shakeIn {
+  0%  { transform: translateX(0); opacity: 0; }
+  20% { transform: translateX(-6px); }
+  40% { transform: translateX(6px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(3px); opacity: 1; }
+  100%{ transform: translateX(0); opacity: 1; }
+}
+
+/* ── Botón principal ──────────────────────────────────────── */
+.btn-login {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  background: linear-gradient(135deg, #1a4080 0%, #1565c0 100%);
+  color: #ffffff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.15s, box-shadow 0.25s;
+  box-shadow: 0 4px 14px rgba(21, 101, 192, 0.35);
+  letter-spacing: 0.015em;
+}
+
+/* Brillo en hover */
+.btn-login::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.25s;
+}
+
+.btn-login:hover::before {
+  opacity: 1;
+}
+
+.btn-login:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(21, 101, 192, 0.45);
+}
+
+.btn-login:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.3);
+}
+
+/* Flecha animada al hover */
+.btn-arrow {
+  display: flex;
+  align-items: center;
+  transition: transform 0.25s;
+}
+
+.btn-login:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* ── Botón cargando ───────────────────────────────────────── */
+.btn-loading {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  background: linear-gradient(135deg, #334155 0%, #475569 100%);
+  color: rgba(255,255,255,0.8);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: not-allowed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  letter-spacing: 0.015em;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Efecto shimmer de carga */
+.btn-loading::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -60%;
+  width: 40%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.12), transparent);
+  animation: shimmer 1.4s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0%  { left: -60%; }
+  100%{ left: 120%; }
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.3);
+  border-top-color: #ffffff;
+  border-radius: 50%;
+  animation: spin 0.75s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Divider ──────────────────────────────────────────────── */
+.divider {
+  position: relative;
+  text-align: center;
+  margin: 1.5rem 0 1rem;
+}
+
+.divider::before {
+  content: '';
+  position: absolute;
+  top: 50%; left: 0; right: 0;
+  height: 1px;
+  background: #e2e8f0;
+}
+
+.divider span {
+  position: relative;
+  background: #ffffff;
+  padding: 0 0.85rem;
+  font-size: 0.8rem;
+  color: #94a3b8;
+}
+
+/* ── Botón secundario (registro) ──────────────────────────── */
+.btn-register {
+  display: block;
+  width: 100%;
+  padding: 0.8rem;
+  text-align: center;
+  background: transparent;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  color: #0d2a5c;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s, transform 0.15s;
+  box-sizing: border-box;
+}
+
+.btn-register:hover {
+  border-color: #1a4080;
+  background: #eff6ff;
+  color: #1a4080;
+  transform: translateY(-1px);
+}
+
+.btn-register:active {
+  transform: translateY(0);
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE
+   ══════════════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  .brand-panel {
+    display: none;
+  }
+
+  .form-panel {
+    background: linear-gradient(135deg, #0d2a5c 0%, #1565c0 100%);
+    padding: 1.5rem 1rem;
+    align-items: flex-start;
+    padding-top: 2.5rem;
+  }
+
+  .form-card {
+    padding: 2rem 1.5rem;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+  }
 }

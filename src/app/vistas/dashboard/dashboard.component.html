@@ -1,38 +1,432 @@
+<div class="dashboard-wrapper">
 
-<div class="bg-white" style="background-image: url('../../../assets/white-bg.png');
-height:100%;
-background-size: cover;
-background-position: center;
-background-repeat: no-repeat;
-width:100%">
-  <div class="relative isolate px-6 pt-14 lg:px-8">
-    <div class="mx-auto max-w-2xl py-32 sm:py-48 lg:py-56">
-      <div class="text-center">
-        <h1
-          class="text-5xl font-semibold tracking-tight text-balance text-black sm:text-7xl"
-        >
-          ¡Bienvenido(a) {{ user?.nombre }}!
-        </h1>
+  <!-- ============================================================
+       DASHBOARD ADMINISTRADOR (rol 1)
+  ============================================================ -->
+  @if (user?.rol_id == 1) {
 
-        <p
-          class="mt-8 text-lg font-medium text-pretty text-gray-700 sm:text-xl/8"
-        >
-          @if(user?.rol_id == 4){ Este es tu espacio para compartir tus ideas y
-          poder canjear tus puntos por premios } @else if(user?.rol_id == 1){ En
-          este espacio podras administrar las ideas propuestas, registrar
-          usuarios y otorgar puntos. } @else if(user?.rol_id == 2){ En este
-          espacio podras visualizar las ideas propuestas y reportes. }
-          @else if(user?.rol_id == 3){ En este espacio podras registrar usuarios. }
-          @else if(user?.rol_id == 5){ Haz iniciado sesión como invitado. }
-        </p>
-        <div class="mt-10 flex items-center justify-center gap-x-6">
-          <img
-            class="w-24 h-24 mb-3 animate-pulse"
-            src="../../assets/idea2.png"
-            alt="idea image"
-          />
+  <!-- Hero admin -->
+  <section class="admin-hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <span class="sparkle sp-1">✦</span>
+    <span class="sparkle sp-2">★</span>
+    <span class="sparkle sp-3">✦</span>
+
+    <div class="admin-hero-inner">
+      <div>
+        <div class="role-badge">
+          <span class="role-dot"></span>
+          Administrador
         </div>
-        
+        <h1 class="admin-title">
+          Hola, <span class="name-highlight">{{ user?.nombre ?? '...' }}</span>
+        </h1>
+        <p class="admin-subtitle">
+          Aquí tienes un resumen del estado actual del programa de innovación.
+        </p>
+        <div class="user-meta">
+          @if (user?.departamento) {
+            <span class="meta-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z"/>
+              </svg>
+              {{ user?.departamento }}
+            </span>
+          }
+          @if (user?.area) {
+            <span class="meta-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+              </svg>
+              {{ user?.area }}
+            </span>
+          }
+        </div>
+      </div>
+
+      <!-- Acciones rápidas admin en el hero -->
+      <div class="admin-hero-actions">
+        <a routerLink="/admin/ideas-admin" class="hero-action-btn">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+          </svg>
+          Gestionar ideas
+        </a>
+        <a routerLink="/admin/reportes-admin" class="hero-action-btn hero-action-ghost">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+          </svg>
+          Ver reportes
+        </a>
+      </div>
     </div>
-  </div>
+  </section>
+
+  <!-- Estadísticas principales -->
+  <section class="stats-section">
+    <div class="stats-inner">
+
+      @if (!statsLoaded) {
+        <div class="loading-row">
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+          <div class="skeleton-card"></div>
+        </div>
+      } @else {
+        <div class="stats-grid">
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap" style="background:#eff6ff; color:#2563eb">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Total de ideas</span>
+              <span class="stat-value">{{ totalIdeas | number }}</span>
+            </div>
+            <div class="stat-badge" style="background:#eff6ff; color:#2563eb">Históricas</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap" style="background:#f0fdf4; color:#16a34a">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.051zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Ahorro generado</span>
+              <span class="stat-value">${{ totalAhorro | number:'1.0-0' }}</span>
+              <span class="stat-sub">USD {{ totalAhorroUsd | number:'1.0-0' }}</span>
+            </div>
+            <div class="stat-badge" style="background:#f0fdf4; color:#16a34a">MXN</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap" style="background:#fefce8; color:#ca8a04">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Puntos otorgados</span>
+              <span class="stat-value">{{ totalPuntos | number }}</span>
+            </div>
+            <div class="stat-badge" style="background:#fefce8; color:#ca8a04">Contables</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-icon-wrap" style="background:#fdf4ff; color:#9333ea">
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.950l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.950l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+              </svg>
+            </div>
+            <div class="stat-info">
+              <span class="stat-label">Puntos totales</span>
+              <span class="stat-value">{{ totalPuntos | number }}</span>
+              <span class="stat-sub">contables + no contables</span>
+            </div>
+            <div class="stat-badge" style="background:#fdf4ff; color:#9333ea">Global</div>
+          </div>
+
+        </div>
+      }
+    </div>
+  </section>
+
+  <!-- Leaderboard + Accesos rápidos -->
+  <section class="admin-content-section">
+    <div class="admin-content-inner">
+
+      <!-- Top 5 usuarios -->
+      <div class="leaderboard-card">
+        <div class="card-header">
+          <h3>
+            <span>🏅</span> Top 5 colaboradores
+          </h3>
+          <a routerLink="/admin/reportes-admin/puntos" class="card-link">Ver todos →</a>
+        </div>
+
+        @if (!statsLoaded) {
+          <div class="leader-skeleton">
+            @for (i of [1,2,3,4,5]; track i) {
+              <div class="sk-row"></div>
+            }
+          </div>
+        } @else if (top5.length === 0) {
+          <p class="empty-msg">Sin datos disponibles</p>
+        } @else {
+          <ol class="leaderboard-list">
+            @for (u of top5; track u.id; let i = $index) {
+              <li class="leader-row" [class.leader-gold]="i===0" [class.leader-silver]="i===1" [class.leader-bronze]="i===2">
+                <span class="leader-pos">
+                  @if (i === 0) { 🥇 }
+                  @else if (i === 1) { 🥈 }
+                  @else if (i === 2) { 🥉 }
+                  @else { {{ i + 1 }} }
+                </span>
+                <span class="leader-name">{{ u.nombre }}</span>
+                <span class="leader-ibm">IBM: {{ u.ibm }}</span>
+                <span class="leader-pts">{{ u.total_puntos | number }} pts</span>
+              </li>
+            }
+          </ol>
+        }
+      </div>
+
+      <!-- Accesos rápidos admin -->
+      <div class="admin-shortcuts">
+        <div class="card-header">
+          <h3><span>⚡</span> Accesos rápidos</h3>
+        </div>
+        <div class="admin-sc-grid">
+
+          <a routerLink="/admin/ideas-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5z"/>
+              </svg>
+            </div>
+            <span>Ideas</span>
+          </a>
+
+          <a routerLink="/admin/usuarios-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6m-5.784 6A2.24 2.24 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.3 6.3 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1zM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5"/>
+              </svg>
+            </div>
+            <span>Usuarios</span>
+          </a>
+
+          <a routerLink="/admin/reportes-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+              </svg>
+            </div>
+            <span>Reportes</span>
+          </a>
+
+          <a routerLink="/admin/productos-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+              </svg>
+            </div>
+            <span>Productos</span>
+          </a>
+
+          <a routerLink="/admin/premios-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5q0 .807-.034 1.536a3 3 0 1 1-1.133 5.89c-.79 1.865-1.878 2.777-2.833 3.011v2.173l1.425.356c.194.048.377.135.537.255L13.3 15.1a.5.5 0 0 1-.3.9H3a.5.5 0 0 1-.3-.9l1.838-1.379c.16-.12.343-.207.537-.255L6.5 13.11v-2.173c-.955-.234-2.043-1.146-2.833-3.012a3 3 0 1 1-1.132-5.89A33 33 0 0 1 2.5.5"/>
+              </svg>
+            </div>
+            <span>Premios</span>
+          </a>
+
+          <a routerLink="/admin/bonos-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
+                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.051zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+              </svg>
+            </div>
+            <span>Bonos</span>
+          </a>
+
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       DASHBOARD USUARIOS (rol != 1)
+  ============================================================ -->
+  } @else {
+
+  <!-- Hero bienvenida -->
+  <section class="hero-section">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <span class="sparkle sp-1">✦</span>
+    <span class="sparkle sp-2">★</span>
+    <span class="sparkle sp-3">✦</span>
+
+    <div class="hero-inner">
+
+      <div class="hero-text">
+        <div class="role-badge">
+          <span class="role-dot"></span>
+          {{ user?.rol ?? 'Cargando...' }}
+        </div>
+        <h1 class="hero-title">
+          ¡Bienvenido(a),<br />
+          <span class="name-highlight">{{ user?.nombre ?? '...' }}!</span>
+        </h1>
+        <div class="user-meta">
+          @if (user?.departamento) {
+            <span class="meta-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022M6 8.694 1 10.36V15h5zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5z"/>
+              </svg>
+              {{ user?.departamento }}
+            </span>
+          }
+          @if (user?.area) {
+            <span class="meta-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M1 2.5A1.5 1.5 0 0 1 2.5 1h3A1.5 1.5 0 0 1 7 2.5v3A1.5 1.5 0 0 1 5.5 7h-3A1.5 1.5 0 0 1 1 5.5zm8 0A1.5 1.5 0 0 1 10.5 1h3A1.5 1.5 0 0 1 15 2.5v3A1.5 1.5 0 0 1 13.5 7h-3A1.5 1.5 0 0 1 9 5.5zm-8 8A1.5 1.5 0 0 1 2.5 9h3A1.5 1.5 0 0 1 7 10.5v3A1.5 1.5 0 0 1 5.5 15h-3A1.5 1.5 0 0 1 1 13.5zm8 0A1.5 1.5 0 0 1 10.5 9h3a1.5 1.5 0 0 1 1.5 1.5v3a1.5 1.5 0 0 1-1.5 1.5h-3A1.5 1.5 0 0 1 9 13.5z"/>
+              </svg>
+              {{ user?.area }}
+            </span>
+          }
+          @if (user?.locacion) {
+            <span class="meta-chip">
+              <svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10m0-7a3 3 0 1 1 0-6 3 3 0 0 1 0 6"/>
+              </svg>
+              {{ user?.locacion }}
+            </span>
+          }
+        </div>
+        <p class="hero-desc">
+          @if (user?.rol_id == 4) {
+            Este es tu espacio para compartir tus ideas y acumular puntos por cada una aprobada.
+          } @else if (user?.rol_id == 2) {
+            Aquí puedes visualizar las ideas propuestas y consultar reportes.
+          } @else if (user?.rol_id == 3) {
+            Aquí puedes registrar y gestionar usuarios de la plataforma.
+          } @else if (user?.rol_id == 5) {
+            Estás navegando como invitado con acceso limitado a la plataforma.
+          }
+        </p>
+      </div>
+
+      @if (user?.rol_id == 4) {
+      <div class="points-card">
+        <div class="points-glow"></div>
+        <div class="points-icon">🏆</div>
+        <div class="points-number">{{ user?.puntos ?? 0 }}</div>
+        <div class="points-label">puntos acumulados</div>
+        <div class="points-divider"></div>
+        <p class="points-hint">Sigue enviando ideas para ganar más</p>
+        <a routerLink="/myProfile" class="points-btn">Ver mi perfil →</a>
+      </div>
+      } @else {
+      <div class="welcome-card">
+        <div class="welcome-img-wrap">
+          <div class="welcome-glow"></div>
+          <img src="assets/idea2.png" class="welcome-img" alt="Idea" />
+        </div>
+        <p class="welcome-card-text">
+          @if (user?.rol_id == 3) { Gestiona los usuarios de la plataforma. }
+          @else { Explora las ideas propuestas por el equipo. }
+        </p>
+      </div>
+      }
+
+    </div>
+  </section>
+
+  <!-- Accesos rápidos usuarios -->
+  <section class="shortcuts-section">
+    <div class="shortcuts-inner">
+      <h2 class="shortcuts-title">¿Qué quieres hacer hoy?</h2>
+      <div class="shortcuts-grid">
+
+        <a routerLink="/ideas" class="shortcut-card">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#3b82f6,#1d4ed8)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Ideas / Proyectos</span>
+            <span class="sc-sub">Revisa las ideas enviadas</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+
+        <a routerLink="/myProfile" class="shortcut-card">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6m2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0m4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4m-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10s-3.516.68-4.168 1.332c-.678.678-.83 1.418-.832 1.664z"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Mi perfil</span>
+            <span class="sc-sub">Ver mis datos y puntos</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+
+        <a routerLink="/productos" class="shortcut-card">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#10b981,#059669)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Productos</span>
+            <span class="sc-sub">Catálogo disponible</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+
+        @if (user?.rol_id == 3) {
+        <a routerLink="/admin" class="shortcut-card">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#8b5cf6,#6d28d9)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M11 2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v12h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h1V7a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v7h1z"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Dashboard Admin</span>
+            <span class="sc-sub">Gestión y reportes</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+        }
+
+        @if (user?.rol_id == 4) {
+        <a routerLink="/newIdea/0" class="shortcut-card shortcut-featured">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8"/>
+              <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Enviar nueva idea</span>
+            <span class="sc-sub">¡Comparte tu propuesta!</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+        }
+
+        <a routerLink="/terminos-condiciones" class="shortcut-card">
+          <div class="sc-icon" style="background:linear-gradient(135deg,#64748b,#475569)">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
+              <path d="M5.5 7a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1zM5 9.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5m0 2a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5"/>
+              <path d="M9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.5zm0 1v2A1.5 1.5 0 0 0 11 4.5h2V14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <div class="sc-text">
+            <span class="sc-title">Términos y condiciones</span>
+            <span class="sc-sub">Reglamento del programa</span>
+          </div>
+          <span class="sc-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  } <!-- fin @else -->
+
 </div>

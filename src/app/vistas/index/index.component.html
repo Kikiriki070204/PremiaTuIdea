@@ -1,72 +1,200 @@
-<!--ngIf para validar el rol de los usuarios-->
+<div class="page-wrapper">
 
-<div class="container" id="container" style="margin-bottom: 5%">
-  <h1 class="question">¿QUÉ ES PREMIA TU IDEA?</h1>
-  <br />
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero-bg relative overflow-hidden">
 
-  <div
-    class="container max-w-2xl p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
-    style="padding: 3%; margin-top: 1%"
-  >
-    <img
-      class="w-24 h-24 mb-3 items-center"
-      aria-hidden="true"
-      src="../../assets/idea.png"
-      fill="currentColor"
-      style="margin-left: 44%"
-    />
+    <!-- Orbes decorativos de fondo -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-    <h3
-      id=""
-      class="mb-2 text-2xl font-semibold tracking-tight text-gray-900 dark:text-white"
-      style="color: rgb(37, 34, 90)"
-    >
-      SI TIENES UNA IDEA QUE PUEDE MEJORAR ALGUNO DE ESTOS PUNTOS:
-    </h3>
+    <!-- Destellos -->
+    <span class="sparkle sp-1">✦</span>
+    <span class="sparkle sp-2">★</span>
+    <span class="sparkle sp-3">✦</span>
+    <span class="sparkle sp-4">✦</span>
+    <span class="sparkle sp-5">★</span>
 
-    <ul
-      class="py-2 items-center text-md font-medium text-gray-500 list-disc list-inside dark:text-gray-400"
-    >
-      <li>La seguridad</li>
-      <li>La producción</li>
-      <li>Reducción de SCRAP o Tiempos muertos</li>
-      <li>Generar algun tipo de ahorro a la planta</li>
-    </ul>
-    <h5
-      class="yay text-center mt-4 font-bold animate-bounce"
-      style="margin-top: 1%"
-    >
-      ¡Tu idea puede ser escuchada, implementada y PREMIADA!
-    </h5>
-    <div class="container" style="margin-top: 1%; text-align: center">
-      @if(user_token != null) {
-      <a
-        (click)="dashboard()"
-        class="ref inline-flex font-medium items-center text-blue-600 hover:underline"
-        style="margin-top: 2%"
-      >
-        Ir a inicio
-      </a>
-      } @else {
-      <p>
-        ¿Primera vez en el sitio?
-        <a
-          [routerLink]="['/register']"
-          class="ref inline-flex font-medium items-center text-blue-800 hover:underline"
-          style="margin-top: 5%"
-        >
-          ¡Registrate aquí!
-        </a>
-      </p>
-      <br />
-      <a
-        [routerLink]="['/login']"
-        class="ref inline-flex font-medium items-center text-blue-600 hover:underline"
-        style="margin-top: 2%"
-      >
-        Iniciar sesión
-      </a>
-      }
+    <div class="hero-inner">
+
+      <!-- Texto -->
+      <div class="hero-text">
+        <div class="hero-badge">
+          <span>🏆</span>
+          <span>Programa de Innovación BorgWarner</span>
+        </div>
+
+        <h1 class="hero-title">
+          Tu idea puede<br />
+          <span class="text-gradient">cambiar la planta</span>
+        </h1>
+
+        <p class="hero-subtitle">
+          Comparte tus propuestas para mejorar la seguridad, producción y eficiencia.
+          Las mejores ideas son implementadas <strong>y premiadas</strong>.
+        </p>
+
+        @if (isLoggedIn) {
+          <button (click)="dashboard()" class="btn-primary">
+            Ir al dashboard &rarr;
+          </button>
+        } @else {
+          <div class="hero-actions">
+            <a [routerLink]="['/login']" class="btn-primary">Iniciar sesión</a>
+            <a [routerLink]="['/register']" class="btn-ghost">¿Primera vez? Regístrate</a>
+          </div>
+        }
+
+        <!-- Stats -->
+        <div class="hero-stats">
+          <div class="stat">
+            <span class="stat-num">+500</span>
+            <span class="stat-label">Ideas enviadas</span>
+          </div>
+          <div class="stat-sep"></div>
+          <div class="stat">
+            <span class="stat-num">+120</span>
+            <span class="stat-label">Premiadas</span>
+          </div>
+          <div class="stat-sep"></div>
+          <div class="stat">
+            <span class="stat-num">+80</span>
+            <span class="stat-label">Implementadas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Visual card -->
+      <div class="hero-visual">
+        <div class="hero-card">
+          <div class="glow-ring"></div>
+          <img src="assets/idea.png" class="idea-img" alt="Idea" />
+
+          <!-- Badges flotantes -->
+          <div class="float-badge badge-top">
+            <span>💡</span> ¡Nueva idea!
+          </div>
+          <div class="float-badge badge-bot">
+            <span>🏅</span> Premio obtenido
+          </div>
+
+          <!-- Puntos decorativos -->
+          <div class="dot-ring dot-ring-1"></div>
+          <div class="dot-ring dot-ring-2"></div>
+        </div>
+      </div>
+
     </div>
-  </div>
+
+    <!-- Divisor de ola -->
+    <div class="wave">
+      <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f8fafc"/>
+      </svg>
+    </div>
+  </section>
+
+
+  <!-- ===== CÓMO FUNCIONA ===== -->
+  <section class="section-light">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <p class="section-tag">Proceso</p>
+        <h2 class="section-title">¿Cómo funciona?</h2>
+        <p class="section-sub">En 3 sencillos pasos tu idea puede ser reconocida y premiada</p>
+      </div>
+
+      <div class="steps-grid">
+
+        <div class="step-card">
+          <span class="step-num">01</span>
+          <div class="step-icon">💡</div>
+          <h3>Propón tu idea</h3>
+          <p>Describe tu propuesta: cómo mejoraría algún proceso, reduciría riesgos o generaría ahorro para la planta.</p>
+        </div>
+
+        <div class="step-card step-highlight">
+          <span class="step-num">02</span>
+          <div class="step-icon">⚙️</div>
+          <h3>Se evalúa</h3>
+          <p>El equipo administrativo analiza el impacto de tu idea y decide si se aprueba e implementa.</p>
+        </div>
+
+        <div class="step-card">
+          <span class="step-num">03</span>
+          <div class="step-icon">🏆</div>
+          <h3>¡Gana premios!</h3>
+          <p>Las ideas aprobadas generan puntos que puedes canjear por increíbles premios y reconocimientos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== ÁREAS DE INNOVACIÓN ===== -->
+  <section class="section-dark">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <p class="section-tag section-tag-light">Categorías</p>
+        <h2 class="section-title light">¿En qué áreas puedes innovar?</h2>
+        <p class="section-sub light">Cualquier mejora cuenta. Explora las principales categorías:</p>
+      </div>
+
+      <div class="areas-grid">
+
+        <div class="area-card">
+          <div class="area-icon-wrap" style="background: rgba(239,68,68,0.15)">
+            <span>🛡️</span>
+          </div>
+          <h4>Seguridad</h4>
+          <p>Propuestas que reduzcan riesgos y mejoren la seguridad en el área de trabajo.</p>
+        </div>
+
+        <div class="area-card">
+          <div class="area-icon-wrap" style="background: rgba(59,130,246,0.15)">
+            <span>⚙️</span>
+          </div>
+          <h4>Producción</h4>
+          <p>Ideas que optimicen procesos productivos y aumenten la eficiencia operativa.</p>
+        </div>
+
+        <div class="area-card">
+          <div class="area-icon-wrap" style="background: rgba(16,185,129,0.15)">
+            <span>♻️</span>
+          </div>
+          <h4>Reducción de SCRAP</h4>
+          <p>Estrategias para disminuir desperdicios de materiales y tiempos muertos.</p>
+        </div>
+
+        <div class="area-card">
+          <div class="area-icon-wrap" style="background: rgba(245,158,11,0.15)">
+            <span>💰</span>
+          </div>
+          <h4>Ahorro</h4>
+          <p>Propuestas que generen ahorro económico o de recursos para la planta.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===== CTA FINAL (solo si no está logueado) ===== -->
+  @if (!isLoggedIn) {
+  <section class="section-cta">
+    <div class="cta-inner">
+      <div class="cta-emoji">🚀</div>
+      <h2>¿Listo para compartir tu idea?</h2>
+      <p>Únete a la comunidad de innovadores de BorgWarner y empieza a ganar.</p>
+      <div class="cta-actions">
+        <a [routerLink]="['/login']" class="btn-cta-dark">Iniciar sesión</a>
+        <a [routerLink]="['/register']" class="btn-cta-outline">Crear cuenta gratis</a>
+      </div>
+    </div>
+  </section>
+  }
+
 </div>

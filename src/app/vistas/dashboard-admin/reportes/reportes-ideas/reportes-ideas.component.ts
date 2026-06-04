@@ -147,13 +147,18 @@ export class ReportesIdeasComponent implements OnInit {
             const mapByName = (name: string) =>
               area.estatus.find((e: any) => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
 
+            const revision = mapByName('Revision');
+            const aceptadas = mapByName('Aceptada');
+            const implementadas = mapByName('Implementada');
+            const rechazadas = mapByName('Rechazada');
+
             return {
               nombre: area.nombre_area,
-              revision: mapByName('Revision'),
-              aceptadas: mapByName('Aceptada'),
-              implementadas: mapByName('Implementada'),
-              rechazadas: mapByName('Rechazada'),
-              total: area.total_ideas,
+              revision,
+              aceptadas,
+              implementadas,
+              rechazadas,
+              total: revision + aceptadas + implementadas + rechazadas,
             };
           });
 
@@ -212,13 +217,18 @@ export class ReportesIdeasComponent implements OnInit {
             const mapByName = (name: string) =>
               area.estatus.find((e: any) => e.nombre_estatus?.toLowerCase() === name.toLowerCase())?.total_por_estatus ?? 0;
 
+            const revision = mapByName('Revision');
+            const aceptadas = mapByName('Aceptada');
+            const implementadas = mapByName('Implementada');
+            const rechazadas = mapByName('Rechazada');
+
             return {
               nombre: area.nombre_area,
-              revision: mapByName('Revision'),
-              aceptadas: mapByName('Aceptada'),
-              implementadas: mapByName('Implementada'),
-              rechazadas: mapByName('Rechazada'),
-              total: area.total_ideas,
+              revision,
+              aceptadas,
+              implementadas,
+              rechazadas,
+              total: revision + aceptadas + implementadas + rechazadas,
             };
           });
 

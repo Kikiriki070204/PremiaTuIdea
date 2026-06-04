@@ -1,241 +1,214 @@
 <div class="min-h-fit relative overflow-x-auto shadow-md sm:rounded-lg">
-  <div class="mb-4 p-2">
-    <label for="departamento" class="font-bold text-blue-900 text-2xl mt-2">
-      Origen de mejora
-    </label>
-    <select
-      id="departamento"
-      class="form-control mt-3 font-bold"
-      [(ngModel)]="selectedCategoria"
-      (change)="onCategoriaChange()"
-    >
-      <option [value]="1" class="font-bold">Ideas de mejora</option>
-      <option [value]="2" class="font-bold">Lean workshops</option>
-      <option [value]="3" class="font-bold">Cambio de nivel de técnicos</option>
-      <option [value]="4" class="font-bold">Scrap/CI</option>
-      <option [value]="5" class="font-bold">OE</option>
-      <option [value]="10" class="font-bold">Ahorro de energía</option>
-    </select>
+
+  <!-- Panel de filtros -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-sm p-4 mb-4 mx-2 mt-2">
+    <div class="flex items-center justify-between mb-4">
+      <div class="flex items-center gap-2">
+        <svg class="w-5 h-5 text-blue-900" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
+        </svg>
+        <span class="font-bold text-blue-900 text-base">Filtros de búsqueda</span>
+        @if(searchQuery || searchDate) {
+          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-800">
+            {{ (searchQuery ? 1 : 0) + (searchDate ? 1 : 0) }} activo(s)
+          </span>
+        }
+      </div>
+      @if(searchQuery || searchDate) {
+        <button (click)="clearFilters()"
+          class="flex items-center gap-1 text-sm text-red-500 hover:text-red-700 font-medium transition-colors duration-200">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+          Limpiar filtros
+        </button>
+      }
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Origen de mejora</label>
+        <select
+          class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
+          [(ngModel)]="selectedCategoria" (change)="onCategoriaChange()">
+          <option [value]="1">Ideas de mejora</option>
+          <option [value]="2">Lean workshops</option>
+          <option [value]="3">Cambio de nivel de técnicos</option>
+          <option [value]="4">Scrap/CI</option>
+          <option [value]="5">OE</option>
+          <option [value]="10">Ahorro de energía</option>
+        </select>
+      </div>
+
+      @if(selectedCategoria == 1) {
+        <div class="flex flex-col gap-1">
+          <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Área</label>
+          <select
+            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-white"
+            [(ngModel)]="selectedArea" (change)="onAreaChange()">
+            <option [value]="null">Todas las áreas</option>
+            <option [value]="1">Exhaust</option>
+            <option [value]="2">Ignicion</option>
+            <option [value]="3">EACV</option>
+            <option [value]="4">Otros</option>
+            <option [value]="5">SRA</option>
+          </select>
+        </div>
+      }
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Buscar por título</label>
+        <div class="relative">
+          <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <input type="text"
+            class="w-full border border-gray-300 rounded-lg pl-9 pr-8 py-2 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            placeholder="Escribe para buscar..."
+            [(ngModel)]="searchQuery"
+            (ngModelChange)="onSearchChange()">
+          @if(searchQuery) {
+            <button (click)="searchQuery = ''; onSearchChange()"
+              class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-gray-400 hover:text-gray-600 transition-colors duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          }
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-1">
+        <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Filtrar por fecha</label>
+        <div class="relative">
+          <input type="date"
+            class="w-full border rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200"
+            [class.border-blue-400]="searchDate"
+            [class.border-gray-300]="!searchDate"
+            [(ngModel)]="searchDate"
+            (ngModelChange)="onDateChange()">
+          @if(searchDate) {
+            <button (click)="searchDate = ''; onDateChange()"
+              class="absolute inset-y-0 right-0 pr-2.5 flex items-center text-blue-500 hover:text-blue-700 transition-colors duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          }
+        </div>
+        @if(searchDate) {
+          <span class="text-xs text-blue-600 font-medium">Mostrando: {{ searchDate | date:'dd/MM/yyyy' }}</span>
+        }
+      </div>
+    </div>
   </div>
 
-  @if(selectedCategoria == 1){
-  <div class="mb-4 p-2">
-    <label for="departamento" class="font-bold text-blue-900 text-2xl mt-2">
-      Área
-    </label>
-    <select
-      id="departamento"
-      class="form-control mt-3 font-bold"
-      [(ngModel)]="selectedArea"
-      (change)="onAreaChange()"
-      required
-    >
-      <option value="" disabled selected class="font-bold">
-        Selecciona un área
-      </option>
-      <option [value]="1" class="font-bold">Exhaust</option>
-      <option [value]="2" class="font-bold">Ignicion</option>
-      <option [value]="3" class="font-bold">EACV</option>
-      <option [value]="4" class="font-bold">Otros</option>
-      <option [value]="5" class="font-bold">SRA</option>
-    </select>
-  </div>
+  @if(isLoading) {
+    <div class="flex justify-center items-center py-16">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-700"></div>
+      <span class="ml-3 text-gray-500 text-sm font-medium">Cargando ideas...</span>
+    </div>
+  } @else {
 
-  }
-
-  <table
-    class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-  >
-    <thead
-      class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-    >
+  <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
       <tr>
         <th scope="col" class="px-6 py-3">Titulo</th>
+        <th scope="col" class="px-6 py-3">Fecha</th>
         <th scope="col" class="px-6 py-3">Estatus</th>
         <th scope="col" class="px-6 py-3">Opciones</th>
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let idea of ideasUsers.data">
-        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-          {{ idea.titulo }}
-        </td>
-        <td
-          scope="row"
-          style="font-weight: 700"
-          class="px-6 py-4 font-medium text-blue-500 whitespace-nowrap dark:text-white"
-        >
+      <tr *ngFor="let idea of pagedIdeas">
+        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ idea.titulo }}</td>
+        <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">{{ idea.created_at | date:'dd/MM/yyyy' }}</td>
+        <td scope="row" style="font-weight: 700" class="px-6 py-4 font-medium text-blue-500 whitespace-nowrap dark:text-white">
           Implementada
         </td>
         <td>
-          <button
-            (click)="delete(idea.id)"
-            type="button"
-            class="ml-4 text-red-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              class="bi bi-trash3-fill"
-              viewBox="0 0 16 16"
-            >
-              <path
-                d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5"
-              />
+          <button (click)="delete(idea.id)" type="button"
+            class="ml-4 text-red-700 border border-blue-700 hover:bg-red-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3-fill" viewBox="0 0 16 16">
+              <path d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
             </svg>
-            <span class="sr-only">Icon description</span>
           </button>
           <a [routerLink]="['/admin/ideas/', idea.id]">
-            <button
-              type="button"
-              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-eye-fill"
-                viewBox="0 0 16 16"
-              >
+            <button type="button"
+              class="ml-4 text-blue-700 border border-blue-700 hover:bg-blue-500 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-full text-sm p-2.5 text-center inline-flex items-center">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                 <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                <path
-                  d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"
-                />
+                <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
               </svg>
             </button>
           </a>
         </td>
       </tr>
-      @if(ideasUsers.length === 0){
-      <tr>
-        <td colspan="3" class="text-center py-4">
-          <p class="text-gray-500">No hay ideas/proyectos implementados.</p>
-        </td>
-      </tr>
+      @if(pagedIdeas.length === 0) {
+        <tr>
+          <td colspan="4" class="text-center py-10">
+            <svg class="mx-auto h-10 w-10 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-gray-400 font-medium">No se encontraron ideas implementadas.</p>
+            @if(searchQuery || searchDate) {
+              <p class="text-gray-400 text-sm mt-1">Intenta con otros filtros de búsqueda.</p>
+            }
+          </td>
+        </tr>
       }
     </tbody>
   </table>
-  <!-- Paginacion -->
-  <div
-    class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
-    *ngIf="ideasUsers"
-  >
+
+  <!-- Paginación cliente -->
+  <div class="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"
+    *ngIf="filteredIdeas.length > 0">
     <div class="flex flex-1 justify-between sm:hidden">
-      <button
-        (click)="
-          ideasbyStatus(
-            3,
-            ideasUsers.current_page - 1,
-            this.selectedCategoria,
-            this.selectedArea
-          )
-        "
-        [disabled]="ideasUsers.current_page === 1"
-        class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Previous
+      <button (click)="clientPage = clientPage - 1" [disabled]="clientPage <= 1"
+        class="relative inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        Anterior
       </button>
-      <button
-        (click)="
-          ideasbyStatus(
-            3,
-            ideasUsers.current_page + 1,
-            this.selectedCategoria,
-            this.selectedArea
-          )
-        "
-        [disabled]="ideasUsers.current_page === ideasUsers.last_page"
-        class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Next
+      <button (click)="clientPage = clientPage + 1" [disabled]="clientPage >= totalPages"
+        class="relative ml-3 inline-flex transition duration-300 ease-in-out items-center border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed">
+        Siguiente
       </button>
     </div>
     <div class="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
       <div>
-        <span class="text-sm text-gray-700 dark:text-gray-400">
-          Mostrando de
-          <span class="font-semibold text-gray-900 dark:text-white">{{
-            (ideasUsers.current_page - 1) * ideasUsers.per_page + 1
-          }}</span>
-          a
-          <span class="font-semibold text-gray-900 dark:text-white">{{
-            Math.min(
-              ideasUsers.current_page * ideasUsers.per_page,
-              ideasUsers.total
-            )
-          }}</span>
-          de
-          <span class="font-semibold text-gray-900 dark:text-white">{{
-            ideasUsers.total
-          }}</span>
-          ideas/proyectos implementados.
+        <span class="text-sm text-gray-700">
+          Mostrando de <span class="font-semibold text-gray-900">{{ showingFrom }}</span>
+          a <span class="font-semibold text-gray-900">{{ showingTo }}</span>
+          de <span class="font-semibold text-gray-900">{{ filteredIdeas.length }}</span>
+          ideas implementadas.
         </span>
       </div>
       <div>
-        <nav
-          class="isolate inline-flex -space-x-px rounded-md shadow-xs"
-          aria-label="Pagination"
-        >
-          <button
-            (click)="
-              ideasbyStatus(
-                3,
-                ideasUsers.current_page - 1,
-                this.selectedCategoria,
-                this.selectedArea
-              )
-            "
-            [disabled]="ideasUsers.current_page === 1"
-            class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
-          >
-            <span class="sr-only">Previous</span>
-            <svg
-              class="size-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-              data-slot="icon"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z"
-                clip-rule="evenodd"
-              />
+        <nav class="isolate inline-flex -space-x-px rounded-md shadow-xs" aria-label="Pagination">
+          <button (click)="clientPage = clientPage - 1" [disabled]="clientPage <= 1"
+            class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out">
+            <span class="sr-only">Anterior</span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M11.78 5.22a.75.75 0 0 1 0 1.06L8.06 10l3.72 3.72a.75.75 0 1 1-1.06 1.06l-4.25-4.25a.75.75 0 0 1 0-1.06l4.25-4.25a.75.75 0 0 1 1.06 0Z" clip-rule="evenodd" />
             </svg>
           </button>
-          <!-- Current: "z-10 bg-indigo-600 text-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" -->
-          <button
-            (click)="
-              ideasbyStatus(
-                3,
-                ideasUsers.current_page + 1,
-                this.selectedCategoria,
-                this.selectedArea
-              )
-            "
-            [disabled]="ideasUsers.current_page === ideasUsers.last_page"
-            class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out"
-          >
-            <span class="sr-only">Next</span>
-            <svg
-              class="size-5"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-              aria-hidden="true"
-              data-slot="icon"
-            >
-              <path
-                fill-rule="evenodd"
-                d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z"
-                clip-rule="evenodd"
-              />
+          <span class="relative inline-flex items-center px-4 py-2 text-sm font-semibold text-gray-700">
+            {{ clientPage }} / {{ totalPages }}
+          </span>
+          <button (click)="clientPage = clientPage + 1" [disabled]="clientPage >= totalPages"
+            class="relative inline-flex items-center px-2 py-2 text-gray-500 focus:z-20 focus:outline-offset-0 hover:border-b-2 hover:border-blue-700 hover:text-gray-900 disabled:border-b-0 disabled:opacity-50 disabled:cursor-not-allowed transition duration-300 ease-in-out">
+            <span class="sr-only">Siguiente</span>
+            <svg class="size-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M8.22 5.22a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.75.75 0 0 1-1.06-1.06L11.94 10 8.22 6.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
             </svg>
           </button>
         </nav>
       </div>
     </div>
   </div>
+
+  } <!-- fin @else isLoading -->
+
 </div>

@@ -1,4 +1,4 @@
-<nav style="background-color: rgb(41, 47, 130)" class="shadow-lg bg-cover">
+<nav class="navbar-gradient shadow-2xl" style="border-bottom: 1px solid rgba(255,255,255,0.12)">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -81,13 +81,6 @@
               [routerLinkActiveOptions]="{ exact: true }"
               class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
               >Productos</a
-            >
-            <a
-              [routerLink]="['/premios']"
-              [routerLinkActive]="'border-b-2 text-white font-bold shadow-xl'"
-              [routerLinkActiveOptions]="{ exact: true }"
-              class="rounded-sm px-3 py-2 text-sm font-medium text-gray-300 hover:text-white"
-              >Premios</a
             >
             <a
               [routerLink]="['/terminos-condiciones']"
@@ -229,13 +222,6 @@
         [routerLinkActiveOptions]="{ exact: true }"
         class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
         >Productos</a
-      >
-      <a
-        [routerLink]="['/premios']"
-        [routerLinkActive]="'bg-blue-800 text-white border-b-2 font-bold'"
-        [routerLinkActiveOptions]="{ exact: true }"
-        class="block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-blue-800 hover:text-white"
-        >Premios</a
       >
       <a
         [routerLink]="['/terminos-condiciones']"

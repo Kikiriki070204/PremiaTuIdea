@@ -12,29 +12,21 @@ import { AuthService } from '../../servicios/auth.service';
   styleUrl: './index.component.css',
 })
 export class IndexComponent implements OnInit {
-  user_token: string | null = null
-  constructor(protected authService: AuthService, protected router: Router) {
-  }
+  isLoggedIn = false
+
+  constructor(protected authService: AuthService, protected router: Router) {}
 
   ngOnInit(): void {
-    if (this.authService.isLoggedIn()) {
-      const user = this.authService.getUser();
-      const rol = this.authService.getRoleId();
+    this.isLoggedIn = this.authService.isLoggedIn()
 
-      console.log('Usuario logueado:', user?.nombre);
-      console.log('Rol del usuario:', rol);
-
+    if (this.isLoggedIn) {
+      const rol = this.authService.getRoleId()
       if (rol === 1) {
         this.dashboard()
-
-      } else if (rol === 3) {
-
       }
     } else {
-      this.router.navigate(['/login']);
+      this.router.navigate(['/login'])
     }
-
-
   }
 
   dashboard() {

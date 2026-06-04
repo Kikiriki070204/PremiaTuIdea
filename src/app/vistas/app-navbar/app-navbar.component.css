@@ -1,6 +1,30 @@
-.bg-bw{
-    background-color: rgb(41, 47, 130);
-    width: 100%;
-    height: 60px;
+.bg-bw {
+  background: linear-gradient(135deg, #1a1f6e 0%, #292f82 50%, #1e3a8a 100%);
+  width: 100%;
+  height: 60px;
 }
 
+.navbar-gradient {
+  background: linear-gradient(135deg, #0f1356 0%, #292f82 45%, #1e3499 75%, #162380 100%);
+  position: relative;
+  z-index: 50;
+  backdrop-filter: blur(8px);
+}
+
+.navbar-gradient::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 50%, rgba(255,255,255,0.04) 100%);
+  pointer-events: none;
+}
+
+.navbar-gradient::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, rgba(99, 130, 255, 0.6) 30%, rgba(147, 197, 253, 0.8) 50%, rgba(99, 130, 255, 0.6) 70%, transparent 100%);
+}

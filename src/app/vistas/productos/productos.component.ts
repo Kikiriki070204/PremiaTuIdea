@@ -29,8 +29,16 @@ export class ProductosComponent implements OnInit {
   user: any | null = null
 
   imagenUrl: string | null = null;
+  isLoading: boolean = false;
 
   constructor(protected userService: UsersService, protected router: Router, protected authService: AuthService) { }
+  
+  redirectToStore() {
+    this.isLoading = true;
+    setTimeout(() => {
+      window.location.href = 'https://borgwarner.awardco.com/';
+    }, 1500); // 1.5 seconds loading before redirect
+  }
   ngOnInit(): void {
     this.listaProductos = false
     this.meplus()
