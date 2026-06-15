@@ -15,7 +15,7 @@ import { Profile } from '../../interfaces/profile';
 @Component({
   selector: 'app-idea-data-g',
   standalone: true,
-  imports: [NgFor, FormsModule, ReactiveFormsModule, RouterLink],
+  imports: [NgFor, NgIf, FormsModule, ReactiveFormsModule],
   templateUrl: './idea-data-g.component.html',
   styleUrl: './idea-data-g.component.css'
 })
@@ -53,6 +53,13 @@ export class IdeaDataGComponent implements OnInit {
   userInfo: Profile | null = null
 
   public safeImage: SafeUrl | null = null;
+  isDefaultCondiciones = false;
+  public safeResultado: SafeUrl | null = null;
+  resultadoFile: File | null = null;
+  uploadingResultado = false;
+  resultadoError: string | null = null;
+  resultadoSuccess: string | null = null;
+
   ahorro = new FormControl('', Validators.required)
   puntos = new FormControl(Validators.required)
   constructor(protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) { }
@@ -84,10 +91,54 @@ export class IdeaDataGComponent implements OnInit {
 
 
   private getImage(): void {
-    this.ideaService.getImage(this.idea_id).subscribe(image => {
-      let blob: Blob = image;
-      let objectURL = URL.createObjectURL(blob);
-      this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    this.ideaService.getImage(this.idea_id).subscribe({
+      next: (image) => {
+        let objectURL = URL.createObjectURL(image as Blob);
+        this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      error: () => {
+        this.safeImage = this.sanitizer.bypassSecurityTrustUrl('assets/borgwarner_logo.png');
+        this.isDefaultCondiciones = true;
+      }
+    });
+  }
+
+  private getResultadoImage(): void {
+    this.ideaService.getResultado(this.idea_id).subscribe({
+      next: (blob) => {
+        const objectURL = URL.createObjectURL(blob as Blob);
+        this.safeResultado = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      error: () => {
+        this.safeResultado = null;
+      }
+    });
+  }
+
+  onResultadoFileSelected(event: any): void {
+    const input = event.target as HTMLInputElement;
+    this.resultadoFile = (input.files && input.files.length > 0) ? input.files[0] : null;
+    this.resultadoError = null;
+    this.resultadoSuccess = null;
+  }
+
+  subirResultado(): void {
+    if (!this.resultadoFile || !this.idea_id) return;
+    this.uploadingResultado = true;
+    this.resultadoError = null;
+    this.resultadoSuccess = null;
+
+    this.ideaService.uploadResultado(this.idea_id, this.resultadoFile).subscribe({
+      next: () => {
+        this.uploadingResultado = false;
+        this.resultadoSuccess = 'Imagen subida correctamente.';
+        this.resultadoFile = null;
+        this.getResultadoImage();
+      },
+      error: () => {
+        this.uploadingResultado = false;
+        this.resultadoError = 'Error al subir la imagen. Intenta de nuevo.';
+      }
     });
   }
 
@@ -127,6 +178,9 @@ export class IdeaDataGComponent implements OnInit {
           self.contable = value.idea.contable
           self.ahorro_valor = value.idea.ahorro
           self.categoria = value.idea.categoria_id
+          if (value.idea.estatus === 3) {
+            self.getResultadoImage();
+          }
           console.log(value.idea.categoria_id)
           value.colaboradores.forEach(
             colaborador => {
@@ -221,8 +275,14 @@ export class IdeaDataGComponent implements OnInit {
     }
   }
 
+  get misPuntosEnEstaIdea(): number {
+    if (!this.userInfo || !this.colaboradores) return 0;
+    const yo = this.colaboradores.find(c => c.id === this.userInfo!.id);
+    return yo?.puntos ?? 0;
+  }
+
   goBack() {
-    history.back()
+    this.router.navigate(["/ideas"]);
   }
 
   // asignarDisabled(){

@@ -1,294 +1,238 @@
-<!--Hay q modificar el diseno, me voy a chambear en otros request-->
+<div class="max-w-5xl mx-auto px-4 py-6">
 
-<div class="container mx-auto px-4 py-6">
-  <div class="grid gap-6 xl:grid-cols-[2fr,1fr] md:grid-cols-1">
-    <!-- Columna izquierda -->
-    <div
-      class="w-full bg-white border border-gray-200 rounded-lg p-6 dark:bg-gray-800 dark:border-gray-700"
-    >
-      @if(this.categoria === 1 || this.categoria === null) {
+  <!-- Two-column layout -->
+  <div class="grid gap-6 lg:grid-cols-[1fr,300px]">
 
-      <h5 class="mb-4 text-2xl font-bold text-blue-800 dark:text-white">
-        Título de la idea
-      </h5>
-      } @else{
-      <h5 class="mb-4 text-2xl font-bold text-blue-800 dark:text-white">
-        Título del proyecto
-      </h5>
-      }
-      <h6
-        class="mb-4 text-xl font-semibold uppercase text-gray-900 dark:text-white"
-      >
-        {{ idea?.idea?.titulo }}
-      </h6>
+    <!-- ── Left: main content ── -->
+    <div class="space-y-5">
 
-      <!-- Contexto actual -->
-      @if(this.categoria === 1 || this.categoria === null) {
-      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
-        Contexto actual
-      </h5>
-      <div class="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-        <p class="text-lg text-gray-700 dark:text-gray-300">
-          {{ idea?.idea?.antecedente }}
+      <!-- Title card -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-widest text-blue-700 mb-1">
+          @if(this.categoria === 1 || this.categoria === null) { Título de la idea } @else { Título del proyecto }
         </p>
-      </div>
-      }
-
-      <!-- Propuesta -->
-      @if(this.categoria === 1 || this.categoria === null) {
-
-      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
-        Propuesta
-      </h5>
-      } @else {
-      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
-        Descripción del proyecto
-      </h5>
-      }
-      <div class="mb-4 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg">
-        <p class="text-lg text-gray-700 dark:text-gray-300">
-          {{ idea?.idea?.propuesta }}
-        </p>
+        <h1 class="text-2xl font-bold text-gray-900">{{ idea?.idea?.titulo }}</h1>
       </div>
 
-      <!-- Condiciones actuales -->
+      <!-- Contexto actual (solo ideas de mejora) -->
       @if(this.categoria === 1 || this.categoria === null) {
-      <h5 class="mb-2 text-2xl font-bold text-blue-800 dark:text-white">
-        Condiciones actuales
-      </h5>
-      <figure class="max-w-full">
-        <img
-          class="rounded-lg w-full h-auto object-contain"
-          [src]="safeImage"
-          alt="imagen"
-        />
-        <figcaption
-          class="mt-2 text-center text-sm text-gray-500 dark:text-gray-400"
-        >
-          Condiciones
-        </figcaption>
-      </figure>
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-blue-700 mb-3">Contexto actual</h2>
+          <p class="text-gray-700 leading-relaxed">{{ idea?.idea?.antecedente }}</p>
+        </div>
       }
+
+      <!-- Propuesta / Descripción -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+        <h2 class="text-sm font-bold uppercase tracking-widest text-blue-700 mb-3">
+          @if(this.categoria === 1 || this.categoria === null) { Propuesta } @else { Descripción del proyecto }
+        </h2>
+        <p class="text-gray-700 leading-relaxed">{{ idea?.idea?.propuesta }}</p>
+      </div>
+
+      <!-- Condiciones actuales (solo ideas de mejora) -->
+      @if(this.categoria === 1 || this.categoria === null) {
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-blue-700 mb-3">Condiciones actuales</h2>
+          <img
+            [class]="isDefaultCondiciones ? 'mx-auto h-20 w-auto' : 'rounded-xl w-full h-auto object-contain'"
+            [src]="safeImage" alt="Condiciones actuales" />
+        </div>
+      }
+
+      <!-- Razón de rechazo -->
+      @if(idea && idea.idea.estatus === 4 && idea.idea.razon_rechazo) {
+        <div class="bg-red-50 border border-red-200 rounded-2xl p-6 shadow-sm">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-red-700 mb-3">Razón de rechazo</h2>
+          <p class="text-gray-700 leading-relaxed">{{ idea.idea.razon_rechazo }}</p>
+        </div>
+      }
+
+      <!-- Resultados (solo ideas implementadas) -->
+      @if(idea?.idea?.estatus === 3) {
+        <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm">
+          <h2 class="text-sm font-bold uppercase tracking-widest text-blue-700 mb-4">Imagen de resultados</h2>
+
+          @if(safeResultado) {
+            <img class="rounded-xl w-full h-auto object-contain mb-5" [src]="safeResultado" alt="Resultados" />
+          }
+
+          <div class="bg-gray-50 rounded-xl p-4 border border-gray-200">
+            <p class="text-sm font-medium text-gray-600 mb-3">
+              {{ safeResultado ? 'Actualizar imagen de resultados' : 'Agregar imagen de resultados' }}
+            </p>
+            <input type="file" accept="image/jpeg,image/png,image/jpg"
+              (change)="onResultadoFileSelected($event)"
+              class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" />
+            @if(resultadoError) {
+              <p class="mt-2 text-sm text-red-600">{{ resultadoError }}</p>
+            }
+            @if(resultadoSuccess) {
+              <p class="mt-2 text-sm text-green-600">{{ resultadoSuccess }}</p>
+            }
+            <button (click)="subirResultado()"
+              [disabled]="!resultadoFile || uploadingResultado"
+              class="mt-3 px-5 py-2 text-sm font-semibold text-white bg-blue-800 hover:bg-blue-900 rounded-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+              {{ uploadingResultado ? 'Subiendo...' : (safeResultado ? 'Actualizar imagen' : 'Subir imagen') }}
+            </button>
+          </div>
+        </div>
+      }
+
     </div>
 
-    <!-- Columna derecha -->
-    <div
-      class="w-full bg-white border border-gray-200 rounded-lg p-6 dark:bg-gray-800 dark:border-gray-700"
-    >
-      <div class="space-y-4 text-left">
-        <!-- Estatus -->
-        <h6 class="text-xl font-semibold text-blue-800 dark:text-white">
-          Estatus de la idea
-        </h6>
-        <select
-          disabled
-          (change)="onEstadoChange($event)"
-          class="w-full p-2.5 rounded-lg border border-gray-300 dark:border-gray-600 text-sm text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-700 focus:ring-blue-500 focus:border-blue-500"
-        >
+    <!-- ── Right: metadata sidebar ── -->
+    <div class="space-y-4">
+
+      <!-- Estatus -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Estatus</p>
+        <select disabled (change)="onEstadoChange($event)"
+          class="w-full px-3 py-2.5 text-sm rounded-lg border border-gray-200 bg-gray-50 text-gray-700 cursor-not-allowed">
           <option value="{{ idea?.idea?.estatus }}" disabled selected hidden>
             {{ idea?.idea?.estatus_idea }}
           </option>
-          <option *ngFor="let estado of estados" [value]="estado.id">
-            {{ estado.nombre }}
-          </option>
+          <option *ngFor="let estado of estados" [value]="estado.id">{{ estado.nombre }}</option>
         </select>
+      </div>
 
-        <!-- Colaboradores -->
-        <h6 class="text-xl font-semibold text-blue-800 dark:text-white">
-          Colaboradores de la idea
-        </h6>
-        <ul
-          *ngFor="let colaborador of colaboradores"
-          class="w-full text-sm font-medium border border-gray-200 rounded-lg dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
-        >
-          <li
-            class="px-4 py-2 border-b dark:border-gray-600 hover:text-blue-600"
-          >
-            {{ colaborador.nombre }}
-          </li>
-        </ul>
+      <!-- Colaboradores -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Colaboradores</p>
+        <div *ngFor="let colaborador of colaboradores"
+          class="flex items-center gap-2.5 py-2 border-b border-gray-100 last:border-0">
+          <div class="w-7 h-7 rounded-full bg-blue-100 flex items-center justify-center shrink-0">
+            <svg class="w-4 h-4 text-blue-700" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd"
+                d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <span class="text-sm text-gray-700">{{ colaborador.nombre }}</span>
+        </div>
+        <p *ngIf="!colaboradores?.length" class="text-sm text-gray-400 italic">Sin colaboradores asignados</p>
+      </div>
 
-        <!-- Origen de mejora -->
-        <h6 class="text-xl font-semibold text-blue-800 dark:text-white">
-          Origen de mejora
-        </h6>
-        <span class="font-bold text-gray-700 dark:text-white">
-          @switch (this.categoria) { @case (1) { Ideas de mejora } @case (2) {
-          Lean workshops } @case(3) { Cambio de nivel de técnicos } @case(4) {
-          Scrap/CI } @case(5) { OE } @case(10) { Ahorro de energía } @default
-          {No asignado} }
+      <!-- Puntos obtenidos en esta idea -->
+      @if(misPuntosEnEstaIdea > 0) {
+        <div class="bg-blue-50 border border-blue-200 rounded-2xl p-5 shadow-sm">
+          <p class="text-xs font-bold uppercase tracking-widest text-blue-600 mb-2">Puntos obtenidos</p>
+          <div class="flex items-end gap-1.5">
+            <span class="text-3xl font-extrabold text-blue-900">{{ misPuntosEnEstaIdea }}</span>
+            <span class="text-sm text-blue-600 font-medium mb-1">puntos</span>
+          </div>
+          <p class="text-xs text-blue-500 mt-1">por tu participación en esta idea</p>
+        </div>
+      }
+
+      <!-- Origen de mejora -->
+      <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+        <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-2">Origen de mejora</p>
+        <span class="text-sm font-semibold text-gray-800">
+          @switch (this.categoria) {
+            @case (1) { Ideas de mejora }
+            @case (2) { Lean workshops }
+            @case (3) { Cambio de nivel de técnicos }
+            @case (4) { Scrap/CI }
+            @case (5) { OE }
+            @case (10) { Ahorro de energía }
+            @default { No asignado }
+          }
         </span>
+      </div>
 
-        <!-- Tipo de idea -->
-        @if(this.categoria === 1 || this.categoria === null) {
-        <h6 class="text-xl font-semibold text-blue-800 dark:text-white">
-          Tipo de idea
-        </h6>
-        <div class="space-y-2">
+      <!-- Tipo de idea + Campos (solo ideas de mejora) -->
+      @if(this.categoria === 1 || this.categoria === null) {
+        <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+          <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Tipo de idea</p>
+
           @if(contable == 0) {
-          <div class="flex items-center">
-            <input
-              disabled
-              type="radio"
-              checked
-              class="w-4 h-4 text-blue-600 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >No contable</label
-            >
-          </div>
-          <div class="flex items-center">
-            <input
-              disabled
-              type="radio"
-              class="w-4 h-4 text-blue-600 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Contable</label
-            >
-          </div>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-800 inline-block"></span>
+              <span class="text-sm text-gray-700 font-medium">No contable</span>
+            </div>
           } @else {
-          <div class="flex items-center">
-            <input
-              disabled
-              type="radio"
-              checked
-              class="w-4 h-4 text-blue-600 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >Contable</label
-            >
-          </div>
-          <div class="flex items-center">
-            <input
-              disabled
-              type="radio"
-              class="w-4 h-4 text-blue-600 dark:bg-gray-700 dark:border-gray-600"
-            />
-            <label
-              class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-              >No contable</label
-            >
-          </div>
-
-          <!-- Ahorro -->
-          <h6 class="text-xl font-semibold text-blue-800 dark:text-white mt-4">
-            Ahorro
-          </h6>
-          <p class="text-sm text-gray-900 dark:text-white">
-            ${{ idea?.idea?.ahorro }}
-          </p>
+            <div class="flex items-center gap-2 mb-1.5">
+              <span class="w-2 h-2 rounded-full bg-blue-800 inline-block"></span>
+              <span class="text-sm text-gray-700 font-medium">Contable</span>
+            </div>
+            <div class="mt-2 bg-gray-50 rounded-lg px-3 py-2 border border-gray-100">
+              <p class="text-xs text-gray-500 font-medium mb-0.5">Ahorro estimado</p>
+              <p class="text-base font-bold text-blue-900">${{ idea?.idea?.ahorro }}</p>
+            </div>
           }
         </div>
 
         <!-- Campos -->
-        <h6 class="text-xl font-semibold text-blue-800 dark:text-white mt-4">
-          Campos
-        </h6>
-        <div class="space-y-2">
-          <div *ngFor="let campo of campos">
-            <input
-              disabled
-              type="checkbox"
-              [checked]="checkboxStates[campo.id] || false"
-            />
-            <span class="ml-2">{{ campo.nombre }}</span>
+        @if(campos?.length) {
+          <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
+            <p class="text-xs font-bold uppercase tracking-widest text-gray-500 mb-3">Campos</p>
+            <div *ngFor="let campo of campos" class="flex items-center gap-2 mb-2">
+              <input disabled type="checkbox" [checked]="checkboxStates[campo.id] || false"
+                class="w-4 h-4 accent-blue-800" />
+              <span class="text-sm text-gray-700">{{ campo.nombre }}</span>
+            </div>
           </div>
-        </div>
         }
+      }
 
-        <!-- Botón regresar -->
-        <div class="pt-6">
-          <button
-            (click)="goBack()"
-            class="w-full text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:ring-red-500 font-medium rounded-lg text-sm px-5 py-2.5 transition dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-500"
-          >
-            Regresar
-          </button>
-        </div>
+      <!-- Regresar -->
+      <button (click)="goBack()"
+        class="w-full py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-xl shadow transition focus:ring-4 focus:ring-red-300">
+        Regresar
+      </button>
+
+    </div>
+  </div>
+
+  <!-- ── Actividades ── -->
+  <div class="mt-8">
+    <h2 class="text-xl font-bold text-blue-900 mb-4">Actividades</h2>
+
+    @if(actividades?.length == 0) {
+      <div class="flex flex-col items-center justify-center py-12 bg-white rounded-2xl border border-gray-200 text-center">
+        <svg class="w-10 h-10 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+        </svg>
+        <p class="text-gray-400 text-sm font-medium">Sin actividades registradas</p>
       </div>
-    </div>
+    } @else {
+      <div class="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden mb-10">
+        <table class="w-full text-sm text-left">
+          <thead class="text-xs font-semibold uppercase bg-blue-50 text-blue-800">
+            <tr>
+              <th class="px-5 py-3">Título</th>
+              <th class="px-5 py-3">Responsable</th>
+              <th class="px-5 py-3">Inicio</th>
+              <th class="px-5 py-3">Finalización</th>
+              <th class="px-5 py-3">Estatus</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <tr *ngFor="let actividad of actividades" class="hover:bg-gray-50">
+              <td class="px-5 py-3.5 font-medium text-gray-800">{{ actividad.titulo }}</td>
+              <td class="px-5 py-3.5 text-gray-600">{{ actividad.responsable_name }}</td>
+              <td class="px-5 py-3.5 text-gray-500">{{ actividad.fecha_inicio }}</td>
+              <td class="px-5 py-3.5 text-gray-500">{{ actividad.fecha_finalizacion }}</td>
+              <td class="px-5 py-3.5">
+                @if(actividad.id_estado_actividad == 1) {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-amber-100 text-amber-700">Revisión</span>
+                } @else if(actividad.id_estado_actividad == 2) {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-orange-100 text-orange-700">En proceso</span>
+                } @else if(actividad.id_estado_actividad == 3) {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-700">Aceptada</span>
+                } @else if(actividad.id_estado_actividad == 4) {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-blue-100 text-blue-700">Finalizada</span>
+                } @else {
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold bg-red-100 text-red-700">Rechazada</span>
+                }
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    }
   </div>
-</div>
 
-<!-- Main modal -->
-
-<!--Actividades-->
-<h5
-  class="mb-2 text-3xl font-bold text-blue-900 dark:text-white"
-  style="margin-left: 3%; margin-top: 3%"
->
-  Actividades
-</h5>
-
-<div class="myContainer mb-10">
-  @if(actividades?.length == 0) {
-  <h5 class="ml-9 mb-2 text-3xl font-bold text-blue-700 dark:text-white">
-    Sin actividades registradas
-  </h5>
-  } @else{
-  <div class="profileCard" style="width: 80%">
-    <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-      <table
-        class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400"
-      >
-        <thead
-          class="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400"
-        >
-          <tr>
-            <th scope="col" class="px-6 py-3">Titulo</th>
-            <th scope="col" class="px-6 py-3">Responsable</th>
-            <th scope="col" class="px-6 py-3">Fecha de inicio</th>
-            <th scope="col" class="px-6 py-3">Fecha de finalizacion</th>
-            <th scope="col" class="px-6 py-3">Estatus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let actividad of actividades">
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-              <a>{{ actividad.titulo }}</a>
-            </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-              <a>{{ actividad.responsable_name }}</a>
-            </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-              <a>{{ actividad.fecha_inicio }}</a>
-            </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-              <a>{{ actividad.fecha_finalizacion }}</a>
-            </td>
-            @if(actividad.id_estado_actividad == 1) {
-            <td class="px-6 py-4 font-semibold text-amber-600 dark:text-white">
-              Revision
-            </td>
-            } @else if(actividad.id_estado_actividad == 2) {
-            <td class="px-6 py-4 font-semibold text-amber-800 dark:text-white">
-              En proceso
-            </td>
-            } @else if(actividad.id_estado_actividad == 3) {
-            <td
-              class="px-6 py-4 font-semibold text-emerald-500 dark:text-white"
-            >
-              Aceptada
-            </td>
-            } @else if(actividad.id_estado_actividad == 4){
-            <td class="px-6 py-4 font-semibold text-blue-800 dark:text-white">
-              Finalizada
-            </td>
-
-            } @else{
-            <td class="px-6 py-4 font-semibold text-red-800 dark:text-white">
-              Rechazada
-            </td>
-            }
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="h-10"></div>
-  </div>
-  }
 </div>

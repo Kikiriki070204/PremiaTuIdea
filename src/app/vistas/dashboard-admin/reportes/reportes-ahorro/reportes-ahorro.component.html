@@ -1,139 +1,85 @@
-<div id="default-tab-content">
-  <!-- calendarios inputs -->
-  <div
-    class="flex flex-col md:flex-row md:flex-wrap gap-2 md:gap-4 items-start md:items-end mt-6"
-  >
-    <div
-      class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto"
-    >
-      <label for="date0" class="font-bold mb-1 md:mb-0 md:mr-2 text-gray-700"
-        >Fecha inicial</label
-      >
-      <input
-        type="date"
-        [(ngModel)]="date0"
-        name="date0"
-        id="date0"
-        class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-      />
-    </div>
+<div class="space-y-6 pb-10">
 
-    <div
-      class="flex flex-col md:flex-row items-start md:items-center w-full md:w-auto"
-    >
-      <label for="date1" class="font-bold mb-1 md:mb-0 md:mr-2 text-gray-700"
-        >Fecha final</label
-      >
-      <input
-        type="date"
-        [(ngModel)]="date1"
-        name="date1"
-        id="date1"
-        class="rounded-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 w-full md:w-56 text-sm p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-      />
+  <!-- Filter bar -->
+  <div class="flex flex-wrap gap-4 items-end bg-white rounded-xl p-4 shadow-sm border border-gray-100">
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Fecha inicial</label>
+      <input type="date" [(ngModel)]="date0"
+        class="rounded-lg border border-gray-300 text-sm px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
     </div>
-
-    <button
-      (click)="mostrarDatosFiltradosPorFecha()"
-      class="flex items-center justify-center p-2 text-sm font-medium text-white bg-blue-800 rounded-lg border hover:bg-blue-900 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 w-full md:w-auto"
-    >
-      <svg
-        class="w-4 h-4 mr-1"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="none"
-        viewBox="0 0 20 20"
-      >
-        <path
-          stroke="currentColor"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
-        />
+    <div class="flex flex-col gap-1">
+      <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Fecha final</label>
+      <input type="date" [(ngModel)]="date1"
+        class="rounded-lg border border-gray-300 text-sm px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+    </div>
+    <button (click)="mostrarDatosFiltradosPorFecha()"
+      class="flex items-center gap-2 px-4 py-2 text-sm font-semibold text-white bg-blue-700 hover:bg-blue-800 rounded-lg transition">
+      <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+          d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
       </svg>
       Filtrar
     </button>
-
-    <button
-      (click)="mostrarDatosHistoricos()"
-      type="button"
-      class="flex items-center justify-center p-2 text-sm font-medium text-white bg-green-700 rounded-lg border border-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 w-full md:w-auto"
-    >
-      Datos históricos
+    <button (click)="mostrarDatosHistoricos()"
+      class="px-4 py-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg transition">
+      Histórico
     </button>
   </div>
 
-  <div
-    class="p-2 rounded-lg dark:bg-gray-800"
-    id="ahorros"
-    role="tabpanel"
-    aria-labelledby="ahorros-tab"
-  >
-    <h4
-      class="mt-4 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
-    >
-      Ahorro por area (Ideas de mejora)
-    </h4>
-    <span class="text-sm text-gray-600 text-center block"
-      >Total de ahorro: ${{ total_ahorros_dolares }} USD
-    </span>
-    <!-- Cards -->
-    <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 my-4 mt-8"
-    >
-      <div
-        *ngFor="let ahorro of ahorros"
-        class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
-      >
-        <h3
-          class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center"
-        >
-          {{ ahorro.nombre_area }}
-        </h3>
+  <!-- Totales globales -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+    <div class="bg-gradient-to-br from-emerald-500 to-teal-700 rounded-xl p-5 text-white shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-wide opacity-80">Ahorro total (Ideas de mejora)</p>
+      <p class="text-4xl font-bold mt-2">${{ total_ahorros_dolares | number:'1.2-2' }} <span class="text-lg font-normal opacity-80">USD</span></p>
+      <p class="text-xs opacity-70 mt-1">Acumulado histórico por área</p>
+    </div>
+    <div class="bg-gradient-to-br from-blue-500 to-indigo-700 rounded-xl p-5 text-white shadow-sm">
+      <p class="text-xs font-semibold uppercase tracking-wide opacity-80">Ahorro total (Por categoría)</p>
+      <p class="text-4xl font-bold mt-2">${{ total_ahorros_categoria_dolares | number:'1.2-2' }} <span class="text-lg font-normal opacity-80">USD</span></p>
+      <p class="text-xs opacity-70 mt-1">Acumulado por origen de mejora</p>
+    </div>
+  </div>
 
-        <div class="mt-2 border-t pt-2">
-          <span class="text-gray-800 text-sm">
-            Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
-          </span>
+  <!-- Sección: Ahorro por área -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+    <h4 class="text-xl font-bold text-blue-900 mb-1">Ahorro por área — Ideas de mejora</h4>
+    <p class="text-xs text-gray-400 mb-4">% de participación sobre el total de ahorros</p>
+
+    <!-- Cards de áreas -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mb-6">
+      <div *ngFor="let ahorro of ahorros"
+        class="rounded-xl border border-emerald-100 bg-emerald-50 p-4 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+        <h3 class="text-sm font-bold text-gray-800 mb-2 text-center">{{ ahorro.nombre_area }}</h3>
+        <div class="text-center">
+          <p class="text-xl font-bold text-emerald-700">${{ ahorro.valor_animado | number:'1.2-2' }}</p>
+          <p class="text-xs text-emerald-500 font-medium">USD</p>
+        </div>
+        <div class="mt-2 pt-2 border-t border-emerald-100 text-center">
+          <p class="text-xs text-gray-500">${{ ahorro.total_ahorros | number:'1.0-0' }} MXN</p>
         </div>
       </div>
     </div>
 
-    <!-- Gráfica -->
-    <div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-800">
-      <div class="w-full h-72 sm:h-96">
-        <canvas id="ahorro"> </canvas>
+    <!-- Gráfica de barras -->
+    <div class="w-full h-64 sm:h-72">
+      <canvas id="ahorro"></canvas>
+    </div>
+  </div>
+
+  <!-- Sección: Ahorro por categoría -->
+  <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+    <h4 class="text-xl font-bold text-blue-900 mb-4">Ahorro por origen de mejora</h4>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div *ngFor="let ahorro of ahorros_categoria; let i = index"
+        class="rounded-xl border border-gray-100 bg-gray-50 p-4 hover:-translate-y-1 hover:shadow-md transition-all duration-200">
+        <h3 class="text-sm font-bold text-gray-700 mb-3 uppercase tracking-wide">{{ ahorro.nombre_categoria }}</h3>
+        <p class="text-2xl font-bold text-blue-700">${{ ahorro.valor_animado | number:'1.2-2' }}</p>
+        <p class="text-xs text-blue-400 font-medium mt-0.5">USD</p>
+        <div class="mt-3 pt-2 border-t border-gray-200">
+          <p class="text-xs text-gray-500">${{ ahorro.total_ahorros | number:'1.0-0' }} MXN</p>
+        </div>
       </div>
     </div>
   </div>
 
-  <h4
-    class="mt-2 mb-2 text-2xl font-bold text-blue-900 dark:text-white text-center"
-  >
-    Ahorro por origen de mejora
-  </h4>
-  <span class="text-sm text-gray-600 text-center block"
-    >Total de ahorro: ${{ total_ahorros_categoria_dolares }} USD</span
-  >
-
-  <div
-    class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4 my-4 mt-8"
-  >
-    <div
-      *ngFor="let ahorro of ahorros_categoria"
-      class="bg-white dark:bg-gray-800 p-4 rounded-xl shadow transition-transform duration-300 ease-in-out transform hover:-translate-y-2 hover:shadow-xl"
-    >
-      <h3
-        class="text-lg font-bold text-gray-900 dark:text-white mb-2 text-center uppercase"
-      >
-        {{ ahorro.nombre_categoria }}
-      </h3>
-
-      <div class="mt-2 border-t pt-2">
-        <span class="text-gray-800 text-sm">
-          Ahorros totales: ${{ ahorro.valor_animado | number : "1.2-2" }} USD
-        </span>
-      </div>
-    </div>
-  </div>
 </div>

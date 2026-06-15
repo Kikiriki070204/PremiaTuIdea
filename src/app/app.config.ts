@@ -8,5 +8,5 @@ import { DatePipe } from '@angular/common';
 import { corsInterceptor } from './interceptors/cors.interceptor';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule), provideHttpClient(withInterceptors([authInterceptor])), provideHttpClient(withInterceptors([corsInterceptor])), DatePipe,]
+  providers: [provideRouter(routes), importProvidersFrom(HttpClientModule), provideHttpClient(withInterceptors([authInterceptor, corsInterceptor])), DatePipe,]
 };

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { Campos, EditColabs, Estado, EstadoIdeas, EstatusIdea, Idea, IdeaData, Msg, Puntos } from '../interfaces/idea';
 import { Ideas, Imagen } from '../interfaces/ideas';
 import { environment } from '../../enviroment/enviroment';
@@ -31,8 +32,14 @@ export class IdeasService {
     return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeasImplementadas/` + id);
   }
 
+  userIdeasTodas(id: any): Observable<Ideas> {
+    return this.http.get<Ideas>(`${environment.api_url}/ideass/userIdeasTodas/` + id);
+  }
+
   newIdea(data: FormData): Observable<Idea> {
-    return this.http.post<Idea>(`${environment.api_url}/ideass/create`, data);
+    return this.http.post<{idea: Idea}>(`${environment.api_url}/ideass/create`, data).pipe(
+      map(response => response.idea)
+    );
   }
 
   usersIdeas(): Observable<Ideas> {
@@ -132,6 +139,17 @@ export class IdeasService {
 
   editarEstadoAct(data: EditEstado | EditEstado2): Observable<Actividad> {
     return this.http.put<Actividad>(`${environment.api_url}/actividades/update`, data)
+  }
+
+  getResultado(idea_id: any): Observable<any> {
+    return this.http.get(`${environment.api_url}/ideass/resultados/${idea_id}`, { responseType: 'blob' });
+  }
+
+  uploadResultado(idea_id: number, file: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('idea_id', String(idea_id));
+    formData.append('resultado', file);
+    return this.http.post(`${environment.api_url}/ideass/uploadResultado`, formData);
   }
 
 }

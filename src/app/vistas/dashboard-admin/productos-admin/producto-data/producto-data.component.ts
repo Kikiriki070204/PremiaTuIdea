@@ -160,7 +160,7 @@ export class ProductoDataComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/productos-admin"]);
   }
 
 }

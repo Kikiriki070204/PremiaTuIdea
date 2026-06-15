@@ -39,6 +39,6 @@ export class CategoriaIdeaComponent {
     }
   }
   irAtras() {
-    history.back();
+    this.router.navigate(["/dashboard"]);
   }
 }

@@ -1,184 +1,127 @@
-<div class="mx-auto max-w-6xl px-4 py-8">
-  <h5
-    class="text-center text-3xl sm:text-4xl font-bold text-blue-900 dark:text-white mb-6"
-  >
-    Describe tu idea o proyecto
-  </h5>
-  <p class="text-center text-lg text-gray-700 dark:text-gray-300 mb-4">
-    Origen seleccionado: <span class="font-semibold">{{ categoria }}</span>
-  </p>
+<div class="max-w-4xl mx-auto px-4 py-8">
 
-  <div
-    *ngIf="errorMessage"
-    class="mb-6 p-3 text-sm text-red-800 bg-red-50 rounded-lg dark:bg-gray-800 dark:text-red-400 w-full max-w-xl mx-auto"
-    role="alert"
-  >
-    <span class="font-medium">{{ errorMessage }}</span>
+  <!-- Header -->
+  <div class="mb-8 text-center">
+    <h1 class="text-3xl font-bold text-blue-900 mb-1">Describe tu idea o proyecto</h1>
+    <p class="text-sm text-gray-500">
+      Origen seleccionado:
+      <span class="font-semibold text-blue-800">{{ categoria }}</span>
+    </p>
   </div>
 
-  <div
-    class="flex flex-col lg:flex-row gap-10 justify-center items-start bg-white dark:bg-gray-800 shadow-md rounded-lg p-6"
-  >
-    <form class="flex-1 space-y-4 w-full max-w-lg">
-      <div>
-        <label
-          for="titulo"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-        >
-          Título
-        </label>
-        <input
-          [formControl]="titulo"
-          type="text"
-          id="titulo"
-          class="w-full p-2.5 text-sm rounded-lg bg-gray-50 text-gray-900 dark:bg-gray-700 dark:border-gray-600 dark:text-white border focus:ring-blue-500 focus:border-blue-500"
-          [ngClass]="{
-            'border-red-500': formTocado && titulo.invalid,
-            'border-gray-300': !formTocado || titulo.valid
-          }"
-          placeholder="Escribe el título de tu idea o proyecto aquí"
-          required
-        />
-        <p
-          *ngIf="formTocado && titulo.invalid"
-          class="text-red-500 text-sm mt-1"
-        >
-          El título es obligatorio
-        </p>
-      </div>
+  <!-- Error banner -->
+  <div *ngIf="errorMessage"
+    class="mb-6 flex items-start gap-3 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700 text-sm">
+    <svg class="w-5 h-5 shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+      <path fill-rule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zm-1-9V5a1 1 0 112 0v4a1 1 0 11-2 0zm1 4a1 1 0 100 2 1 1 0 000-2z"
+        clip-rule="evenodd" />
+    </svg>
+    <span>{{ errorMessage }}</span>
+  </div>
 
-      <div>
-        <label
-          for="fecha_inicial"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Fecha inicio</label
-        >
-        <input
-          [formControl]="fecha_inicial"
-          type="date"
-          id="fecha_inicial"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          required
-        />
-        <p
-          *ngIf="formTocado && fecha_inicial.invalid"
-          class="text-red-500 text-sm mt-1"
-        >
-          La fecha de inicio es obligatoria
-        </p>
-      </div>
+  <!-- Form card -->
+  <div class="bg-white rounded-2xl shadow-sm border border-gray-200 p-6 lg:p-8">
+    <div class="flex flex-col lg:flex-row gap-8">
 
-      <!-- Propuesta -->
-      @if(idCategoriaSeleccionado == 1){
-      <div>
-        <label
-          for="antecedente"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Contexto actual</label
-        >
-        <textarea
-          [formControl]="antecedentes"
-          id="antecedente"
-          rows="4"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          placeholder="Describe el contexto aquí..."
-        ></textarea>
-        <p
-          *ngIf="formTocado && antecedentes.invalid"
-          class="text-red-500 text-sm mt-1"
-        >
-          El contexto actual es obligatorio
-        </p>
-      </div>
-      }
+      <!-- Left column: main content -->
+      <div class="flex-1 space-y-5">
 
-      <div>
-        <label
-          for="propuesta"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Descripción</label
-        >
-        @if(idCategoriaSeleccionado == 1){
-        <textarea
-          [formControl]="propuesta"
-          id="propuesta"
-          rows="4"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          placeholder="Describe tu idea aquí..."
-        ></textarea>
-        } @else {
-        <textarea
-          [formControl]="propuesta"
-          id="propuesta"
-          rows="4"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-          placeholder="Describe tu proyecto aquí..."
-        ></textarea>
+        <!-- Título -->
+        <div>
+          <label for="titulo" class="block mb-1.5 text-sm font-semibold text-gray-700">
+            Título <span class="text-red-500">*</span>
+          </label>
+          <input [formControl]="titulo" type="text" id="titulo"
+            [ngClass]="{
+              'border-red-400 ring-1 ring-red-300': formTocado && titulo.invalid,
+              'border-gray-300': !formTocado || titulo.valid
+            }"
+            class="w-full px-3 py-2.5 text-sm rounded-lg bg-gray-50 text-gray-900 border focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none"
+            placeholder="Escribe el título aquí" />
+          <p *ngIf="formTocado && titulo.invalid" class="mt-1.5 text-xs text-red-500">El título es obligatorio</p>
+        </div>
+
+        <!-- Fecha inicio -->
+        <div>
+          <label for="fecha_inicial" class="block mb-1.5 text-sm font-semibold text-gray-700">
+            Fecha de inicio <span class="text-red-500">*</span>
+          </label>
+          <input [formControl]="fecha_inicial" type="date" id="fecha_inicial"
+            class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none" />
+          <p *ngIf="formTocado && fecha_inicial.invalid" class="mt-1.5 text-xs text-red-500">La fecha de inicio es obligatoria</p>
+        </div>
+
+        <!-- Contexto actual (solo ideas de mejora) -->
+        @if(idCategoriaSeleccionado == 1) {
+          <div>
+            <label for="antecedente" class="block mb-1.5 text-sm font-semibold text-gray-700">
+              Contexto actual <span class="text-red-500">*</span>
+            </label>
+            <textarea [formControl]="antecedentes" id="antecedente" rows="4"
+              class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none resize-none"
+              placeholder="Describe la situación actual..."></textarea>
+            <p *ngIf="formTocado && antecedentes.invalid" class="mt-1.5 text-xs text-red-500">El contexto actual es obligatorio</p>
+          </div>
         }
-        <p
-          *ngIf="formTocado && propuesta.invalid"
-          class="text-red-500 text-sm mt-1"
-        >
-          La descripción es obligatoria
-        </p>
-      </div>
-    </form>
 
-    <form class="flex-1 w-full max-w-sm space-y-6">
-      @if(idCategoriaSeleccionado == 1){
-      <div>
-        <label
-          for="user_avatar"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Condición actual</label
-        >
-        <input
-          id="user_avatar"
-          type="file"
-          (change)="onFileSelected($event)"
-          class="w-full text-sm border border-gray-300 rounded-lg cursor-pointer bg-blue-800 text-white focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:text-gray-400"
-        />
+        <!-- Descripción / Propuesta -->
+        <div>
+          <label for="propuesta" class="block mb-1.5 text-sm font-semibold text-gray-700">
+            @if(idCategoriaSeleccionado == 1) { Propuesta } @else { Descripción }
+            <span class="text-red-500">*</span>
+          </label>
+          <textarea [formControl]="propuesta" id="propuesta" rows="5"
+            class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none resize-none"
+            [placeholder]="idCategoriaSeleccionado == 1 ? 'Describe tu propuesta de mejora...' : 'Describe tu proyecto...'"></textarea>
+          <p *ngIf="formTocado && propuesta.invalid" class="mt-1.5 text-xs text-red-500">La descripción es obligatoria</p>
+        </div>
       </div>
 
-      <div>
-        <label
-          for="area"
-          class="block mb-1 text-sm font-medium text-gray-900 dark:text-white"
-          >Área</label
-        >
-        <select
-          [formControl]="area"
-          id="area"
-          (change)="onAreaChange($event)"
-          class="w-full p-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
-        >
-          <option disabled selected hidden>Seleccione un área</option>
-          <option *ngFor="let area of areas" [value]="area.id">
-            {{ area.nombre }}
-          </option>
-        </select>
-        <p *ngIf="formTocado && area.invalid" class="text-red-500 text-sm mt-1">
-          El área es obligatoria
-        </p>
-      </div>
-      }
+      <!-- Right column: extra fields + actions -->
+      <div class="lg:w-72 space-y-5">
 
-      <div class="flex flex-wrap gap-4 mt-4">
-        <button
-          (click)="idea()"
-          type="button"
-          class="flex-1 text-white bg-blue-800 hover:bg-blue-900 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 transition dark:bg-blue-700 dark:hover:bg-blue-600 dark:focus:ring-blue-700"
-        >
-          Siguiente
-        </button>
-        <button
-          (click)="goBack()"
-          type="button"
-          class="flex-1 text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:ring-red-900 font-medium rounded-lg text-sm px-5 py-2.5 transition dark:bg-gray-600 dark:hover:bg-gray-500 dark:focus:ring-gray-500"
-        >
-          Cancelar
-        </button>
+        @if(idCategoriaSeleccionado == 1) {
+          <!-- Condición actual (archivo) -->
+          <div>
+            <label class="block mb-1.5 text-sm font-semibold text-gray-700">Condición actual</label>
+            <label class="flex flex-col items-center justify-center w-full h-28 border-2 border-dashed border-gray-300 rounded-xl cursor-pointer bg-gray-50 hover:bg-gray-100 hover:border-blue-400">
+              <svg class="w-7 h-7 text-gray-400 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                  d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+              </svg>
+              <span class="text-xs text-gray-500">Haz clic para subir imagen</span>
+              <input type="file" (change)="onFileSelected($event)" class="hidden" />
+            </label>
+          </div>
+
+          <!-- Área -->
+          <div>
+            <label for="area" class="block mb-1.5 text-sm font-semibold text-gray-700">
+              Área <span class="text-red-500">*</span>
+            </label>
+            <select [formControl]="area" id="area" (change)="onAreaChange($event)"
+              class="w-full px-3 py-2.5 text-sm border border-gray-300 rounded-lg bg-gray-50 text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none">
+              <option disabled selected hidden>Seleccione un área</option>
+              <option *ngFor="let area of areas" [value]="area.id">{{ area.nombre }}</option>
+            </select>
+            <p *ngIf="formTocado && area.invalid" class="mt-1.5 text-xs text-red-500">El área es obligatoria</p>
+          </div>
+        }
+
+        <!-- Buttons -->
+        <div class="flex flex-col gap-3 pt-2">
+          <button (click)="idea()" type="button"
+            class="w-full py-2.5 text-sm font-semibold text-white bg-blue-900 hover:bg-blue-800 rounded-lg shadow transition focus:ring-4 focus:ring-blue-300">
+            Siguiente
+          </button>
+          <button (click)="goBack()" type="button"
+            class="w-full py-2.5 text-sm font-semibold text-white bg-red-600 hover:bg-red-700 rounded-lg shadow transition focus:ring-4 focus:ring-red-300">
+            Cancelar
+          </button>
+        </div>
       </div>
-    </form>
+
+    </div>
   </div>
 </div>

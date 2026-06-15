@@ -297,54 +297,126 @@
       </div>
     </ng-template>
 
-    <h5 class="mb-4 text-2xl font-bold text-blue-900 dark:text-white">
-      Ideas implementadas
-    </h5>
+    <h5 class="mb-3 text-2xl font-bold text-blue-900 dark:text-white">Ideas</h5>
 
-    <div *ngIf="ideas?.length !== 0; else noIdeas" class="overflow-x-auto">
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead
-          class="text-xs uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
-        >
-          <tr>
-            <th class="px-6 py-3">Título</th>
-            <th class="px-6 py-3">Estatus</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let idea of ideas">
-            <td class="px-6 py-4 font-bold text-gray-900 dark:text-white">
+    <!-- En revisión -->
+    <div class="mb-2 border border-gray-200 rounded-lg overflow-hidden">
+      <button (click)="toggleSection('revision')"
+        class="w-full flex items-center justify-between px-4 py-3 bg-amber-50 hover:bg-amber-100 transition-colors duration-200 text-left">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-amber-500 inline-block"></span>
+          <span class="font-semibold text-amber-800">En revisión</span>
+          <span class="ml-1 text-xs font-bold text-amber-700 bg-amber-200 rounded-full px-2 py-0.5">{{ ideasRevision.length }}</span>
+        </div>
+        <svg class="w-4 h-4 text-amber-700 transition-transform duration-200"
+          [class.rotate-180]="openSections['revision']"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      @if(openSections['revision']) {
+        @if(ideasRevision.length > 0) {
+          <ul class="divide-y divide-gray-100">
+            <li *ngFor="let idea of ideasRevision"
+              class="px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer"
+              [routerLink]="['/admin/ideas/', idea.id]">
               {{ idea.titulo }}
-            </td>
-            <td
-              class="px-6 py-4 font-bold whitespace-nowrap"
-              [ngClass]="{
-                'text-yellow-500': idea.estatus == 1,
-                'text-emerald-600': idea.estatus == 2,
-                'text-blue-700': idea.estatus == 3,
-                'text-red-800': idea.estatus == 4,
-                'dark:text-white': true
-              }"
-            >
-              {{
-                idea.estatus == 1
-                  ? "En revisión"
-                  : idea.estatus == 2
-                  ? "Aceptada"
-                  : idea.estatus == 3
-                  ? "Implementada"
-                  : "Rechazada"
-              }}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </li>
+          </ul>
+        } @else {
+          <p class="px-4 py-3 text-sm text-gray-400 italic">Sin ideas en revisión.</p>
+        }
+      }
     </div>
 
-    <ng-template #noIdeas>
-      <h5 class="mt-4 text-lg font-semibold text-blue-600 dark:text-white">
-        ¡Este usuario aún no tiene ideas implementadas!
-      </h5>
-    </ng-template>
+    <!-- Aceptadas -->
+    <div class="mb-2 border border-gray-200 rounded-lg overflow-hidden">
+      <button (click)="toggleSection('aceptadas')"
+        class="w-full flex items-center justify-between px-4 py-3 bg-emerald-50 hover:bg-emerald-100 transition-colors duration-200 text-left">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block"></span>
+          <span class="font-semibold text-emerald-800">Aceptadas</span>
+          <span class="ml-1 text-xs font-bold text-emerald-700 bg-emerald-200 rounded-full px-2 py-0.5">{{ ideasAceptadas.length }}</span>
+        </div>
+        <svg class="w-4 h-4 text-emerald-700 transition-transform duration-200"
+          [class.rotate-180]="openSections['aceptadas']"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      @if(openSections['aceptadas']) {
+        @if(ideasAceptadas.length > 0) {
+          <ul class="divide-y divide-gray-100">
+            <li *ngFor="let idea of ideasAceptadas"
+              class="px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer"
+              [routerLink]="['/admin/ideas/', idea.id]">
+              {{ idea.titulo }}
+            </li>
+          </ul>
+        } @else {
+          <p class="px-4 py-3 text-sm text-gray-400 italic">Sin ideas aceptadas.</p>
+        }
+      }
+    </div>
+
+    <!-- Implementadas -->
+    <div class="mb-2 border border-gray-200 rounded-lg overflow-hidden">
+      <button (click)="toggleSection('implementadas')"
+        class="w-full flex items-center justify-between px-4 py-3 bg-blue-50 hover:bg-blue-100 transition-colors duration-200 text-left">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-blue-600 inline-block"></span>
+          <span class="font-semibold text-blue-800">Implementadas</span>
+          <span class="ml-1 text-xs font-bold text-blue-700 bg-blue-200 rounded-full px-2 py-0.5">{{ ideasImplementadas.length }}</span>
+        </div>
+        <svg class="w-4 h-4 text-blue-700 transition-transform duration-200"
+          [class.rotate-180]="openSections['implementadas']"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      @if(openSections['implementadas']) {
+        @if(ideasImplementadas.length > 0) {
+          <ul class="divide-y divide-gray-100">
+            <li *ngFor="let idea of ideasImplementadas"
+              class="px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer"
+              [routerLink]="['/admin/ideas/', idea.id]">
+              {{ idea.titulo }}
+            </li>
+          </ul>
+        } @else {
+          <p class="px-4 py-3 text-sm text-gray-400 italic">Sin ideas implementadas.</p>
+        }
+      }
+    </div>
+
+    <!-- Rechazadas -->
+    <div class="mb-2 border border-gray-200 rounded-lg overflow-hidden">
+      <button (click)="toggleSection('rechazadas')"
+        class="w-full flex items-center justify-between px-4 py-3 bg-red-50 hover:bg-red-100 transition-colors duration-200 text-left">
+        <div class="flex items-center gap-2">
+          <span class="w-2.5 h-2.5 rounded-full bg-red-500 inline-block"></span>
+          <span class="font-semibold text-red-800">Rechazadas</span>
+          <span class="ml-1 text-xs font-bold text-red-700 bg-red-200 rounded-full px-2 py-0.5">{{ ideasRechazadas.length }}</span>
+        </div>
+        <svg class="w-4 h-4 text-red-700 transition-transform duration-200"
+          [class.rotate-180]="openSections['rechazadas']"
+          fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+        </svg>
+      </button>
+      @if(openSections['rechazadas']) {
+        @if(ideasRechazadas.length > 0) {
+          <ul class="divide-y divide-gray-100">
+            <li *ngFor="let idea of ideasRechazadas"
+              class="px-4 py-2.5 text-sm text-gray-800 hover:bg-gray-50 cursor-pointer"
+              [routerLink]="['/admin/ideas/', idea.id]">
+              {{ idea.titulo }}
+            </li>
+          </ul>
+        } @else {
+          <p class="px-4 py-3 text-sm text-gray-400 italic">Sin ideas rechazadas.</p>
+        }
+      }
+    </div>
   </div>
 </div>

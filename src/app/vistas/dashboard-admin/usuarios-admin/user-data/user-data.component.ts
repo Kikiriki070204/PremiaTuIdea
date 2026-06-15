@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgClass, NgFor } from '@angular/common';
+import { CommonModule, NgFor } from '@angular/common';
 import { UsersService } from '../../../../servicios/users.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Profile, UpdateUser } from '../../../../interfaces/profile';
 import { IdeasService } from '../../../../servicios/ideas.service';
 import { Idea } from '../../../../interfaces/idea';
@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-user-data',
   standalone: true,
-  imports: [NgFor, FormsModule, ReactiveFormsModule, NgClass, CommonModule],
+  imports: [NgFor, FormsModule, ReactiveFormsModule, CommonModule, RouterLink],
   templateUrl: './user-data.component.html',
   styleUrl: './user-data.component.css'
 })
@@ -26,7 +26,11 @@ export class UserDataComponent implements OnInit {
 
   id: number | null = null
   userProfile: Profile | null = null
-  ideas: Idea[] | null = null
+  ideasRevision: Idea[] = []
+  ideasAceptadas: Idea[] = []
+  ideasImplementadas: Idea[] = []
+  ideasRechazadas: Idea[] = []
+  openSections: { [key: string]: boolean } = { revision: true, aceptadas: false, implementadas: false, rechazadas: false }
   selectedActive: number | null = null
   selectedRol: number | null = null
 
@@ -54,11 +58,14 @@ export class UserDataComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log("id: ", this.id)
     this.userData()
-    this.userImplementedIdeas()
+    this.userTodasLasIdeas()
     this.getDeps()
     this.getAreas()
+  }
+
+  toggleSection(section: string): void {
+    this.openSections[section] = !this.openSections[section]
   }
 
   userData() {
@@ -79,12 +86,14 @@ export class UserDataComponent implements OnInit {
       });
   }
 
-  userImplementedIdeas(): void {
-    this.ideasService.ideasImpByUser(this.id).subscribe(
-      ideasImp => {
-        this.ideas = ideasImp.ideas
-      },
-    )
+  userTodasLasIdeas(): void {
+    this.ideasService.userIdeasTodas(this.id).subscribe(ideas => {
+      const todas = ideas.ideas
+      this.ideasRevision     = todas.filter(i => i.estatus == 1)
+      this.ideasAceptadas    = todas.filter(i => i.estatus == 2)
+      this.ideasImplementadas = todas.filter(i => i.estatus == 3)
+      this.ideasRechazadas   = todas.filter(i => i.estatus == 4)
+    })
   }
   onEstadoChange(event: any) {
     const selectedValue = event.target.value;
@@ -218,7 +227,7 @@ export class UserDataComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/usuarios-admin"]);
   }
 
   getDeps(): void {

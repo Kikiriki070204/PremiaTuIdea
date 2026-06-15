@@ -8,6 +8,7 @@ export interface Idea {
 	propuesta: string
 	estatus: number
 	user_id: number
+	razon_rechazo: string | null
 }
 
 export interface IdeaData {
@@ -25,6 +26,7 @@ export interface IdeaData {
 		contable: number
 		puntos: number
 		categoria_id: number
+		razon_rechazo: string | null
 	},
 	colaboradores: User[
 
@@ -62,6 +64,7 @@ export interface Estado {
 	campos_id: number[] | null
 	ahorro: number | null | undefined
 	fecha_fin: string | null
+	razon_rechazo: string | null
 }
 
 export interface EstatusIdea {

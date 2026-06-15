@@ -23,10 +23,11 @@ export class IdeasAceptadasAdminComponent implements OnInit {
   readonly clientPageSize = 15;
   isLoading = false;
 
-  selectedCategoria: number = 1;
+  selectedCategoria: number = 0;
   selectedArea: number | null = null;
   searchQuery: string = '';
-  searchDate: string = '';
+  searchDateFrom: string = '';
+  searchDateTo: string = '';
 
   constructor(
     protected authService: AuthService,
@@ -106,8 +107,13 @@ export class IdeasAceptadasAdminComponent implements OnInit {
       result = result.filter((idea: any) => idea.titulo?.toLowerCase().includes(q));
     }
 
-    if (this.searchDate) {
-      result = result.filter((idea: any) => (idea.created_at ?? '').slice(0, 10) === this.searchDate);
+    if (this.searchDateFrom || this.searchDateTo) {
+      result = result.filter((idea: any) => {
+        const date = (idea.created_at ?? '').slice(0, 10);
+        if (this.searchDateFrom && date < this.searchDateFrom) return false;
+        if (this.searchDateTo && date > this.searchDateTo) return false;
+        return true;
+      });
     }
 
     this.filteredIdeas = result;
@@ -124,13 +130,15 @@ export class IdeasAceptadasAdminComponent implements OnInit {
 
   clearFilters(): void {
     this.searchQuery = '';
-    this.searchDate = '';
+    this.searchDateFrom = '';
+    this.searchDateTo = '';
     this.applyFilters();
   }
 
   onCategoriaChange(): void {
     this.searchQuery = '';
-    this.searchDate = '';
+    this.searchDateFrom = '';
+    this.searchDateTo = '';
     this.loadAllData();
   }
 

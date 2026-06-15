@@ -99,9 +99,17 @@ export class IdeaDataComponent implements OnInit {
   checkboxStatesColabs: { [id: number]: boolean } = {};
 
   public safeImage: SafeUrl | null = null;
+  isDefaultCondiciones = false;
+  public safeResultado: SafeUrl | null = null;
+  resultadoFile: File | null = null;
+  uploadingResultado = false;
+  resultadoError: string | null = null;
+  resultadoSuccess: string | null = null;
+
   ahorro = new FormControl('', Validators.required)
   puntos = new FormControl(Validators.required)
   puntos_x_idea = new FormControl('', Validators.required)
+  razonRechazo: string = ''
 
   constructor(protected userService: UsersService, private datePipe: DatePipe, protected authService: AuthService, protected sanitizer: DomSanitizer, private activatedRoute: ActivatedRoute, protected ideaService: IdeasService, protected router: Router) {
     this.searchChanged.pipe(
@@ -255,10 +263,55 @@ export class IdeaDataComponent implements OnInit {
 
 
   private getImage(): void {
-    this.ideaService.getImage(this.idea_id).subscribe(image => {
-      let blob: Blob = image;
-      let objectURL = URL.createObjectURL(blob);
-      this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+    this.ideaService.getImage(this.idea_id).subscribe({
+      next: (image) => {
+        let blob: Blob = image;
+        let objectURL = URL.createObjectURL(blob);
+        this.safeImage = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      error: () => {
+        this.safeImage = this.sanitizer.bypassSecurityTrustUrl('assets/borgwarner_logo.png');
+        this.isDefaultCondiciones = true;
+      }
+    });
+  }
+
+  private getResultadoImage(): void {
+    this.ideaService.getResultado(this.idea_id).subscribe({
+      next: (blob) => {
+        const objectURL = URL.createObjectURL(blob as Blob);
+        this.safeResultado = this.sanitizer.bypassSecurityTrustUrl(objectURL);
+      },
+      error: () => {
+        this.safeResultado = null;
+      }
+    });
+  }
+
+  onResultadoFileSelected(event: any): void {
+    const input = event.target as HTMLInputElement;
+    this.resultadoFile = (input.files && input.files.length > 0) ? input.files[0] : null;
+    this.resultadoError = null;
+    this.resultadoSuccess = null;
+  }
+
+  subirResultado(): void {
+    if (!this.resultadoFile || !this.idea_id) return;
+    this.uploadingResultado = true;
+    this.resultadoError = null;
+    this.resultadoSuccess = null;
+
+    this.ideaService.uploadResultado(this.idea_id, this.resultadoFile).subscribe({
+      next: () => {
+        this.uploadingResultado = false;
+        this.resultadoSuccess = 'Imagen subida correctamente.';
+        this.resultadoFile = null;
+        this.getResultadoImage();
+      },
+      error: () => {
+        this.uploadingResultado = false;
+        this.resultadoError = 'Error al subir la imagen. Intenta de nuevo.';
+      }
     });
   }
 
@@ -277,6 +330,9 @@ export class IdeaDataComponent implements OnInit {
           self.puntos_idea = value.idea.puntos
           self.ahorro_idea = value.idea.ahorro
           self.categoria_id = value.idea.categoria_id
+          if (value.idea.estatus === 3) {
+            self.getResultadoImage();
+          }
           console.log(value)
           self.getCampos()
           value.colaboradores.forEach(
@@ -448,7 +504,8 @@ export class IdeaDataComponent implements OnInit {
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
       ahorro: (this.ahorro.value !== null) ? +this.ahorro.value : this.idea?.idea.ahorro,
-      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : ' '
+      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : null,
+      razon_rechazo: (this.selectedEstado === 4) ? this.razonRechazo : null
     }
 
     this.ideaService.editarEstado(estado).subscribe({
@@ -497,7 +554,8 @@ export class IdeaDataComponent implements OnInit {
       campos_id: this.campos_idea ?? 0,
       contable: this.contable ?? null,
       ahorro: (this.ahorro.value !== null && this.ahorro.value !== '') ? +this.ahorro.value : this.idea?.idea.ahorro,
-      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : ' '
+      fecha_fin: (this.selectedEstado === 3) ? this.fecha_puntos : null,
+      razon_rechazo: this.idea?.idea.razon_rechazo ?? null
     }
 
     this.ideaService.editarEstado(estado).subscribe({
@@ -612,6 +670,6 @@ export class IdeaDataComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(['/admin/ideas-admin']);
   }
 }

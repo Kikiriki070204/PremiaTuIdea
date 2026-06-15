@@ -59,12 +59,17 @@ export class ReportesPremiosComponent {
         const data = productos.map((p: any) => p.cantidad_entregada);
 
         const backgroundColors = [
-          'rgba(35, 52, 188, 1)', 'rgba(176, 21, 63, 1)', 'rgba(29, 232, 50, 1)',
-          'rgba(235, 235, 28, 1)', 'rgba(294, 97, 7, 1)', 'rgba(33, 147, 8, 1)',
-          'rgba(0, 191, 255, 1)', 'rgba(213, 14, 192, 1)', 'rgba(231, 207, 7, 1)',
-          'rgba(185, 178, 122, 1)'
+          'rgba(99,102,241,0.85)','rgba(59,130,246,0.85)','rgba(16,185,129,0.85)',
+          'rgba(245,158,11,0.85)','rgba(168,85,247,0.85)','rgba(20,184,166,0.85)',
+          'rgba(249,115,22,0.85)','rgba(236,72,153,0.85)','rgba(132,204,22,0.85)',
+          'rgba(239,68,68,0.85)',
         ];
-        const borderColors = backgroundColors.map(color => color.replace('1)', '0.4)'));
+        const borderColors = [
+          'rgba(99,102,241,1)','rgba(59,130,246,1)','rgba(16,185,129,1)',
+          'rgba(245,158,11,1)','rgba(168,85,247,1)','rgba(20,184,166,1)',
+          'rgba(249,115,22,1)','rgba(236,72,153,1)','rgba(132,204,22,1)',
+          'rgba(239,68,68,1)',
+        ];
 
         const canvas = document.getElementById('topProductosChart') as HTMLCanvasElement;
 
@@ -77,7 +82,8 @@ export class ReportesPremiosComponent {
               data: data,
               backgroundColor: backgroundColors,
               borderColor: borderColors,
-              borderWidth: 1
+              borderWidth: 1,
+              borderRadius: 6
             }]
           },
           options: {
@@ -106,7 +112,8 @@ export class ReportesPremiosComponent {
               }
             },
             scales: this.chartType === 'bar' ? {
-
+              y: { beginAtZero: true, grid: { color: 'rgba(0,0,0,0.05)' } },
+              x: { grid: { display: false } }
             } : undefined
           }
         });

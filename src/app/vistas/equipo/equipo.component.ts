@@ -23,6 +23,7 @@ import { initFlowbite } from 'flowbite';
   styleUrl: './equipo.component.css'
 })
 export class EquipoComponent implements OnInit {
+  showModal = false
   colabSelected: number | null = null
   colaboradores: User[] = []
   id: number | null = null
@@ -151,8 +152,8 @@ export class EquipoComponent implements OnInit {
 
       this.equipoService.agregar(userteam).subscribe({
         next(value: UsuarioEquipo) {
-          console.log("colaboradores:", value);
-          self.router.navigate(['/ideas'])
+          self.showModal = false;
+          self.router.navigate(['/ideas']);
         },
         error(err) {
           console.log("Error:", err);

@@ -162,7 +162,7 @@ export class ActividadDataComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['/admin/ideas-admin/revision'])
+    this.router.navigate(['/admin/ideas-admin'])
 
   }
 

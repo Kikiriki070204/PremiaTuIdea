@@ -68,7 +68,7 @@ export class NewIdeaComponent implements OnInit {
     this.selectedArea = String(selectedValue)
   }
 
-  async idea() {
+  idea() {
     this.formTocado = true;
 
     if (this.idCategoriaSeleccionado == 1) {
@@ -98,18 +98,6 @@ export class NewIdeaComponent implements OnInit {
     formData.append('propuesta', this.propuesta.value ?? "");
     if (this.condiciones) {
       formData.append('condiciones', this.condiciones);
-    }
-    else {
-      console.log("No selecciono niguna imagen")
-      // Load the default image/file from the project (assuming it's in the assets folder)
-      const defaultImageUrl = 'assets/borgwarner_logo.png';  // Adjust this path accordingly
-
-      const response = await fetch(defaultImageUrl);
-      const blob = await response.blob();
-      const file = new File([blob], 'default-image.png', { type: blob.type });
-
-
-      formData.append('condiciones', file);
     }
     formData.append('fecha_inicio', this.fecha_inicial.value ?? "")
     if (this.selectedArea) {
@@ -157,7 +145,7 @@ export class NewIdeaComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(['/categoriaIdea']);
   }
 
   categorias() {

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, interval, map, Observable, of, startWith, switchMap } from 'rxjs';
 import { environment } from '../../enviroment/enviroment';
+import { AuthService } from './auth.service';
 
 @Injectable({
     providedIn: 'root'
@@ -11,10 +12,13 @@ export class NotificacionesService {
     private hayNoLeidasSubject = new BehaviorSubject<boolean>(false);
     public hayNoLeidas$ = this.hayNoLeidasSubject.asObservable();
 
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient, private authService: AuthService) {
         interval(30000).pipe(
             startWith(0),
-            switchMap(() => this.obtenerCantidadNoLeidas()),
+            switchMap(() => {
+                if (!this.authService.isLoggedIn()) return of(0);
+                return this.obtenerCantidadNoLeidas();
+            }),
             catchError(() => of(0))
         ).subscribe(count => this.hayNoLeidasSubject.next(count > 0));
     }

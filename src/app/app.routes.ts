@@ -8,7 +8,7 @@ import { sesionActivaGuard } from './guards/sesionActiva.guard';
 // Ya hay un guard!
 export const routes: Routes =
     [
-        { path: '', loadComponent: () => import('./vistas/index/index.component').then(m => m.IndexComponent) },
+        { path: '', loadComponent: () => import('./vistas/index/index.component').then(m => m.IndexComponent), data: { hideNavbar: true } },
         //Rutas de usuario
         //{ path: 'activar', loadComponent: () => import('./vistas/activate/activate.component').then(m => m.ActivateComponent) },
         { path: 'login', loadComponent: () => import('./vistas/login/login.component').then(m => m.LoginComponent), canActivate: [sesionActivaGuard] },
@@ -123,33 +123,6 @@ export const routes: Routes =
                     path: 'ideas-admin', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-admin.component').then(m => m.IdeasAdminComponent),
                     canActivate: [authAdminGuard],
                     data: { hideNavbar: true },
-                    children: [
-                        {
-                            path: '',
-                            redirectTo: 'revision',
-                            pathMatch: 'full'
-                        },
-                        {
-                            path: 'revision', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-revision-admin/ideas-revision-admin.component').then(m => m.IdeasRevisionAdminComponent),
-                            data: { hideNavbar: true },
-                            canActivate: [authAdminGuard],
-                        },
-                        {
-                            path: 'aceptadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-aceptadas-admin/ideas-aceptadas-admin.component').then(m => m.IdeasAceptadasAdminComponent),
-                            data: { hideNavbar: true },
-                            canActivate: [authAdminGuard],
-                        },
-                        {
-                            path: 'implementadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-implementadas-admin/ideas-implementadas-admin.component').then(m => m.IdeasImplementadasAdminComponent),
-                            data: { hideNavbar: true },
-                            canActivate: [authAdminGuard],
-                        },
-                        {
-                            path: 'rechazadas', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/ideas-rechazadas-admin/ideas-rechazadas-admin.component').then(m => m.IdeasRechazadasAdminComponent),
-                            data: { hideNavbar: true },
-                            canActivate: [authAdminGuard],
-                        },
-                    ]
                 },
                 {
                     path: 'ideas/:id', loadComponent: () => import('./vistas/dashboard-admin/ideas-admin/idea-data/idea-data.component').then(m => m.IdeaDataComponent),
@@ -223,6 +196,20 @@ export const routes: Routes =
                 // bonos
                 {
                     path: 'bonos-admin', loadComponent: () => import('./vistas/dashboard-admin/bonos-admin/bonos-admin.component').then(m => m.BonosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+
+                // anuncios
+                {
+                    path: 'anuncios-admin', loadComponent: () => import('./vistas/dashboard-admin/anuncios-admin/anuncios-admin.component').then(m => m.AnunciosAdminComponent),
+                    data: { hideNavbar: true },
+                    canActivate: [authAdminGuard],
+                },
+
+                // carrusel
+                {
+                    path: 'carrusel-admin', loadComponent: () => import('./vistas/dashboard-admin/carrusel-admin/carrusel-admin.component').then(m => m.CarruselAdminComponent),
                     data: { hideNavbar: true },
                     canActivate: [authAdminGuard],
                 }

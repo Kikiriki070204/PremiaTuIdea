@@ -75,6 +75,6 @@ export class NewProductoComponent {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/productos-admin"]);
   }
 }

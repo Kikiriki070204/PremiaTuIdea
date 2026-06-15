@@ -195,7 +195,7 @@ export class NewUserComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/usuarios-admin"]);
   }
 
 

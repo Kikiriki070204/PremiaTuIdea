@@ -29,6 +29,14 @@ export class UsersService {
     return this.http.get<UsersList>(`${environment.api_url}/users/usuariosAll?page=${page}`);
   }
 
+  allUsersForExport(): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/users/usuariosAllExport`);
+  }
+
+  resetAllPuntos(): Observable<any> {
+    return this.http.post<any>(`${environment.api_url}/users/resetAllPuntos`, {});
+  }
+
   updateUser(data: UpdateUser): Observable<User> {
     return this.http.put<User>(`${environment.api_url}/users/update`, data);
   }

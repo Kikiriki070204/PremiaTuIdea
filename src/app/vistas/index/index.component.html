@@ -1,12 +1,48 @@
 <div class="page-wrapper">
 
-  <!-- ===== HERO SECTION ===== -->
+  <!-- ══ Barra de progreso de scroll ══ -->
+  <div id="scroll-bar" class="scroll-progress"></div>
+
+  <!-- ══════════════════════════════════════════
+       NAVBAR STICKY
+  ══════════════════════════════════════════ -->
+  <nav class="landing-nav">
+    <div class="nav-inner">
+      <div class="nav-brand">
+        <img src="assets/logoWhite.png" alt="PremiaTuIdea" class="nav-logo" />
+        <span class="nav-brand-name">PremiaTuIdea</span>
+      </div>
+      @if (!isLoggedIn) {
+        <div class="nav-actions">
+          <a [routerLink]="['/login']" class="nav-btn-ghost">Iniciar sesión</a>
+          <a [routerLink]="['/register']" class="nav-btn-solid">Crear cuenta</a>
+        </div>
+      } @else {
+        <button (click)="dashboard()" class="nav-btn-solid">Ir al dashboard →</button>
+      }
+    </div>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════════
+       HERO
+  ══════════════════════════════════════════ -->
   <section class="hero-bg relative overflow-hidden">
 
-    <!-- Orbes decorativos de fondo -->
+    <!-- Canvas de partículas constelación -->
+    <canvas id="hero-canvas" class="particle-canvas"></canvas>
+
+    <!-- Orbes con parallax -->
     <div class="orb orb-1"></div>
     <div class="orb orb-2"></div>
     <div class="orb orb-3"></div>
+    <div class="orb orb-4"></div>
+
+    <!-- Malla de puntos -->
+    <div class="hero-dots"></div>
+
+    <!-- Glow del mouse -->
+    <div class="mouse-glow"></div>
 
     <!-- Destellos -->
     <span class="sparkle sp-1">✦</span>
@@ -14,165 +50,208 @@
     <span class="sparkle sp-3">✦</span>
     <span class="sparkle sp-4">✦</span>
     <span class="sparkle sp-5">★</span>
+    <span class="sparkle sp-6">✧</span>
+    <span class="sparkle sp-7">✦</span>
+    <span class="sparkle sp-8">★</span>
+
+    <!-- Líneas decorativas flotantes -->
+    <div class="deco-line deco-line-1"></div>
+    <div class="deco-line deco-line-2"></div>
 
     <div class="hero-inner">
 
       <!-- Texto -->
       <div class="hero-text">
-        <div class="hero-badge">
+
+        <div class="hero-badge reveal reveal-left">
+          <span class="badge-pulse"></span>
           <span>🏆</span>
-          <span>Programa de Innovación BorgWarner</span>
+          <span>Programa de Innovación · BorgWarner</span>
         </div>
 
-        <h1 class="hero-title">
+        <h1 class="hero-title reveal reveal-left" style="--delay:.1s">
           Tu idea puede<br />
           <span class="text-gradient">cambiar la planta</span>
         </h1>
 
-        <p class="hero-subtitle">
+        <p class="hero-subtitle reveal reveal-left" style="--delay:.2s">
           Comparte tus propuestas para mejorar la seguridad, producción y eficiencia.
           Las mejores ideas son implementadas <strong>y premiadas</strong>.
         </p>
 
         @if (isLoggedIn) {
-          <button (click)="dashboard()" class="btn-primary">
+          <button (click)="dashboard()" class="btn-primary reveal reveal-left" style="--delay:.3s">
             Ir al dashboard &rarr;
           </button>
         } @else {
-          <div class="hero-actions">
+          <div class="hero-actions reveal reveal-left" style="--delay:.3s">
             <a [routerLink]="['/login']" class="btn-primary">Iniciar sesión</a>
             <a [routerLink]="['/register']" class="btn-ghost">¿Primera vez? Regístrate</a>
           </div>
         }
 
-        <!-- Stats -->
+        <!-- Stats con contador animado -->
         <div class="hero-stats">
-          <div class="stat">
-            <span class="stat-num">+500</span>
+          <div class="stat reveal reveal-up" style="--delay:.4s">
+            <span class="stat-num glow-num">+{{ stat1 }}</span>
             <span class="stat-label">Ideas enviadas</span>
           </div>
-          <div class="stat-sep"></div>
-          <div class="stat">
-            <span class="stat-num">+120</span>
+          <div class="stat-sep reveal reveal-up" style="--delay:.45s"></div>
+          <div class="stat reveal reveal-up" style="--delay:.5s">
+            <span class="stat-num glow-num">+{{ stat2 }}</span>
             <span class="stat-label">Premiadas</span>
           </div>
-          <div class="stat-sep"></div>
-          <div class="stat">
-            <span class="stat-num">+80</span>
+          <div class="stat-sep reveal reveal-up" style="--delay:.55s"></div>
+          <div class="stat reveal reveal-up" style="--delay:.6s">
+            <span class="stat-num glow-num">+{{ stat3 }}</span>
             <span class="stat-label">Implementadas</span>
           </div>
         </div>
+
       </div>
 
-      <!-- Visual card -->
-      <div class="hero-visual">
-        <div class="hero-card">
-          <div class="glow-ring"></div>
-          <img src="assets/idea.png" class="idea-img" alt="Idea" />
+      <!-- Tarjeta visual / Carrusel -->
+      <div class="hero-visual reveal reveal-right" style="--delay:.15s">
+        <div class="hero-card-wrapper">
+          <div class="float-badge badge-top"><span>💡</span> ¡Nueva idea!</div>
+          <div class="float-badge badge-bot"><span>🏅</span> Premio obtenido</div>
+          <div class="hero-card">
+            <div class="card-shimmer"></div>
+            <div class="glow-ring"></div>
 
-          <!-- Badges flotantes -->
-          <div class="float-badge badge-top">
-            <span>💡</span> ¡Nueva idea!
-          </div>
-          <div class="float-badge badge-bot">
-            <span>🏅</span> Premio obtenido
-          </div>
+            @if(carruselImagenes.length > 0) {
+              <!-- Slides del carrusel -->
+              <div class="carrusel-inner">
+                @for(img of carruselImagenes; track img.id; let i = $index) {
+                  <img
+                    [src]="carruselImageUrl(img.id)"
+                    class="carrusel-slide"
+                    [class.active]="i === carruselIndex"
+                    alt="Imagen {{ i + 1 }}"
+                  />
+                }
+                <!-- Dots -->
+                @if(carruselImagenes.length > 1) {
+                  <div class="carrusel-dots">
+                    @for(img of carruselImagenes; track img.id; let i = $index) {
+                      <button (click)="carruselGoTo(i)"
+                        class="carrusel-dot"
+                        [class.carrusel-dot-active]="i === carruselIndex">
+                      </button>
+                    }
+                  </div>
+                  <button (click)="carruselPrev()" class="carrusel-btn carrusel-btn-left">&#8249;</button>
+                  <button (click)="carruselNext()" class="carrusel-btn carrusel-btn-right">&#8250;</button>
+                }
+              </div>
+            } @else {
+              <img src="assets/idea.png" class="idea-img" alt="Idea" />
+            }
 
-          <!-- Puntos decorativos -->
-          <div class="dot-ring dot-ring-1"></div>
-          <div class="dot-ring dot-ring-2"></div>
+            <div class="dot-ring dot-ring-1"></div>
+            <div class="dot-ring dot-ring-2"></div>
+            <div class="dot-ring dot-ring-3"></div>
+          </div>
         </div>
       </div>
 
     </div>
 
-    <!-- Divisor de ola -->
+    <!-- Ola divisora animada -->
     <div class="wave">
       <svg viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f8fafc"/>
+        <path class="wave-path" d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="#f8fafc"/>
       </svg>
     </div>
   </section>
 
 
-  <!-- ===== CÓMO FUNCIONA ===== -->
+  <!-- ══════════════════════════════════════════
+       CÓMO FUNCIONA
+  ══════════════════════════════════════════ -->
   <section class="section-light">
     <div class="section-inner">
 
       <div class="section-header">
-        <p class="section-tag">Proceso</p>
-        <h2 class="section-title">¿Cómo funciona?</h2>
-        <p class="section-sub">En 3 sencillos pasos tu idea puede ser reconocida y premiada</p>
+        <p class="section-tag reveal reveal-up">Proceso</p>
+        <h2 class="section-title reveal reveal-up" style="--delay:.1s">¿Cómo funciona?</h2>
+        <p class="section-sub reveal reveal-up" style="--delay:.15s">En 3 sencillos pasos tu idea puede ser reconocida y premiada</p>
       </div>
 
       <div class="steps-grid">
 
-        <div class="step-card">
+        <div class="step-card reveal reveal-up" style="--delay:.0s">
           <span class="step-num">01</span>
           <div class="step-icon">💡</div>
           <h3>Propón tu idea</h3>
           <p>Describe tu propuesta: cómo mejoraría algún proceso, reduciría riesgos o generaría ahorro para la planta.</p>
+          <div class="card-border-glow"></div>
         </div>
 
-        <div class="step-card step-highlight">
+        <div class="step-card step-highlight reveal reveal-up" style="--delay:.12s">
           <span class="step-num">02</span>
           <div class="step-icon">⚙️</div>
           <h3>Se evalúa</h3>
           <p>El equipo administrativo analiza el impacto de tu idea y decide si se aprueba e implementa.</p>
+          <div class="card-border-glow"></div>
         </div>
 
-        <div class="step-card">
+        <div class="step-card reveal reveal-up" style="--delay:.24s">
           <span class="step-num">03</span>
           <div class="step-icon">🏆</div>
           <h3>¡Gana premios!</h3>
           <p>Las ideas aprobadas generan puntos que puedes canjear por increíbles premios y reconocimientos.</p>
+          <div class="card-border-glow"></div>
         </div>
 
       </div>
+
+      <!-- Indicador de conexión entre pasos -->
+      <div class="steps-connector reveal reveal-up" style="--delay:.35s">
+        <div class="connector-line"></div>
+        <span class="connector-dot"></span>
+        <span class="connector-dot"></span>
+        <span class="connector-dot"></span>
+      </div>
+
     </div>
   </section>
 
 
-  <!-- ===== ÁREAS DE INNOVACIÓN ===== -->
+  <!-- ══════════════════════════════════════════
+       ÁREAS DE INNOVACIÓN
+  ══════════════════════════════════════════ -->
   <section class="section-dark">
     <div class="section-inner">
 
       <div class="section-header">
-        <p class="section-tag section-tag-light">Categorías</p>
-        <h2 class="section-title light">¿En qué áreas puedes innovar?</h2>
-        <p class="section-sub light">Cualquier mejora cuenta. Explora las principales categorías:</p>
+        <p class="section-tag section-tag-light reveal reveal-up">Categorías</p>
+        <h2 class="section-title light reveal reveal-up" style="--delay:.1s">¿En qué áreas puedes innovar?</h2>
+        <p class="section-sub light reveal reveal-up" style="--delay:.15s">Cualquier mejora cuenta. Explora las principales categorías:</p>
       </div>
 
       <div class="areas-grid">
 
-        <div class="area-card">
-          <div class="area-icon-wrap" style="background: rgba(239,68,68,0.15)">
-            <span>🛡️</span>
-          </div>
+        <div class="area-card reveal reveal-up" style="--delay:.0s">
+          <div class="area-icon-wrap" style="background:rgba(239,68,68,0.15)"><span>🛡️</span></div>
           <h4>Seguridad</h4>
           <p>Propuestas que reduzcan riesgos y mejoren la seguridad en el área de trabajo.</p>
         </div>
 
-        <div class="area-card">
-          <div class="area-icon-wrap" style="background: rgba(59,130,246,0.15)">
-            <span>⚙️</span>
-          </div>
+        <div class="area-card reveal reveal-up" style="--delay:.1s">
+          <div class="area-icon-wrap" style="background:rgba(59,130,246,0.15)"><span>⚙️</span></div>
           <h4>Producción</h4>
           <p>Ideas que optimicen procesos productivos y aumenten la eficiencia operativa.</p>
         </div>
 
-        <div class="area-card">
-          <div class="area-icon-wrap" style="background: rgba(16,185,129,0.15)">
-            <span>♻️</span>
-          </div>
+        <div class="area-card reveal reveal-up" style="--delay:.2s">
+          <div class="area-icon-wrap" style="background:rgba(16,185,129,0.15)"><span>♻️</span></div>
           <h4>Reducción de SCRAP</h4>
           <p>Estrategias para disminuir desperdicios de materiales y tiempos muertos.</p>
         </div>
 
-        <div class="area-card">
-          <div class="area-icon-wrap" style="background: rgba(245,158,11,0.15)">
-            <span>💰</span>
-          </div>
+        <div class="area-card reveal reveal-up" style="--delay:.3s">
+          <div class="area-icon-wrap" style="background:rgba(245,158,11,0.15)"><span>💰</span></div>
           <h4>Ahorro</h4>
           <p>Propuestas que generen ahorro económico o de recursos para la planta.</p>
         </div>
@@ -182,19 +261,72 @@
   </section>
 
 
-  <!-- ===== CTA FINAL (solo si no está logueado) ===== -->
+  <!-- ══════════════════════════════════════════
+       BENEFICIOS
+  ══════════════════════════════════════════ -->
+  <section class="section-light">
+    <div class="section-inner">
+
+      <div class="section-header">
+        <p class="section-tag reveal reveal-up">Beneficios</p>
+        <h2 class="section-title reveal reveal-up" style="--delay:.1s">¿Por qué participar?</h2>
+      </div>
+
+      <div class="benefits-grid">
+
+        <div class="benefit-card reveal reveal-up" style="--delay:.0s">
+          <div class="benefit-icon">🎯</div>
+          <h4>Impacto real</h4>
+          <p>Tus ideas se analizan y las mejores se implementan en la planta, generando un cambio tangible.</p>
+        </div>
+
+        <div class="benefit-card reveal reveal-up" style="--delay:.1s">
+          <div class="benefit-icon">⭐</div>
+          <h4>Reconocimiento</h4>
+          <p>Acumula puntos por cada idea enviada y aprobada. Sube en el ranking de innovadores.</p>
+        </div>
+
+        <div class="benefit-card reveal reveal-up" style="--delay:.2s">
+          <div class="benefit-icon">🎁</div>
+          <h4>Premios</h4>
+          <p>Canjea tus puntos por premios exclusivos: desde artículos tecnológicos hasta experiencias únicas.</p>
+        </div>
+
+        <div class="benefit-card reveal reveal-up" style="--delay:.3s">
+          <div class="benefit-icon">🤝</div>
+          <h4>Trabajo en equipo</h4>
+          <p>Invita colaboradores a tu idea y compartan el reconocimiento por el trabajo en conjunto.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════════
+       CTA FINAL
+  ══════════════════════════════════════════ -->
   @if (!isLoggedIn) {
   <section class="section-cta">
+    <!-- partículas flotantes CTA -->
+    <span class="cta-orb cta-orb-1"></span>
+    <span class="cta-orb cta-orb-2"></span>
+    <span class="cta-orb cta-orb-3"></span>
     <div class="cta-inner">
-      <div class="cta-emoji">🚀</div>
-      <h2>¿Listo para compartir tu idea?</h2>
-      <p>Únete a la comunidad de innovadores de BorgWarner y empieza a ganar.</p>
-      <div class="cta-actions">
+      <div class="cta-emoji reveal reveal-up">🚀</div>
+      <h2 class="reveal reveal-up" style="--delay:.1s">¿Listo para compartir tu idea?</h2>
+      <p class="reveal reveal-up" style="--delay:.18s">Únete a la comunidad de innovadores de BorgWarner y empieza a ganar.</p>
+      <div class="cta-actions reveal reveal-up" style="--delay:.26s">
         <a [routerLink]="['/login']" class="btn-cta-dark">Iniciar sesión</a>
         <a [routerLink]="['/register']" class="btn-cta-outline">Crear cuenta gratis</a>
       </div>
     </div>
   </section>
   }
+
+  <!-- Footer -->
+  <footer class="landing-footer">
+    <p>© 2025 PremiaTuIdea · BorgWarner · Todos los derechos reservados</p>
+  </footer>
 
 </div>

@@ -28,7 +28,7 @@ export class NotFoundComponent implements OnInit {
   }
 
   goBack() {
-    history.back()
+    this.router.navigate(["/dashboard"]);
   }
 
   goToLogin() {

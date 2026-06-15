@@ -92,6 +92,6 @@ export class PremioDataComponent implements OnInit {
 
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/premios-admin"]);
   }
 }

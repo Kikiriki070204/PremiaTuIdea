@@ -1,7 +1,6 @@
 import { CommonModule, NgFor } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { Profile } from '../../../../interfaces/profile';
 import { AuthService } from '../../../../servicios/auth.service';
 import { IdeasService } from '../../../../servicios/ideas.service';
 import { FormsModule } from '@angular/forms';
@@ -23,10 +22,12 @@ export class IdeasRevisionAdminComponent implements OnInit {
   readonly clientPageSize = 15;
   isLoading = false;
 
-  selectedCategoria: number = 1;
+  selectedEstatus: number = 0;
+  selectedCategoria: number = 0;
   selectedArea: number | null = null;
   searchQuery: string = '';
-  searchDate: string = '';
+  searchDateFrom: string = '';
+  searchDateTo: string = '';
 
   constructor(
     protected authService: AuthService,
@@ -55,13 +56,28 @@ export class IdeasRevisionAdminComponent implements OnInit {
     return Math.min(this.clientPage * this.clientPageSize, this.filteredIdeas.length);
   }
 
+  estatusLabel(estatus: number): string {
+    const labels: Record<number, string> = { 1: 'En revisión', 2: 'Aceptada', 3: 'Implementada', 4: 'Rechazada' };
+    return labels[estatus] ?? 'Desconocido';
+  }
+
+  estatusColorClass(estatus: number): string {
+    const classes: Record<number, string> = {
+      1: 'text-yellow-500',
+      2: 'text-green-500',
+      3: 'text-blue-500',
+      4: 'text-red-600'
+    };
+    return classes[estatus] ?? 'text-gray-500';
+  }
+
   loadAllData(): void {
     this.isLoading = true;
     this.allIdeas = [];
     this.filteredIdeas = [];
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (this.ideaService.ideasByStatusAndCategory(1, this.selectedCategoria, 1, this.selectedArea) as any).subscribe({
+    (this.ideaService.ideasByStatusAndCategory(this.selectedEstatus, this.selectedCategoria, 1, this.selectedArea) as any).subscribe({
       next: (firstRes: any) => {
         const firstData: any[] = firstRes?.ideas?.data ?? [];
         const lastPage: number = firstRes?.ideas?.last_page ?? 1;
@@ -76,7 +92,7 @@ export class IdeasRevisionAdminComponent implements OnInit {
         const requests = [];
         for (let p = 2; p <= lastPage; p++) {
           requests.push(
-            (this.ideaService.ideasByStatusAndCategory(1, this.selectedCategoria, p, this.selectedArea) as any)
+            (this.ideaService.ideasByStatusAndCategory(this.selectedEstatus, this.selectedCategoria, p, this.selectedArea) as any)
               .pipe(map((r: any) => r?.ideas?.data ?? []))
           );
         }
@@ -106,12 +122,24 @@ export class IdeasRevisionAdminComponent implements OnInit {
       result = result.filter((idea: any) => idea.titulo?.toLowerCase().includes(q));
     }
 
-    if (this.searchDate) {
-      result = result.filter((idea: any) => (idea.created_at ?? '').slice(0, 10) === this.searchDate);
+    if (this.searchDateFrom || this.searchDateTo) {
+      result = result.filter((idea: any) => {
+        const date = (idea.created_at ?? '').slice(0, 10);
+        if (this.searchDateFrom && date < this.searchDateFrom) return false;
+        if (this.searchDateTo && date > this.searchDateTo) return false;
+        return true;
+      });
     }
 
     this.filteredIdeas = result;
     this.clientPage = 1;
+  }
+
+  onEstatusChange(): void {
+    this.searchQuery = '';
+    this.searchDateFrom = '';
+    this.searchDateTo = '';
+    this.loadAllData();
   }
 
   onSearchChange(): void {
@@ -124,13 +152,15 @@ export class IdeasRevisionAdminComponent implements OnInit {
 
   clearFilters(): void {
     this.searchQuery = '';
-    this.searchDate = '';
+    this.searchDateFrom = '';
+    this.searchDateTo = '';
     this.applyFilters();
   }
 
   onCategoriaChange(): void {
     this.searchQuery = '';
-    this.searchDate = '';
+    this.searchDateFrom = '';
+    this.searchDateTo = '';
     this.loadAllData();
   }
 

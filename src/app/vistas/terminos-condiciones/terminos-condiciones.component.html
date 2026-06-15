@@ -1,543 +1,213 @@
-<div class="min-h-screen bg-gray-100 flex justify-center p-4 pt-20">
-  <div
-    class="w-full max-w-6xl bg-white shadow-lg rounded-t-2xl overflow-hidden"
-  >
-    <div class="border-b">
-      <!-- dropdown -->
-      <div class="md:hidden p-4">
-        <select
-          [(ngModel)]="activeTab"
-          class="w-full border border-gray-300 rounded p-2"
-        >
-          <option value="sec1">Ideas (Premia tu idea)</option>
-          <option value="sec2">Lean Workshops</option>
-          <option value="sec3">Cambio de nivel de técnicos</option>
-          <option value="sec4">Scrap y mejora continua</option>
-          <option value="sec5">OE</option>
-          <option value="sec6">Ahorro de energía</option>
+<div class="tc-wrapper">
+
+  <!-- ── Hero ── -->
+  <section class="tc-hero">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <span class="sparkle sp-1">✦</span>
+    <span class="sparkle sp-2">★</span>
+    <span class="sparkle sp-3">✦</span>
+
+    <div class="tc-hero-inner">
+      <div class="role-badge">
+        <span class="role-dot"></span>
+        Programa de Innovación
+      </div>
+      <h1 class="tc-title">
+        Términos y <span class="tc-highlight">Condiciones</span>
+      </h1>
+      <p class="tc-subtitle">
+        Consulta las bases, reglas y esquemas de premiación para cada categoría del programa.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── Contenido ── -->
+  <section class="tc-body">
+    <div class="tc-inner">
+
+      <!-- Pestañas desktop -->
+      <nav class="tab-bar">
+        @for(tab of tabs; track tab.key) {
+          <button (click)="switchTab(tab.key)"
+                  [class.tab-active]="activeTab === tab.key"
+                  class="tab-btn">
+            {{ tab.label }}
+          </button>
+        }
+      </nav>
+
+      <!-- Select móvil -->
+      <div class="tab-mobile">
+        <select [ngModel]="activeTab" (ngModelChange)="switchTab($event)" class="tab-select">
+          @for(tab of tabs; track tab.key) {
+            <option [value]="tab.key">{{ tab.label }}</option>
+          }
         </select>
       </div>
 
-      <div class="hidden md:flex">
-        <button
-          (click)="activeTab = 'sec1'"
-          [ngClass]="
-            activeTab === 'sec1'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          Ideas (Premia tu idea)
-        </button>
-        <button
-          (click)="activeTab = 'sec2'"
-          [ngClass]="
-            activeTab === 'sec2'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          Lean Workshops
-        </button>
-        <button
-          (click)="activeTab = 'sec3'"
-          [ngClass]="
-            activeTab === 'sec3'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          Cambio de nivel de técnicos
-        </button>
-        <button
-          (click)="activeTab = 'sec4'"
-          [ngClass]="
-            activeTab === 'sec4'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          Scrap y mejora continua
-        </button>
-        <button
-          (click)="activeTab = 'sec5'"
-          [ngClass]="
-            activeTab === 'sec5'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          OE
-        </button>
-        <button
-          (click)="activeTab = 'sec6'"
-          [ngClass]="
-            activeTab === 'sec6'
-              ? 'text-blue-800 border-blue-800'
-              : 'text-gray-600 border-transparent'
-          "
-          class="flex-1 py-3 text-center font-medium hover:text-blue-800 focus:outline-none border-b-2"
-        >
-          Ahorro de energía
-        </button>
-      </div>
+      <!-- ── Panel dinámico (aplica a todas las pestañas) ── -->
+      <div class="panel" [class.panel-editing]="editingSection === activeTab">
+
+        <!-- Barra de edición (solo admin) -->
+        @if(isAdmin) {
+          <div class="edit-bar" [class.edit-bar-active]="editingSection === activeTab">
+
+            @if(editingSection === activeTab) {
+              <!-- Modo edición activo -->
+              <div class="edit-bar-left">
+                <svg class="edit-icon-sm" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                </svg>
+                <span class="edit-mode-label">Modo edición — {{ getTabConfig(activeTab).label }}</span>
+              </div>
+              <div class="edit-bar-actions">
+                <button class="btn-save" (click)="saveEdit()" [disabled]="saving">
+                  @if(saving) {
+                    <span class="btn-spinner"></span> Guardando...
+                  } @else {
+                    ✓ Guardar
+                  }
+                </button>
+                <button class="btn-cancel" (click)="cancelEdit()">✕ Cancelar</button>
+              </div>
+
+            } @else {
+              <!-- Botón para entrar a editar -->
+              <button class="btn-edit-trigger" (click)="startEdit(activeTab)" title="Editar esta sección">
+                <svg class="edit-icon-sm" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                </svg>
+                Editar sección
+              </button>
+            }
+
+          </div>
+        }
+
+        <!-- ── Bases y reglas ── -->
+        <div class="panel-block">
+          <span class="block-chip">Bases y reglas</span>
+          <h2 class="block-title">{{ getTabConfig(activeTab).baseTitle }}</h2>
+
+          @if(editingSection === activeTab) {
+            <quill-editor
+              class="tc-quill"
+              [(ngModel)]="editBases"
+              [modules]="editorModules"
+              placeholder="Escribe las bases y reglas..."
+            ></quill-editor>
+          } @else {
+            <div class="rules-content" [innerHTML]="getBasesHtml(activeTab)"></div>
+          }
+        </div>
+
+        <!-- ── Premiación ── -->
+        <div class="panel-block">
+          <span class="block-chip award-chip">Premiación</span>
+          <h2 class="block-title">Esquema de premiación</h2>
+
+          @if(editingSection === activeTab) {
+            <quill-editor
+              class="tc-quill"
+              [(ngModel)]="editPremiacion"
+              [modules]="editorModules"
+              placeholder="Escribe el esquema de premiación..."
+            ></quill-editor>
+
+            <!-- Gestor de imágenes por slot (secciones con imágenes definidas) -->
+            @if(getDefaultImages(activeTab).length > 0) {
+              <div class="img-slots-edit mt-gap">
+                <div class="img-slots-edit-header">
+                  <svg class="img-manager-icon" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clip-rule="evenodd"/>
+                  </svg>
+                  <span>Imágenes de la sección</span>
+                </div>
+                <div class="default-img-grid">
+                  @for(slot of getDefaultImages(activeTab); track slot.src; let i = $index) {
+                    <div class="default-img-item" [class.default-img-wide]="slot.wide">
+                      <p class="default-img-title">{{ slot.title }}</p>
+                      <div class="slot-edit-card">
+                        @if(getApiImageForSlot(activeTab, i + 1); as apiImg) {
+                          <img [src]="apiImg.url" [alt]="slot.title" class="slot-edit-photo" />
+                          <div class="slot-edit-btns">
+                            <label class="slot-btn-action slot-btn-change" [class.slot-btn-loading]="uploadingSlot !== null">
+                              <input type="file" (change)="uploadImagenForSlot($event, activeTab, i + 1)"
+                                     accept="image/jpeg,image/png,image/jpg" style="display:none"
+                                     [disabled]="uploadingSlot !== null">
+                              @if(uploadingSlot === i + 1) {
+                                <span class="btn-spinner btn-spinner-dark"></span> Subiendo...
+                              } @else {
+                                ↑ Cambiar imagen
+                              }
+                            </label>
+                            <button class="slot-btn-action slot-btn-delete-sm" (click)="deleteImagen(apiImg.id)"
+                                    [disabled]="uploadingSlot !== null">✕ Eliminar</button>
+                          </div>
+                        } @else {
+                          <img [src]="slot.src" [alt]="slot.title" class="slot-edit-photo is-default" />
+                          <div class="slot-edit-btns">
+                            <label class="slot-btn-action slot-btn-change" [class.slot-btn-loading]="uploadingSlot === i + 1">
+                              <input type="file" (change)="uploadImagenForSlot($event, activeTab, i + 1)"
+                                     accept="image/jpeg,image/png,image/jpg" style="display:none"
+                                     [disabled]="uploadingSlot !== null">
+                              @if(uploadingSlot === i + 1) {
+                                <span class="btn-spinner btn-spinner-dark"></span> Subiendo...
+                              } @else {
+                                ↑ Subir imagen propia
+                              }
+                            </label>
+                          </div>
+                        }
+                      </div>
+                    </div>
+                  }
+                </div>
+              </div>
+            }
+
+          } @else {
+            <div class="rules-content" [innerHTML]="getPremiacionHtml(activeTab)"></div>
+
+            <!-- Imágenes guardadas en la API -->
+            @if(getApiImages(activeTab).length > 0) {
+              <div class="api-img-grid mt-gap">
+                @for(img of getApiImages(activeTab); track img.id) {
+                  <div class="img-card">
+                    <img [src]="img.url" alt="Imagen {{ img.orden }}" />
+                  </div>
+                }
+              </div>
+            } @else if(getDefaultImages(activeTab).length > 0) {
+              <div class="default-img-grid mt-gap">
+                @for(img of getDefaultImages(activeTab); track img.src) {
+                  <div class="default-img-item" [class.default-img-wide]="img.wide">
+                    <p class="default-img-title">{{ img.title }}</p>
+                    <img [src]="img.src" [alt]="img.title" class="default-img-photo" />
+                  </div>
+                }
+              </div>
+            }
+          }
+        </div>
+
+      </div><!-- /panel -->
     </div>
+  </section>
 
-    <!-- contenido -->
-
-    <div class="p-4 sm:p-6 text-sm sm:text-base">
-      <!-- SECCION PREMIA TU IDEA -->
-      <div *ngIf="activeTab === 'sec1'" class="p-6">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">
-            Bases y reglas de puntaje para las ideas
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
-            por el comité OpEx, el estatus del proyecto o idea se encontrará
-            disponible dentro de la sección de tus ideas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
-            proyecto que se te haya asignado por tus funciones o
-            responsabilidades.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
-            colectiva, los puntos se dividirán entre los colaboradores de la
-            idea.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> En caso de ser
-            rechazada tu primer idea, se te otorgaran 20 puntos por
-            unica ocasion.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <!-- 2 columnas -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
-          <!-- Tarjeta 1 -->
-          <div class="flex flex-col items-center text-center h-full">
-            <h3 class="text-xl font-semibold mb-2">Ideas no contables</h3>
-            <img
-              src="../../../assets/ideas no contables.png"
-              alt="Imagen 1"
-              class="w-full h-80 object-contain"
-            />
-          </div>
-
-          <!-- Tarjeta 2 -->
-          <div class="flex flex-col items-center text-center h-full">
-            <h3 class="text-xl font-semibold mb-2">Ideas contables</h3>
-            <img
-              src="../../../assets/ideas contables2.png"
-              alt="Imagen 2"
-              class="w-full h-80 object-contain"
-            />
-          </div>
-        </div>
-
-        <!-- 1 columna -->
-        <div class="flex justify-center mt-8">
-          <div class="flex flex-col items-center text-center">
-            <h3 class="text-xl font-semibold mb-4">
-              Tabulación de puntaje en base al 10% del excedente de la meta
-            </h3>
-
-            <img
-              src="../../../assets/tabulacion de puntos actualizada.png"
-              alt="Imagen 3"
-              class="h-3/5 object-cover mb-4 border-2 border-black"
-            />
-
-            <p class="text-gray-500 w-3/5 text-sm">
-              Después de los $4500 USD de ahorro se darán 325 puntos
-              independientemente de cuánto ahorro se consiga.
-            </p>
-          </div>
-        </div>
-      </div>
-      <!-- SECCION LEAN WORKSHOPS -->
-      <div *ngIf="activeTab === 'sec2'">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">
-            Bases y reglas de puntaje para workshops
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
-            por el comité OpEx, el estatus del proyecto o idea se encontrará
-            disponible dentro de la sección de tus ideas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
-            proyecto que se te haya asignado por tus funciones o
-            responsabilidades.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
-            colectiva, los puntos se dividirán entre los colaboradores de la
-            idea.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> El premio en puntos será
-            evaluado con el 10% del excedente de la meta establecida y seguirá
-            las reglas aplicadas en el origen de Premia Tu Idea.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Se otorgarán 15 puntos de
-            gratificación por haber participado.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Recursos humanos otorgará
-            un diploma por la participación y un presente.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Se otorgarán 2 puntos por
-            registrar un proyecto, pero al completar 3 rechazadas ya no se
-            otorgarán puntos por simplemente registrarlo.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-8">
-          <div class="flex flex-col items-center text-center">
-            <h3 class="text-xl font-semibold mb-4">
-              Tabulación de puntaje en base al 10% del excedente de la meta
-            </h3>
-
-            <img
-              src="../../../assets/tabulacion de puntos actualizada.png"
-              alt="Imagen 3"
-              class="h-3/5 object-cover mb-4 border-2 border-black"
-            />
-
-            <p class="text-gray-500 w-3/5 text-sm">
-              Después de los $4500 USD de ahorro se darán 325 puntos
-              independientemente de cuánto ahorro se consiga.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECCION CAMBIO DE NIVEL -->
-      <div *ngIf="activeTab === 'sec3'">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">
-            Bases y reglas de puntaje para cambio de nivel de técnicos
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Solo se podrá realizar un
-            proyecto por año y deberá ser uno aprobado por su jefe y seguridad.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Solo se puede subir un
-            nivel anualmente, independientemente del ahorro en USD logrado
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> En caso de superar la meta
-            establecida para su cambio de nivel, se te asignará el 10% del
-            excedente del ahorro en puntos para poder intercambiarlos por
-            premios.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Existen 6 niveles de
-            técnicos, técnico 1, 2 y 3, y técnico especial 1, 2, y 3. Para pasar
-            de nivel 1 a 2 de técnico se necesita llegar a una meta mínima de
-            1200 USD y así va aumentando el mínimo en 200 USD para los
-            siguientes niveles.
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> El premio será el 10% del
-            excedente de la meta establecida, siguiendo el criterio de Premia Tu
-            Idea.
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> En caso de no exceder la
-            meta establecida se gratificará con 15 puntos.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Se otorgarán 2 puntos por
-            registrar un proyecto, pero al completar 3 rechazadas ya no se
-            otorgarán puntos por simplemente registrarlo.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-8">
-          <div class="flex flex-col items-center text-center">
-            <h3 class="text-xl font-semibold mb-4">
-              Tabulación de puntaje en base al 10% del excedente de la meta
-            </h3>
-
-            <img
-              src="../../../assets/tabulacion de puntos actualizada.png"
-              alt="Imagen 3"
-              class="h-3/5 object-cover mb-4 border-2 border-black"
-            />
-
-            <p class="text-gray-500 w-3/5 text-sm">
-              Después de los $4500 USD de ahorro se darán 325 puntos
-              independientemente de cuánto ahorro se consiga.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SECCION SCAP -->
-      <div *ngIf="activeTab === 'sec4'">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4 text-center">
-            Bases y reglas de puntaje para proyectos de scrap y mejora continua
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg mt-4">
-          <p class="flex items-start">
-            El rendimiento por medio de bonos se realizará cuando los proyectos
-            llevel el % de scrap vs ventas por debajo de su meta.
-          </p>
-          <p class="flex items-start mt-1">
-            <span class="text-blue-800 mr-2">•</span> El bono será repartido
-            entre los miembros del equipo de Solución de Problemas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> El bono será calculado de
-            manera mensual y se pagará de manera trimestral.
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Si los proyectos están
-            enfocados en 1 segmento de línea, la meta del % del scrap vs ventas
-            será calculada diviendo el métrico de toda la línea entre el número
-            de segmentos con equipos de solucion de problemas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> El bono de los proyectos
-            cerrados no es acumulativo, cada proyecto serpa premiado solo una
-            vez.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>El retrabajo o contenciones
-            de claidad no serán consideradas como acciones correctivas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> La efectividad de las
-            acciones correctivas será evaluada 1 mes después de la
-            implementación de estas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Las metas de % de scrap vs
-            ventas serán redefinidas después de la implementación de acciones
-            correctivas de proyectos.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>Las mejoras relaionadas a
-            cambios de diseño generados externamente o mejoras de precios de
-            componentes no serán consideradas como acciones correctivas.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            El porcentaje del bono será calculado en base al 10% del ahorro del
-            proyecto con un tope máximo de 11,000 pesos.
-          </p>
-
-          <p class="flex items-start text-gray-500 text-sm">
-            Cualquier otra situación que no ha sido considerada en la
-            condiciones será evaluada por el Staff de la planta.
-          </p>
-        </div>
-      </div>
-
-      <!-- SECCION DE OE -->
-      <div *ngIf="activeTab === 'sec5'">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4 text-center">
-            Bases y reglas de puntaje para proyectos de OE
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg mt-4">
-          <p class="flex items-start">
-            El reconocimiento con bono se obtendrá cuando el proyecto lleve el
-            impacto en %OE por "Equipment Breakdown" registrado en OMS por
-            debajo de la meta definida.
-          </p>
-          <p class="flex items-start mt-1">
-            <span class="text-blue-800 mr-2">•</span>
-            El bono será repartido entre los miembros del equipo de solución de
-            problemas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>
-            Los equipos deberán ser conformados por al menos 1 coordinador de
-            mantenimiento y un técnico de mantenimiento, el número máximo de
-            miembros en el equipo es de 3 personas.
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>
-            El reconocimiento-bono del proyecto cerrado no es acumulativo, cada
-            proyecto será premiado solo 1 vez.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>
-            La efectividad de las acciones correctivas será evaluada 1 mes
-            después de la implementación.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span>Los eventos con una causa
-            especial("1 timer") no serán considerados como proyectos de mejora.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Los meses atípicos con
-            bajas ventas o paros de línea no serán considerados para el cálculo
-            del bono.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> El bono será calculado de
-            manera mensual y se pagará de manera trimestral.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            El bono será calculado en base a los siguientes criterios de
-            impacto:
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">1. </span> Tiempo extra: El gasto
-            en dólares evitado por la producción no realizada por las fallas del
-            equipo.
-          </p>
-
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">2. </span> Mejoras en tiempos de
-            ciclo que ayudarán a incrementar la salida de piezas.
-          </p>
-
-          <p class="flex items-start text-gray-500 text-sm">
-            Cualquier otra situación que no ha sido considerada en la
-            condiciones será evaluada por el Staff de la planta.
-          </p>
-        </div>
-      </div>
-
-      <!-- SECCION DE AHORRO DE ENERGIA -->
-      <div *ngIf="activeTab === 'sec6'">
-        <div class="flex justify-center">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">
-            Bases y reglas de puntaje para proyectos de ahorro de energía
-          </h2>
-        </div>
-
-        <!-- viñetas -->
-        <div class="space-y-2 w-fit text-lg">
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Las ideas serán evaluadas
-            por el comité OpEx, el estatus del proyecto o idea se encontrará
-            disponible dentro de la sección de tus ideas.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> La idea NO puede ser un
-            proyecto que se te haya asignado por tus funciones o
-            responsabilidades.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> Si la propuesta es
-            colectiva, los puntos se dividirán entre los colaboradores de la
-            idea.
-          </p>
-          <p class="flex items-start">
-            <span class="text-blue-800 mr-2">•</span> En caso de ser rechazada tu
-            primer idea, se te otorgaran 20 puntos por unica ocasion.
-          </p>
-        </div>
-
-        <div class="flex justify-center mt-12">
-          <h2 class="text-4xl text-blue-900 font-bold mb-4">Premiación</h2>
-        </div>
-
-        <div class="flex flex-col items-center text-center">
-          <h3 class="text-xl font-semibold mb-2">Proyectos</h3>
-          <img
-            src="../../../assets/ideas contables2.png"
-            alt="Imagen 2"
-            class="h-3/4 object-cover border-2 border-black"
-          />
-        </div>
-
-        <div class="flex justify-center mt-2">
-          <div class="flex flex-col items-center text-center">
-            <h3 class="text-xl font-semibold mb-4">
-              Tabulación de puntaje en base al 10% del excedente de la meta
-            </h3>
-
-            <img
-              src="../../../assets/ahorro de energía actualizado.png"
-              alt="Imagen 3"
-              class="h-3/5 object-cover mb-4 border-2 border-black"
-            />
-
-            <p class="text-gray-500 w-3/5 text-sm">
-              Después de los $4835 USD de ahorro se darán 325 puntos
-              independientemente de cuánto ahorro se consiga.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- ── Toast ── -->
+  @if(toast) {
+    <div class="toast" [class.toast-ok]="toast.ok" [class.toast-err]="!toast.ok">
+      <svg viewBox="0 0 20 20" fill="currentColor" width="16" height="16">
+        @if(toast.ok) {
+          <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+        } @else {
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/>
+        }
+      </svg>
+      {{ toast.msg }}
     </div>
-  </div>
+  }
+
 </div>

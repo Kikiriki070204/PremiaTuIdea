@@ -6,12 +6,12 @@ export const authAdminGuard: CanActivateFn = (route, state) => {
     const router = inject(Router);
     const authService = inject(AuthService);
 
-    const rol = authService.getRoleId()
+    const rol = authService.getRoleId();
 
-    if (rol === 1) {
+    if (rol === 1 || rol === 2 || rol === 3) {
         return true;
     }
 
-    router.navigate(['/**']);
+    router.navigate(['/dashboard']);
     return false;
 };

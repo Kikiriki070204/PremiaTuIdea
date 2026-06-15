@@ -6,18 +6,18 @@ import { ReportesService } from '../../servicios/reportes.service';
 import { Profile } from '../../interfaces/profile';
 import { Top10User } from '../../interfaces/reportes';
 import { initFlowbite } from 'flowbite';
+import { AnuncioModalComponent } from '../anuncio-modal/anuncio-modal.component';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [RouterLink, DecimalPipe],
+  imports: [RouterLink, DecimalPipe, AnuncioModalComponent],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent implements OnInit {
   user: Profile | null = null
 
-  // Estadísticas admin
   totalIdeas          = 0
   totalAhorro         = 0
   totalAhorroUsd      = 0
@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     protected authService: AuthService,
-    protected reportesService: ReportesService
+    protected reportesService: ReportesService,
   ) {}
 
   ngOnInit(): void {

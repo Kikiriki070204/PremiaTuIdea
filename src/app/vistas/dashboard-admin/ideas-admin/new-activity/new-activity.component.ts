@@ -128,7 +128,7 @@ export class NewActivityComponent implements OnInit {
   }
 
   goBack() {
-    history.back();
+    this.router.navigate(["/admin/ideas/", this.id]);
   }
 
 }

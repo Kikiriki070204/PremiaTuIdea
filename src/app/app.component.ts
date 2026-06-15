@@ -14,7 +14,7 @@ import { filter } from 'rxjs';
 export class AppComponent {
   title = 'PremiaTuIdea';
 
-  showNavbar = true;
+  showNavbar = false;
 
   constructor(private router: Router, private route: ActivatedRoute) {
     this.router.events

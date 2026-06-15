@@ -1,0 +1,113 @@
+<div class="an-page">
+
+  <!-- Toast de confirmación -->
+  @if (toast) {
+    <div class="an-toast" [class.an-toast-ok]="toast.ok" [class.an-toast-err]="!toast.ok">
+      @if (toast.ok) {
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+        </svg>
+      } @else {
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
+          <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+        </svg>
+      }
+      {{ toast.text }}
+    </div>
+  }
+
+  <div class="an-header">
+    <div class="an-header-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49-.202-.003A2.014 2.014 0 0 1 0 9V8a2.014 2.014 0 0 1 1.994-2.014 69 69 0 0 0 .538-.033 71 71 0 0 0-.316-.04A1 1 0 0 1 3 4.82V4a2 2 0 0 1 2-2h1c2.49 0 4.906.59 7 1.655z"/>
+      </svg>
+    </div>
+    <div>
+      <h2 class="an-title">Anuncio para usuarios</h2>
+      <p class="an-subtitle">El mensaje se muestra como popup al iniciar sesión</p>
+    </div>
+  </div>
+
+  <div class="an-card">
+
+    <div class="an-card-header">
+      <span class="an-status-label">Estado del anuncio</span>
+      <label class="an-switch" [title]="activo ? 'Anuncio activo' : 'Anuncio inactivo'">
+        <input type="checkbox" [(ngModel)]="activo" />
+        <span class="an-switch-track">
+          <span class="an-switch-thumb"></span>
+        </span>
+        <span class="an-switch-text" [class.is-active]="activo">
+          {{ activo ? 'Activo' : 'Inactivo' }}
+        </span>
+      </label>
+    </div>
+
+    <div class="an-card-body">
+
+      <div class="an-field">
+        <label class="an-label">Mensaje del anuncio</label>
+        <div class="an-editor-wrap">
+          <quill-editor
+            [(ngModel)]="mensaje"
+            [modules]="editorModules"
+            placeholder="Escribe aquí el mensaje que verán los usuarios al iniciar sesión…"
+          ></quill-editor>
+        </div>
+      </div>
+
+      <div class="an-field an-field-row">
+        <div>
+          <label class="an-label">Duración (días)</label>
+          <div class="an-dias-wrap">
+            <input
+              type="number"
+              class="an-input-dias"
+              [(ngModel)]="dias"
+              min="0"
+              max="365"
+              placeholder="0"
+            />
+            <span class="an-hint">0 = sin límite de tiempo</span>
+          </div>
+        </div>
+
+        <div class="an-preview-box">
+          <span class="an-preview-label">Vista previa</span>
+          <div class="an-preview-chip" [class.chip-active]="activo && mensaje.trim().length > 0">
+            @if (activo && mensaje.trim().length > 0) {
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="8"/>
+              </svg>
+              Visible para usuarios
+            } @else {
+              <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" viewBox="0 0 16 16">
+                <circle cx="8" cy="8" r="8"/>
+              </svg>
+              No visible (inactivo o sin mensaje)
+            }
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="an-card-footer">
+      <button class="an-save-btn" (click)="guardar()" [disabled]="guardando">
+        @if (guardando) {
+          <svg class="an-spin" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2z"/>
+          </svg>
+          Guardando…
+        } @else {
+          <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" fill="currentColor" viewBox="0 0 16 16">
+            <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
+          </svg>
+          Publicar anuncio
+        }
+      </button>
+    </div>
+
+  </div>
+
+</div>

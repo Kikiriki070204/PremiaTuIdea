@@ -293,30 +293,19 @@ export class ReportesAhorroComponent implements OnInit {
           label: '% de ahorro',
           data: this.ahorros_percentages,
           backgroundColor: [
-            'rgba(35, 52, 188, 1)', //dark turquoise
-            'rgba(176, 21, 63, 1)', //aqumarine
-            'rgba(29, 232, 50, 1)', //turquoise 29, 232, 50
-            'rgba(235, 235, 28, 1)', //steel blue
-            'rgba(294, 97, 7, 1)', //deep sky blue 0, 191, 255
-            'rgba(33, 147, 8, 1)', //navy blue 29, 232, 50
-            'rgba(0, 191, 255, 1)', //blue
-            'rgba(213, 14, 192, 1)', //royal blue
-            'rgba(231, 207, 7, 1)', //dark slate
-            'rgba(185, 178, 122, 1)' //storm blue
+            'rgba(16,185,129,0.85)','rgba(59,130,246,0.85)','rgba(245,158,11,0.85)',
+            'rgba(168,85,247,0.85)','rgba(20,184,166,0.85)','rgba(249,115,22,0.85)',
+            'rgba(239,68,68,0.85)','rgba(236,72,153,0.85)','rgba(132,204,22,0.85)',
+            'rgba(99,102,241,0.85)',
           ],
           borderColor: [
-            'rgba(35, 52, 188, 0.4)', //dark turquoise
-            'rgba(176, 21, 63, 0.4)',  //aqumarine 241, 65, 34
-            'rgba(29, 232, 50, 0.4)', //turquoise
-            'rgba(235, 235, 28, 0.4)', //steel blue
-            'rgba(294, 97, 7, 0.4)', //deep sky blue
-            'rgba(33, 147, 8, 0.4)', //navy blue
-            'rgba(0, 191, 255, 0.4)', //blue
-            'rgba(213, 14, 192, 0.4)', //royal blue
-            'rgba(231, 207, 7, 0.4)', //dark slate
-            'rgba(185, 178, 122, 0.4)' //storm blue
+            'rgba(16,185,129,1)','rgba(59,130,246,1)','rgba(245,158,11,1)',
+            'rgba(168,85,247,1)','rgba(20,184,166,1)','rgba(249,115,22,1)',
+            'rgba(239,68,68,1)','rgba(236,72,153,1)','rgba(132,204,22,1)',
+            'rgba(99,102,241,1)',
           ],
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius: 6
         }]
       },
       options: {
@@ -324,11 +313,18 @@ export class ReportesAhorroComponent implements OnInit {
           y: {
             beginAtZero: true,
             min: 0,
-            max: 100
-          }
+            max: 100,
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: { callback: (v: any) => v + '%' }
+          },
+          x: { grid: { display: false } }
         },
         responsive: true,
         maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx: any) => ` ${ctx.raw.toFixed(1)}%` } }
+        }
       }
     });
   }
@@ -344,30 +340,19 @@ export class ReportesAhorroComponent implements OnInit {
           label: '% de ahorro',
           data: this.ahorros_percentages,
           backgroundColor: [
-            'rgba(35, 52, 188, 1)', //dark turquoise
-            'rgba(176, 21, 63, 1)', //aqumarine
-            'rgba(29, 232, 50, 1)', //turquoise 29, 232, 50
-            'rgba(235, 235, 28, 1)', //steel blue
-            'rgba(294, 97, 7, 1)', //deep sky blue 0, 191, 255
-            'rgba(33, 147, 8, 1)', //navy blue 29, 232, 50
-            'rgba(0, 191, 255, 1)', //blue
-            'rgba(213, 14, 192, 1)', //royal blue
-            'rgba(231, 207, 7, 1)', //dark slate
-            'rgba(185, 178, 122, 1)' //storm blue
+            'rgba(16,185,129,0.85)','rgba(59,130,246,0.85)','rgba(245,158,11,0.85)',
+            'rgba(168,85,247,0.85)','rgba(20,184,166,0.85)','rgba(249,115,22,0.85)',
+            'rgba(239,68,68,0.85)','rgba(236,72,153,0.85)','rgba(132,204,22,0.85)',
+            'rgba(99,102,241,0.85)',
           ],
           borderColor: [
-            'rgba(35, 52, 188, 0.4)', //dark turquoise
-            'rgba(176, 21, 63, 0.4)',  //aqumarine 241, 65, 34
-            'rgba(29, 232, 50, 0.4)', //turquoise
-            'rgba(235, 235, 28, 0.4)', //steel blue
-            'rgba(294, 97, 7, 0.4)', //deep sky blue
-            'rgba(33, 147, 8, 0.4)', //navy blue
-            'rgba(0, 191, 255, 0.4)', //blue
-            'rgba(213, 14, 192, 0.4)', //royal blue
-            'rgba(231, 207, 7, 0.4)', //dark slate
-            'rgba(185, 178, 122, 0.4)' //storm blue
+            'rgba(16,185,129,1)','rgba(59,130,246,1)','rgba(245,158,11,1)',
+            'rgba(168,85,247,1)','rgba(20,184,166,1)','rgba(249,115,22,1)',
+            'rgba(239,68,68,1)','rgba(236,72,153,1)','rgba(132,204,22,1)',
+            'rgba(99,102,241,1)',
           ],
-          borderWidth: 1
+          borderWidth: 1,
+          borderRadius: 6
         }]
       },
       options: {
@@ -375,10 +360,18 @@ export class ReportesAhorroComponent implements OnInit {
           y: {
             beginAtZero: true,
             min: 0,
-            max: 100
-          }
+            max: 100,
+            grid: { color: 'rgba(0,0,0,0.05)' },
+            ticks: { callback: (v: any) => v + '%' }
+          },
+          x: { grid: { display: false } }
         },
-        responsive: true
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { display: false },
+          tooltip: { callbacks: { label: (ctx: any) => ` ${ctx.raw.toFixed(1)}%` } }
+        }
       }
     });
   }

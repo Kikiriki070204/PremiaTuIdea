@@ -128,6 +128,14 @@ export class ReportesService {
     return this.http.post<AhorroTotalCategoria>(`${environment.api_url}/ideass/ahorroHistoricoCategoriaFechas`, fechas)
   }
 
+  ideasMensualesPorAnio(year: number): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/ideass/ideasMensualesPorAnio?year=${year}`);
+  }
+
+  ideasMensualesPorAnioYArea(year: number): Observable<any> {
+    return this.http.get<any>(`${environment.api_url}/ideass/ideasMensualesPorAnioYArea?year=${year}`);
+  }
+
   // PREMIOS
   getResumenPremios(): Observable<any> {
     return this.http.get<any>(`${environment.api_url}/estado/resumenPremios`)

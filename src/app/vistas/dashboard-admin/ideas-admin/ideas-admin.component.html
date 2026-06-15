@@ -1,80 +1,193 @@
-<div
-  class="container grid sm:flex sm:gap-6 items-center"
-  style="margin-left: 5%; padding-top: 1%"
->
+<div class="container grid sm:flex sm:gap-6 items-center justify-between" style="margin-left: 5%; padding-top: 1%; padding-right: 2%">
   <h4 class="mt-6 mb-3 text-4xl font-bold text-blue-900 dark:text-white">
     Todas las ideas / Proyectos
   </h4>
+  <button (click)="openExportModal()"
+    class="mt-4 sm:mt-0 flex items-center gap-2 bg-green-600 hover:bg-green-700 active:bg-green-800 text-white font-semibold px-5 py-2.5 rounded-lg shadow-md transition-all duration-200">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+        d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+    </svg>
+    Exportar
+  </button>
 </div>
 
 <div class="mt-2" style="margin-left: 6%; margin-right: 20%">
   <div class="w-fit" style="margin-bottom: 1%"></div>
-  <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
-    <ul
-      class="flex flex-wrap -mb-px text-sm font-medium text-center"
-      id="default-styled-tab"
-      data-tabs-active-classes="text-purple-600 hover:text-purple-600 dark:text-purple-500 dark:hover:text-purple-500 border-purple-600 dark:border-purple-500"
-      data-tabs-inactive-classes="dark:border-transparent text-gray-500 hover:text-gray-600 dark:text-gray-400 border-gray-100 hover:border-gray-300 dark:border-gray-700 dark:hover:text-gray-300"
-      role="tablist"
-    >
-      <li class="me-2" role="presentation">
-        <button
-          [routerLink]="['revision']"
-          routerLinkActive="text-amber-500 border-b-2 border-amber-500 "
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="hover:text-amber-500 inline-block p-4 hover:border-b-2 hover:border-amber-500 rounded-t-lg"
-          id="profile-styled-tab"
-          aria-selected="false"
-        >
-          En revision
-        </button>
-      </li>
-      <li class="me-2" role="presentation">
-        <button
-          [routerLink]="['aceptadas']"
-          routerLinkActive="text-green-500 border-b-2 border-green-500"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="inline-block p-4 hover:border-b-2 rounded-t-lg hover:text-green-500 hover:border-green-500"
-          id="dashboard-styled-tab"
-          type="button"
-          role="tab"
-          aria-controls="dashboard"
-          aria-selected="false"
-        >
-          Aceptadas
-        </button>
-      </li>
-      <li class="me-2" role="presentation">
-        <button
-          [routerLink]="['implementadas']"
-          routerLinkActive="text-blue-500 border-b-2 border-blue-500"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="inline-block p-4 hover:border-b-2 rounded-t-lg hover:text-blue-500 hover:border-blue-500"
-          id="settings-styled-tab"
-          type="button"
-          role="tab"
-          aria-controls="settings"
-          aria-selected="false"
-        >
-          Implementadas
-        </button>
-      </li>
-      <li role="presentation">
-        <button
-          [routerLink]="['rechazadas']"
-          routerLinkActive="text-red-700 border-b-2 border-red-700"
-          [routerLinkActiveOptions]="{ exact: true }"
-          class="inline-block p-4 hover:border-b-2 rounded-t-lg hover:text-red-700 hover:border-red-700"
-          id="contacts-styled-tab"
-          type="button"
-          role="tab"
-          aria-controls="contacts"
-          aria-selected="false"
-        >
-          Rechazadas
-        </button>
-      </li>
-    </ul>
-  </div>
-  <router-outlet></router-outlet>
+  <app-ideas-revision-admin></app-ideas-revision-admin>
 </div>
+
+<!-- ── Modal de exportación ── -->
+@if(showExportModal) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm p-4"
+    (click)="closeExportModal()">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg" (click)="$event.stopPropagation()">
+
+      <!-- Header del modal -->
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <div class="flex items-center gap-3">
+          <div class="bg-green-100 p-2 rounded-lg">
+            <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+          </div>
+          <div>
+            <h3 class="text-base font-bold text-gray-900">Exportar a Excel</h3>
+            <p class="text-xs text-gray-500">Ideas / Proyectos</p>
+          </div>
+        </div>
+        <button (click)="closeExportModal()" class="text-gray-400 hover:text-gray-600 transition-colors">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+
+      <!-- Cuerpo del modal -->
+      <div class="px-6 py-5 space-y-5">
+
+        <!-- Selector de modo -->
+        <div class="grid grid-cols-2 gap-3">
+          <button (click)="exportMode = 'all'"
+            class="flex flex-col items-center gap-1.5 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+            [class.border-green-500]="exportMode === 'all'"
+            [class.bg-green-50]="exportMode === 'all'"
+            [class.border-gray-200]="exportMode !== 'all'"
+            [class.hover:border-gray-300]="exportMode !== 'all'">
+            <svg class="w-7 h-7" [class.text-green-600]="exportMode === 'all'" [class.text-gray-400]="exportMode !== 'all'"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M4 6h16M4 10h16M4 14h16M4 18h16" />
+            </svg>
+            <span class="text-sm font-semibold" [class.text-green-700]="exportMode === 'all'" [class.text-gray-700]="exportMode !== 'all'">Exportar todo</span>
+            <span class="text-xs text-center" [class.text-green-600]="exportMode === 'all'" [class.text-gray-400]="exportMode !== 'all'">Sin filtros aplicados</span>
+          </button>
+
+          <button (click)="exportMode = 'filtered'"
+            class="flex flex-col items-center gap-1.5 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer"
+            [class.border-green-500]="exportMode === 'filtered'"
+            [class.bg-green-50]="exportMode === 'filtered'"
+            [class.border-gray-200]="exportMode !== 'filtered'"
+            [class.hover:border-gray-300]="exportMode !== 'filtered'">
+            <svg class="w-7 h-7" [class.text-green-600]="exportMode === 'filtered'" [class.text-gray-400]="exportMode !== 'filtered'"
+              fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2a1 1 0 01-.293.707L13 13.414V19a1 1 0 01-.553.894l-4 2A1 1 0 017 21v-7.586L3.293 6.707A1 1 0 013 6V4z" />
+            </svg>
+            <span class="text-sm font-semibold" [class.text-green-700]="exportMode === 'filtered'" [class.text-gray-700]="exportMode !== 'filtered'">Con filtros</span>
+            <span class="text-xs text-center" [class.text-green-600]="exportMode === 'filtered'" [class.text-gray-400]="exportMode !== 'filtered'">Personalizar datos</span>
+          </button>
+        </div>
+
+        <!-- Sección de filtros -->
+        @if(exportMode === 'filtered') {
+          <div class="space-y-4 border-t border-gray-100 pt-4">
+
+            <!-- Estatus -->
+            <div>
+              <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-2">Estatus</label>
+              <div class="grid grid-cols-2 gap-2">
+                <label class="flex items-center gap-2 text-sm cursor-pointer select-none">
+                  <input type="checkbox" [(ngModel)]="expRevision"
+                    class="w-4 h-4 text-amber-500 rounded border-gray-300 focus:ring-amber-400">
+                  <span class="font-medium text-amber-600">En revisión</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer select-none">
+                  <input type="checkbox" [(ngModel)]="expAceptadas"
+                    class="w-4 h-4 text-green-500 rounded border-gray-300 focus:ring-green-400">
+                  <span class="font-medium text-green-600">Aceptadas</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer select-none">
+                  <input type="checkbox" [(ngModel)]="expImplementadas"
+                    class="w-4 h-4 text-blue-500 rounded border-gray-300 focus:ring-blue-400">
+                  <span class="font-medium text-blue-600">Implementadas</span>
+                </label>
+                <label class="flex items-center gap-2 text-sm cursor-pointer select-none">
+                  <input type="checkbox" [(ngModel)]="expRechazadas"
+                    class="w-4 h-4 text-red-500 rounded border-gray-300 focus:ring-red-400">
+                  <span class="font-medium text-red-600">Rechazadas</span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Origen de mejora -->
+            <div>
+              <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Origen de mejora</label>
+              <select [(ngModel)]="expCategoria" (change)="expArea = null"
+                class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                <option [value]="0">Todos los orígenes</option>
+                <option [value]="1">Ideas de mejora</option>
+                <option [value]="2">Lean workshops</option>
+                <option [value]="3">Cambio de nivel de técnicos</option>
+                <option [value]="4">Scrap/CI</option>
+                <option [value]="5">OE</option>
+                <option [value]="10">Ahorro de energía</option>
+              </select>
+            </div>
+
+            <!-- Área (solo si Origen = Ideas de mejora) -->
+            @if(expCategoria === 1) {
+              <div>
+                <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Área</label>
+                <select [(ngModel)]="expArea"
+                  class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white">
+                  <option [value]="null">Todas las áreas</option>
+                  <option [value]="1">Exhaust</option>
+                  <option [value]="2">Ignicion</option>
+                  <option [value]="3">EACV</option>
+                  <option [value]="4">Otros</option>
+                  <option [value]="5">SRA</option>
+                </select>
+              </div>
+            }
+
+            <!-- Rango de fechas -->
+            <div>
+              <label class="text-xs font-semibold text-gray-500 uppercase tracking-wide block mb-1">Rango de fechas</label>
+              <div class="flex gap-3">
+                <div class="flex flex-col flex-1 gap-0.5">
+                  <span class="text-xs text-gray-400">Desde</span>
+                  <input type="date" [(ngModel)]="expDateFrom"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+                <div class="flex flex-col flex-1 gap-0.5">
+                  <span class="text-xs text-gray-400">Hasta</span>
+                  <input type="date" [(ngModel)]="expDateTo"
+                    class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                </div>
+              </div>
+            </div>
+
+          </div>
+        }
+
+      </div>
+
+      <!-- Footer del modal -->
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200">
+        <button (click)="closeExportModal()" [disabled]="isExporting"
+          class="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-800 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors duration-200 disabled:opacity-50">
+          Cancelar
+        </button>
+        <button (click)="exportar()" [disabled]="isExporting"
+          class="flex items-center gap-2 px-5 py-2 text-sm font-semibold text-white bg-green-600 hover:bg-green-700 rounded-lg shadow transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed">
+          @if(isExporting) {
+            <svg class="animate-spin w-4 h-4" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+            </svg>
+            Exportando...
+          } @else {
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+            </svg>
+            Exportar Excel
+          }
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

@@ -1,3 +1,5 @@
+<app-anuncio-modal></app-anuncio-modal>
+
 <div class="dashboard-wrapper">
 
   <!-- ============================================================
@@ -112,7 +114,7 @@
             </div>
             <div class="stat-info">
               <span class="stat-label">Puntos otorgados</span>
-              <span class="stat-value">{{ totalPuntos | number }}</span>
+              <span class="stat-value">{{ totalPuntosContables | number }}</span>
             </div>
             <div class="stat-badge" style="background:#fefce8; color:#ca8a04">Contables</div>
           </div>
@@ -210,13 +212,13 @@
             <span>Reportes</span>
           </a>
 
-          <a routerLink="/admin/productos-admin" class="admin-sc-card">
-            <div class="asc-icon" style="background:linear-gradient(135deg,#f59e0b,#d97706)">
+          <a routerLink="/admin/anuncios-admin" class="admin-sc-card">
+            <div class="asc-icon" style="background:linear-gradient(135deg,#6366f1,#4338ca)">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
-                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4"/>
+                <path d="M13 2.5a1.5 1.5 0 0 1 3 0v11a1.5 1.5 0 0 1-3 0v-.214c-2.162-1.241-4.49-1.843-6.912-2.083l.405 2.712A1 1 0 0 1 5.51 15.1h-.548a1 1 0 0 1-.916-.599l-1.85-3.49-.202-.003A2.014 2.014 0 0 1 0 9V8a2.014 2.014 0 0 1 1.994-2.014 69 69 0 0 0 .538-.033 71 71 0 0 0-.316-.04A1 1 0 0 1 3 4.82V4a2 2 0 0 1 2-2h1c2.49 0 4.906.59 7 1.655z"/>
               </svg>
             </div>
-            <span>Productos</span>
+            <span>Anuncios</span>
           </a>
 
           <a routerLink="/admin/premios-admin" class="admin-sc-card">
@@ -228,13 +230,13 @@
             <span>Premios</span>
           </a>
 
-          <a routerLink="/admin/bonos-admin" class="admin-sc-card">
+          <a routerLink="/admin/carrusel-admin" class="admin-sc-card">
             <div class="asc-icon" style="background:linear-gradient(135deg,#06b6d4,#0e7490)">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="white" viewBox="0 0 16 16">
-                <path d="M4 10.781c.148 1.667 1.513 2.85 3.591 3.003V15h1.043v-1.216c2.27-.179 3.678-1.438 3.678-3.3 0-1.59-.947-2.51-2.956-3.028l-.722-.187V3.467c1.122.11 1.879.714 2.07 1.616h1.47c-.166-1.6-1.54-2.748-3.54-2.875V1H7.591v1.233c-1.939.23-3.27 1.472-3.27 3.156 0 1.454.966 2.483 2.661 2.917l.61.162v4.031c-1.149-.17-1.94-.8-2.131-1.718zm3.391-3.836c-1.043-.263-1.6-.825-1.6-1.616 0-.944.704-1.641 1.8-1.828v3.495l-.2-.051zm1.591 1.872c1.287.323 1.852.859 1.852 1.769 0 1.097-.826 1.828-2.2 1.939V8.73z"/>
+                <path d="M0 5a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1zm5.5 3.5a.5.5 0 0 0-1 0v3a.5.5 0 0 0 1 0zm-2-1a.5.5 0 0 0-.5.5v2a.5.5 0 0 0 1 0v-2a.5.5 0 0 0-.5-.5m5 1a.5.5 0 0 0-1 0v1a.5.5 0 0 0 1 0z"/>
               </svg>
             </div>
-            <span>Bonos</span>
+            <span>Carrusel</span>
           </a>
 
         </div>
@@ -242,7 +244,6 @@
 
     </div>
   </section>
-
 
   <!-- ============================================================
        DASHBOARD USUARIOS (rol != 1)
@@ -346,7 +347,7 @@
             </svg>
           </div>
           <div class="sc-text">
-            <span class="sc-title">Ideas / Proyectos</span>
+            <span class="sc-title">Ideas registradas</span>
             <span class="sc-sub">Revisa las ideas enviadas</span>
           </div>
           <span class="sc-arrow">→</span>
@@ -394,7 +395,7 @@
         }
 
         @if (user?.rol_id == 4) {
-        <a routerLink="/newIdea/0" class="shortcut-card shortcut-featured">
+        <a routerLink="/categoriaIdea" class="shortcut-card shortcut-featured">
           <div class="sc-icon" style="background:linear-gradient(135deg,#ec4899,#be185d)">
             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="white" viewBox="0 0 16 16">
               <path d="M8 1.5a6.5 6.5 0 1 0 0 13 6.5 6.5 0 0 0 0-13M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8"/>
